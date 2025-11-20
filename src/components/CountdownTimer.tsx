@@ -35,9 +35,7 @@ const countdownConfigs: CountdownConfig[] = [
   }
 ];
 
-interface CountdownTimerProps {}
-
-export function CountdownTimer({}: CountdownTimerProps) {
+export function CountdownTimer() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState<{
     days: number;
@@ -83,7 +81,7 @@ export function CountdownTimer({}: CountdownTimerProps) {
 
     setTimeLeft(calculateTimeLeft());
     setProgress(calculateProgress());
-    
+
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
       setProgress(calculateProgress());
@@ -108,10 +106,10 @@ export function CountdownTimer({}: CountdownTimerProps) {
 
   return (
     <div className="relative rounded-2xl p-8 border border-primary/20 overflow-hidden shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-glow)] transition-all duration-500"
-         style={{ background: 'var(--gradient-timer)' }}>
+      style={{ background: 'var(--gradient-timer)' }}>
       {/* Animated background effect */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 animate-pulse opacity-50"></div>
-      
+
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">

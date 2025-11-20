@@ -35,7 +35,7 @@ export function SearchDialog() {
     ]).then(([announcementsData, calendarData]) => {
       setAnnouncements(announcementsData);
       const events: CalendarEvent[] = [];
-      Object.values(calendarData).forEach((monthEvents: any) => {
+      Object.values(calendarData as Record<string, CalendarEvent[]>).forEach((monthEvents) => {
         events.push(...monthEvents);
       });
       setCalendarEvents(events);

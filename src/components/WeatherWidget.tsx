@@ -65,6 +65,45 @@ interface WeatherData {
   weatherElement: WeatherElement[];
 }
 
+// 未標準化的 API 回應類型
+interface RawWeatherElement {
+  time?: RawTimeSlot[];
+  Time?: RawTimeSlot[];
+  elementName?: string;
+  ElementName?: string;
+}
+
+interface RawLocation {
+  locationName?: string;
+  LocationName?: string;
+  weatherElement?: RawWeatherElement[];
+  WeatherElement?: RawWeatherElement[];
+}
+
+interface RawTimeSlot {
+  startTime?: string;
+  StartTime?: string;
+  endTime?: string;
+  EndTime?: string;
+  elementValue?: Array<Record<string, unknown>>;
+  ElementValue?: Array<Record<string, unknown>>;
+}
+
+interface DailyForecast {
+  date: string;
+  dayOfWeek: string;
+  weather: string;
+  maxTemp: string;
+  minTemp: string;
+  pop: string;
+  rh: string;
+  ws: string;
+  wd: string;
+  feelTemp: string;
+  ci: string;
+  uvi: string;
+}
+
 export const WeatherWidget = () => {
   const [selectedDistrict, setSelectedDistrict] = useState("東區");
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
@@ -88,11 +127,11 @@ export const WeatherWidget = () => {
 
         if (Array.isArray(locationsList)) {
           const rawLoc = locationsList.find(
-            (l: any) => (l.locationName || l.LocationName) === district
+            (l: RawLocation) => (l.locationName || l.LocationName) === district
           );
 
           if (rawLoc) {
-            const normalize = (loc: any): WeatherData => {
+            const normalize = (loc: RawLocation): WeatherData => {
               const getSeriesByKey = (valueKey: string) => {
                 const elements = loc.weatherElement || loc.WeatherElement || [];
                 for (const e of elements) {
@@ -100,7 +139,7 @@ export const WeatherWidget = () => {
                   const first = times?.[0];
                   const ev = first?.elementValue?.[0] || first?.ElementValue?.[0];
                   if (ev && valueKey in ev) {
-                    return times.map((t: any) => ({
+                    return times.map((t: RawTimeSlot) => ({
                       startTime: t.startTime || t.StartTime,
                       endTime: t.endTime || t.EndTime,
                       elementValue: [
@@ -119,7 +158,7 @@ export const WeatherWidget = () => {
               };
 
               const buildElement = (name: string, keyCandidates: string[]) => {
-                let series: any = null;
+                let series: ReturnType<typeof getSeriesByKey> = null;
                 for (const k of keyCandidates) {
                   series = getSeriesByKey(k);
                   if (series) break;
@@ -176,12 +215,12 @@ export const WeatherWidget = () => {
 
   useEffect(() => {
     fetchWeather(selectedDistrict);
-    
+
     // 每30分鐘更新一次
     const interval = setInterval(() => {
       fetchWeather(selectedDistrict);
     }, 30 * 60 * 1000); // 30分鐘 = 30 * 60 * 1000 毫秒
-    
+
     return () => clearInterval(interval);
   }, [selectedDistrict]);
 
@@ -199,7 +238,7 @@ export const WeatherWidget = () => {
 
   const getCurrentWeather = () => {
     if (!weatherData) return null;
-    
+
     return {
       weather: getElementValue("Wx"),
       temp: getElementValue("T"),
@@ -215,18 +254,18 @@ export const WeatherWidget = () => {
 
   const getDailyForecast = () => {
     if (!weatherData) return [];
-    
+
     const wxElement = weatherData.weatherElement.find(e => e.elementName === "Wx");
     if (!wxElement) return [];
-    
+
     // 每天取早上6點的資料作為代表
-    const dailyData: any[] = [];
+    const dailyData: DailyForecast[] = [];
     const seenDates = new Set<string>();
-    
+
     wxElement.time.forEach((timeSlot, index) => {
       const date = new Date(timeSlot.startTime);
       const dateKey = date.toLocaleDateString('zh-TW', { month: 'numeric', day: 'numeric' });
-      
+
       if (!seenDates.has(dateKey) && dailyData.length < 3) {
         seenDates.add(dateKey);
         dailyData.push({
@@ -245,7 +284,7 @@ export const WeatherWidget = () => {
         });
       }
     });
-    
+
     return dailyData;
   };
 
@@ -259,15 +298,15 @@ export const WeatherWidget = () => {
           <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
             天氣資訊
           </CardTitle>
-          <Button 
-            variant="ghost" 
-            size="sm" 
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={() => setIsExpanded(!isExpanded)}
           >
             {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </Button>
         </div>
-        
+
         <div className="mt-2">
           <Select value={selectedDistrict} onValueChange={setSelectedDistrict}>
             <SelectTrigger>
@@ -283,142 +322,142 @@ export const WeatherWidget = () => {
           </Select>
         </div>
       </CardHeader>
-      
+
       {isExpanded && (
         <CardContent className="space-y-4">
-        {loading ? (
-          <div className="space-y-3">
-            <Skeleton className="h-24 w-full" />
-            <div className="grid grid-cols-3 gap-2">
-              <Skeleton className="h-20" />
-              <Skeleton className="h-20" />
-              <Skeleton className="h-20" />
+          {loading ? (
+            <div className="space-y-3">
+              <Skeleton className="h-24 w-full" />
+              <div className="grid grid-cols-3 gap-2">
+                <Skeleton className="h-20" />
+                <Skeleton className="h-20" />
+                <Skeleton className="h-20" />
+              </div>
             </div>
-          </div>
-        ) : current ? (
-          <>
-            {/* 當前天氣 */}
-            <div className="p-4 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex-1">
-                  <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div>
-                      <p className="text-muted-foreground text-xs">溫度</p>
-                      <p className="font-semibold">{current.temp}°C</p>
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground text-xs">相對濕度</p>
-                      <p className="font-semibold">{current.rh}%</p>
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground text-xs">風速</p>
-                      <p className="font-semibold">{current.ws} m/s</p>
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground text-xs">風向</p>
-                      <p className="font-semibold">{current.wd}</p>
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground text-xs">降雨機率</p>
-                      <p className="font-semibold">{current.pop}%</p>
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground text-xs">體感溫度</p>
-                      <p className="font-semibold">{current.feelTemp}°C</p>
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground text-xs">舒適度</p>
-                      <p className="font-semibold">{current.ci}</p>
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground text-xs">紫外線指數</p>
-                      <p className="font-semibold">{current.uvi}</p>
+          ) : current ? (
+            <>
+              {/* 當前天氣 */}
+              <div className="p-4 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex-1">
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div>
+                        <p className="text-muted-foreground text-xs">溫度</p>
+                        <p className="font-semibold">{current.temp}°C</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground text-xs">相對濕度</p>
+                        <p className="font-semibold">{current.rh}%</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground text-xs">風速</p>
+                        <p className="font-semibold">{current.ws} m/s</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground text-xs">風向</p>
+                        <p className="font-semibold">{current.wd}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground text-xs">降雨機率</p>
+                        <p className="font-semibold">{current.pop}%</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground text-xs">體感溫度</p>
+                        <p className="font-semibold">{current.feelTemp}°C</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground text-xs">舒適度</p>
+                        <p className="font-semibold">{current.ci}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground text-xs">紫外線指數</p>
+                        <p className="font-semibold">{current.uvi}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="text-primary ml-4">
-                  {getWeatherIcon(current.weather)}
+                  <div className="text-primary ml-4">
+                    {getWeatherIcon(current.weather)}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* 未來3天預報 */}
-            <div>
-              <h3 className="text-sm font-semibold mb-2 text-muted-foreground">未來3天預報</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                {forecast.map((day, index) => (
-                  <Collapsible 
-                    key={index}
-                    open={expandedDay === index}
-                    onOpenChange={(open) => setExpandedDay(open ? index : null)}
-                  >
-                    <div className="p-3 rounded-lg bg-gradient-to-br from-muted/50 to-muted/30 border border-border/50 hover:border-primary/30 transition-all">
-                      <CollapsibleTrigger className="w-full cursor-pointer">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="text-left">
-                            <p className="text-xs text-muted-foreground">{day.dayOfWeek}</p>
-                            <p className="text-sm font-semibold">{day.date}</p>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <div className="text-primary">
-                              {getWeatherIcon(day.weather)}
+              {/* 未來3天預報 */}
+              <div>
+                <h3 className="text-sm font-semibold mb-2 text-muted-foreground">未來3天預報</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  {forecast.map((day, index) => (
+                    <Collapsible
+                      key={index}
+                      open={expandedDay === index}
+                      onOpenChange={(open) => setExpandedDay(open ? index : null)}
+                    >
+                      <div className="p-3 rounded-lg bg-gradient-to-br from-muted/50 to-muted/30 border border-border/50 hover:border-primary/30 transition-all">
+                        <CollapsibleTrigger className="w-full cursor-pointer">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="text-left">
+                              <p className="text-xs text-muted-foreground">{day.dayOfWeek}</p>
+                              <p className="text-sm font-semibold">{day.date}</p>
                             </div>
-                            {expandedDay === index ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                            <div className="flex items-center gap-2">
+                              <div className="text-primary">
+                                {getWeatherIcon(day.weather)}
+                              </div>
+                              {expandedDay === index ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                            </div>
                           </div>
-                        </div>
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="font-semibold">{day.minTemp}° ~ {day.maxTemp}°</span>
-                          <span className="text-muted-foreground">
-                            <Droplets className="h-3 w-3 inline" /> {day.pop}%
-                          </span>
-                        </div>
-                      </CollapsibleTrigger>
-                      
-                      <CollapsibleContent>
-                        <div className="mt-3 pt-3 border-t border-border/50 grid grid-cols-2 gap-2 text-xs">
-                          <div>
-                            <p className="text-muted-foreground">溫度</p>
-                            <p className="font-semibold">{day.minTemp}° ~ {day.maxTemp}°</p>
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="font-semibold">{day.minTemp}° ~ {day.maxTemp}°</span>
+                            <span className="text-muted-foreground">
+                              <Droplets className="h-3 w-3 inline" /> {day.pop}%
+                            </span>
                           </div>
-                          <div>
-                            <p className="text-muted-foreground">相對濕度</p>
-                            <p className="font-semibold">{day.rh}%</p>
+                        </CollapsibleTrigger>
+
+                        <CollapsibleContent>
+                          <div className="mt-3 pt-3 border-t border-border/50 grid grid-cols-2 gap-2 text-xs">
+                            <div>
+                              <p className="text-muted-foreground">溫度</p>
+                              <p className="font-semibold">{day.minTemp}° ~ {day.maxTemp}°</p>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground">相對濕度</p>
+                              <p className="font-semibold">{day.rh}%</p>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground">風速</p>
+                              <p className="font-semibold">{day.ws} m/s</p>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground">風向</p>
+                              <p className="font-semibold">{day.wd}</p>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground">降雨機率</p>
+                              <p className="font-semibold">{day.pop}%</p>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground">體感溫度</p>
+                              <p className="font-semibold">{day.feelTemp}°C</p>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground">舒適度</p>
+                              <p className="font-semibold">{day.ci}</p>
+                            </div>
+                            <div>
+                              <p className="text-muted-foreground">紫外線指數</p>
+                              <p className="font-semibold">{day.uvi}</p>
+                            </div>
                           </div>
-                          <div>
-                            <p className="text-muted-foreground">風速</p>
-                            <p className="font-semibold">{day.ws} m/s</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">風向</p>
-                            <p className="font-semibold">{day.wd}</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">降雨機率</p>
-                            <p className="font-semibold">{day.pop}%</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">體感溫度</p>
-                            <p className="font-semibold">{day.feelTemp}°C</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">舒適度</p>
-                            <p className="font-semibold">{day.ci}</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">紫外線指數</p>
-                            <p className="font-semibold">{day.uvi}</p>
-                          </div>
-                        </div>
-                      </CollapsibleContent>
-                    </div>
-                  </Collapsible>
-                ))}
+                        </CollapsibleContent>
+                      </div>
+                    </Collapsible>
+                  ))}
+                </div>
               </div>
-            </div>
-          </>
-        ) : (
-          <p className="text-center text-muted-foreground">無法取得天氣資訊</p>
-        )}
+            </>
+          ) : (
+            <p className="text-center text-muted-foreground">無法取得天氣資訊</p>
+          )}
         </CardContent>
       )}
     </Card>
