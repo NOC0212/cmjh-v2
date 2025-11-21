@@ -4,12 +4,15 @@ import { Announcements } from "@/components/Announcements";
 import { CalendarView } from "@/components/CalendarView";
 import { SearchDialog } from "@/components/SearchDialog";
 import { FavoritesDialog } from "@/components/FavoritesDialog";
+import { SettingsDialog } from "@/components/SettingsDialog";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { WeatherWidget } from "@/components/WeatherWidget";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useComponentSettings } from "@/hooks/useComponentSettings";
 import { School } from "lucide-react";
 
 const Index = () => {
+  const { visibility } = useComponentSettings();
   const commonSitesAnim = useScrollAnimation();
   const announcementsAnim = useScrollAnimation();
   const calendarAnim = useScrollAnimation();
@@ -32,6 +35,7 @@ const Index = () => {
             <div className="flex items-center gap-2">
               <SearchDialog />
               <FavoritesDialog />
+              <SettingsDialog />
               <AppSidebar />
             </div>
           </div>
@@ -39,62 +43,67 @@ const Index = () => {
 
         <main className="flex-1 p-4 lg:p-8 max-w-7xl w-full mx-auto">
           <div className="space-y-12">
-            <div
-              id="countdown"
-              ref={countdownAnim.ref}
-              className={`transition-all duration-700 ${
-                countdownAnim.isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-8"
-              }`}
-            >
-              <CountdownTimer />
-            </div>
+            {visibility.countdown && (
+              <div
+                id="countdown"
+                ref={countdownAnim.ref}
+                className={`transition-all duration-700 ${countdownAnim.isVisible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                  }`}
+              >
+                <CountdownTimer />
+              </div>
+            )}
 
-            <div
-              id="weather"
-              ref={weatherAnim.ref}
-              className={`transition-all duration-700 ${
-                weatherAnim.isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-8"
-              }`}
-            >
-              <WeatherWidget />
-            </div>
+            {visibility.weather && (
+              <div
+                id="weather"
+                ref={weatherAnim.ref}
+                className={`transition-all duration-700 ${weatherAnim.isVisible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                  }`}
+              >
+                <WeatherWidget />
+              </div>
+            )}
 
-            <div
-              ref={commonSitesAnim.ref}
-              className={`transition-all duration-700 delay-100 ${
-                commonSitesAnim.isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-8"
-              }`}
-            >
-              <CommonSites />
-            </div>
+            {visibility.commonSites && (
+              <div
+                ref={commonSitesAnim.ref}
+                className={`transition-all duration-700 delay-100 ${commonSitesAnim.isVisible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                  }`}
+              >
+                <CommonSites />
+              </div>
+            )}
 
-            <div
-              ref={announcementsAnim.ref}
-              className={`transition-all duration-700 delay-200 ${
-                announcementsAnim.isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-8"
-              }`}
-            >
-              <Announcements />
-            </div>
+            {visibility.announcements && (
+              <div
+                ref={announcementsAnim.ref}
+                className={`transition-all duration-700 delay-200 ${announcementsAnim.isVisible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                  }`}
+              >
+                <Announcements />
+              </div>
+            )}
 
-            <div
-              ref={calendarAnim.ref}
-              className={`transition-all duration-700 delay-300 ${
-                calendarAnim.isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-8"
-              }`}
-            >
-              <CalendarView />
-            </div>
+            {visibility.calendar && (
+              <div
+                ref={calendarAnim.ref}
+                className={`transition-all duration-700 delay-300 ${calendarAnim.isVisible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                  }`}
+              >
+                <CalendarView />
+              </div>
+            )}
           </div>
         </main>
 

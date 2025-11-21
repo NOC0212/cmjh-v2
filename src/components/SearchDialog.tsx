@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useComponentSettings } from "@/hooks/useComponentSettings";
 
 interface Announcement {
   date: string;
@@ -27,20 +28,45 @@ export function SearchDialog() {
   const [query, setQuery] = useState("");
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
+  const { visibility } = useComponentSettings();
 
   useEffect(() => {
-    Promise.all([
-      fetch("/data/announcements.json").then((res) => res.json()),
-      fetch("/data/calendar.json").then((res) => res.json()),
-    ]).then(([announcementsData, calendarData]) => {
-      setAnnouncements(announcementsData);
-      const events: CalendarEvent[] = [];
-      Object.values(calendarData as Record<string, CalendarEvent[]>).forEach((monthEvents) => {
-        events.push(...monthEvents);
+    // 根據用戶設定條件載入資料
+    type DataResult = { type: "announcements"; data: Announcement[] } | { type: "calendar"; data: Record<string, CalendarEvent[]> };
+    const promises: Promise<DataResult>[] = [];
+
+    if (visibility.announcements) {
+      promises.push(
+        fetch("/data/announcements.json")
+          .then((res) => res.json())
+          .then((data) => ({ type: "announcements", data }))
+      );
+    }
+
+    if (visibility.calendar) {
+      promises.push(
+        fetch("/data/calendar.json")
+          .then((res) => res.json())
+          .then((data) => ({ type: "calendar", data }))
+      );
+    }
+
+    if (promises.length > 0) {
+      Promise.all(promises).then((results) => {
+        results.forEach((result) => {
+          if (result.type === "announcements") {
+            setAnnouncements(result.data);
+          } else if (result.type === "calendar") {
+            const events: CalendarEvent[] = [];
+            Object.values(result.data as Record<string, CalendarEvent[]>).forEach((monthEvents) => {
+              events.push(...monthEvents);
+            });
+            setCalendarEvents(events);
+          }
+        });
       });
-      setCalendarEvents(events);
-    });
-  }, []);
+    }
+  }, [visibility.announcements, visibility.calendar]);
 
   const filteredAnnouncements = announcements.filter((a) =>
     a.title.toLowerCase().includes(query.toLowerCase())
