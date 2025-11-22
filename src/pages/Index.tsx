@@ -7,6 +7,7 @@ import { FavoritesDialog } from "@/components/FavoritesDialog";
 import { SettingsDialog } from "@/components/SettingsDialog";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { WeatherWidget } from "@/components/WeatherWidget";
+import { ToolsSection } from "@/components/ToolsSection";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useComponentSettings } from "@/hooks/useComponentSettings";
 import { School } from "lucide-react";
@@ -37,6 +38,10 @@ const Index = () => {
     commonSites: {
       element: <CommonSites />,
       anim: commonSitesAnim,
+    },
+    tools: {
+      element: <ToolsSection />,
+      anim: commonSitesAnim, // 重用 commonSitesAnim
     },
     announcements: {
       element: <Announcements />,

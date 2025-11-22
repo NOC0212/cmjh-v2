@@ -16,8 +16,9 @@ const DEFAULT_COMPONENTS: ComponentSettings[] = [
     { id: "countdown", label: "倒數計時器", enabled: true, order: 0 },
     { id: "weather", label: "天氣資訊", enabled: true, order: 1 },
     { id: "commonSites", label: "常用網站", enabled: true, order: 2 },
-    { id: "announcements", label: "行政公告", enabled: true, order: 3 },
-    { id: "calendar", label: "行事曆", enabled: true, order: 4 },
+    { id: "tools", label: "小工具", enabled: true, order: 3 },
+    { id: "announcements", label: "行政公告", enabled: true, order: 4 },
+    { id: "calendar", label: "行事曆", enabled: true, order: 5 },
 ];
 
 const DEFAULT_SETTINGS: AppSettings = {
