@@ -28,45 +28,50 @@ export function SearchDialog() {
   const [query, setQuery] = useState("");
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
-  const { visibility } = useComponentSettings();
+  const { settings } = useComponentSettings();
 
   useEffect(() => {
     // 根據用戶設定條件載入資料
-    type DataResult = { type: "announcements"; data: Announcement[] } | { type: "calendar"; data: Record<string, CalendarEvent[]> };
+    type DataResult =
+      | { type: "announcements"; data: Announcement[] }
+      | { type: "calendar"; data: Record<string, CalendarEvent[]> };
     const promises: Promise<DataResult>[] = [];
 
-    if (visibility.announcements) {
+    // 檢查公告是否啟用
+    const announcementsEnabled = settings.components.find((c) => c.id === "announcements")?.enabled;
+    if (announcementsEnabled) {
       promises.push(
         fetch("/data/announcements.json")
           .then((res) => res.json())
-          .then((data) => ({ type: "announcements", data }))
+          .then((data): DataResult => ({ type: "announcements", data }))
       );
     }
 
-    if (visibility.calendar) {
+    // 檢查行事曆是否啟用
+    const calendarEnabled = settings.components.find((c) => c.id === "calendar")?.enabled;
+    if (calendarEnabled) {
       promises.push(
         fetch("/data/calendar.json")
           .then((res) => res.json())
-          .then((data) => ({ type: "calendar", data }))
+          .then((data): DataResult => ({ type: "calendar", data }))
       );
     }
 
-    if (promises.length > 0) {
-      Promise.all(promises).then((results) => {
-        results.forEach((result) => {
-          if (result.type === "announcements") {
-            setAnnouncements(result.data);
-          } else if (result.type === "calendar") {
-            const events: CalendarEvent[] = [];
-            Object.values(result.data as Record<string, CalendarEvent[]>).forEach((monthEvents) => {
-              events.push(...monthEvents);
-            });
-            setCalendarEvents(events);
-          }
-        });
+    Promise.all(promises).then((results) => {
+      results.forEach((result) => {
+        if (result.type === "announcements") {
+          setAnnouncements(result.data);
+        } else if (result.type === "calendar") {
+          const calendarData = result.data;
+          const allEvents: CalendarEvent[] = [];
+          Object.values(calendarData).forEach((monthEvents: CalendarEvent[]) => {
+            allEvents.push(...monthEvents);
+          });
+          setCalendarEvents(allEvents);
+        }
       });
-    }
-  }, [visibility.announcements, visibility.calendar]);
+    });
+  }, [settings]);
 
   const filteredAnnouncements = announcements.filter((a) =>
     a.title.toLowerCase().includes(query.toLowerCase())

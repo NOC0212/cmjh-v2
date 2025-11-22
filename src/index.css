@@ -108,7 +108,8 @@ All colors MUST be HSL.
     --shadow-glow: 0 0 20px hsl(210 75% 55% / 0.3);
   }
 
-  .theme-blue, [data-theme="blue"] {
+  .theme-blue,
+  [data-theme="blue"] {
     --primary: 210 75% 48%;
     --primary-foreground: 0 0% 100%;
     --accent: 210 75% 55%;
@@ -121,7 +122,8 @@ All colors MUST be HSL.
     --gradient-accent: linear-gradient(135deg, hsl(210 75% 55%), hsl(210 75% 65%));
   }
 
-  .theme-green, [data-theme="green"] {
+  .theme-green,
+  [data-theme="green"] {
     --primary: 142 71% 45%;
     --primary-foreground: 0 0% 100%;
     --accent: 142 71% 50%;
@@ -134,7 +136,8 @@ All colors MUST be HSL.
     --gradient-accent: linear-gradient(135deg, hsl(142 71% 50%), hsl(142 71% 60%));
   }
 
-  .theme-orange, [data-theme="orange"] {
+  .theme-orange,
+  [data-theme="orange"] {
     --primary: 30 95% 55%;
     --primary-foreground: 0 0% 100%;
     --accent: 30 95% 60%;
@@ -147,7 +150,8 @@ All colors MUST be HSL.
     --gradient-accent: linear-gradient(135deg, hsl(30 95% 60%), hsl(30 95% 70%));
   }
 
-  .theme-red, [data-theme="red"] {
+  .theme-red,
+  [data-theme="red"] {
     --primary: 0 75% 55%;
     --primary-foreground: 0 0% 100%;
     --accent: 0 75% 60%;
@@ -160,7 +164,8 @@ All colors MUST be HSL.
     --gradient-accent: linear-gradient(135deg, hsl(0 75% 60%), hsl(0 75% 70%));
   }
 
-  .theme-purple, [data-theme="purple"] {
+  .theme-purple,
+  [data-theme="purple"] {
     --primary: 271 81% 56%;
     --primary-foreground: 0 0% 100%;
     --accent: 271 81% 61%;
@@ -171,6 +176,26 @@ All colors MUST be HSL.
     --border: 270 20% 90%;
     --gradient-primary: linear-gradient(135deg, hsl(271 81% 56%), hsl(271 81% 66%));
     --gradient-accent: linear-gradient(135deg, hsl(271 81% 61%), hsl(271 81% 71%));
+  }
+
+  .theme-gradient,
+  [data-theme="gradient"] {
+    --primary: 240 75% 52%;
+    --primary-foreground: 0 0% 100%;
+    --accent: 271 81% 56%;
+    --ring: 240 75% 52%;
+    --background: 220 60% 99%;
+    --card: 225 55% 99%;
+    --muted: 220 50% 97%;
+    --border: 220 30% 92%;
+    --foreground: 220 20% 20%;
+    --card-foreground: 220 20% 20%;
+    --gradient-primary: linear-gradient(135deg, hsl(210 75% 48%), hsl(271 81% 56%), hsl(45 93% 58%));
+    --gradient-accent: linear-gradient(135deg, hsl(271 81% 56%), hsl(210 75% 55%), hsl(45 93% 58%));
+    --gradient-card: linear-gradient(135deg, hsl(210 75% 48% / 0.08), hsl(271 81% 56% / 0.08), hsl(45 93% 58% / 0.08));
+    --gradient-calendar: linear-gradient(to bottom right, hsl(210 75% 48% / 0.1), hsl(271 81% 56% / 0.1));
+    --gradient-timer: linear-gradient(135deg, hsl(210 75% 48% / 0.2), hsl(271 81% 56% / 0.15), hsl(45 93% 58% / 0.15));
+    --gradient-site: linear-gradient(to bottom right, hsl(210 75% 48% / 0.06), hsl(271 81% 56% / 0.06), hsl(45 93% 58% / 0.06));
   }
 }
 
@@ -183,14 +208,67 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 
+  /* 漸層主題專用樣式 */
+  .theme-gradient .bg-card,
+  [data-theme="gradient"] .bg-card {
+    background: linear-gradient(135deg,
+        hsl(210 75% 48% / 0.12) 0%,
+        hsl(271 81% 56% / 0.12) 50%,
+        hsl(45 93% 58% / 0.12) 100%), hsl(var(--card));
+  }
+
+  .theme-gradient .bg-primary,
+  [data-theme="gradient"] .bg-primary {
+    background: linear-gradient(135deg,
+        hsl(210 75% 55%),
+        hsl(240 75% 52%),
+        hsl(271 81% 56%));
+  }
+
+  .theme-gradient .border-primary,
+  [data-theme="gradient"] .border-primary {
+    border-color: hsl(240 75% 52%);
+  }
+
+  /* Dialog 和 Popover 的漸層背景 */
+  .theme-gradient .bg-popover,
+  [data-theme="gradient"] .bg-popover {
+    background: linear-gradient(135deg,
+        hsl(210 75% 48% / 0.08) 0%,
+        hsl(271 81% 56% / 0.08) 50%,
+        hsl(45 93% 58% / 0.08) 100%), hsl(var(--popover));
+  }
+
+  /* 選單、對話框的邊框發光效果 */
+  .theme-gradient [role="dialog"],
+  .theme-gradient [role="menu"],
+  [data-theme="gradient"] [role="dialog"],
+  [data-theme="gradient"] [role="menu"] {
+    background: linear-gradient(135deg,
+        hsl(210 75% 48% / 0.08) 0%,
+        hsl(271 81% 56% / 0.08) 50%,
+        hsl(45 93% 58% / 0.08) 100%), hsl(var(--popover));
+    box-shadow: 0 8px 32px hsl(210 75% 48% / 0.15),
+      0 4px 16px hsl(271 81% 56% / 0.1),
+      0 2px 8px hsl(45 93% 58% / 0.08);
+  }
+
+  /* Button hover 效果 */
+  .theme-gradient button:hover,
+  [data-theme="gradient"] button:hover {
+    filter: brightness(1.05);
+  }
+
   @keyframes particle-burst {
     0% {
       transform: translate(0, 0) scale(1);
       opacity: 1;
     }
+
     50% {
       opacity: 0.8;
     }
+
     100% {
       transform: translate(35px, calc((var(--particle-id, 0) - 7) * 3px)) scale(0.2);
       opacity: 0;
@@ -202,9 +280,11 @@ All colors MUST be HSL.
       transform: translate(0, 0) scale(1);
       opacity: 1;
     }
+
     50% {
       opacity: 0.8;
     }
+
     100% {
       transform: translate(-35px, calc((var(--particle-id, 0) - 7) * 3px)) scale(0.2);
       opacity: 0;
@@ -219,19 +299,63 @@ All colors MUST be HSL.
     animation: particle-burst-reverse ease-out infinite;
   }
 
-  .animate-particle-burst:nth-child(1) { --particle-id: 0; }
-  .animate-particle-burst:nth-child(2) { --particle-id: 1; }
-  .animate-particle-burst:nth-child(3) { --particle-id: 2; }
-  .animate-particle-burst:nth-child(4) { --particle-id: 3; }
-  .animate-particle-burst:nth-child(5) { --particle-id: 4; }
-  .animate-particle-burst:nth-child(6) { --particle-id: 5; }
-  .animate-particle-burst:nth-child(7) { --particle-id: 6; }
-  .animate-particle-burst:nth-child(8) { --particle-id: 7; }
-  .animate-particle-burst:nth-child(9) { --particle-id: 8; }
-  .animate-particle-burst:nth-child(10) { --particle-id: 9; }
-  .animate-particle-burst:nth-child(11) { --particle-id: 10; }
-  .animate-particle-burst:nth-child(12) { --particle-id: 11; }
-  .animate-particle-burst:nth-child(13) { --particle-id: 12; }
-  .animate-particle-burst:nth-child(14) { --particle-id: 13; }
-  .animate-particle-burst:nth-child(15) { --particle-id: 14; }
+  .animate-particle-burst:nth-child(1) {
+    --particle-id: 0;
+  }
+
+  .animate-particle-burst:nth-child(2) {
+    --particle-id: 1;
+  }
+
+  .animate-particle-burst:nth-child(3) {
+    --particle-id: 2;
+  }
+
+  .animate-particle-burst:nth-child(4) {
+    --particle-id: 3;
+  }
+
+  .animate-particle-burst:nth-child(5) {
+    --particle-id: 4;
+  }
+
+  .animate-particle-burst:nth-child(6) {
+    --particle-id: 5;
+  }
+
+  .animate-particle-burst:nth-child(7) {
+    --particle-id: 6;
+  }
+
+  .animate-particle-burst:nth-child(8) {
+    --particle-id: 7;
+  }
+
+  .animate-particle-burst:nth-child(9) {
+    --particle-id: 8;
+  }
+
+  .animate-particle-burst:nth-child(10) {
+    --particle-id: 9;
+  }
+
+  .animate-particle-burst:nth-child(11) {
+    --particle-id: 10;
+  }
+
+  .animate-particle-burst:nth-child(12) {
+    --particle-id: 11;
+  }
+
+  .animate-particle-burst:nth-child(13) {
+    --particle-id: 12;
+  }
+
+  .animate-particle-burst:nth-child(14) {
+    --particle-id: 13;
+  }
+
+  .animate-particle-burst:nth-child(15) {
+    --particle-id: 14;
+  }
 }

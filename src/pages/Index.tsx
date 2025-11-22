@@ -12,12 +12,41 @@ import { useComponentSettings } from "@/hooks/useComponentSettings";
 import { School } from "lucide-react";
 
 const Index = () => {
-  const { visibility } = useComponentSettings();
+  const { settings } = useComponentSettings();
   const commonSitesAnim = useScrollAnimation();
   const announcementsAnim = useScrollAnimation();
   const calendarAnim = useScrollAnimation();
   const countdownAnim = useScrollAnimation();
   const weatherAnim = useScrollAnimation();
+
+  // 獲取已啟用並排序的組件
+  const enabledComponents = settings.components
+    .filter((c) => c.enabled)
+    .sort((a, b) => a.order - b.order);
+
+  // 組件映射 (包含動畫)
+  const componentMap: Record<string, { element: JSX.Element; anim: ReturnType<typeof useScrollAnimation> }> = {
+    countdown: {
+      element: <CountdownTimer />,
+      anim: countdownAnim,
+    },
+    weather: {
+      element: <WeatherWidget />,
+      anim: weatherAnim,
+    },
+    commonSites: {
+      element: <CommonSites />,
+      anim: commonSitesAnim,
+    },
+    announcements: {
+      element: <Announcements />,
+      anim: announcementsAnim,
+    },
+    calendar: {
+      element: <CalendarView />,
+      anim: calendarAnim,
+    },
+  };
 
   return (
     <div className="min-h-screen flex w-full bg-background">
@@ -43,67 +72,20 @@ const Index = () => {
 
         <main className="flex-1 p-4 lg:p-8 max-w-7xl w-full mx-auto">
           <div className="space-y-12">
-            {visibility.countdown && (
-              <div
-                id="countdown"
-                ref={countdownAnim.ref}
-                className={`transition-all duration-700 ${countdownAnim.isVisible
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                  }`}
-              >
-                <CountdownTimer />
-              </div>
-            )}
-
-            {visibility.weather && (
-              <div
-                id="weather"
-                ref={weatherAnim.ref}
-                className={`transition-all duration-700 ${weatherAnim.isVisible
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                  }`}
-              >
-                <WeatherWidget />
-              </div>
-            )}
-
-            {visibility.commonSites && (
-              <div
-                ref={commonSitesAnim.ref}
-                className={`transition-all duration-700 delay-100 ${commonSitesAnim.isVisible
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                  }`}
-              >
-                <CommonSites />
-              </div>
-            )}
-
-            {visibility.announcements && (
-              <div
-                ref={announcementsAnim.ref}
-                className={`transition-all duration-700 delay-200 ${announcementsAnim.isVisible
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                  }`}
-              >
-                <Announcements />
-              </div>
-            )}
-
-            {visibility.calendar && (
-              <div
-                ref={calendarAnim.ref}
-                className={`transition-all duration-700 delay-300 ${calendarAnim.isVisible
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                  }`}
-              >
-                <CalendarView />
-              </div>
-            )}
+            {enabledComponents.map((component) => {
+              const { element, anim } = componentMap[component.id];
+              return (
+                <div
+                  key={component.id}
+                  id={component.id}
+                  ref={anim.ref}
+                  className={`transition-all duration-700 ${anim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                    }`}
+                >
+                  {element}
+                </div>
+              );
+            })}
           </div>
         </main>
 

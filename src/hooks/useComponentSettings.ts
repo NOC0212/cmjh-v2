@@ -1,68 +1,204 @@
 import { useState, useEffect, useRef } from "react";
 
-export interface ComponentVisibility {
-    countdown: boolean;
-    weather: boolean;
-    commonSites: boolean;
-    announcements: boolean;
-    calendar: boolean;
+export interface ComponentSettings {
+    id: string;
+    label: string;
+    enabled: boolean;
+    order: number;
 }
 
-const DEFAULT_VISIBILITY: ComponentVisibility = {
-    countdown: true,
-    weather: true,
-    commonSites: true,
-    announcements: true,
-    calendar: true,
+export interface AppSettings {
+    components: ComponentSettings[];
+    theme: string;
+}
+
+const DEFAULT_COMPONENTS: ComponentSettings[] = [
+    { id: "countdown", label: "倒數計時器", enabled: true, order: 0 },
+    { id: "weather", label: "天氣資訊", enabled: true, order: 1 },
+    { id: "commonSites", label: "常用網站", enabled: true, order: 2 },
+    { id: "announcements", label: "行政公告", enabled: true, order: 3 },
+    { id: "calendar", label: "行事曆", enabled: true, order: 4 },
+];
+
+const DEFAULT_SETTINGS: AppSettings = {
+    components: DEFAULT_COMPONENTS,
+    theme: "light",
 };
 
-const STORAGE_KEY = "cmjh-component-visibility";
+const STORAGE_KEY = "cmjh-app-settings";
+const OLD_COMPONENT_KEY = "cmjh-component-visibility";
+const OLD_THEME_KEY = "active-theme";
+
+const migrateOldSettings = (): AppSettings | null => {
+    const oldVisibility = localStorage.getItem(OLD_COMPONENT_KEY);
+    const oldTheme = localStorage.getItem(OLD_THEME_KEY);
+
+    if (oldVisibility || oldTheme) {
+        let components = [...DEFAULT_COMPONENTS];
+
+        if (oldVisibility) {
+            try {
+                const visibility = JSON.parse(oldVisibility);
+                components = DEFAULT_COMPONENTS.map((comp) => ({
+                    ...comp,
+                    enabled: visibility[comp.id] ?? true,
+                }));
+            } catch (error) {
+                console.error("Failed to migrate old component settings:", error);
+            }
+        }
+
+        const newSettings: AppSettings = {
+            components,
+            theme: oldTheme || "light",
+        };
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(newSettings));
+        localStorage.removeItem(OLD_COMPONENT_KEY);
+        localStorage.removeItem(OLD_THEME_KEY);
+
+        return newSettings;
+    }
+
+    return null;
+};
+
+const applyTheme = (value: string) => {
+    const root = document.documentElement;
+    const body = document.body;
+    const themeNames = ["light", "dark", "blue", "green", "orange", "red", "purple", "gradient"];
+
+    [root, body].forEach((el) => {
+        el.classList.remove("dark");
+        themeNames.forEach((name) => {
+            el.classList.remove(`theme-${name}`);
+        });
+        el.removeAttribute("data-theme");
+    });
+
+    if (value === "dark") {
+        root.classList.add("dark");
+        body.classList.add("dark");
+    } else if (value !== "light") {
+        const cls = `theme-${value}`;
+        root.classList.add(cls);
+        body.classList.add(cls);
+        root.setAttribute("data-theme", value);
+        body.setAttribute("data-theme", value);
+    }
+};
 
 export function useComponentSettings() {
     const isInitialMount = useRef(true);
 
-    const [visibility, setVisibility] = useState<ComponentVisibility>(() => {
-        // 從 localStorage 讀取設定
+    const [settings, setSettings] = useState<AppSettings>(() => {
         try {
             const stored = localStorage.getItem(STORAGE_KEY);
             if (stored) {
-                return { ...DEFAULT_VISIBILITY, ...JSON.parse(stored) };
+                return JSON.parse(stored);
             }
         } catch (error) {
-            console.error("Failed to load component settings:", error);
+            console.error("Failed to load app settings:", error);
         }
-        return DEFAULT_VISIBILITY;
+
+        const migrated = migrateOldSettings();
+        if (migrated) {
+            return migrated;
+        }
+
+        return DEFAULT_SETTINGS;
     });
 
-    // 當設定改變時，保存到 localStorage (但跳過初始載入)
     useEffect(() => {
         if (isInitialMount.current) {
             isInitialMount.current = false;
+            applyTheme(settings.theme);
             return;
         }
 
         try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(visibility));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
         } catch (error) {
-            console.error("Failed to save component settings:", error);
+            console.error("Failed to save app settings:", error);
         }
-    }, [visibility]);
+    }, [settings]);
 
-    const updateVisibility = (key: keyof ComponentVisibility, value: boolean) => {
-        setVisibility((prev) => ({ ...prev, [key]: value }));
+    useEffect(() => {
+        applyTheme(settings.theme);
+    }, [settings.theme]);
+
+    const toggleComponent = (id: string) => {
+        setSettings((prev) => ({
+            ...prev,
+            components: prev.components.map((comp) =>
+                comp.id === id ? { ...comp, enabled: !comp.enabled } : comp
+            ),
+        }));
+    };
+
+    const moveComponentUp = (id: string) => {
+        setSettings((prev) => {
+            const components = [...prev.components];
+            const enabledComponents = components.filter((c) => c.enabled).sort((a, b) => a.order - b.order);
+            const index = enabledComponents.findIndex((c) => c.id === id);
+
+            if (index <= 0) return prev;
+
+            const temp = enabledComponents[index].order;
+            enabledComponents[index].order = enabledComponents[index - 1].order;
+            enabledComponents[index - 1].order = temp;
+
+            const updatedComponents = components.map((comp) => {
+                const found = enabledComponents.find((ec) => ec.id === comp.id);
+                return found || comp;
+            });
+
+            return { ...prev, components: updatedComponents };
+        });
+    };
+
+    const moveComponentDown = (id: string) => {
+        setSettings((prev) => {
+            const components = [...prev.components];
+            const enabledComponents = components.filter((c) => c.enabled).sort((a, b) => a.order - b.order);
+            const index = enabledComponents.findIndex((c) => c.id === id);
+
+            if (index < 0 || index >= enabledComponents.length - 1) return prev;
+
+            const temp = enabledComponents[index].order;
+            enabledComponents[index].order = enabledComponents[index + 1].order;
+            enabledComponents[index + 1].order = temp;
+
+            const updatedComponents = components.map((comp) => {
+                const found = enabledComponents.find((ec) => ec.id === comp.id);
+                return found || comp;
+            });
+
+            return { ...prev, components: updatedComponents };
+        });
+    };
+
+    const setTheme = (theme: string) => {
+        setSettings((prev) => ({ ...prev, theme }));
     };
 
     const resetToDefault = () => {
-        setVisibility(DEFAULT_VISIBILITY);
+        setSettings(DEFAULT_SETTINGS);
     };
 
     const showAll = () => {
-        setVisibility(DEFAULT_VISIBILITY);
+        setSettings((prev) => ({
+            ...prev,
+            components: prev.components.map((comp) => ({ ...comp, enabled: true })),
+        }));
     };
 
     return {
-        visibility,
-        updateVisibility,
+        settings,
+        toggleComponent,
+        moveComponentUp,
+        moveComponentDown,
+        setTheme,
         resetToDefault,
         showAll,
     };
