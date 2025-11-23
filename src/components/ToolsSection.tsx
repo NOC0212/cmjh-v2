@@ -66,7 +66,7 @@ export function ToolsSection() {
                     return (
                         <Card
                             key={tool.id}
-                            className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 hover:border-primary/50 overflow-hidden"
+                            className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:scale-105 hover:border-primary/50 overflow-hidden rounded-2xl"
                             onClick={() => navigate(tool.path)}
                         >
                             <div className="p-6 text-center">

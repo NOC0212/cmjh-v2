@@ -71,7 +71,7 @@ export function SettingsDialog() {
                     <div className="space-y-3">
                         <div className="flex items-center justify-between gap-4">
                             <div>
-                                <h3 className="text-sm font-semibold flex items-center gap-2">
+                                <h3 className="text-sm font-semibold flex items-center gap-2 text-foreground">
                                     <span className="text-primary">📍</span>
                                     已啟用的組件
                                 </h3>
@@ -137,7 +137,7 @@ export function SettingsDialog() {
                     <Separator />
 
                     <div className="space-y-3">
-                        <h3 className="text-sm font-semibold flex items-center gap-2">
+                        <h3 className="text-sm font-semibold flex items-center gap-2 text-foreground">
                             <span className="text-muted-foreground">📍</span>
                             未啟用的組件
                         </h3>
@@ -167,7 +167,7 @@ export function SettingsDialog() {
                     <Separator />
 
                     <div className="space-y-3">
-                        <h3 className="text-sm font-semibold flex items-center gap-2">
+                        <h3 className="text-sm font-semibold flex items-center gap-2 text-foreground">
                             <span>🎨</span>
                             主題設定
                         </h3>

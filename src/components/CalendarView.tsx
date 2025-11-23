@@ -64,7 +64,7 @@ export function CalendarView() {
 
   const eventsByDay = useMemo(() => {
     if (!selectedMonth || !calendarData[selectedMonth]) return {};
-    
+
     const events = calendarData[selectedMonth];
     const grouped: { [key: number]: CalendarEvent[] } = {};
     events.forEach((event) => {
@@ -120,7 +120,7 @@ export function CalendarView() {
           <div
             key={`day-${day}`}
             onClick={() => setSelectedDay(null)}
-            className="col-span-7 bg-primary/5 border-2 border-primary rounded-lg p-4 cursor-pointer transition-all hover:bg-primary/10"
+            className="col-span-7 bg-primary/5 border-2 border-primary rounded-lg p-4 cursor-pointer"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -156,11 +156,10 @@ export function CalendarView() {
         <div
           key={`day-${day}`}
           onClick={() => setSelectedDay(day)}
-          className={`min-h-[80px] md:min-h-[100px] p-1.5 md:p-3 rounded-lg border transition-all cursor-pointer ${
-            isToday
-              ? "bg-primary/10 border-primary ring-2 ring-primary/20"
-              : "bg-card border-border hover:border-primary/50 hover:bg-primary/5"
-          }`}
+          className={`min-h-[80px] md:min-h-[100px] p-1.5 md:p-3 rounded-lg border cursor-pointer ${isToday
+            ? "bg-primary/10 border-primary ring-2 ring-primary/20"
+            : "bg-card border-border hover:border-primary/50"
+            }`}
         >
           <div className="font-semibold mb-1 flex items-center justify-between">
             <span className={`text-xs md:text-base ${isToday ? "text-primary" : "text-foreground"}`}>
@@ -217,26 +216,26 @@ export function CalendarView() {
 
   return (
     <section id="calendar" className="mb-12 scroll-mt-20">
-      <div className="relative rounded-2xl p-8 border border-primary/20 overflow-hidden shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-500"
-           style={{ background: 'var(--gradient-calendar)' }}>
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-50"></div>
-        
+      <div className="relative rounded-2xl p-8 border border-primary/20 overflow-hidden shadow-[var(--shadow-card)]"
+        style={{ background: 'var(--gradient-calendar)' }}>
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-50"></div>
+
         <div className="relative z-10">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
             <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">行事曆</h2>
-            <div className="flex items-center gap-3 bg-background/50 backdrop-blur-sm rounded-full p-1.5">
+            <div className="flex items-center gap-3 bg-background/80 rounded-full p-1.5">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={handlePrevMonth}
                 disabled={currentMonthIndex === 0}
-                className="h-9 w-9 hover:bg-primary/20 disabled:opacity-30 transition-all"
+                className="h-9 w-9 disabled:opacity-30"
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
 
               <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-                <SelectTrigger className="w-[180px] border-primary/20 bg-background/70 backdrop-blur-sm hover:border-primary/40 transition-colors">
+                <SelectTrigger className="w-[180px] border-primary/20 bg-background/90">
                   <SelectValue placeholder="選擇月份" />
                 </SelectTrigger>
                 <SelectContent>
@@ -253,29 +252,30 @@ export function CalendarView() {
                 size="icon"
                 onClick={handleNextMonth}
                 disabled={currentMonthIndex === months.length - 1}
-                className="h-9 w-9 hover:bg-primary/20 disabled:opacity-30 transition-all"
+                className="h-9 w-9 disabled:opacity-30"
               >
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </div>
           </div>
 
-          <div 
-            key={selectedMonth}
-            className={`grid grid-cols-7 gap-2 bg-background/30 backdrop-blur-sm rounded-xl p-4 border border-border/50 ${
-              direction === 'left' ? 'animate-in slide-in-from-left' : 'animate-in slide-in-from-right'
-            } duration-300`}
-          >
-            {renderCalendar()}
+          <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+            <div
+              key={selectedMonth}
+              className="grid grid-cols-7 gap-2 bg-background/50 rounded-xl p-4 border border-border/50 min-w-[300px]"
+              style={{ willChange: 'transform' }}
+            >
+              {renderCalendar()}
+            </div>
           </div>
         </div>
       </div>
 
       {selectedEvents.length > 0 && (
         <div className="mt-8 relative rounded-2xl p-8 border border-primary/20 overflow-hidden shadow-[var(--shadow-card)]"
-             style={{ background: 'var(--gradient-calendar)' }}>
-          <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-primary/5 opacity-50"></div>
-          
+          style={{ background: 'var(--gradient-calendar)' }}>
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/5 via-transparent to-primary/5 opacity-50"></div>
+
           <div className="relative z-10">
             <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-6">
               本月活動 ({selectedEvents.length})
@@ -284,13 +284,13 @@ export function CalendarView() {
               {selectedEvents.map((event, idx) => (
                 <div
                   key={idx}
-                  className="group bg-background/60 backdrop-blur-sm rounded-xl p-5 border border-border/50 hover:border-primary/40 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
+                  className="bg-background/70 rounded-xl p-5 border border-border/50"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 bg-gradient-to-br from-primary/20 to-accent/20 text-primary rounded-xl px-4 py-2.5 text-sm font-bold border border-primary/20 group-hover:border-primary/40 transition-colors">
+                    <div className="flex-shrink-0 bg-gradient-to-br from-primary/20 to-accent/20 text-primary rounded-xl px-4 py-2.5 text-sm font-bold border border-primary/20">
                       {event.date.split("-")[2]}日
                     </div>
-                    <p className="text-foreground flex-1 leading-relaxed group-hover:text-primary transition-colors">{event.title}</p>
+                    <p className="text-foreground flex-1 leading-relaxed">{event.title}</p>
                   </div>
                 </div>
               ))}

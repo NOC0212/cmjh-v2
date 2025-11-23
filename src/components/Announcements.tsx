@@ -26,7 +26,7 @@ export function Announcements() {
         setAnnouncements(data);
         setLoading(false);
         // Cleanup favorites when announcements are loaded
-        const validIds = data.map((ann: Announcement) => 
+        const validIds = data.map((ann: Announcement) =>
           `announcement-${ann.date}-${ann.title}`
         );
         cleanupFavorites("announcement", validIds);
@@ -60,7 +60,7 @@ export function Announcements() {
         <h2 className="text-3xl font-bold mb-6 text-foreground">行政公告</h2>
         <div className="space-y-3">
           {Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className="bg-card rounded-lg p-4 border border-border">
+            <div key={i} className="bg-card rounded-2xl p-4 border border-border">
               <div className="flex items-start gap-3">
                 <Skeleton className="h-6 w-20 flex-shrink-0" />
                 <Skeleton className="h-6 flex-1" />
@@ -102,18 +102,18 @@ export function Announcements() {
         </div>
       </div>
 
-      <div 
+      <div
         key={currentPage}
         className={`space-y-3 ${direction === 'right' ? 'animate-slide-in-right' : 'animate-slide-in-left'}`}
       >
         {currentAnnouncements.map((announcement, index) => {
           const favoriteId = `announcement-${announcement.date}-${announcement.title}`;
           const isFav = isFavorite(favoriteId);
-          
+
           return (
             <div
               key={index}
-              className="group bg-card rounded-lg p-4 border border-border hover:border-primary transition-all duration-300 hover:shadow-lg hover:bg-primary/5"
+              className="group bg-card rounded-2xl p-4 border border-border hover:border-primary transition-all duration-300 hover:shadow-lg hover:bg-primary/5"
             >
               <div className="flex items-start gap-3">
                 <span className="text-xs text-primary-foreground font-medium bg-primary px-2 py-1 rounded flex-shrink-0">
@@ -147,9 +147,8 @@ export function Announcements() {
                   }}
                 >
                   <Star
-                    className={`h-4 w-4 transition-colors ${
-                      isFav ? "fill-primary text-primary" : "text-muted-foreground"
-                    }`}
+                    className={`h-4 w-4 transition-colors ${isFav ? "fill-primary text-primary" : "text-muted-foreground"
+                      }`}
                   />
                 </Button>
                 <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />

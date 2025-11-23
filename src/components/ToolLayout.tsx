@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { ArrowLeft, Sun, Moon, Menu } from "lucide-react";
+import { ArrowLeft, Settings } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { AppSidebar } from "@/components/AppSidebar";
+import { SettingsDialog } from "@/components/SettingsDialog";
 
 interface ToolLayoutProps {
     children: React.ReactNode;
@@ -11,23 +11,16 @@ interface ToolLayoutProps {
 
 export function ToolLayout({ children, title }: ToolLayoutProps) {
     const navigate = useNavigate();
-    const [theme, setTheme] = useState<"light" | "dark">("light");
 
-    const toggleTheme = () => {
-        const newTheme = theme === "light" ? "dark" : "light";
-        setTheme(newTheme);
-
-        // 應用主題
-        const root = document.documentElement;
-        const body = document.body;
-
-        if (newTheme === "dark") {
-            root.classList.add("dark");
-            body.classList.add("dark");
-        } else {
-            root.classList.remove("dark");
-            body.classList.remove("dark");
-        }
+    const handleBack = () => {
+        navigate("/");
+        // 等待導航完成後滾動到小工具區塊
+        setTimeout(() => {
+            const toolsSection = document.getElementById("tools");
+            if (toolsSection) {
+                toolsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        }, 100);
     };
 
     return (
@@ -40,7 +33,7 @@ export function ToolLayout({ children, title }: ToolLayoutProps) {
                         <Button
                             variant="ghost"
                             size="icon"
-                            onClick={() => navigate("/")}
+                            onClick={handleBack}
                             className="mr-2"
                         >
                             <ArrowLeft className="h-5 w-5" />
@@ -53,14 +46,8 @@ export function ToolLayout({ children, title }: ToolLayoutProps) {
 
                         {/* 右側按鈕 */}
                         <div className="flex items-center gap-2">
-                            {/* 主題切換 */}
-                            <Button variant="ghost" size="icon" onClick={toggleTheme}>
-                                {theme === "light" ? (
-                                    <Moon className="h-5 w-5" />
-                                ) : (
-                                    <Sun className="h-5 w-5" />
-                                )}
-                            </Button>
+                            {/* 設定按鈕 */}
+                            <SettingsDialog />
 
                             {/* 選單 */}
                             <AppSidebar />

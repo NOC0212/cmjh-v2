@@ -101,7 +101,7 @@ export default function Timer() {
         <ToolLayout title="計時器">
             <div className="space-y-6">
                 <div className="text-center">
-                    <h2 className="text-2xl font-bold mb-2">⏱️ 計時器 / 碼表</h2>
+                    <h2 className="text-2xl font-bold mb-2 text-foreground">⏱️ 計時器 / 碼表</h2>
                     <p className="text-muted-foreground">倒數計時或正數碼表</p>
                 </div>
 
@@ -264,7 +264,7 @@ export default function Timer() {
 
                 {/* 使用說明 */}
                 <Card className="p-6 bg-primary/5 border-primary/20">
-                    <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
+                    <h3 className="text-sm font-semibold mb-2 flex items-center gap-2 text-foreground">
                         <span>💡</span>
                         使用說明
                     </h3>

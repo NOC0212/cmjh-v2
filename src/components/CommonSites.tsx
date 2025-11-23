@@ -48,20 +48,20 @@ export function CommonSites() {
               target="_blank"
               rel="noopener noreferrer"
               className="group relative rounded-xl p-6 border border-primary/20 overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[var(--shadow-glow)]"
-              style={{ 
+              style={{
                 background: 'var(--gradient-site)',
                 animationDelay: `${idx * 50}ms`
               }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
               <div className="relative z-10 flex items-start justify-between gap-3">
                 <span className="font-semibold text-card-foreground group-hover:text-primary transition-all duration-300 leading-snug">
                   {site.name}
                 </span>
                 <ExternalLink className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:scale-110 transition-all duration-300 flex-shrink-0" />
               </div>
-              
+
               <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
             </a>
           ))}

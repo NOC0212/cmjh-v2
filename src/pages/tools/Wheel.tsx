@@ -83,13 +83,13 @@ export default function Wheel() {
         <ToolLayout title="隨機抽籤輪盤">
             <div className="space-y-6">
                 <div className="text-center">
-                    <h2 className="text-2xl font-bold mb-2">🎯 隨機抽籤輪盤</h2>
+                    <h2 className="text-2xl font-bold mb-2 text-foreground">🎯 隨機抽籤輪盤</h2>
                     <p className="text-muted-foreground">轉動輪盤，隨機抽選幸運兒！</p>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
                     <Card className="p-6">
-                        <h3 className="text-lg font-semibold mb-4">選項設定</h3>
+                        <h3 className="text-lg font-semibold mb-4 text-foreground">選項設定</h3>
                         <Textarea
                             placeholder="請輸入選項，每行一個&#10;例如：&#10;第一項&#10;第二項&#10;第三項"
                             value={input}
@@ -216,7 +216,7 @@ export default function Wheel() {
                 </div>
 
                 <Card className="p-6 bg-primary/5 border-primary/20">
-                    <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
+                    <h3 className="text-sm font-semibold mb-2 flex items-center gap-2 text-foreground">
                         <span>💡</span>
                         使用說明
                     </h3>

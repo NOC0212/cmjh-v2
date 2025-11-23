@@ -55,14 +55,14 @@ export default function Order() {
         <ToolLayout title="順序工具">
             <div className="space-y-6">
                 <div className="text-center">
-                    <h2 className="text-2xl font-bold mb-2">🔀 順序工具</h2>
+                    <h2 className="text-2xl font-bold mb-2 text-foreground">🔀 順序工具</h2>
                     <p className="text-muted-foreground">隨機排列名單順序</p>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
                     {/* 輸入區 */}
                     <Card className="p-6">
-                        <h3 className="text-lg font-semibold mb-4">名單輸入</h3>
+                        <h3 className="text-lg font-semibold mb-4 text-foreground">名單輸入</h3>
                         <Textarea
                             placeholder="請輸入名單，每行一個&#10;例如：&#10;第一項&#10;第二項&#10;第三項"
                             value={input}
@@ -87,7 +87,7 @@ export default function Order() {
                     {/* 結果區 */}
                     <Card className="p-6">
                         <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-lg font-semibold">排序結果</h3>
+                            <h3 className="text-lg font-semibold text-foreground">排序結果</h3>
                             {result.length > 0 && (
                                 <Button onClick={handleCopy} variant="outline" size="sm">
                                     <Copy className="mr-2 h-4 w-4" />
@@ -120,7 +120,7 @@ export default function Order() {
 
                 {/* 使用說明 */}
                 <Card className="p-6 bg-primary/5 border-primary/20">
-                    <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
+                    <h3 className="text-sm font-semibold mb-2 flex items-center gap-2 text-foreground">
                         <span>💡</span>
                         使用說明
                     </h3>

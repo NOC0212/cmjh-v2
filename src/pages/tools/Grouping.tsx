@@ -74,13 +74,13 @@ export default function Grouping() {
         <ToolLayout title="分組工具">
             <div className="space-y-6">
                 <div className="text-center">
-                    <h2 className="text-2xl font-bold mb-2">👥 分組工具</h2>
+                    <h2 className="text-2xl font-bold mb-2 text-foreground">👥 分組工具</h2>
                     <p className="text-muted-foreground">快速將名單分成多個小組</p>
                 </div>
 
                 {/* 輸入區 */}
                 <Card className="p-6">
-                    <h3 className="text-lg font-semibold mb-4">名單輸入</h3>
+                    <h3 className="text-lg font-semibold mb-4 text-foreground">名單輸入</h3>
                     <Textarea
                         placeholder="請輸入名單，每行一個&#10;例如：&#10;第一項&#10;第二項&#10;第三項"
                         value={input}
@@ -94,7 +94,7 @@ export default function Grouping() {
 
                 {/* 分組設定 */}
                 <Card className="p-6">
-                    <h3 className="text-lg font-semibold mb-4">分組設定</h3>
+                    <h3 className="text-lg font-semibold mb-4 text-foreground">分組設定</h3>
                     <RadioGroup value={groupType} onValueChange={(value) => setGroupType(value as "count" | "size")}>
                         <div className="flex items-center space-x-2 mb-4">
                             <RadioGroupItem value="count" id="count" />
@@ -145,7 +145,7 @@ export default function Grouping() {
                 {/* 結果顯示 */}
                 {result.length > 0 && (
                     <div className="space-y-4">
-                        <h3 className="text-lg font-semibold flex items-center gap-2">
+                        <h3 className="text-lg font-semibold flex items-center gap-2 text-foreground">
                             <Users className="h-5 w-5" />
                             分組結果（共 {result.length} 組）
                         </h3>
@@ -174,7 +174,7 @@ export default function Grouping() {
 
                 {/* 使用說明 */}
                 <Card className="p-6 bg-primary/5 border-primary/20">
-                    <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
+                    <h3 className="text-sm font-semibold mb-2 flex items-center gap-2 text-foreground">
                         <span>💡</span>
                         使用說明
                     </h3>

@@ -39,7 +39,7 @@ export default function Clock() {
         <ToolLayout title="時鐘">
             <div className="space-y-6">
                 <div className="text-center">
-                    <h2 className="text-2xl font-bold mb-2">🕐 時鐘</h2>
+                    <h2 className="text-2xl font-bold mb-2 text-foreground">🕐 時鐘</h2>
                     <p className="text-muted-foreground">實時顯示當前時間</p>
                 </div>
 

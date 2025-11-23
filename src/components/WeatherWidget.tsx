@@ -292,7 +292,7 @@ export const WeatherWidget = () => {
   const forecast = getDailyForecast();
 
   return (
-    <Card className="overflow-hidden border-primary/20 bg-gradient-to-br from-card via-card to-primary/5 hover:shadow-lg transition-all duration-300">
+    <Card className="overflow-hidden border-primary/20 bg-gradient-to-br from-card via-card to-primary/5 hover:shadow-lg transition-all duration-300 rounded-2xl">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">

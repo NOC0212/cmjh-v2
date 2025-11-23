@@ -1,39 +1,53 @@
 import { useEffect, useState } from "react";
-import { Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import { Clock, ChevronLeft, ChevronRight, Plus, Trash2, Settings, Edit, RotateCcw } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface CountdownConfig {
+  id: string;
   targetDate: Date;
   startDate?: Date;
   label: string;
   progressLabel: string;
+  isDefault?: boolean;
 }
 
 // 輔助函數：直接輸入台灣時間，自動轉換為正確的 Date 對象
-// 使用方式：taiwanTime(年, 月, 日, 時, 分, 秒)
-// 例如：taiwanTime(2025, 11, 13, 0, 0, 0) 代表 2025年11月13日 00:00 台灣時間
 const taiwanTime = (year: number, month: number, day: number, hour = 0, minute = 0, second = 0): Date => {
-  // 台灣時區是 UTC+8，所以要減去 8 小時來得到 UTC 時間
   return new Date(Date.UTC(year, month - 1, day, hour - 8, minute, second));
 };
 
-// 倒數計時配置列表 - 可以直接在這裡修改
-// 現在可以直接輸入台灣時間，不用再計算時區了！
-const countdownConfigs: CountdownConfig[] = [
+// 預設倒數計時配置
+const getDefaultConfigs = (): CountdownConfig[] => [
   {
-    targetDate: taiwanTime(2025, 11, 27, 0, 0, 0), // 2025年11月13日 00:00
-    startDate: taiwanTime(2025, 10, 16, 0, 0, 0),   // 2025年10月3日 00:00
+    id: "default-1",
+    targetDate: taiwanTime(2025, 11, 27, 0, 0, 0),
+    startDate: taiwanTime(2025, 10, 16, 0, 0, 0),
     label: "第二次段考倒數 11/27 11/28",
-    progressLabel: "上次至本次段考進度條"
+    progressLabel: "上次至本次段考進度條",
+    isDefault: true
   },
   {
-    targetDate: taiwanTime(2026, 1, 1, 0, 0, 0),   // 2026年1月1日 00:00
-    startDate: taiwanTime(2025, 1, 1, 0, 0, 0),    // 2025年1月1日 00:00
+    id: "default-2",
+    targetDate: taiwanTime(2026, 1, 1, 0, 0, 0),
+    startDate: taiwanTime(2025, 1, 1, 0, 0, 0),
     label: "2026年倒數",
-    progressLabel: "2025年進度條"
+    progressLabel: "2025年進度條",
+    isDefault: true
   }
 ];
+
+const STORAGE_KEY = "cmjh-custom-countdowns";
 
 export function CountdownTimer() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -44,11 +58,44 @@ export function CountdownTimer() {
     seconds: number;
   } | null>(null);
   const [progress, setProgress] = useState(0);
+  const [allCountdowns, setAllCountdowns] = useState<CountdownConfig[]>([]);
+  const [addDialogOpen, setAddDialogOpen] = useState(false);
+  const [manageDialogOpen, setManageDialogOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    label: "",
+    targetDate: "",
+    startDate: "",
+    progressLabel: ""
+  });
 
-  const currentConfig = countdownConfigs[currentIndex];
-  const { targetDate, startDate, label, progressLabel } = currentConfig;
+  // 載入倒計時
+  useEffect(() => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        const configs = parsed.map((c: any) => ({
+          ...c,
+          targetDate: new Date(c.targetDate),
+          startDate: c.startDate ? new Date(c.startDate) : undefined,
+        }));
+        setAllCountdowns(configs);
+      } catch (error) {
+        console.error("Failed to load countdowns:", error);
+        setAllCountdowns(getDefaultConfigs());
+      }
+    } else {
+      setAllCountdowns(getDefaultConfigs());
+    }
+  }, []);
+
+  const currentConfig = allCountdowns[currentIndex];
+  const { targetDate, startDate, label, progressLabel } = currentConfig || {};
 
   useEffect(() => {
+    if (!currentConfig) return;
+
     const getTaiwanTime = () => {
       const now = new Date();
       return new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + (8 * 60 * 60 * 1000));
@@ -88,103 +135,316 @@ export function CountdownTimer() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [targetDate, startDate]);
+  }, [targetDate, startDate, currentConfig]);
+
+  const saveToStorage = (configs: CountdownConfig[]) => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(configs.map(c => ({
+      ...c,
+      targetDate: c.targetDate.toISOString(),
+      startDate: c.startDate?.toISOString()
+    }))));
+  };
 
   const handlePrevious = () => {
-    setCurrentIndex((prev) => (prev - 1 + countdownConfigs.length) % countdownConfigs.length);
+    setCurrentIndex((prev) => (prev - 1 + allCountdowns.length) % allCountdowns.length);
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % countdownConfigs.length);
+    setCurrentIndex((prev) => (prev + 1) % allCountdowns.length);
+  };
+
+  const validateForm = () => {
+    if (!formData.label || !formData.targetDate) {
+      alert("請填寫標題和目標日期");
+      return false;
+    }
+
+    const targetDateTime = new Date(formData.targetDate);
+    const now = new Date();
+
+    if (targetDateTime <= now) {
+      alert("目標時間必須晚於當前時間");
+      return false;
+    }
+
+    if (formData.startDate) {
+      const startDateTime = new Date(formData.startDate);
+      if (startDateTime >= targetDateTime) {
+        alert("開始時間必須早於目標時間");
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const handleAddNew = () => {
+    if (!validateForm()) return;
+
+    const newConfig: CountdownConfig = {
+      id: `custom-${Date.now()}`,
+      label: formData.label,
+      targetDate: new Date(formData.targetDate),
+      startDate: formData.startDate ? new Date(formData.startDate) : undefined,
+      progressLabel: formData.progressLabel || "進度",
+      isDefault: false
+    };
+
+    const newCountdowns = [...allCountdowns, newConfig];
+    setAllCountdowns(newCountdowns);
+    saveToStorage(newCountdowns);
+
+    setFormData({ label: "", targetDate: "", startDate: "", progressLabel: "" });
+    setAddDialogOpen(false);
+  };
+
+  const formatDateForInput = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
+
+  const handleEdit = (countdown: CountdownConfig) => {
+    setEditingId(countdown.id);
+    setFormData({
+      label: countdown.label,
+      targetDate: formatDateForInput(countdown.targetDate),
+      startDate: countdown.startDate ? formatDateForInput(countdown.startDate) : "",
+      progressLabel: countdown.progressLabel
+    });
+    setAddDialogOpen(true);
+  };
+
+  const handleSaveEdit = () => {
+    if (!validateForm()) return;
+
+    const updatedConfig: CountdownConfig = {
+      id: editingId!,
+      label: formData.label,
+      targetDate: new Date(formData.targetDate),
+      startDate: formData.startDate ? new Date(formData.startDate) : undefined,
+      progressLabel: formData.progressLabel || "進度",
+      isDefault: allCountdowns.find(c => c.id === editingId)?.isDefault || false
+    };
+
+    const newCountdowns = allCountdowns.map(c => c.id === editingId ? updatedConfig : c);
+    setAllCountdowns(newCountdowns);
+    saveToStorage(newCountdowns);
+
+    setFormData({ label: "", targetDate: "", startDate: "", progressLabel: "" });
+    setEditingId(null);
+    setAddDialogOpen(false);
+  };
+
+  const handleDelete = (id: string) => {
+    const newCountdowns = allCountdowns.filter(c => c.id !== id);
+
+    if (newCountdowns.length === 0) {
+      const defaults = getDefaultConfigs();
+      setAllCountdowns(defaults);
+      saveToStorage(defaults);
+      setCurrentIndex(0);
+    } else {
+      setAllCountdowns(newCountdowns);
+      saveToStorage(newCountdowns);
+      if (currentIndex >= newCountdowns.length) {
+        setCurrentIndex(newCountdowns.length - 1);
+      }
+    }
+  };
+
+  const handleMoveUp = (index: number) => {
+    if (index === 0) return;
+    const newCountdowns = [...allCountdowns];
+    [newCountdowns[index - 1], newCountdowns[index]] = [newCountdowns[index], newCountdowns[index - 1]];
+    setAllCountdowns(newCountdowns);
+    saveToStorage(newCountdowns);
+
+    if (currentIndex === index) setCurrentIndex(index - 1);
+    else if (currentIndex === index - 1) setCurrentIndex(index);
+  };
+
+  const handleMoveDown = (index: number) => {
+    if (index === allCountdowns.length - 1) return;
+    const newCountdowns = [...allCountdowns];
+    [newCountdowns[index], newCountdowns[index + 1]] = [newCountdowns[index + 1], newCountdowns[index]];
+    setAllCountdowns(newCountdowns);
+    saveToStorage(newCountdowns);
+
+    if (currentIndex === index) setCurrentIndex(index + 1);
+    else if (currentIndex === index + 1) setCurrentIndex(index);
+  };
+
+  const handleReset = () => {
+    if (confirm("確定要重置為預設倒計時嗎？這將刪除所有自定義倒計時。")) {
+      const defaults = getDefaultConfigs();
+      setAllCountdowns(defaults);
+      saveToStorage(defaults);
+      setCurrentIndex(0);
+      setManageDialogOpen(false);
+    }
+  };
+
+  const formatDate = (date: Date) => {
+    return date.toLocaleString('zh-TW', {
+      year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'
+    });
   };
 
   const isComplete = progress >= 100;
 
-  if (!timeLeft && !isComplete) {
-    return null;
-  }
+  if (!currentConfig) return null;
 
   return (
-    <div className="relative rounded-2xl p-8 border border-primary/20 overflow-hidden shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-glow)] transition-all duration-500"
-      style={{ background: 'var(--gradient-timer)' }}>
-      {/* Animated background effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 animate-pulse opacity-50"></div>
-
-      <div className="relative z-10">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary/10 rounded-lg">
+    <div
+      className="relative w-full max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-primary/20 p-4 shadow-[var(--shadow-card)] md:p-8"
+      style={{ background: 'var(--gradient-timer)' }}
+    >
+      <div className="relative z-10 flex flex-col gap-6">
+        {/* Header */}
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex min-w-0 flex-1 items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
               <Clock className="h-6 w-6 text-primary animate-pulse" />
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <h2 className="truncate text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent md:text-3xl">
               {label}
             </h2>
           </div>
-          <div className="flex items-center gap-2 bg-background/50 backdrop-blur-sm rounded-full px-3 py-1">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handlePrevious}
-              className="h-7 w-7 hover:bg-primary/20 transition-colors"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <span className="text-xs font-semibold text-primary px-2">
-              {currentIndex + 1} / {countdownConfigs.length}
-            </span>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleNext}
-              className="h-7 w-7 hover:bg-primary/20 transition-colors"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
+
+          <div className="flex shrink-0 items-center gap-2">
+            <Dialog open={addDialogOpen} onOpenChange={setAddDialogOpen}>
+              <DialogTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => {
+                  setEditingId(null);
+                  setFormData({ label: "", targetDate: "", startDate: "", progressLabel: "" });
+                }}>
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>{editingId ? "編輯倒計時" : "新增倒計時"}</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="label">標題</Label>
+                    <Input id="label" value={formData.label} onChange={(e) => setFormData({ ...formData, label: e.target.value })} placeholder="例如：寒假倒數" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="targetDate">目標日期時間</Label>
+                    <Input id="targetDate" type="datetime-local" value={formData.targetDate} onChange={(e) => setFormData({ ...formData, targetDate: e.target.value })} />
+                    <p className="text-xs text-muted-foreground">必須晚於當前時間</p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="startDate">開始日期時間（選填）</Label>
+                    <Input id="startDate" type="datetime-local" value={formData.startDate} onChange={(e) => setFormData({ ...formData, startDate: e.target.value })} />
+                    <p className="text-xs text-muted-foreground">用於計算進度條，必須早於目標時間</p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="progressLabel">進度條標籤（選填）</Label>
+                    <Input id="progressLabel" value={formData.progressLabel} onChange={(e) => setFormData({ ...formData, progressLabel: e.target.value })} placeholder="例如：學期進度" />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button variant="outline" onClick={() => { setAddDialogOpen(false); setEditingId(null); }}>取消</Button>
+                  <Button onClick={editingId ? handleSaveEdit : handleAddNew}>儲存</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+
+            <Dialog open={manageDialogOpen} onOpenChange={setManageDialogOpen}>
+              <DialogTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <Settings className="h-4 w-4" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-h-[80vh] max-w-2xl overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>管理倒計時</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-3 py-4">
+                  {allCountdowns.map((countdown, index) => (
+                    <div key={countdown.id} className="flex items-center gap-3 rounded-lg border border-border bg-muted/50 p-4">
+                      <div className="flex-1">
+                        <div className="mb-1 flex items-center gap-2 text-sm font-semibold text-foreground">
+                          {countdown.label}
+                          {countdown.isDefault && <span className="rounded bg-primary/10 px-2 py-0.5 text-xs text-primary">預設</span>}
+                        </div>
+                        <div className="text-xs text-muted-foreground">目標: {formatDate(countdown.targetDate)}</div>
+                      </div>
+                      <div className="flex gap-1">
+                        <Button variant="ghost" size="icon" onClick={() => handleEdit(countdown)} className="h-8 w-8"><Edit className="h-4 w-4" /></Button>
+                        <Button variant="ghost" size="icon" onClick={() => handleMoveUp(index)} disabled={index === 0} className="h-8 w-8">↑</Button>
+                        <Button variant="ghost" size="icon" onClick={() => handleMoveDown(index)} disabled={index === allCountdowns.length - 1} className="h-8 w-8">↓</Button>
+                        <Button variant="ghost" size="icon" onClick={() => handleDelete(countdown.id)} className="h-8 w-8 text-destructive"><Trash2 className="h-4 w-4" /></Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <DialogFooter>
+                  <Button variant="outline" onClick={handleReset} className="mr-auto gap-2"><RotateCcw className="h-4 w-4" />重置為預設</Button>
+                  <Button onClick={() => setManageDialogOpen(false)}>完成</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+
+            <div className="flex items-center gap-1 rounded-full bg-background/50 px-2 py-1">
+              <Button variant="ghost" size="icon" onClick={handlePrevious} className="h-7 w-7"><ChevronLeft className="h-4 w-4" /></Button>
+              <span className="px-2 text-xs font-semibold text-primary">{currentIndex + 1} / {allCountdowns.length}</span>
+              <Button variant="ghost" size="icon" onClick={handleNext} className="h-7 w-7"><ChevronRight className="h-4 w-4" /></Button>
+            </div>
           </div>
         </div>
-        {!isComplete ? (
+
+        {/* Timer Content */}
+        {isComplete ? (
+          <div className="rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 py-12 text-center">
+            <div className="mb-4 animate-bounce text-6xl">🎉</div>
+            <p className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">時間到！</p>
+          </div>
+        ) : (
           <>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              <div className="bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur-sm rounded-xl p-5 text-center border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2">
+            <div className="grid w-full grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 lg:gap-4">
+              <div className="rounded-xl border border-primary/20 bg-gradient-to-br from-primary/10 to-primary/5 p-4 text-center md:p-5">
+                <div className="mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-3xl font-bold text-transparent md:text-5xl">
                   {timeLeft?.days || 0}
                 </div>
-                <div className="text-sm font-medium text-muted-foreground">天</div>
+                <div className="text-xs font-medium text-muted-foreground md:text-sm">天</div>
               </div>
-              <div className="bg-gradient-to-br from-accent/10 to-accent/5 backdrop-blur-sm rounded-xl p-5 text-center border border-accent/20 hover:border-accent/40 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-2">
+              <div className="rounded-xl border border-accent/20 bg-gradient-to-br from-accent/10 to-accent/5 p-4 text-center md:p-5">
+                <div className="mb-2 bg-gradient-to-r from-accent to-primary bg-clip-text text-3xl font-bold text-transparent md:text-5xl">
                   {timeLeft?.hours || 0}
                 </div>
-                <div className="text-sm font-medium text-muted-foreground">時</div>
+                <div className="text-xs font-medium text-muted-foreground md:text-sm">時</div>
               </div>
-              <div className="bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur-sm rounded-xl p-5 text-center border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2">
+              <div className="rounded-xl border border-primary/20 bg-gradient-to-br from-primary/10 to-primary/5 p-4 text-center md:p-5">
+                <div className="mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-3xl font-bold text-transparent md:text-5xl">
                   {timeLeft?.minutes || 0}
                 </div>
-                <div className="text-sm font-medium text-muted-foreground">分</div>
+                <div className="text-xs font-medium text-muted-foreground md:text-sm">分</div>
               </div>
-              <div className="bg-gradient-to-br from-accent/10 to-accent/5 backdrop-blur-sm rounded-xl p-5 text-center border border-accent/20 hover:border-accent/40 transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-2">
+              <div className="rounded-xl border border-accent/20 bg-gradient-to-br from-accent/10 to-accent/5 p-4 text-center md:p-5">
+                <div className="mb-2 bg-gradient-to-r from-accent to-primary bg-clip-text text-3xl font-bold text-transparent md:text-5xl">
                   {timeLeft?.seconds || 0}
                 </div>
-                <div className="text-sm font-medium text-muted-foreground">秒</div>
+                <div className="text-xs font-medium text-muted-foreground md:text-sm">秒</div>
               </div>
             </div>
-            <div className="space-y-3 bg-background/30 backdrop-blur-sm rounded-xl p-4 border border-border/50">
-              <div className="flex justify-between items-center">
+
+            <div className="space-y-3 rounded-xl border border-border/50 bg-background/50 p-4">
+              <div className="flex items-center justify-between">
                 <span className="text-sm font-semibold text-foreground">{progressLabel}</span>
-                <span className="text-sm font-bold text-primary px-3 py-1 bg-primary/10 rounded-full">{progress.toFixed(1)}%</span>
+                <span className="rounded-full bg-primary/10 px-3 py-1 text-sm font-bold text-primary">{progress.toFixed(1)}%</span>
               </div>
               <Progress value={progress} className="h-3" gradient />
             </div>
           </>
-        ) : (
-          <div className="text-center py-12 bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl">
-            <div className="text-6xl mb-4 animate-bounce">🎉</div>
-            <p className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">時間到！</p>
-          </div>
         )}
       </div>
-    </div>
+    </div >
   );
 }
