@@ -305,12 +305,12 @@ export function CountdownTimer() {
     >
       <div className="relative z-10 flex flex-col gap-6">
         {/* Header */}
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex min-w-0 flex-1 items-center gap-3">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
               <Clock className="h-6 w-6 text-primary animate-pulse" />
             </div>
-            <h2 className="truncate text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent md:text-3xl">
+            <h2 className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent md:text-3xl break-words">
               {label}
             </h2>
           </div>

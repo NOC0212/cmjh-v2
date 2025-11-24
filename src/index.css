@@ -111,6 +111,35 @@
   --primary: 30 95% 55%;
   --primary-foreground: 0 0% 100%;
   --accent: 30 95% 60%;
+  --ring: 30 95% 55%;
+  --background: 30 40% 98%;
+  --card: 0 0% 100%;
+  --muted: 30 40% 95%;
+  --border: 30 20% 90%;
+  --gradient-primary: linear-gradient(135deg, hsl(30 95% 55%), hsl(30 95% 65%));
+  --gradient-accent: linear-gradient(135deg, hsl(30 95% 60%), hsl(30 95% 70%));
+}
+
+.theme-red,
+[data-theme="red"] {
+  --primary: 0 84% 60%;
+  --primary-foreground: 0 0% 100%;
+  --accent: 0 84% 65%;
+  --ring: 0 84% 60%;
+  --background: 0 40% 98%;
+  --card: 0 0% 100%;
+  --muted: 0 40% 95%;
+  --border: 0 20% 90%;
+  --gradient-primary: linear-gradient(135deg, hsl(0 84% 60%), hsl(0 84% 70%));
+  --gradient-accent: linear-gradient(135deg, hsl(0 84% 65%), hsl(0 84% 75%));
+}
+
+.theme-purple,
+[data-theme="purple"] {
+  --primary: 271 81% 56%;
+  --primary-foreground: 0 0% 100%;
+  --accent: 271 81% 61%;
+  --ring: 271 81% 56%;
   --background: 270 40% 98%;
   --card: 0 0% 100%;
   --muted: 270 35% 95%;
@@ -185,4 +214,21 @@
 .animate-gradient-shift {
   background-size: 200% 100%;
   animation: gradient-shift 3s ease-in-out infinite;
+}
+
+/* Fade-in animation for first-time setup */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out;
 }
