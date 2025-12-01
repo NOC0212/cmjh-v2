@@ -31,8 +31,8 @@ const taiwanTime = (year: number, month: number, day: number, hour = 0, minute =
 const getDefaultConfigs = (): CountdownConfig[] => [
   {
     id: "default-1",
-    targetDate: taiwanTime(2025, 11, 29, 0, 0, 0),
-    startDate: taiwanTime(2026, 1, 15, 0, 0, 0),
+    targetDate: taiwanTime(2026, 1, 15, 0, 0, 0),
+    startDate: taiwanTime(2025, 11, 29, 0, 0, 0),
     label: "第三次段考倒數 1/15 1/16",
     progressLabel: "上次至本次段考進度條",
     isDefault: true
