@@ -10,8 +10,19 @@ import {
   DialogTrigger,
   DialogFooter,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
 
 interface CountdownConfig {
   id: string;
@@ -49,7 +60,17 @@ const getDefaultConfigs = (): CountdownConfig[] => [
 
 const STORAGE_KEY = "cmjh-custom-countdowns";
 
+interface StoredCountdownConfig {
+  id: string;
+  targetDate: string;
+  startDate?: string;
+  label: string;
+  progressLabel: string;
+  isDefault?: boolean;
+}
+
 export function CountdownTimer() {
+  const { toast } = useToast();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState<{
     days: number;
@@ -61,6 +82,7 @@ export function CountdownTimer() {
   const [allCountdowns, setAllCountdowns] = useState<CountdownConfig[]>([]);
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [manageDialogOpen, setManageDialogOpen] = useState(false);
+  const [resetDialogOpen, setResetDialogOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     label: "",
@@ -74,8 +96,8 @@ export function CountdownTimer() {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       try {
-        const parsed = JSON.parse(stored);
-        const configs = parsed.map((c: any) => ({
+        const parsed: StoredCountdownConfig[] = JSON.parse(stored);
+        const configs = parsed.map((c) => ({
           ...c,
           targetDate: new Date(c.targetDate),
           startDate: c.startDate ? new Date(c.startDate) : undefined,
@@ -138,11 +160,15 @@ export function CountdownTimer() {
   }, [targetDate, startDate, currentConfig]);
 
   const saveToStorage = (configs: CountdownConfig[]) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(configs.map(c => ({
-      ...c,
-      targetDate: c.targetDate.toISOString(),
-      startDate: c.startDate?.toISOString()
-    }))));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(configs.map(c => ({
+        ...c,
+        targetDate: c.targetDate.toISOString(),
+        startDate: c.startDate?.toISOString()
+      }))));
+    } catch (error) {
+      console.error("Failed to save countdowns:", error);
+    }
   };
 
   const handlePrevious = () => {
@@ -155,7 +181,11 @@ export function CountdownTimer() {
 
   const validateForm = () => {
     if (!formData.label || !formData.targetDate) {
-      alert("請填寫標題和目標日期");
+      toast({
+        title: "驗證失敗",
+        description: "請填寫標題和目標日期",
+        variant: "destructive",
+      });
       return false;
     }
 
@@ -163,14 +193,22 @@ export function CountdownTimer() {
     const now = new Date();
 
     if (targetDateTime <= now) {
-      alert("目標時間必須晚於當前時間");
+      toast({
+        title: "驗證失敗",
+        description: "目標時間必須晚於當前時間",
+        variant: "destructive",
+      });
       return false;
     }
 
     if (formData.startDate) {
       const startDateTime = new Date(formData.startDate);
       if (startDateTime >= targetDateTime) {
-        alert("開始時間必須早於目標時間");
+        toast({
+          title: "驗證失敗",
+          description: "開始時間必須早於目標時間",
+          variant: "destructive",
+        });
         return false;
       }
     }
@@ -279,13 +317,20 @@ export function CountdownTimer() {
   };
 
   const handleReset = () => {
-    if (confirm("確定要重置為預設倒計時嗎？這將刪除所有自定義倒計時。")) {
-      const defaults = getDefaultConfigs();
-      setAllCountdowns(defaults);
-      saveToStorage(defaults);
-      setCurrentIndex(0);
-      setManageDialogOpen(false);
-    }
+    setResetDialogOpen(true);
+  };
+
+  const confirmReset = () => {
+    const defaults = getDefaultConfigs();
+    setAllCountdowns(defaults);
+    saveToStorage(defaults);
+    setCurrentIndex(0);
+    setManageDialogOpen(false);
+    setResetDialogOpen(false);
+    toast({
+      title: "重置成功",
+      description: "已重置為預設倒計時",
+    });
   };
 
   const formatDate = (date: Date) => {
@@ -391,6 +436,21 @@ export function CountdownTimer() {
                 </DialogFooter>
               </DialogContent>
             </Dialog>
+
+            <AlertDialog open={resetDialogOpen} onOpenChange={setResetDialogOpen}>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>確認重置</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    確定要重置為預設倒計時嗎？這將刪除所有自定義倒計時。
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>取消</AlertDialogCancel>
+                  <AlertDialogAction onClick={confirmReset}>確認重置</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
 
             <div className="flex items-center gap-1 rounded-full bg-background/50 px-2 py-1">
               <Button variant="ghost" size="icon" onClick={handlePrevious} className="h-7 w-7"><ChevronLeft className="h-4 w-4" /></Button>

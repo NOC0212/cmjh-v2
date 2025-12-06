@@ -128,25 +128,182 @@ src/
 
 ## 🚀 開發指南
 
-### 安裝依賴
+### 前置需求
+
+- **Node.js**: >= 18.0.0
+- **npm**: >= 9.0.0 或 **yarn** >= 1.22.0
+- **Git**: 用於版本控制
+
+### 快速開始
+
+1. **克隆專案**
+```bash
+git clone https://github.com/NOC0212/cmjh-v2.git
+cd cmjh-v2
+```
+
+2. **安裝依賴**
 ```bash
 npm install
 ```
 
-### 開發模式
+3. **設置環境變數**
+```bash
+# 複製環境變數範例文件
+cp .env.example .env
+
+# 編輯 .env 文件，填入你的 API 金鑰
+```
+
+4. **啟動開發伺服器**
 ```bash
 npm run dev
 ```
 
-### 建構專案
-```bash
-npm run build
+5. **打開瀏覽器**
+訪問 `http://localhost:8080`
+
+### 環境變數設置
+
+#### 本地開發環境
+
+1. **創建 `.env` 文件**
+在項目根目錄創建 `.env` 文件（可參考 `.env.example`）
+
+2. **設置環境變數**
+```env
+# 中央氣象署 API 金鑰
+# 請到 https://opendata.cwa.gov.tw/ 申請 API 金鑰
+VITE_CWA_API_KEY=your-api-key-here
 ```
 
-### 預覽建構結果
+**注意**：
+- `.env` 文件已加入 `.gitignore`，不會被提交到版本控制
+- 如果沒有設置 `VITE_CWA_API_KEY`，將使用預設的開發用 API 金鑰
+- 在生產環境部署時，請在部署平台（如 Vercel）設置環境變數
+
+#### Vercel 部署設置
+
+在 Vercel 中設置環境變數的步驟：
+
+1. **進入 Vercel 專案設置**
+   - 登入 [Vercel Dashboard](https://vercel.com/dashboard)
+   - 選擇你的專案
+   - 點擊 **Settings** → **Environment Variables**
+
+2. **添加環境變數**
+   - 變數名稱：`VITE_CWA_API_KEY`
+   - 變數值：你的中央氣象署 API 金鑰
+   - 環境：選擇 **Production**、**Preview**、**Development**（建議全部選擇）
+
+3. **重新部署**
+   - 設置環境變數後，Vercel 會自動觸發新的部署
+   - 或者手動點擊 **Redeploy** 按鈕
+
+**重要提示**：
+- ✅ Vite 環境變數必須以 `VITE_` 開頭才能在客戶端訪問
+- ✅ 設置環境變數後，需要重新部署才能生效
+- ✅ 環境變數會在構建時注入到代碼中，不會暴露在客戶端代碼中
+
+### 開發命令
+
+| 命令 | 說明 |
+|------|------|
+| `npm run dev` | 啟動開發伺服器（http://localhost:8080） |
+| `npm run build` | 構建生產版本到 `dist/` 目錄 |
+| `npm run build:dev` | 構建開發版本（包含 source maps） |
+| `npm run preview` | 預覽構建結果 |
+| `npm run lint` | 運行 ESLint 檢查代碼 |
+
+### 開發流程
+
+1. **創建功能分支**
 ```bash
-npm run preview
+git checkout -b feature/your-feature-name
 ```
+
+2. **開發和測試**
+- 在開發模式下進行開發
+- 使用瀏覽器開發工具調試
+- 確保代碼通過 lint 檢查
+
+3. **提交代碼**
+```bash
+git add .
+git commit -m "feat: 添加新功能"
+git push origin feature/your-feature-name
+```
+
+4. **創建 Pull Request**
+- 在 GitHub 上創建 PR
+- 等待代碼審查
+- 合併到主分支
+
+### 專案結構說明
+
+```
+cmjh-v2/
+├── public/              # 靜態資源
+│   ├── data/           # JSON 數據文件
+│   │   ├── announcements.json  # 行政公告
+│   │   └── calendar.json      # 行事曆
+│   └── ...
+├── src/
+│   ├── components/     # React 組件
+│   │   ├── ui/        # shadcn/ui 基礎組件
+│   │   ├── ErrorBoundary.tsx  # 錯誤邊界
+│   │   ├── Loading.tsx        # 加載組件
+│   │   └── ...
+│   ├── hooks/         # 自訂 Hooks
+│   ├── lib/           # 工具函數
+│   ├── pages/         # 頁面組件
+│   │   ├── Index.tsx  # 首頁
+│   │   └── tools/     # 工具頁面（代碼分割）
+│   ├── App.tsx        # 應用入口
+│   └── main.tsx       # 應用啟動
+├── .env.example       # 環境變數範例
+├── vite.config.ts     # Vite 配置
+├── tsconfig.json      # TypeScript 配置
+└── package.json       # 專案依賴
+```
+
+### 代碼規範
+
+- **TypeScript**: 使用嚴格模式，避免使用 `any`
+- **ESLint**: 遵循專案 ESLint 規則
+- **組件命名**: 使用 PascalCase（如 `CountdownTimer.tsx`）
+- **文件命名**: 組件文件使用 PascalCase，工具文件使用 camelCase
+- **導入順序**: 
+  1. React 相關
+  2. 第三方庫
+  3. 內部組件
+  4. 工具函數
+  5. 類型定義
+
+### 性能優化
+
+專案已實作以下性能優化：
+
+- ✅ **代碼分割**: 工具頁面使用 lazy loading
+- ✅ **錯誤邊界**: 防止應用崩潰
+- ✅ **useMemo/useCallback**: 減少不必要的重新渲染
+- ✅ **代碼分割配置**: 將大型依賴庫分離到獨立 chunk
+
+### 調試技巧
+
+1. **React DevTools**
+   - 安裝瀏覽器擴展
+   - 檢查組件狀態和 props
+   - 使用 Profiler 分析性能
+
+2. **瀏覽器控制台**
+   - 查看錯誤信息
+   - 檢查網絡請求
+   - 使用斷點調試
+
+3. **Vite DevTools**
+   - 使用 Vite 的 HMR（熱模塊替換）
+   - 檢查構建輸出
 
 ## 🎯 路由配置
 
@@ -210,6 +367,138 @@ npm run preview
 - ✅ 完善 localStorage 主題記憶機制
 - ✅ 優化首次載入體驗
 
+## 🔧 故障排除
+
+### 常見問題
+
+#### 1. 環境變數未生效
+
+**問題**: 設置了環境變數但應用無法讀取
+
+**解決方案**:
+- 確認環境變數以 `VITE_` 開頭
+- 重新啟動開發伺服器（`npm run dev`）
+- 檢查 `.env` 文件是否在項目根目錄
+- 確認 `.env` 文件格式正確（無引號，無空格）
+
+#### 2. 構建失敗
+
+**問題**: `npm run build` 失敗
+
+**解決方案**:
+```bash
+# 清除緩存和 node_modules
+rm -rf node_modules dist
+npm install
+npm run build
+```
+
+#### 3. 類型錯誤
+
+**問題**: TypeScript 類型檢查失敗
+
+**解決方案**:
+- 檢查 `tsconfig.json` 配置
+- 確認所有類型定義正確
+- 使用 `// @ts-ignore` 僅作為最後手段
+
+#### 4. 天氣 API 無法使用
+
+**問題**: 天氣資訊無法載入
+
+**解決方案**:
+- 檢查 API 金鑰是否正確設置
+- 確認網絡連接正常
+- 檢查瀏覽器控制台的錯誤信息
+- 確認 API 金鑰未過期
+
+#### 5. localStorage 錯誤
+
+**問題**: 保存設定時出現錯誤
+
+**解決方案**:
+- 檢查瀏覽器是否支援 localStorage
+- 確認未使用私密模式（某些瀏覽器限制）
+- 檢查存儲空間是否充足
+- 清除瀏覽器緩存和 localStorage
+
+#### 6. 路由無法訪問
+
+**問題**: 訪問路由時顯示 404
+
+**解決方案**:
+- 確認 `vercel.json` 配置正確
+- 檢查路由路徑是否正確
+- 確認構建輸出包含所有路由
+
+#### 7. 組件錯誤導致白屏
+
+**問題**: 應用出現白屏
+
+**解決方案**:
+- 檢查瀏覽器控制台的錯誤信息
+- 確認 Error Boundary 正常工作
+- 使用 React DevTools 檢查組件狀態
+- 查看錯誤邊界顯示的錯誤詳情
+
+#### 8. 開發伺服器無法啟動
+
+**問題**: `npm run dev` 失敗
+
+**解決方案**:
+```bash
+# 檢查 Node.js 版本
+node --version  # 應該 >= 18.0.0
+
+# 清除緩存
+npm cache clean --force
+
+# 重新安裝依賴
+rm -rf node_modules package-lock.json
+npm install
+```
+
+#### 9. 樣式未正確載入
+
+**問題**: Tailwind CSS 樣式未生效
+
+**解決方案**:
+- 確認 `tailwind.config.ts` 配置正確
+- 檢查 `index.css` 是否正確導入
+- 確認構建過程包含 Tailwind 處理
+- 清除瀏覽器緩存
+
+#### 10. 代碼分割後頁面無法載入
+
+**問題**: 使用 lazy loading 後頁面無法載入
+
+**解決方案**:
+- 確認所有 lazy 導入的路徑正確
+- 檢查 Suspense fallback 是否正確設置
+- 查看網絡請求是否成功
+- 確認構建輸出包含所有 chunk
+
+### 獲取幫助
+
+如果遇到其他問題：
+
+1. **查看 Issues**: 在 GitHub Issues 中搜索類似問題
+2. **創建 Issue**: 提供詳細的錯誤信息和重現步驟
+3. **檢查文檔**: 查看相關文檔和代碼註釋
+4. **聯繫維護者**: 通過 GitHub 聯繫專案維護者
+
+### 調試模式
+
+啟用詳細日誌：
+
+```bash
+# 開發模式（已包含詳細日誌）
+npm run dev
+
+# 構建開發版本（包含 source maps）
+npm run build:dev
+```
+
 ## 📄 授權
 
 本專案以開源形式發布，歡迎自由取用或提交分支。
@@ -217,5 +506,22 @@ npm run preview
 ## 🤝 貢獻
 
 歡迎提交 Issue 或 Pull Request！
+
+### 貢獻指南
+
+1. **Fork 專案**
+2. **創建功能分支** (`git checkout -b feature/AmazingFeature`)
+3. **提交更改** (`git commit -m 'Add some AmazingFeature'`)
+4. **推送到分支** (`git push origin feature/AmazingFeature`)
+5. **開啟 Pull Request**
+
+### 貢獻類型
+
+- 🐛 Bug 修復
+- ✨ 新功能
+- 📝 文檔改進
+- 🎨 UI/UX 改進
+- ⚡ 性能優化
+- 🔧 代碼重構
 
 **專案持續更新中！**

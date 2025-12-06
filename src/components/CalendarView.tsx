@@ -8,10 +8,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useCalendarEvents } from "@/hooks/useCalendarEvents";
+import { CalendarDialog } from "@/components/CalendarDialog";
 
 interface CalendarEvent {
   date: string;
   title: string;
+  isCustom?: boolean;
 }
 
 type CalendarData = {
@@ -22,18 +25,26 @@ export function CalendarView() {
   const [calendarData, setCalendarData] = useState<CalendarData>({});
   const [selectedMonth, setSelectedMonth] = useState("");
   const [loading, setLoading] = useState(true);
-  const [direction, setDirection] = useState<'left' | 'right'>('right');
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const { customEvents, getCustomEventsByMonth } = useCalendarEvents();
 
   useEffect(() => {
     fetch("/data/calendar.json")
       .then((res) => res.json())
       .then((data: CalendarData) => {
-        setCalendarData(data);
+        // 標記預設事件
+        const markedData: CalendarData = {};
+        Object.keys(data).forEach((month) => {
+          markedData[month] = data[month].map((event) => ({
+            ...event,
+            isCustom: false,
+          }));
+        });
+        setCalendarData(markedData);
         // Set current month or closest available month
         const today = new Date();
         const currentYM = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
-        const months = Object.keys(data).sort();
+        const months = Object.keys(markedData).sort();
         setSelectedMonth(months.includes(currentYM) ? currentYM : months[0] || "");
         setLoading(false);
       })
@@ -43,12 +54,32 @@ export function CalendarView() {
       });
   }, []);
 
-  const months = useMemo(() => Object.keys(calendarData).sort(), [calendarData]);
+  // 合併預設和自訂事件
+  const mergedCalendarData = useMemo(() => {
+    const customByMonth = getCustomEventsByMonth();
+    const merged: CalendarData = { ...calendarData };
+
+    // 將自訂事件合併到對應月份
+    Object.keys(customByMonth).forEach((month) => {
+      if (!merged[month]) {
+        merged[month] = [];
+      }
+      merged[month] = [...merged[month], ...customByMonth[month]];
+    });
+
+    // 對每個月份的事件按日期排序
+    Object.keys(merged).forEach((month) => {
+      merged[month].sort((a, b) => a.date.localeCompare(b.date));
+    });
+
+    return merged;
+  }, [calendarData, customEvents, getCustomEventsByMonth]);
+
+  const months = useMemo(() => Object.keys(mergedCalendarData).sort(), [mergedCalendarData]);
   const currentMonthIndex = useMemo(() => months.indexOf(selectedMonth), [months, selectedMonth]);
 
   const handlePrevMonth = () => {
     if (currentMonthIndex > 0) {
-      setDirection('left');
       setSelectedDay(null);
       setSelectedMonth(months[currentMonthIndex - 1]);
     }
@@ -56,16 +87,15 @@ export function CalendarView() {
 
   const handleNextMonth = () => {
     if (currentMonthIndex < months.length - 1) {
-      setDirection('right');
       setSelectedDay(null);
       setSelectedMonth(months[currentMonthIndex + 1]);
     }
   };
 
   const eventsByDay = useMemo(() => {
-    if (!selectedMonth || !calendarData[selectedMonth]) return {};
+    if (!selectedMonth || !mergedCalendarData[selectedMonth]) return {};
 
-    const events = calendarData[selectedMonth];
+    const events = mergedCalendarData[selectedMonth];
     const grouped: { [key: number]: CalendarEvent[] } = {};
     events.forEach((event) => {
       const day = parseInt(event.date.split("-")[2], 10);
@@ -73,10 +103,10 @@ export function CalendarView() {
       grouped[day].push(event);
     });
     return grouped;
-  }, [selectedMonth, calendarData]);
+  }, [selectedMonth, mergedCalendarData]);
 
   const renderCalendar = () => {
-    if (!selectedMonth || !calendarData[selectedMonth]) return null;
+    if (!selectedMonth || !mergedCalendarData[selectedMonth]) return null;
 
     const [year, month] = selectedMonth.split("-").map(Number);
     const firstDay = new Date(year, month - 1, 1);
@@ -112,7 +142,6 @@ export function CalendarView() {
       const dayEvents = eventsByDay[day] || [];
 
       const isSelected = selectedDay === day;
-      const hasEvents = dayEvents.length > 0;
 
       // 如果是選中的日期，佔滿整週
       if (isSelected) {
@@ -139,6 +168,11 @@ export function CalendarView() {
                   <div key={idx} className="flex items-start gap-2 bg-card p-3 rounded-md border border-border">
                     <span className="text-primary text-xl">•</span>
                     <span className="text-sm text-card-foreground flex-1">{event.title}</span>
+                    {event.isCustom && (
+                      <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded shrink-0">
+                        自訂
+                      </span>
+                    )}
                   </div>
                 ))
               ) : (
@@ -175,8 +209,13 @@ export function CalendarView() {
             {/* 桌面版：顯示前2個事件 */}
             <div className="hidden md:block">
               {dayEvents.slice(0, 2).map((event, idx) => (
-                <div key={idx} className="text-xs text-muted-foreground line-clamp-2 mb-0.5">
-                  • {event.title}
+                <div key={idx} className="flex items-center gap-1 text-xs text-muted-foreground line-clamp-2 mb-0.5">
+                  <span>• {event.title}</span>
+                  {event.isCustom && (
+                    <span className="text-[10px] bg-primary/10 text-primary px-1 py-0.5 rounded shrink-0">
+                      自訂
+                    </span>
+                  )}
                 </div>
               ))}
               {dayEvents.length > 2 && (
@@ -201,7 +240,7 @@ export function CalendarView() {
     return calendarCells;
   };
 
-  const selectedEvents = selectedMonth ? calendarData[selectedMonth] || [] : [];
+  const selectedEvents = selectedMonth ? mergedCalendarData[selectedMonth] || [] : [];
 
   if (loading) {
     return (
@@ -222,7 +261,10 @@ export function CalendarView() {
 
         <div className="relative z-10">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">行事曆</h2>
+            <div className="flex items-center gap-3">
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">行事曆</h2>
+              <CalendarDialog />
+            </div>
             <div className="flex items-center gap-3 bg-background/80 rounded-full p-1.5">
               <Button
                 variant="ghost"
@@ -234,16 +276,42 @@ export function CalendarView() {
                 <ChevronLeft className="h-4 w-4" />
               </Button>
 
-              <Select value={selectedMonth} onValueChange={setSelectedMonth}>
+              <Select value={selectedMonth} onValueChange={(value) => { setSelectedDay(null); setSelectedMonth(value); }}>
                 <SelectTrigger className="w-[180px] border-primary/20 bg-background/90">
-                  <SelectValue placeholder="選擇月份" />
+                  <SelectValue placeholder="選擇月份">
+                    {selectedMonth && (() => {
+                      const [year, month] = selectedMonth.split("-");
+                      return `${year}年 ${parseInt(month)}月`;
+                    })()}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
-                  {months.map((m) => (
-                    <SelectItem key={m} value={m}>
-                      {m}
-                    </SelectItem>
-                  ))}
+                  {(() => {
+                    // Group months by year
+                    const groupedByYear: { [year: string]: string[] } = {};
+                    months.forEach((m) => {
+                      const year = m.split("-")[0];
+                      if (!groupedByYear[year]) groupedByYear[year] = [];
+                      groupedByYear[year].push(m);
+                    });
+                    const years = Object.keys(groupedByYear).sort();
+
+                    return years.map((year) => (
+                      <div key={year}>
+                        <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground bg-muted/50">
+                          {year}年
+                        </div>
+                        {groupedByYear[year].map((m) => {
+                          const month = parseInt(m.split("-")[1]);
+                          return (
+                            <SelectItem key={m} value={m}>
+                              {month}月
+                            </SelectItem>
+                          );
+                        })}
+                      </div>
+                    ));
+                  })()}
                 </SelectContent>
               </Select>
 
@@ -290,7 +358,14 @@ export function CalendarView() {
                     <div className="flex-shrink-0 bg-gradient-to-br from-primary/20 to-accent/20 text-primary rounded-xl px-4 py-2.5 text-sm font-bold border border-primary/20">
                       {event.date.split("-")[2]}日
                     </div>
-                    <p className="text-foreground flex-1 leading-relaxed">{event.title}</p>
+                    <div className="flex-1 flex items-center gap-2">
+                      <p className="text-foreground leading-relaxed">{event.title}</p>
+                      {event.isCustom && (
+                        <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded shrink-0">
+                          自訂
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}

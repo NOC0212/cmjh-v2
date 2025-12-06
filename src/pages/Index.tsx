@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { AppSidebar } from "@/components/AppSidebar";
 import { CommonSites } from "@/components/CommonSites";
 import { Announcements } from "@/components/Announcements";
@@ -21,37 +22,44 @@ const Index = () => {
   const weatherAnim = useScrollAnimation();
 
   // 獲取已啟用並排序的組件
-  const enabledComponents = settings.components
-    .filter((c) => c.enabled)
-    .sort((a, b) => a.order - b.order);
+  const enabledComponents = useMemo(
+    () =>
+      settings.components
+        .filter((c) => c.enabled)
+        .sort((a, b) => a.order - b.order),
+    [settings.components]
+  );
 
-  // 組件映射 (包含動畫)
-  const componentMap: Record<string, { element: JSX.Element; anim: ReturnType<typeof useScrollAnimation> }> = {
-    countdown: {
-      element: <CountdownTimer />,
-      anim: countdownAnim,
-    },
-    weather: {
-      element: <WeatherWidget />,
-      anim: weatherAnim,
-    },
-    commonSites: {
-      element: <CommonSites />,
-      anim: commonSitesAnim,
-    },
-    tools: {
-      element: <ToolsSection />,
-      anim: commonSitesAnim, // 重用 commonSitesAnim
-    },
-    announcements: {
-      element: <Announcements />,
-      anim: announcementsAnim,
-    },
-    calendar: {
-      element: <CalendarView />,
-      anim: calendarAnim,
-    },
-  };
+  // 組件映射 (包含動畫) - 使用 useMemo 緩存
+  const componentMap: Record<string, { element: JSX.Element; anim: ReturnType<typeof useScrollAnimation> }> = useMemo(
+    () => ({
+      countdown: {
+        element: <CountdownTimer />,
+        anim: countdownAnim,
+      },
+      weather: {
+        element: <WeatherWidget />,
+        anim: weatherAnim,
+      },
+      commonSites: {
+        element: <CommonSites />,
+        anim: commonSitesAnim,
+      },
+      tools: {
+        element: <ToolsSection />,
+        anim: commonSitesAnim, // 重用 commonSitesAnim
+      },
+      announcements: {
+        element: <Announcements />,
+        anim: announcementsAnim,
+      },
+      calendar: {
+        element: <CalendarView />,
+        anim: calendarAnim,
+      },
+    }),
+    [countdownAnim, weatherAnim, commonSitesAnim, announcementsAnim, calendarAnim]
+  );
 
   return (
     <div className="min-h-screen flex w-full bg-background">

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,8 @@ import { Cloud, CloudRain, Sun, CloudSnow, Droplets, ChevronDown, ChevronUp } fr
 import { Skeleton } from "@/components/ui/skeleton";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
-const API_KEY = "CWA-6AEC6F91-948A-464F-9DC1-AC1B8361153D";
+// 從環境變數讀取 API 金鑰，如果沒有設置則使用預設值（僅用於開發）
+const API_KEY = import.meta.env.VITE_CWA_API_KEY || "CWA-6AEC6F91-948A-464F-9DC1-AC1B8361153D";
 
 const DISTRICTS = [
   { value: "中西區", label: "中西區" },
@@ -111,7 +112,7 @@ export const WeatherWidget = () => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [expandedDay, setExpandedDay] = useState<number | null>(null);
 
-  const fetchWeather = async (district: string) => {
+  const fetchWeather = useCallback(async (district: string) => {
     setLoading(true);
     try {
       const response = await fetch(
@@ -210,7 +211,7 @@ export const WeatherWidget = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
 
   useEffect(() => {
@@ -222,7 +223,7 @@ export const WeatherWidget = () => {
     }, 30 * 60 * 1000); // 30分鐘 = 30 * 60 * 1000 毫秒
 
     return () => clearInterval(interval);
-  }, [selectedDistrict]);
+  }, [selectedDistrict, fetchWeather]);
 
   const getWeatherIcon = (wx: string) => {
     if (wx.includes("雨")) return <CloudRain className="h-8 w-8" />;

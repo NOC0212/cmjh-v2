@@ -12,22 +12,34 @@ export function useFavorites() {
   const [favorites, setFavorites] = useState<Favorite[]>([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem("favorites");
-    if (saved) {
-      setFavorites(JSON.parse(saved));
+    try {
+      const saved = localStorage.getItem("favorites");
+      if (saved) {
+        setFavorites(JSON.parse(saved));
+      }
+    } catch (error) {
+      console.error("Failed to load favorites:", error);
     }
   }, []);
 
   const addFavorite = (item: Favorite) => {
     const newFavorites = [...favorites, item];
     setFavorites(newFavorites);
-    localStorage.setItem("favorites", JSON.stringify(newFavorites));
+    try {
+      localStorage.setItem("favorites", JSON.stringify(newFavorites));
+    } catch (error) {
+      console.error("Failed to save favorites:", error);
+    }
   };
 
   const removeFavorite = (id: string) => {
     const newFavorites = favorites.filter((f) => f.id !== id);
     setFavorites(newFavorites);
-    localStorage.setItem("favorites", JSON.stringify(newFavorites));
+    try {
+      localStorage.setItem("favorites", JSON.stringify(newFavorites));
+    } catch (error) {
+      console.error("Failed to save favorites:", error);
+    }
   };
 
   const isFavorite = (id: string) => {
@@ -41,7 +53,11 @@ export function useFavorites() {
         return validIds.includes(f.id);
       });
       if (filtered.length !== prevFavorites.length) {
-        localStorage.setItem("favorites", JSON.stringify(filtered));
+        try {
+          localStorage.setItem("favorites", JSON.stringify(filtered));
+        } catch (error) {
+          console.error("Failed to save favorites:", error);
+        }
         return filtered;
       }
       return prevFavorites;

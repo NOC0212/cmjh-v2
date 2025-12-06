@@ -23,23 +23,31 @@ export default function Timer() {
 
     // 倒數計時器邏輯
     useEffect(() => {
-        if (isCountdownRunning && timeLeft > 0) {
-            const timer = setInterval(() => {
-                setTimeLeft((prev) => {
-                    if (prev <= 1) {
-                        setIsCountdownRunning(false);
-                        if (audioRef.current) {
-                            audioRef.current.play();
-                        }
-                        return 0;
-                    }
-                    return prev - 1;
-                });
-            }, 1000);
+        if (!isCountdownRunning || timeLeft <= 0) return;
 
-            return () => clearInterval(timer);
+        const timer = setInterval(() => {
+            setTimeLeft((prev) => {
+                if (prev <= 1) {
+                    return 0;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [isCountdownRunning]);
+
+    // 處理倒數計時結束
+    useEffect(() => {
+        if (timeLeft === 0 && isCountdownRunning) {
+            setIsCountdownRunning(false);
+            if (audioRef.current) {
+                audioRef.current.play().catch((error) => {
+                    console.error("Failed to play audio:", error);
+                });
+            }
         }
-    }, [isCountdownRunning, timeLeft]);
+    }, [timeLeft, isCountdownRunning]);
 
     // 碼表邏輯
     useEffect(() => {

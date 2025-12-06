@@ -1,49 +1,44 @@
 import { ExternalLink, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-
-const commonSites = [
-  { name: "114上學期行事曆", url: "/114學年度第一學期行事曆.pdf" },
-  { name: "晨間英語多媒體播放", url: "/英聽挑戰.pdf" },
-  { name: "段考成績查詢", url: "http://120.115.12.4/" },
-  { name: "12年國教專區", url: "https://jhquery.tn.edu.tw/" },
-  { name: "國中學生輔導資料", url: "https://jhc.tn.edu.tw/Login.action" },
-  { name: "翰林雲端學院TEAMS", url: "https://cmjhtn.teamslite.com.tw/v2/login.html" },
-  { name: "教育部因材網", url: "https://adl.edu.tw/HomePage/home/" },
-  { name: "布可星球", url: "https://read.tn.edu.tw/" },
-];
+import { useCommonSites } from "@/hooks/useCommonSites";
+import { CommonSitesDialog } from "@/components/CommonSitesDialog";
 
 export function CommonSites() {
   const [isExpanded, setIsExpanded] = useState(true);
+  const { sites } = useCommonSites();
 
   return (
     <section id="common-sites" className="mb-12 scroll-mt-20">
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">常用網站</h2>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="gap-2 hover:bg-primary/10 transition-all"
-        >
-          {isExpanded ? (
-            <>
-              <ChevronUp className="h-4 w-4" />
-              收起
-            </>
-          ) : (
-            <>
-              <ChevronDown className="h-4 w-4" />
-              展開
-            </>
-          )}
-        </Button>
+        <div className="flex items-center gap-2">
+          <CommonSitesDialog />
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="gap-2 hover:bg-primary/10 transition-all"
+          >
+            {isExpanded ? (
+              <>
+                <ChevronUp className="h-4 w-4" />
+                收起
+              </>
+            ) : (
+              <>
+                <ChevronDown className="h-4 w-4" />
+                展開
+              </>
+            )}
+          </Button>
+        </div>
       </div>
       {isExpanded && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
-          {commonSites.map((site, idx) => (
+          {sites.map((site, idx) => (
             <a
-              key={site.name}
+              key={site.id}
               href={site.url}
               target="_blank"
               rel="noopener noreferrer"
