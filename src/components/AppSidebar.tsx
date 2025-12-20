@@ -55,13 +55,13 @@ export function AppSidebar() {
 
         <DropdownMenuItem asChild>
           <a
-            href="https://github.com/PRO-DEV0212/cmjh"
+            href="https://github.com/NOC0212/cmjh-v2"
             target="_blank"
             rel="noopener noreferrer"
             className="cursor-pointer"
           >
             <Github className="h-4 w-4 mr-2" />
-            <span>開源 GitHub</span>
+            <span>開源 GitHub專案</span>
           </a>
         </DropdownMenuItem>
 
