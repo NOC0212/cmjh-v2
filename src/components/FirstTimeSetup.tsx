@@ -3,6 +3,16 @@ import { useComponentSettings } from "@/hooks/useComponentSettings";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 
+const loadingHints = [
+    "正在載入 CalendarView.tsx...",
+    "正在載入 WeatherWidget.tsx...",
+    "正在載入 CountdownTimer.tsx...",
+    "正在載入 ToolLayout.tsx...",
+    "正在初始化應用程式...",
+    "正在載入首次使用者介面...",
+    "即將完成..."
+];
+
 const SETUP_STORAGE_KEY = "cmjh-first-setup-completed";
 
 interface Theme {
@@ -80,14 +90,50 @@ export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
     const [step, setStep] = useState<"loading" | "selecting">("loading");
     const [selectedTheme, setSelectedTheme] = useState<string | null>(null);
     const { setTheme } = useComponentSettings();
+    const [progress, setProgress] = useState(0);
+    const [currentHintIndex, setCurrentHintIndex] = useState(0);
+    const [isFading, setIsFading] = useState(false);
 
     useEffect(() => {
-        // 顯示載入動畫1.5秒
+        // Progress animation: 0 to 100 in 3 seconds
+        const duration = 3000;
+        const interval = 30;
+        const increment = 100 / (duration / interval);
+
+        const progressTimer = setInterval(() => {
+            setProgress((prev) => {
+                if (prev >= 100) {
+                    clearInterval(progressTimer);
+                    return 100;
+                }
+                return Math.min(prev + increment, 100);
+            });
+        }, interval);
+
+        // After 3 seconds (100%), wait 500ms then start fade
+        const fadeTimer = setTimeout(() => {
+            setIsFading(true);
+        }, 3500);
+
+        // After fade animation (500ms), switch to selecting
         const timer = setTimeout(() => {
             setStep("selecting");
-        }, 3000);
+        }, 4000);
 
-        return () => clearTimeout(timer);
+        return () => {
+            clearInterval(progressTimer);
+            clearTimeout(fadeTimer);
+            clearTimeout(timer);
+        };
+    }, []);
+
+    useEffect(() => {
+        // Rotate loading hints every 600ms
+        const hintTimer = setInterval(() => {
+            setCurrentHintIndex((prev) => (prev + 1) % loadingHints.length);
+        }, 600);
+
+        return () => clearInterval(hintTimer);
     }, []);
 
     const handleConfirm = () => {
@@ -107,14 +153,48 @@ export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
 
     if (step === "loading") {
         return (
-            <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-purple-900 dark:to-gray-900">
-                <div className="text-center">
-                    <div className="inline-block">
-                        <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
-                    </div>
-                    <p className="mt-6 text-lg text-gray-600 dark:text-gray-300 font-medium">
-                        載入中...
+            <div
+                className={`fixed inset-0 flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-purple-900 dark:to-gray-900 transition-opacity duration-500 ${isFading ? 'opacity-0' : 'opacity-100'}`}
+            >
+                <div className={`flex flex-col items-center justify-center gap-6 p-8 w-full max-w-md transition-all duration-500 ${isFading ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}>
+                    {/* Author Credit */}
+                    <p className="text-sm font-medium text-gray-700 dark:text-white/90 tracking-wide">
+                        本網站由 cy.noc0531 製作
                     </p>
+
+                    {/* Progress Bar Container */}
+                    <div className="w-full">
+                        <div className="relative w-full h-3 bg-gray-200 dark:bg-white/20 rounded-full overflow-hidden backdrop-blur-sm shadow-inner">
+                            {/* Progress Fill with Gradient */}
+                            <div
+                                className="absolute top-0 left-0 h-full rounded-full transition-all duration-100 ease-out"
+                                style={{
+                                    width: `${progress}%`,
+                                    background: "linear-gradient(90deg, #3b82f6 0%, #8b5cf6 50%, #a855f7 100%)",
+                                    boxShadow: "0 0 20px rgba(139, 92, 246, 0.5)"
+                                }}
+                            />
+                            {/* Shine Effect */}
+                            <div
+                                className="absolute top-0 left-0 h-full rounded-full opacity-30"
+                                style={{
+                                    width: `${progress}%`,
+                                    background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)"
+                                }}
+                            />
+                        </div>
+                        {/* Progress Percentage */}
+                        <p className="text-center text-xs text-gray-500 dark:text-white/70 mt-2 font-mono">
+                            {Math.round(progress)}%
+                        </p>
+                    </div>
+
+                    {/* Loading Hint Carousel */}
+                    <div className="h-6 flex items-center justify-center">
+                        <p className="text-sm text-gray-400 dark:text-white/60 font-mono animate-pulse">
+                            {loadingHints[currentHintIndex]}
+                        </p>
+                    </div>
                 </div>
             </div>
         );
