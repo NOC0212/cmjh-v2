@@ -1,115 +1,118 @@
-import { useMemo } from "react";
-import { AppSidebar } from "@/components/AppSidebar";
+import { useMemo, useState } from "react";
 import { CommonSites } from "@/components/CommonSites";
 import { Announcements } from "@/components/Announcements";
 import { CalendarView } from "@/components/CalendarView";
-import { SearchDialog } from "@/components/SearchDialog";
-import { FavoritesDialog } from "@/components/FavoritesDialog";
-import { SettingsDialog } from "@/components/SettingsDialog";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { WeatherWidget } from "@/components/WeatherWidget";
 import { ToolsSection } from "@/components/ToolsSection";
+import { ResponsiveNav, NavPage } from "@/components/ResponsiveNav";
+import { SearchPage } from "@/components/SearchPage";
+import { SiteAnnouncementsPage } from "@/components/SiteAnnouncementsPage";
+import { FavoritesPage } from "@/components/FavoritesPage";
+import { SettingsPage } from "@/components/SettingsPage";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useComponentSettings } from "@/hooks/useComponentSettings";
-import { School } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import React from "react";
 
 const Index = () => {
-  const { settings } = useComponentSettings();
-  const commonSitesAnim = useScrollAnimation();
-  const announcementsAnim = useScrollAnimation();
-  const calendarAnim = useScrollAnimation();
-  const countdownAnim = useScrollAnimation();
-  const weatherAnim = useScrollAnimation();
+    const { settings } = useComponentSettings();
+    const isMobile = useIsMobile();
+    const [currentPage, setCurrentPage] = useState<NavPage>("home");
 
-  // 獲取已啟用並排序的組件
-  const enabledComponents = useMemo(
-    () =>
-      settings.components
-        .filter((c) => c.enabled)
-        .sort((a, b) => a.order - b.order),
-    [settings.components]
-  );
+    // 取得已啟用且排序後的組件
+    const enabledComponents = useMemo(
+        () =>
+            settings.components
+                .filter((c) => c.enabled)
+                .sort((a, b) => a.order - b.order),
+        [settings.components]
+    );
 
-  // 組件映射 (包含動畫) - 使用 useMemo 緩存
-  const componentMap: Record<string, { element: JSX.Element; anim: ReturnType<typeof useScrollAnimation> }> = useMemo(
-    () => ({
-      countdown: {
-        element: <CountdownTimer />,
-        anim: countdownAnim,
-      },
-      weather: {
-        element: <WeatherWidget />,
-        anim: weatherAnim,
-      },
-      commonSites: {
-        element: <CommonSites />,
-        anim: commonSitesAnim,
-      },
-      tools: {
-        element: <ToolsSection />,
-        anim: commonSitesAnim, // 重用 commonSitesAnim
-      },
-      announcements: {
-        element: <Announcements />,
-        anim: announcementsAnim,
-      },
-      calendar: {
-        element: <CalendarView />,
-        anim: calendarAnim,
-      },
-    }),
-    [countdownAnim, weatherAnim, commonSitesAnim, announcementsAnim, calendarAnim]
-  );
+    // 渲染首頁組件
+    const renderHomePageComponent = (id: string) => {
+        switch (id) {
+            case "countdown": return <CountdownTimer key="countdown" />;
+            case "weather": return <WeatherWidget key="weather" />;
+            case "commonSites": return <CommonSites key="commonSites" />;
+            case "tools": return <ToolsSection key="tools" />;
+            case "announcements": return <Announcements key="announcements" />;
+            case "calendar": return <CalendarView key="calendar" />;
+            default: return null;
+        }
+    };
 
-  return (
-    <div className="min-h-screen flex w-full bg-background">
-      <div className="flex-1 flex flex-col">
-        <header className="sticky top-0 z-40 bg-gradient-to-r from-background via-background to-primary/5 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-primary/20">
-          <div className="flex h-16 items-center gap-4 px-4 lg:px-6">
-            <div className="flex items-center gap-3 flex-1">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <School className="h-5 w-5 text-primary" />
-              </div>
-              <h1 className="text-base sm:text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                崇明國中
-              </h1>
+    // 根據標籤渲染頁面內容
+    const renderPageContent = () => {
+        switch (currentPage) {
+            case "search":
+                return <SearchPage />;
+            case "announcements":
+                return <SiteAnnouncementsPage />;
+            case "favorites":
+                return <FavoritesPage />;
+            case "settings":
+                return <SettingsPage />;
+            case "home":
+            default:
+                return (
+                    <div className="space-y-12">
+                        {enabledComponents.map((component) => (
+                            <HomeSection key={component.id} id={component.id}>
+                                {renderHomePageComponent(component.id)}
+                            </HomeSection>
+                        ))}
+                    </div>
+                );
+        }
+    };
+
+    return (
+        <div className={`h-[100dvh] w-full flex overflow-hidden bg-background ${isMobile ? 'flex-col' : 'flex-row'}`}>
+            {/* 桌面版側邊導航 (作為 Flex 項目而非 fixed) */}
+            {!isMobile && <ResponsiveNav currentPage={currentPage} onPageChange={setCurrentPage} />}
+
+            {/* 手機版頂部標題列 */}
+            {isMobile && (
+                <ResponsiveNav currentPage={currentPage} onPageChange={setCurrentPage} mode="header" />
+            )}
+
+            {/* 主內容區塊 */}
+            <div className="flex-1 flex flex-col min-h-0">
+                <main className="flex-1 overflow-y-auto px-4 lg:p-8 max-w-5xl w-full mx-auto">
+                    <div className="py-4">
+                        {renderPageContent()}
+                    </div>
+
+                    {/* 版權資訊 */}
+                    {currentPage === "home" && (
+                        <footer className="mt-12 border-t border-primary/20 bg-gradient-to-r from-background to-primary/5 py-12 px-4 lg:px-6 rounded-t-3xl text-center text-sm text-muted-foreground">
+                            <p>© 2025 崇明國中 by nocfond</p>
+                        </footer>
+                    )}
+                </main>
             </div>
-            <div className="flex items-center gap-2">
-              <SearchDialog />
-              <FavoritesDialog />
-              <SettingsDialog />
-              <AppSidebar />
-            </div>
-          </div>
-        </header>
 
-        <main className="flex-1 p-4 lg:p-8 max-w-7xl w-full mx-auto">
-          <div className="space-y-12">
-            {enabledComponents.map((component) => {
-              const { element, anim } = componentMap[component.id];
-              return (
-                <div
-                  key={component.id}
-                  id={component.id}
-                  ref={anim.ref}
-                  className={`transition-all duration-700 ${anim.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                    }`}
-                >
-                  {element}
-                </div>
-              );
-            })}
-          </div>
-        </main>
+            {/* 手機版底部導航列 */}
+            {isMobile && (
+                <ResponsiveNav currentPage={currentPage} onPageChange={setCurrentPage} mode="footer" />
+            )}
+        </div>
+    );
+};
 
-        <footer className="border-t border-primary/20 bg-gradient-to-r from-background to-primary/5 py-6 px-4 lg:px-6">
-          <div className="max-w-7xl mx-auto text-center text-sm text-muted-foreground">
-            <p>© 2025 崇明國中 by nocfond</p>
-          </div>
-        </footer>
-      </div>
-    </div>
-  );
+// 動態區塊包裝器
+const HomeSection = ({ children, id }: { children: React.ReactNode; id: string }) => {
+    const { ref, isVisible } = useScrollAnimation();
+    return (
+        <div
+            id={id}
+            ref={ref}
+            className={`transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+        >
+            {children}
+        </div>
+    );
 };
 
 export default Index;

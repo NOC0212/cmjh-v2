@@ -1,8 +1,7 @@
-import { ArrowLeft, Settings } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { AppSidebar } from "@/components/AppSidebar";
-import { SettingsDialog } from "@/components/SettingsDialog";
 
 interface ToolLayoutProps {
     children: React.ReactNode;
@@ -46,9 +45,6 @@ export function ToolLayout({ children, title }: ToolLayoutProps) {
 
                         {/* 右側按鈕 */}
                         <div className="flex items-center gap-2">
-                            {/* 設定按鈕 */}
-                            <SettingsDialog />
-
                             {/* 選單 */}
                             <AppSidebar />
                         </div>
