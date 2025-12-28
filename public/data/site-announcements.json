@@ -1,5 +1,10 @@
 [
     {
+        "id": "sticky-top",
+        "title": "[置頂] 崇明國中-v2 使用指南 https://nocfond-blog.vercel.app/posts/docs-cmjh-v2/",
+        "date": "2025-12-28"
+    },
+    {
         "id": "v1.2.2-update",
         "title": "V1.2.2更新公告 !!新增榮譽榜功能!! 清除網站快取後即可正常使用",
         "date": "2025-12-28"
