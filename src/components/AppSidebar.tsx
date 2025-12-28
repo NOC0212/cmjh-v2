@@ -1,4 +1,4 @@
-import { Home, Bell, Calendar, Github, ExternalLink, Menu, Clock, Cloud, Wrench } from "lucide-react";
+import { Home, Bell, Calendar, Github, ExternalLink, Menu, Clock, Cloud, Wrench, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -14,6 +14,7 @@ const navItems = [
   { title: "天氣資訊", path: "#weather", icon: Cloud },
   { title: "常用網站", path: "#common-sites", icon: Home },
   { title: "小工具", path: "#tools", icon: Wrench },
+  { title: "榮譽榜", path: "#honors", icon: Trophy },
   { title: "行政公告", path: "#announcements", icon: Bell },
   { title: "行事曆", path: "#calendar", icon: Calendar },
 ];

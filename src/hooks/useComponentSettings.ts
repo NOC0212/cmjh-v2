@@ -17,8 +17,9 @@ const DEFAULT_COMPONENTS: ComponentSettings[] = [
     { id: "weather", label: "天氣資訊", enabled: true, order: 1 },
     { id: "commonSites", label: "常用網站", enabled: true, order: 2 },
     { id: "tools", label: "小工具", enabled: true, order: 3 },
-    { id: "announcements", label: "行政公告", enabled: true, order: 4 },
-    { id: "calendar", label: "行事曆", enabled: true, order: 5 },
+    { id: "honors", label: "榮譽榜", enabled: false, order: 4 },
+    { id: "announcements", label: "行政公告", enabled: true, order: 5 },
+    { id: "calendar", label: "行事曆", enabled: true, order: 6 },
 ];
 
 const DEFAULT_SETTINGS: AppSettings = {
@@ -96,7 +97,24 @@ export function useComponentSettings() {
         try {
             const stored = localStorage.getItem(STORAGE_KEY);
             if (stored) {
-                return JSON.parse(stored);
+                const parsedSettings = JSON.parse(stored);
+
+                // 遷移邏輯：合併預設組件與已儲存的設定
+                const existingComponents = parsedSettings.components || [];
+                const existingIds = new Set(existingComponents.map((c: ComponentSettings) => c.id));
+
+                // 找出新增的組件（存在於 DEFAULT_COMPONENTS 但不在已儲存的設定中）
+                const newComponents = DEFAULT_COMPONENTS.filter(
+                    (c) => !existingIds.has(c.id)
+                );
+
+                // 合併組件列表
+                const mergedComponents = [...existingComponents, ...newComponents];
+
+                return {
+                    ...parsedSettings,
+                    components: mergedComponents,
+                };
             }
         } catch (error) {
             console.error("Failed to load app settings:", error);

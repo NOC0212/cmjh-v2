@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 
 export interface Favorite {
   id: string;
-  type: "announcement" | "event";
+  type: "announcement" | "event" | "honor";
   title: string;
   date: string;
   url?: string;
@@ -46,7 +46,7 @@ export function useFavorites() {
     return favorites.some((f) => f.id === id);
   };
 
-  const cleanupFavorites = useCallback((type: "announcement" | "event", validIds: string[]) => {
+  const cleanupFavorites = useCallback((type: "announcement" | "event" | "honor", validIds: string[]) => {
     setFavorites((prevFavorites) => {
       const filtered = prevFavorites.filter((f) => {
         if (f.type !== type) return true;

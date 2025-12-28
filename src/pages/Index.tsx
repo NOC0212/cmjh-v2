@@ -5,6 +5,7 @@ import { CalendarView } from "@/components/CalendarView";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { WeatherWidget } from "@/components/WeatherWidget";
 import { ToolsSection } from "@/components/ToolsSection";
+import { HonorsBoard } from "@/components/HonorsBoard";
 import { ResponsiveNav, NavPage } from "@/components/ResponsiveNav";
 import { SearchPage } from "@/components/SearchPage";
 import { SiteAnnouncementsPage } from "@/components/SiteAnnouncementsPage";
@@ -36,6 +37,7 @@ const Index = () => {
             case "weather": return <WeatherWidget key="weather" />;
             case "commonSites": return <CommonSites key="commonSites" />;
             case "tools": return <ToolsSection key="tools" />;
+            case "honors": return <HonorsBoard key="honors" />;
             case "announcements": return <Announcements key="announcements" />;
             case "calendar": return <CalendarView key="calendar" />;
             default: return null;
