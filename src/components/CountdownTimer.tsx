@@ -50,18 +50,26 @@ const getDefaultConfigs = (): CountdownConfig[] => [
   },
   {
     id: "default-2",
-    targetDate: taiwanTime(2026, 1, 1, 0, 0, 0),
-    startDate: taiwanTime(2025, 1, 1, 0, 0, 0),
-    label: "2026年倒數",
-    progressLabel: "2025年進度條",
-    isDefault: true
-  },
-  {
-    id: "default-3",
     targetDate: taiwanTime(2026, 1, 20, 0, 0, 0),
     startDate: taiwanTime(2025, 9, 1, 0, 0, 0),
     label: "結業式 1/20",
     progressLabel: "本學期進度條",
+    isDefault: true
+  },
+  {
+    id: "default-3",
+    targetDate: taiwanTime(2026, 2, 23, 0, 0, 0),
+    startDate: taiwanTime(2026, 1, 21, 0, 0, 0),
+    label: "寒假",
+    progressLabel: "寒假進度條",
+    isDefault: true
+  },
+  {
+    id: "default-4",
+    targetDate: taiwanTime(2027, 1, 1, 0, 0, 0),
+    startDate: taiwanTime(2026, 1, 1, 0, 0, 0),
+    label: "2027年倒數",
+    progressLabel: "2026年進度條",
     isDefault: true
   }
 ];
