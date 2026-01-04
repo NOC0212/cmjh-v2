@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { FirstTimeSetup, checkFirstTimeSetup } from "@/components/FirstTimeSetup";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Loading } from "@/components/Loading";
@@ -17,10 +17,50 @@ const Order = lazy(() => import("./pages/tools/Order"));
 const Clock = lazy(() => import("./pages/tools/Clock"));
 const Timer = lazy(() => import("./pages/tools/Timer"));
 
+import MaintenancePage from "./pages/Maintenance";
+
 const queryClient = new QueryClient();
+
+interface MaintenanceConfig {
+  isMaintenance: boolean;
+  showTimer: boolean;
+  maintenanceEndTime: string;
+  message: string;
+}
 
 const App = () => {
   const [setupCompleted, setSetupCompleted] = useState(() => checkFirstTimeSetup());
+  const [maintenanceConfig, setMaintenanceConfig] = useState<MaintenanceConfig | null>(null);
+  const [loadingMaintenance, setLoadingMaintenance] = useState(true);
+
+  useEffect(() => {
+    const fetchMaintenance = async () => {
+      try {
+        const response = await fetch("/data/maintenance.json");
+        const data = await response.json();
+        setMaintenanceConfig(data);
+      } catch (error) {
+        console.error("Failed to fetch maintenance config:", error);
+      } finally {
+        setLoadingMaintenance(false);
+      }
+    };
+    fetchMaintenance();
+  }, []);
+
+  if (loadingMaintenance) {
+    return <Loading fullScreen message="正在讀取設定..." />;
+  }
+
+  if (maintenanceConfig?.isMaintenance) {
+    return (
+      <MaintenancePage
+        maintenanceEndTime={maintenanceConfig.maintenanceEndTime}
+        showTimer={maintenanceConfig.showTimer}
+        message={maintenanceConfig.message}
+      />
+    );
+  }
 
   // 如果尚未完成首次設定，顯示設定畫面
   if (!setupCompleted) {
