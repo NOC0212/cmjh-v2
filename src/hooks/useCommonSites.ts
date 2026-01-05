@@ -9,7 +9,7 @@ export interface CommonSite {
 
 const DEFAULT_SITES: CommonSite[] = [
   { id: "site-1", name: "114上學期行事曆", url: "/114學年度第一學期行事曆.pdf", order: 0 },
-  { id: "site-2", name: "晨間英語多媒體播放", url: "/英聽挑戰.pdf", order: 1 },
+  { id: "site-2", name: "崇明國中v2使用指南", url: "https://nocfond-blog.vercel.app/posts/docs-cmjh-v2/", order: 1 },
   { id: "site-3", name: "段考成績查詢", url: "http://120.115.12.4/", order: 2 },
   { id: "site-4", name: "12年國教專區", url: "https://jhquery.tn.edu.tw/", order: 3 },
   { id: "site-5", name: "國中學生輔導資料", url: "https://jhc.tn.edu.tw/Login.action", order: 4 },
