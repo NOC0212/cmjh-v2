@@ -11,7 +11,7 @@ interface MaintenancePageProps {
 const MaintenancePage = ({
     maintenanceEndTime = "2026-01-05T00:00:00+08:00",
     showTimer = true,
-    message = "網頁正在進行系統升級，請稍後再試。"
+    message = "網頁可能正在修復或更新，請稍後再試。"
 }: MaintenancePageProps) => {
     const [timeLeft, setTimeLeft] = useState<{
         days: number;

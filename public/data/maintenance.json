@@ -1,6 +1,6 @@
 {
-    "isMaintenance": false,
-    "showTimer": false,
-    "maintenanceEndTime": "2026-01-04T00:00:00+08:00",
+    "isMaintenance": true,
+    "showTimer": true,
+    "maintenanceEndTime": "2026-01-07T22:00:00+08:00",
     "message": "網頁發生了一些問題，正在修復中。"
 }
