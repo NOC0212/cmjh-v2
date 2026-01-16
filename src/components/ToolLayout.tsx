@@ -23,46 +23,46 @@ export function ToolLayout({ children, title }: ToolLayoutProps) {
     };
 
     return (
-        <div className="min-h-screen flex w-full bg-background">
-            <div className="flex-1 flex flex-col">
-                {/* 導覽列 */}
-                <header className="sticky top-0 z-40 bg-gradient-to-r from-background via-background to-primary/5 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-primary/20">
-                    <div className="flex h-16 items-center gap-4 px-4 lg:px-6">
-                        {/* 返回按鈕 */}
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={handleBack}
-                            className="mr-2"
-                        >
-                            <ArrowLeft className="h-5 w-5" />
-                        </Button>
+        <div className="h-screen w-full bg-background flex flex-col overflow-hidden">
+            {/* 導覽列 */}
+            <header className="flex-none sticky top-0 z-40 bg-gradient-to-r from-background via-background to-primary/5 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-primary/20">
+                <div className="flex h-16 items-center gap-4 px-4 lg:px-6">
+                    {/* 返回按鈕 */}
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleBack}
+                        className="mr-2"
+                    >
+                        <ArrowLeft className="h-5 w-5" />
+                    </Button>
 
-                        {/* 標題 */}
-                        <h1 className="text-base sm:text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent flex-1">
-                            {title}
-                        </h1>
+                    {/* 標題 */}
+                    <h1 className="text-base sm:text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent flex-1">
+                        {title}
+                    </h1>
 
-                        {/* 右側按鈕 */}
-                        <div className="flex items-center gap-2">
-                            {/* 選單 */}
-                            <AppSidebar />
-                        </div>
+                    {/* 右側按鈕 */}
+                    <div className="flex items-center gap-2">
+                        {/* 選單 */}
+                        <AppSidebar />
                     </div>
-                </header>
+                </div>
+            </header>
 
-                {/* 內容區 */}
-                <main className="flex-1 p-4 lg:p-8 max-w-7xl w-full mx-auto">
+            {/* 內容區 - 加入可捲動容器 */}
+            <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 lg:p-8">
+                <div className="max-w-7xl w-full mx-auto">
                     {children}
-                </main>
+                </div>
 
-                {/* Footer */}
-                <footer className="border-t border-primary/20 bg-gradient-to-r from-background to-primary/5 py-6 px-4 lg:px-6">
+                {/* Footer - 放在可捲動區域內以確保能看到 */}
+                <footer className="mt-12 border-t border-primary/20 bg-gradient-to-r from-background to-primary/5 py-6 px-4 lg:px-6 rounded-t-3xl">
                     <div className="max-w-7xl mx-auto text-center text-sm text-muted-foreground">
-                        <p>© 2025 崇明國中 by nocfond</p>
+                        <p>© 2026 崇明國中 by nocfond</p>
                     </div>
                 </footer>
-            </div>
+            </main>
         </div>
     );
 }

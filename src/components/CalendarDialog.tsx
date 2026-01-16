@@ -180,14 +180,14 @@ export function CalendarDialog() {
             <span className="hidden sm:inline">管理</span>
           </Button>
         </DialogTrigger>
-        <DialogContent className="w-[calc(100vw-2rem)] max-w-lg md:max-w-2xl max-h-[85vh] overflow-y-auto">
+        <DialogContent className="w-[95vw] max-w-md max-h-[85vh] overflow-y-auto rounded-2xl">
           <DialogHeader>
             <DialogTitle className="text-foreground">管理自訂事件</DialogTitle>
           </DialogHeader>
 
           <div className="space-y-6 py-4">
             {/* 新增/編輯表單 */}
-            <div className="space-y-4 p-4 bg-muted/30 rounded-lg border border-border">
+            <div className="space-y-4 p-4 bg-muted/30 rounded-xl border border-border">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-semibold text-foreground">
                   {editingId ? "編輯事件" : "新增事件"}
@@ -296,11 +296,11 @@ export function CalendarDialog() {
                   sortedEvents.map((event) => (
                     <div
                       key={event.id}
-                      className="flex items-center gap-2 bg-background rounded-md p-3 border border-border"
+                      className="flex items-center gap-2 bg-background rounded-lg p-3 border border-border"
                     >
                       <div className="flex-1 min-w-0">
-                        <div className="font-medium text-sm truncate text-foreground">{event.title}</div>
-                        <div className="text-xs text-muted-foreground truncate">{event.date}</div>
+                        <div className="font-medium text-sm break-words text-foreground">{event.title}</div>
+                        <div className="text-xs text-muted-foreground break-all">{event.date}</div>
                       </div>
                       <div className="flex gap-1 shrink-0">
                         <Button
@@ -341,7 +341,7 @@ export function CalendarDialog() {
 
       {/* 刪除確認對話框 */}
       <AlertDialog open={deleteId !== null} onOpenChange={(open) => !open && setDeleteId(null)}>
-        <AlertDialogContent>
+        <AlertDialogContent className="rounded-2xl">
           <AlertDialogHeader>
             <AlertDialogTitle>確認刪除</AlertDialogTitle>
             <AlertDialogDescription>

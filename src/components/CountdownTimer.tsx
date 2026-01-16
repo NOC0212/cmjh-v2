@@ -42,14 +42,6 @@ const taiwanTime = (year: number, month: number, day: number, hour = 0, minute =
 const getDefaultConfigs = (): CountdownConfig[] => [
   {
     id: "default-1",
-    targetDate: taiwanTime(2026, 1, 15, 0, 0, 0),
-    startDate: taiwanTime(2025, 11, 29, 0, 0, 0),
-    label: "第三次段考倒數 1/15 1/16",
-    progressLabel: "上次至本次段考進度條",
-    isDefault: true
-  },
-  {
-    id: "default-2",
     targetDate: taiwanTime(2026, 1, 20, 0, 0, 0),
     startDate: taiwanTime(2025, 9, 1, 0, 0, 0),
     label: "結業式 1/20",
@@ -57,15 +49,15 @@ const getDefaultConfigs = (): CountdownConfig[] => [
     isDefault: true
   },
   {
-    id: "default-3",
+    id: "default-2",
     targetDate: taiwanTime(2026, 2, 23, 0, 0, 0),
-    startDate: taiwanTime(2026, 1, 21, 0, 0, 0),
+    startDate: taiwanTime(2026, 1, 24, 0, 0, 0),
     label: "寒假",
     progressLabel: "寒假進度條",
     isDefault: true
   },
   {
-    id: "default-4",
+    id: "default-3",
     targetDate: taiwanTime(2027, 1, 1, 0, 0, 0),
     startDate: taiwanTime(2026, 1, 1, 0, 0, 0),
     label: "2027年倒數",
@@ -386,7 +378,7 @@ export function CountdownTimer() {
                   <Plus className="h-4 w-4" />
                 </Button>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent className="w-[95vw] max-w-md rounded-2xl">
                 <DialogHeader>
                   <DialogTitle>{editingId ? "編輯倒計時" : "新增倒計時"}</DialogTitle>
                 </DialogHeader>
@@ -423,19 +415,22 @@ export function CountdownTimer() {
                   <Settings className="h-4 w-4" />
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-h-[80vh] max-w-2xl overflow-y-auto">
+              <DialogContent className="max-h-[80vh] w-[95vw] max-w-md overflow-y-auto rounded-2xl">
                 <DialogHeader>
                   <DialogTitle>管理倒計時</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-3 py-4">
                   {allCountdowns.map((countdown, index) => (
-                    <div key={countdown.id} className="flex items-center gap-3 rounded-lg border border-border bg-muted/50 p-4">
-                      <div className="flex-1">
-                        <div className="mb-1 flex items-center gap-2 text-sm font-semibold text-foreground">
-                          {countdown.label}
-                          {countdown.isDefault && <span className="rounded bg-primary/10 px-2 py-0.5 text-xs text-primary">預設</span>}
+                    <div key={countdown.id} className="flex items-center gap-3 rounded-xl border border-border bg-muted/50 p-4">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">
+                        {index + 1}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="mb-1 flex flex-wrap items-center gap-2 text-sm font-semibold text-foreground">
+                          <span className="break-words">{countdown.label}</span>
+                          {countdown.isDefault && <span className="shrink-0 rounded bg-primary/10 px-2 py-0.5 text-xs text-primary">預設</span>}
                         </div>
-                        <div className="text-xs text-muted-foreground">目標: {formatDate(countdown.targetDate)}</div>
+                        <div className="text-xs text-muted-foreground break-all">目標: {formatDate(countdown.targetDate)}</div>
                       </div>
                       <div className="flex gap-1">
                         <Button variant="ghost" size="icon" onClick={() => handleEdit(countdown)} className="h-8 w-8"><Edit className="h-4 w-4" /></Button>
@@ -454,7 +449,7 @@ export function CountdownTimer() {
             </Dialog>
 
             <AlertDialog open={resetDialogOpen} onOpenChange={setResetDialogOpen}>
-              <AlertDialogContent>
+              <AlertDialogContent className="rounded-2xl">
                 <AlertDialogHeader>
                   <AlertDialogTitle>確認重置</AlertDialogTitle>
                   <AlertDialogDescription>

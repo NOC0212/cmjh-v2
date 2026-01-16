@@ -57,7 +57,7 @@ export function HonorsBoard() {
     if (loading) {
         return (
             <section id="honors" className="mb-12 scroll-mt-20">
-                <h2 className="text-3xl font-bold mb-6 text-foreground">榮譽榜</h2>
+                <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">榮譽榜</h2>
                 <div className="space-y-3">
                     {Array.from({ length: 5 }).map((_, i) => (
                         <div key={i} className="bg-card rounded-2xl p-4 border border-border">
@@ -76,7 +76,7 @@ export function HonorsBoard() {
     return (
         <section id="honors" className="mb-12 scroll-mt-20">
             <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
-                <h2 className="text-3xl font-bold text-foreground">榮譽榜</h2>
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">榮譽榜</h2>
                 <div className="flex items-center gap-2">
                     <Button
                         variant="outline"

@@ -1,520 +1,112 @@
-# 崇明國中現代化組件重構專案
+# 🏫 崇明國中現代化組件重構專案 (CMJH-v2)
 
-這是一個以 https://www.cmjh.tn.edu.tw/ 重新使用 TypeScript 及相關語言重新排版、簡化、自定義、整合而成的 v2 網頁。  
-本專案以開源，請自行取用或提交分支。
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=FFD62E)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
-## ✨ 主要功能
-
-### 🎨 主題系統
-支援多種主題切換，提供個性化視覺體驗：
-- 淺色模式
-- 深色模式
-- 藍色主題
-- 綠色主題
-- 橙色主題
-- 紅色主題
-- 紫色主題
-- 漸層主題
-
-### 📅 倒數計時器
-- **自訂倒數計時功能**
-  - 支援新增多個自訂倒數計時
-  - 可設定標題、目標日期、起始日期
-  - 自訂進度條標籤文字
-  - 編輯和刪除現有倒數計時
-  - 調整倒數計時顯示順序（上移/下移）
-  - 重置為預設倒數計時
-  - 所有設定持久化保存
-- **視覺改進**
-  - 靜態藍色→紫色漸變背景
-  - 進度條末端柔和白色光暈效果
-  - 輕微脈動動畫，突出當前進度
-
-### 🌤️ 天氣預報
-使用中央氣象署（CWA）API，支援 22 個縣市選擇和自動定位功能。
-- 顯示當前天氣和未來 3 個時段的預報
-- 日期、示意圖、溫度、降雨機率
-- 響應式卡片設計
-
-### 🔗 常用網站
-可自訂的常用網站快速連結
-- 可在 `/src/components/CommonSites.tsx` 進行更改
-- 格式：`{ name: "範例(顯示名稱)", url: "127.0.0.1(網址)" }`
-
-### 📢 行政公告
-- 使用 GitHub Actions 自動爬取學校公告
-- 每 5 分鐘更新一次
-- 支援翻頁和收藏功能
-- 原始碼：`scraper.py`
-- 資料位置：`/public/data/announcements.json`
-
-### 📆 行事曆
-- 響應式設計，點擊日期查看詳細內容
-- 每週手動更新及維護
-- 資料位置：`/public/data/calendar.json`
-
-### 🛠️ 小工具系統
-
-#### 隨機抽籤輪盤 🎯
-- 支援自訂選項，每行一個
-- 完整色塊填滿的 SVG 輪盤（8 種顏色循環）
-- 流暢的旋轉動畫（3 秒，緩動曲線）
-- 預設填入 1-30，開啟即可使用
-
-#### 分組工具 👥
-- 兩種分組模式：按組數 / 按每組人數
-- Fisher-Yates 洗牌演算法保證隨機性
-- 分組結果以卡片形式展示
-- 預設填入 1-30
-
-#### 順序工具 🔀
-- 隨機排列名單順序
-- Fisher-Yates 洗牌演算法
-- 序號標記，清晰呈現
-- 支援一鍵複製結果到剪貼簿
-
-#### 時鐘 🕐
-- 實時顯示當前時間、日期、星期
-- 支援全螢幕顯示/退出
-- 顯示多時區參考（台北、東京、紐約）
-- 每秒自動更新
-
-#### 計時器 / 碼表 ⏱️
-- **倒數計時模式**
-  - 自訂分鐘和秒鐘
-  - 視覺進度圓環顯示剩餘時間
-  - 時間到播放提示音
-  - 快速設定按鈕（1/3/5/10/15/30 分鐘）
-- **碼表模式**
-  - 正數計時，從 0 開始
-  - 精確到 0.01 秒
-  - Tab 切換兩種模式
-
-## 🔧 技術棧
-
-- **框架**: React + TypeScript
-- **路由**: React Router
-- **樣式**: Tailwind CSS
-- **UI 組件**: Radix UI
-- **狀態管理**: React Hooks
-- **構建工具**: Vite
-- **部署**: Vercel
-
-## 📂 專案結構
-
-```
-src/
-├── components/          # 主要組件
-│   ├── ui/             # UI 基礎組件
-│   ├── CountdownTimer.tsx
-│   ├── WeatherWidget.tsx
-│   ├── Announcements.tsx
-│   ├── CalendarView.tsx
-│   ├── CommonSites.tsx
-│   ├── ToolsSection.tsx
-│   ├── ToolLayout.tsx
-│   └── ...
-├── pages/              # 頁面組件
-│   ├── Index.tsx
-│   └── tools/         # 工具頁面
-│       ├── Wheel.tsx
-│       ├── Grouping.tsx
-│       ├── Order.tsx
-│       ├── Clock.tsx
-│       └── Timer.tsx
-├── hooks/              # 自訂 Hooks
-└── lib/                # 工具函數
-```
-
-## 🚀 開發指南
-
-### 前置需求
-
-- **Node.js**: >= 18.0.0
-- **npm**: >= 9.0.0 或 **yarn** >= 1.22.0
-- **Git**: 用於版本控制
-
-### 快速開始
-
-1. **克隆專案**
-```bash
-git clone https://github.com/NOC0212/cmjh-v2.git
-cd cmjh-v2
-```
-
-2. **安裝依賴**
-```bash
-npm install
-```
-
-3. **設置環境變數**
-```bash
-# 複製環境變數範例文件
-cp .env.example .env
-
-# 編輯 .env 文件，填入你的 API 金鑰
-```
-
-4. **啟動開發伺服器**
-```bash
-npm run dev
-```
-
-5. **打開瀏覽器**
-訪問 `http://localhost:8080`
-
-### 環境變數設置
-
-#### 本地開發環境
-
-1. **創建 `.env` 文件**
-在項目根目錄創建 `.env` 文件（可參考 `.env.example`）
-
-2. **設置環境變數**
-```env
-# 中央氣象署 API 金鑰
-# 請到 https://opendata.cwa.gov.tw/ 申請 API 金鑰
-VITE_CWA_API_KEY=your-api-key-here
-```
-
-**注意**：
-- `.env` 文件已加入 `.gitignore`，不會被提交到版本控制
-- 如果沒有設置 `VITE_CWA_API_KEY`，將使用預設的開發用 API 金鑰
-- 在生產環境部署時，請在部署平台（如 Vercel）設置環境變數
-
-#### Vercel 部署設置
-
-在 Vercel 中設置環境變數的步驟：
-
-1. **進入 Vercel 專案設置**
-   - 登入 [Vercel Dashboard](https://vercel.com/dashboard)
-   - 選擇你的專案
-   - 點擊 **Settings** → **Environment Variables**
-
-2. **添加環境變數**
-   - 變數名稱：`VITE_CWA_API_KEY`
-   - 變數值：你的中央氣象署 API 金鑰
-   - 環境：選擇 **Production**、**Preview**、**Development**（建議全部選擇）
-
-3. **重新部署**
-   - 設置環境變數後，Vercel 會自動觸發新的部署
-   - 或者手動點擊 **Redeploy** 按鈕
-
-**重要提示**：
-- ✅ Vite 環境變數必須以 `VITE_` 開頭才能在客戶端訪問
-- ✅ 設置環境變數後，需要重新部署才能生效
-- ✅ 環境變數會在構建時注入到代碼中，不會暴露在客戶端代碼中
-
-### 開發命令
-
-| 命令 | 說明 |
-|------|------|
-| `npm run dev` | 啟動開發伺服器（http://localhost:8080） |
-| `npm run build` | 構建生產版本到 `dist/` 目錄 |
-| `npm run build:dev` | 構建開發版本（包含 source maps） |
-| `npm run preview` | 預覽構建結果 |
-| `npm run lint` | 運行 ESLint 檢查代碼 |
-
-### 開發流程
-
-1. **創建功能分支**
-```bash
-git checkout -b feature/your-feature-name
-```
-
-2. **開發和測試**
-- 在開發模式下進行開發
-- 使用瀏覽器開發工具調試
-- 確保代碼通過 lint 檢查
-
-3. **提交代碼**
-```bash
-git add .
-git commit -m "feat: 添加新功能"
-git push origin feature/your-feature-name
-```
-
-4. **創建 Pull Request**
-- 在 GitHub 上創建 PR
-- 等待代碼審查
-- 合併到主分支
-
-### 專案結構說明
-
-```
-cmjh-v2/
-├── public/              # 靜態資源
-│   ├── data/           # JSON 數據文件
-│   │   ├── announcements.json  # 行政公告
-│   │   └── calendar.json      # 行事曆
-│   └── ...
-├── src/
-│   ├── components/     # React 組件
-│   │   ├── ui/        # shadcn/ui 基礎組件
-│   │   ├── ErrorBoundary.tsx  # 錯誤邊界
-│   │   ├── Loading.tsx        # 加載組件
-│   │   └── ...
-│   ├── hooks/         # 自訂 Hooks
-│   ├── lib/           # 工具函數
-│   ├── pages/         # 頁面組件
-│   │   ├── Index.tsx  # 首頁
-│   │   └── tools/     # 工具頁面（代碼分割）
-│   ├── App.tsx        # 應用入口
-│   └── main.tsx       # 應用啟動
-├── .env.example       # 環境變數範例
-├── vite.config.ts     # Vite 配置
-├── tsconfig.json      # TypeScript 配置
-└── package.json       # 專案依賴
-```
-
-### 代碼規範
-
-- **TypeScript**: 使用嚴格模式，避免使用 `any`
-- **ESLint**: 遵循專案 ESLint 規則
-- **組件命名**: 使用 PascalCase（如 `CountdownTimer.tsx`）
-- **文件命名**: 組件文件使用 PascalCase，工具文件使用 camelCase
-- **導入順序**: 
-  1. React 相關
-  2. 第三方庫
-  3. 內部組件
-  4. 工具函數
-  5. 類型定義
-
-### 性能優化
-
-專案已實作以下性能優化：
-
-- ✅ **代碼分割**: 工具頁面使用 lazy loading
-- ✅ **錯誤邊界**: 防止應用崩潰
-- ✅ **useMemo/useCallback**: 減少不必要的重新渲染
-- ✅ **代碼分割配置**: 將大型依賴庫分離到獨立 chunk
-
-### 調試技巧
-
-1. **React DevTools**
-   - 安裝瀏覽器擴展
-   - 檢查組件狀態和 props
-   - 使用 Profiler 分析性能
-
-2. **瀏覽器控制台**
-   - 查看錯誤信息
-   - 檢查網絡請求
-   - 使用斷點調試
-
-3. **Vite DevTools**
-   - 使用 Vite 的 HMR（熱模塊替換）
-   - 檢查構建輸出
-
-## 🎯 路由配置
-
-- `/` - 首頁
-- `/tools/wheel` - 隨機抽籤輪盤
-- `/tools/grouping` - 分組工具
-- `/tools/order` - 順序工具
-- `/tools/clock` - 時鐘
-- `/tools/timer` - 計時器 / 碼表
-
-## 🌈 自訂指南
-
-### 修改倒數計時器
-可在組件設定對話框中：
-- 新增自訂倒數計時
-- 編輯現有倒數計時
-- 調整顯示順序
-- 刪除不需要的倒數計時
-
-### 修改常用網站
-編輯 `/src/components/CommonSites.tsx`：
-```typescript
-{ name: "網站名稱", url: "https://example.com" }
-```
-
-### 修改行事曆
-編輯 `/public/data/calendar.json`：
-```json
-{
-  "2024-01": [
-    {
-      "date": "2024-01-15",
-      "title": "活動名稱"
-    }
-  ]
-}
-```
+這是一個以 [崇明國中官網](https://www.cmjh.tn.edu.tw/) 為基礎，使用 React 18、TypeScript 及現代化 Web 技術重新開發的 v2 2.0 專案。本專案將官網資訊進行高度整合、簡化與自定義，並加入多項專為教學與行政設計的數位工具。
 
 ---
 
-## 🔄 最新更新（2026-01-04）V1.2.3
+## 🎨 核心功能詳解
 
-### 🛠️ 維修模式系統
-- ✅ **新增維修頁面**：當系統更新時，可顯示專屬維修畫面。
-- ✅ **倒數計時功能**：預計維修完成時間倒數，結束時自動切換狀態。
-- ✅ **動態配置**：可透過 `maintenance.json` 即時控制維修開關與文字。
+### 1. 智慧主題與視覺系統
+支援深層次的個人化視覺配置，所有設定均會持久化保存於瀏覽器中：
+- **雙重選擇器**：支援「外觀模式」（隨系統、淺色、深色）與「主題色彩」獨立配置。
+- **預設主題庫**：
+  - 基礎色系：藍、綠、橘、紅、紫色。
+  - 特色主題：**漸層主題 (Gradient)**、**霓虹主題 (Neon)**。
+- **流暢體驗**：全站整合 `Framer Motion`，提供細膩的區塊載入動畫與元件過渡效果。
 
-### 👻 404 頁面重製
-- ✅ **現代化設計**：加入動態幽靈動畫與磨砂玻璃視覺效果。
-- ✅ **優化導航**：快速連結回到首頁或返回上一頁。
+### 2. 倒數計時系統 (Countdown Widgets)
+不僅是計時器，更是學習進度追蹤器：
+- **自訂多組配置**：支援同時追蹤段考、結業式、國中教育會考等重要日程。
+- **動態進度條**：
+  - **邏輯**：根據「起始日期」與「目標日期」計算即時百分比。
+  - **視覺**：進度條末端具備柔和白色光暈，並有輕微脈動效果。
+- **管理功能**：支援新增、編輯標題/日期、調整顯示順序（上移/下移）、刪除及重置為預設。
+- **自動化標籤**：可獨立設定進度條下方的顯示文字（如：本學期進度、寒假倒數進度）。
 
-### ⚙️ 系統優化
-- ✅ **動畫庫整合**：正式引入 `framer-motion` 提升全站動態體驗。
+### 3. 多功能教學小工具 (Tool Suite)
+專為課堂互動設計的輕量化工具，支援代碼分割 (Lazy Loading) 提升載入速度：
+- **隨機抽籤輪盤 (Wheel)** 🎯
+  - **技術**：使用 SVG 動態生成輪盤色塊，內建 8 種循環配色。
+  - **邏輯**：流暢的 3 秒緩動曲線旋轉，預設 1-30 號名單，支援即時修改每行一個選項。
+- **分組工具 (Grouping)** 👥
+  - **模式**：可選擇「按組數分組」或「按每組人數分組」。
+  - **演算法**：採用 Fisher-Yates 洗牌演算法，確保 100% 隨機性。
+- **順序工具 (Order)** 🔀
+  - 快速生成隨機名單順序，具備清晰的序號標記。
+  - 支援一鍵複製結果到剪貼簿。
+- **專業計時器 & 碼錶 (Timer)** ⏱️
+  - **倒數模式**：提供 1/3/5/10/30 分鐘快捷鍵，時間結束具備視覺與音效提醒。
+  - **碼錶模式**：精確至 0.01 秒，支援 Tab 快速切換。
+- **全螢幕時鐘 (Clock)** 🕐
+  - 提供電子數位與多時區參考（台北、東京、紐約），支援沉浸式全螢幕顯示。
+
+### 4. 自動化行政與資訊區塊
+- **中央氣象署 (CWA) 天氣預報**：
+  - 支援 22 縣市選擇與 **自動定位**。
+  - 顯示 36 小時預報（分為三個時段），包含降雨機率與溫度變化。
+- **行政公告爬蟲**：
+  - **核心邏輯**：透過 `scraper.py` 自動爬取校網公告，生成 `announcements.json`。
+  - **自動化**：由 GitHub Actions 每 5 分鐘觸發一次，確保資訊同步。
+  - **介面**：支援分頁顯示、關鍵字搜尋，並整合「收藏功能」。
+- **動態行事曆**：
+  - 資料儲存於 `calendar.json`，每月持續維護更新。
+  - 響應式格狀設計，點擊特定日期可展開查看詳細活動清單。
 
 ---
 
-## 🔧 故障排除
+## 版本管理與資料安全
+- **全域版本號 (App Versioning)**：
+  - 程式碼會自動追蹤系統版本
+  - 當偵測到核心資料結構變更時，會執行 `ensureVersion()` 進行平滑遷移。
+- **資料管理中心**：
+  - **備份**：支援將所有個人設定（含自訂計時器、標籤、收藏）匯出為 `.json` 檔案。
+  - **還原**：一鍵匯入備份檔，完整恢復使用習慣。
+- **智能更新提示 (Update Prompt)**：
+  - 遠端版本更新時，系統會彈出美觀的通知視窗，提示使用者重新整理以獲取新功能。
 
-### 常見問題
+---
 
-#### 1. 環境變數未生效
+## 🛠️ 技術棧與架構
 
-**問題**: 設置了環境變數但應用無法讀取
+| 類別 | 使用技術 |
+|------|----------|
+| **框架** | React 18, TypeScript 5, Vite |
+| **樣式** | Tailwind CSS, Framer Motion, Lucide Icons |
+| **組件庫** | Radix UI, Shadcn/UI |
+| **狀態/資料** | TanStack Query (React Query), LocalStorage |
+| **路由** | React Router 6 |
+| **自動化** | Python (Scrapy), GitHub Actions |
 
-**解決方案**:
-- 確認環境變數以 `VITE_` 開頭
-- 重新啟動開發伺服器（`npm run dev`）
-- 檢查 `.env` 文件是否在項目根目錄
-- 確認 `.env` 文件格式正確（無引號，無空格）
+### 📂 專案目錄說明
+- `src/components/`：模組化頁面元件（天氣、計時、公告等）。
+- `src/pages/tools/`：教學工具頁面專屬目錄。
+- `src/lib/app-version.ts`：最高優先級的版本控制邏輯。
+- `src/hooks/`：封裝共用邏輯（如 `useComponentSettings` 管理元件排序）。
+- `public/data/`：靜態數據中心，存放爬蟲產出的 JSON 檔案。
 
-#### 2. 構建失敗
+---
 
-**問題**: `npm run build` 失敗
+## 🚀 開發人員指南
 
-**解決方案**:
-```bash
-# 清除緩存和 node_modules
-rm -rf node_modules dist
-npm install
-npm run build
-```
+1. **環境配置**：
+   - 複製 `.env.example` 並重新命名為 `.env`。
+   - 填入 `VITE_CWA_API_KEY` 以啟用天氣功能。
+2. **運行指令**：
+   - `npm run dev`: 啟動開發伺服器。
+   - `npm run build`: 生產環境構建。
+   - `npm run lint`: 執行代碼檢查。
 
-#### 3. 類型錯誤
+---
 
-**問題**: TypeScript 類型檢查失敗
+## 📄 授權與宣告
+本專案為開源專案，旨在提升校園資訊化。更多變更細節請參閱 [UPDATE_LOG.md](file:///d:/python311/cmjh/UPDATE_LOG.md)。
 
-**解決方案**:
-- 檢查 `tsconfig.json` 配置
-- 確認所有類型定義正確
-- 使用 `// @ts-ignore` 僅作為最後手段
-
-#### 4. 天氣 API 無法使用
-
-**問題**: 天氣資訊無法載入
-
-**解決方案**:
-- 檢查 API 金鑰是否正確設置
-- 確認網絡連接正常
-- 檢查瀏覽器控制台的錯誤信息
-- 確認 API 金鑰未過期
-
-#### 5. localStorage 錯誤
-
-**問題**: 保存設定時出現錯誤
-
-**解決方案**:
-- 檢查瀏覽器是否支援 localStorage
-- 確認未使用私密模式（某些瀏覽器限制）
-- 檢查存儲空間是否充足
-- 清除瀏覽器緩存和 localStorage
-
-#### 6. 路由無法訪問
-
-**問題**: 訪問路由時顯示 404
-
-**解決方案**:
-- 確認 `vercel.json` 配置正確
-- 檢查路由路徑是否正確
-- 確認構建輸出包含所有路由
-
-#### 7. 組件錯誤導致白屏
-
-**問題**: 應用出現白屏
-
-**解決方案**:
-- 檢查瀏覽器控制台的錯誤信息
-- 確認 Error Boundary 正常工作
-- 使用 React DevTools 檢查組件狀態
-- 查看錯誤邊界顯示的錯誤詳情
-
-#### 8. 開發伺服器無法啟動
-
-**問題**: `npm run dev` 失敗
-
-**解決方案**:
-```bash
-# 檢查 Node.js 版本
-node --version  # 應該 >= 18.0.0
-
-# 清除緩存
-npm cache clean --force
-
-# 重新安裝依賴
-rm -rf node_modules package-lock.json
-npm install
-```
-
-#### 9. 樣式未正確載入
-
-**問題**: Tailwind CSS 樣式未生效
-
-**解決方案**:
-- 確認 `tailwind.config.ts` 配置正確
-- 檢查 `index.css` 是否正確導入
-- 確認構建過程包含 Tailwind 處理
-- 清除瀏覽器緩存
-
-#### 10. 代碼分割後頁面無法載入
-
-**問題**: 使用 lazy loading 後頁面無法載入
-
-**解決方案**:
-- 確認所有 lazy 導入的路徑正確
-- 檢查 Suspense fallback 是否正確設置
-- 查看網絡請求是否成功
-- 確認構建輸出包含所有 chunk
-
-### 獲取幫助
-
-如果遇到其他問題：
-
-1. **查看 Issues**: 在 GitHub Issues 中搜索類似問題
-2. **創建 Issue**: 提供詳細的錯誤信息和重現步驟
-3. **檢查文檔**: 查看相關文檔和代碼註釋
-4. **聯繫維護者**: 通過 GitHub 聯繫專案維護者
-
-### 調試模式
-
-啟用詳細日誌：
-
-```bash
-# 開發模式（已包含詳細日誌）
-npm run dev
-
-# 構建開發版本（包含 source maps）
-npm run build:dev
-```
-
-## 📄 授權
-
-本專案以開源形式發布，歡迎自由取用或提交分支。
-
-## 🤝 貢獻
-
-歡迎提交 Issue 或 Pull Request！
-
-### 貢獻指南
-
-1. **Fork 專案**
-2. **創建功能分支** (`git checkout -b feature/AmazingFeature`)
-3. **提交更改** (`git commit -m 'Add some AmazingFeature'`)
-4. **推送到分支** (`git push origin feature/AmazingFeature`)
-5. **開啟 Pull Request**
-
-### 貢獻類型
-
-- 🐛 Bug 修復
-- ✨ 新功能
-- 📝 文檔改進
-- 🎨 UI/UX 改進
-- ⚡ 性能優化
-- 🔧 代碼重構
-
-**專案持續更新中！**
+- **最新版本**：v1.3.0
+- **更新日期**：2026-01-17
+- **開發者**：[nocfond](https://github.com/NOC0212)

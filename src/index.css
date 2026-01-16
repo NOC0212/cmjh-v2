@@ -75,103 +75,211 @@
     --shadow-card-hover: 0 8px 24px hsl(0 0% 0% / 0.35);
     --shadow-glow: 0 0 20px hsl(210 75% 55% / 0.3);
   }
+
+  /* Custom Scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground) / 0.3) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 20px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--primary) / 0.5);
+  }
 }
 
-/* Theme definitions */
+/* Color scheme definitions - These only override primary colors and gradients */
 .theme-blue,
 [data-theme="blue"] {
   --primary: 210 75% 48%;
-  --primary-foreground: 0 0% 100%;
-  --accent: 210 75% 55%;
+  --accent: 210 75% 60%;
   --ring: 210 75% 48%;
-  --background: 210 40% 98%;
-  --card: 0 0% 100%;
-  --muted: 210 40% 95%;
-  --border: 214 32% 91%;
   --gradient-primary: linear-gradient(135deg, hsl(210 75% 48%), hsl(210 75% 60%));
-  --gradient-accent: linear-gradient(135deg, hsl(210 75% 55%), hsl(210 75% 65%));
 }
 
 .theme-green,
 [data-theme="green"] {
   --primary: 142 71% 45%;
-  --primary-foreground: 0 0% 100%;
-  --accent: 142 71% 50%;
+  --accent: 142 71% 55%;
   --ring: 142 71% 45%;
-  --background: 140 40% 98%;
-  --card: 0 0% 100%;
-  --muted: 140 40% 95%;
-  --border: 140 20% 90%;
   --gradient-primary: linear-gradient(135deg, hsl(142 71% 45%), hsl(142 71% 55%));
-  --gradient-accent: linear-gradient(135deg, hsl(142 71% 50%), hsl(142 71% 60%));
 }
 
 .theme-orange,
 [data-theme="orange"] {
   --primary: 30 95% 55%;
-  --primary-foreground: 0 0% 100%;
-  --accent: 30 95% 60%;
+  --accent: 30 95% 65%;
   --ring: 30 95% 55%;
-  --background: 30 40% 98%;
-  --card: 0 0% 100%;
-  --muted: 30 40% 95%;
-  --border: 30 20% 90%;
   --gradient-primary: linear-gradient(135deg, hsl(30 95% 55%), hsl(30 95% 65%));
-  --gradient-accent: linear-gradient(135deg, hsl(30 95% 60%), hsl(30 95% 70%));
 }
 
 .theme-red,
 [data-theme="red"] {
   --primary: 0 84% 60%;
-  --primary-foreground: 0 0% 100%;
-  --accent: 0 84% 65%;
+  --accent: 0 84% 70%;
   --ring: 0 84% 60%;
-  --background: 0 40% 98%;
-  --card: 0 0% 100%;
-  --muted: 0 40% 95%;
-  --border: 0 20% 90%;
   --gradient-primary: linear-gradient(135deg, hsl(0 84% 60%), hsl(0 84% 70%));
-  --gradient-accent: linear-gradient(135deg, hsl(0 84% 65%), hsl(0 84% 75%));
 }
 
 .theme-purple,
 [data-theme="purple"] {
   --primary: 271 81% 56%;
-  --primary-foreground: 0 0% 100%;
-  --accent: 271 81% 61%;
+  --accent: 271 81% 66%;
   --ring: 271 81% 56%;
-  --background: 270 40% 98%;
-  --card: 0 0% 100%;
-  --muted: 270 35% 95%;
-  --border: 270 20% 90%;
   --gradient-primary: linear-gradient(135deg, hsl(271 81% 56%), hsl(271 81% 66%));
-  --gradient-accent: linear-gradient(135deg, hsl(271 81% 61%), hsl(271 81% 71%));
 }
 
+/* Neon is a special skin - works best in dark mode, but now supports light mode */
+.theme-neon,
+[data-theme="neon"] {
+  --primary: 190 100% 40%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 327 100% 50%;
+  --secondary-foreground: 0 0% 100%;
+  --accent: 327 100% 50%;
+  --accent-foreground: 0 0% 100%;
+  --ring: 190 100% 40%;
+  --gradient-primary: linear-gradient(135deg, hsl(190 100% 40%), hsl(327 100% 50%));
+  --gradient-accent: linear-gradient(135deg, hsl(327 100% 50%), hsl(280 100% 40%));
+  --shadow-glow: 0 0 15px hsl(190 100% 40% / 0.2);
+}
+
+.dark.theme-neon,
+.dark[data-theme="neon"] {
+  --background: 240 10% 4%;
+  --foreground: 0 0% 98%;
+  --card: 240 10% 8%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 10% 8%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 190 100% 50%;
+  --primary-foreground: 240 10% 4%;
+  --secondary: 327 100% 54%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 10% 12%;
+  --muted-foreground: 240 5% 70%;
+  --accent: 327 100% 54%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 100% 50%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 190 100% 50% / 0.4;
+  --input: 240 10% 12%;
+  --ring: 190 100% 50%;
+  --gradient-primary: linear-gradient(135deg, hsl(190 100% 50%), hsl(327 100% 54%));
+  --gradient-accent: linear-gradient(135deg, hsl(327 100% 54%), hsl(280 100% 50%));
+  --shadow-glow: 0 0 15px hsl(190 100% 50% / 0.4);
+  --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.6);
+  --shadow-card-hover: 0 0 20px hsl(190 100% 50% / 0.3), 0 8px 32px hsl(0 0% 0% / 0.8);
+}
+
+.theme-neon .border,
+.theme-neon .border-border,
+[data-theme="neon"] .border,
+[data-theme="neon"] .border-border {
+  border-color: hsl(190 100% 50% / 0.4);
+  box-shadow: 0 0 5px hsl(190 100% 50% / 0.2);
+}
+
+.theme-neon .bg-card,
+[data-theme="neon"] .bg-card {
+  border: 1px solid hsl(190 100% 50% / 0.2);
+}
+
+/* Modern is a high-contrast skin - Linkvertise inspired */
+.theme-modern,
+[data-theme="modern"] {
+  --primary: 43 100% 52%;
+  --accent: 32 100% 50%;
+  --ring: 43 100% 52%;
+  --gradient-primary: linear-gradient(135deg, hsl(48 100% 50%), hsl(38 100% 50%), hsl(25 100% 48%));
+  --gradient-accent: linear-gradient(135deg, hsl(38 100% 50%), hsl(32 100% 50%), hsl(25 100% 48%));
+}
+
+/* Modern Specifics - High Contrast Dark Theme but with Gradient Logic */
+.dark.theme-modern,
+.dark[data-theme="modern"] {
+  --background: 0 0% 7%;
+  --card: 0 0% 11%;
+  --border: 0 0% 18%;
+  --muted: 0 0% 10%;
+  --shadow-glow: 0 0 15px hsl(43 100% 52% / 0.25);
+  --gradient-card: linear-gradient(135deg, hsl(48 100% 50% / 0.08), hsl(38 100% 50% / 0.08), hsl(25 100% 50% / 0.05));
+  --gradient-calendar: linear-gradient(to bottom right, hsl(48 100% 50% / 0.1), hsl(38 100% 50% / 0.05));
+  --gradient-timer: linear-gradient(135deg, hsl(48 100% 50% / 0.2), hsl(25 100% 50% / 0.15));
+  --gradient-site: linear-gradient(to bottom right, hsl(48 100% 50% / 0.08), hsl(32 100% 50% / 0.08));
+  --gradient-progress: linear-gradient(90deg, hsl(48 100% 50%), hsl(32 100% 50%));
+}
+
+/* Gradient scheme colors */
 .theme-gradient,
 [data-theme="gradient"] {
   --primary: 240 75% 52%;
-  --primary-foreground: 0 0% 100%;
-  --accent: 271 81% 56%;
   --ring: 240 75% 52%;
+  --gradient-primary: linear-gradient(135deg, hsl(210 75% 48%), hsl(271 81% 56%), hsl(45 93% 58%));
+  --gradient-accent: linear-gradient(135deg, hsl(271 81% 56%), hsl(210 75% 55%), hsl(45 93% 58%));
+}
+
+/* Gradient Light Mode specifics */
+:root:not(.dark) .theme-gradient,
+:root:not(.dark)[data-theme="gradient"] {
   --background: 220 60% 99%;
   --card: 225 55% 99%;
   --muted: 220 50% 97%;
   --border: 220 30% 92%;
   --foreground: 220 20% 20%;
   --card-foreground: 220 20% 20%;
-  --gradient-primary: linear-gradient(135deg, hsl(210 75% 48%), hsl(271 81% 56%), hsl(45 93% 58%));
-  --gradient-accent: linear-gradient(135deg, hsl(271 81% 56%), hsl(210 75% 55%), hsl(45 93% 58%));
-  --gradient-card: linear-gradient(135deg, hsl(210 75% 48% / 0.08), hsl(271 81% 56% / 0.08), hsl(45 93% 58% / 0.08));
-  --gradient-calendar: linear-gradient(to bottom right, hsl(210 75% 48% / 0.1), hsl(271 81% 56% / 0.1));
-  --gradient-timer: linear-gradient(135deg, hsl(210 75% 48% / 0.2), hsl(271 81% 56% / 0.15), hsl(45 93% 58% / 0.15));
-  --gradient-site: linear-gradient(to bottom right, hsl(210 75% 48% / 0.06), hsl(271 81% 56% / 0.06), hsl(45 93% 58% / 0.06));
+}
+
+/* Gradient Dark Mode specifics */
+.dark.theme-gradient,
+.dark[data-theme="gradient"] {
+  --background: 225 30% 6%;
+  --card: 225 30% 10%;
+  --border: 225 20% 15%;
+  --muted: 225 20% 12%;
+  --gradient-card: linear-gradient(135deg, hsl(210 75% 48% / 0.1), hsl(271 81% 56% / 0.1), hsl(45 93% 58% / 0.05));
+}
+
+/* Utility classes for the new theme system */
+.bg-primary {
+  background-color: hsl(var(--primary));
+}
+
+.text-primary {
+  color: hsl(var(--primary));
+}
+
+.border-primary {
+  border-color: hsl(var(--primary));
+}
+
+.ring-primary {
+  --tw-ring-color: hsl(var(--primary));
 }
 
 /* Gradient component styles */
+/* Gradient component styles - Shared between Theme Gradient and Modern Gradient */
 .theme-gradient .bg-card,
 [data-theme="gradient"] .bg-card {
   background: linear-gradient(135deg, hsl(210 75% 48% / 0.12) 0%, hsl(271 81% 56% / 0.12) 50%, hsl(45 93% 58% / 0.12) 100%), hsl(var(--card));
+}
+
+.theme-modern .bg-card,
+[data-theme="modern"] .bg-card {
+  background: linear-gradient(135deg, hsl(48 100% 50% / 0.12) 0%, hsl(38 100% 50% / 0.12) 50%, hsl(25 100% 50% / 0.12) 100%), hsl(var(--card));
 }
 
 .theme-gradient .bg-primary,
@@ -179,9 +287,19 @@
   background: linear-gradient(135deg, hsl(210 75% 55%), hsl(240 75% 52%), hsl(271 81% 56%));
 }
 
+.theme-modern .bg-primary,
+[data-theme="modern"] .bg-primary {
+  background: var(--gradient-primary);
+}
+
 .theme-gradient .border-primary,
 [data-theme="gradient"] .border-primary {
   border-image: linear-gradient(135deg, hsl(210 75% 48% / 0.08) 0%, hsl(271 81% 56% / 0.08) 50%, hsl(45 93% 58% / 0.08) 100%) 1;
+}
+
+.theme-modern .border-primary,
+[data-theme="modern"] .border-primary {
+  border-image: linear-gradient(135deg, hsl(48 100% 50% / 0.08) 0%, hsl(38 100% 50% / 0.08) 50%, hsl(25 100% 50% / 0.08) 100%) 1;
 }
 
 .theme-gradient [role="dialog"],
@@ -192,9 +310,19 @@
   box-shadow: 0 8px 32px hsl(210 75% 48% / 0.15), 0 4px 16px hsl(271 81% 56% / 0.1), 0 2px 8px hsl(45 93% 58% / 0.08);
 }
 
+.theme-modern [role="dialog"],
+.theme-modern [role="menu"],
+[data-theme="modern"] [role="dialog"],
+[data-theme="modern"] [role="menu"] {
+  background: linear-gradient(135deg, hsl(48 100% 50% / 0.08) 0%, hsl(38 100% 50% / 0.08) 50%, hsl(25 100% 50% / 0.08) 100%), hsl(var(--popover));
+  box-shadow: 0 8px 32px hsl(48 100% 50% / 0.15), 0 4px 16px hsl(38 100% 50% / 0.1), 0 2px 8px hsl(25 100% 50% / 0.08);
+}
+
 /* Button hover effect */
 .theme-gradient button:hover,
-[data-theme="gradient"] button:hover {
+[data-theme="gradient"] button:hover,
+.theme-modern button:hover,
+[data-theme="modern"] button:hover {
   filter: brightness(1.05);
 }
 
@@ -238,9 +366,12 @@
   padding-bottom: env(safe-area-inset-bottom, 20px);
 }
 
-/* Fix mobile scroll jitter */
+/* Fix mobile scroll jitter and layout stretching */
 html,
 body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
   overscroll-behavior-y: none;
   touch-action: manipulation;
   -webkit-overflow-scrolling: touch;

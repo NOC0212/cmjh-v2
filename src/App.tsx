@@ -5,8 +5,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect, lazy, Suspense } from "react";
 import { FirstTimeSetup, checkFirstTimeSetup } from "@/components/FirstTimeSetup";
+import { UpdatePrompt } from "@/components/UpdatePrompt";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Loading } from "@/components/Loading";
+import { ensureVersion } from "@/lib/app-version";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -28,12 +30,22 @@ interface MaintenanceConfig {
   message: string;
 }
 
+import { SettingsProvider } from "./hooks/SettingsContext";
+
 const App = () => {
   const [setupCompleted, setSetupCompleted] = useState(() => checkFirstTimeSetup());
   const [maintenanceConfig, setMaintenanceConfig] = useState<MaintenanceConfig | null>(null);
   const [loadingMaintenance, setLoadingMaintenance] = useState(true);
+  const [showLoadingUi, setShowLoadingUi] = useState(false);
 
   useEffect(() => {
+    ensureVersion();
+
+    // 只有當讀取超過 200ms 時才顯示載入畫面，避免閃爍
+    const loadingTimer = setTimeout(() => {
+      setShowLoadingUi(true);
+    }, 200);
+
     const fetchMaintenance = async () => {
       try {
         const response = await fetch("/data/maintenance.json");
@@ -43,13 +55,16 @@ const App = () => {
         console.error("Failed to fetch maintenance config:", error);
       } finally {
         setLoadingMaintenance(false);
+        clearTimeout(loadingTimer);
       }
     };
     fetchMaintenance();
+
+    return () => clearTimeout(loadingTimer);
   }, []);
 
   if (loadingMaintenance) {
-    return <Loading fullScreen message="正在讀取設定..." />;
+    return showLoadingUi ? <Loading fullScreen message="正在讀取設定..." /> : null;
   }
 
   if (maintenanceConfig?.isMaintenance) {
@@ -67,7 +82,9 @@ const App = () => {
     return (
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <FirstTimeSetup onComplete={() => setSetupCompleted(true)} />
+          <SettingsProvider>
+            <FirstTimeSetup onComplete={() => setSetupCompleted(true)} />
+          </SettingsProvider>
         </TooltipProvider>
       </QueryClientProvider>
     );
@@ -78,77 +95,81 @@ const App = () => {
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-            <ErrorBoundary>
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <ErrorBoundary>
-                      <Index />
-                    </ErrorBoundary>
-                  }
-                />
+          <SettingsProvider>
+            <UpdatePrompt />
+            <Toaster />
+            <Sonner />
+            <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+              <ErrorBoundary>
+                <Routes>
 
-                {/* 工具頁面路由 - 使用代碼分割和錯誤邊界 */}
-                <Route
-                  path="/tools/wheel"
-                  element={
-                    <ErrorBoundary>
-                      <Suspense fallback={<Loading fullScreen message="載入輪盤工具..." />}>
-                        <Wheel />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="/tools/grouping"
-                  element={
-                    <ErrorBoundary>
-                      <Suspense fallback={<Loading fullScreen message="載入分組工具..." />}>
-                        <Grouping />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="/tools/order"
-                  element={
-                    <ErrorBoundary>
-                      <Suspense fallback={<Loading fullScreen message="載入順序工具..." />}>
-                        <Order />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="/tools/clock"
-                  element={
-                    <ErrorBoundary>
-                      <Suspense fallback={<Loading fullScreen message="載入時鐘..." />}>
-                        <Clock />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="/tools/timer"
-                  element={
-                    <ErrorBoundary>
-                      <Suspense fallback={<Loading fullScreen message="載入計時器..." />}>
-                        <Timer />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
+                  <Route
+                    path="/"
+                    element={
+                      <ErrorBoundary>
+                        <Index />
+                      </ErrorBoundary>
+                    }
+                  />
 
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </ErrorBoundary>
-          </BrowserRouter>
+                  {/* 工具頁面路由 - 使用代碼分割和錯誤邊界 */}
+                  <Route
+                    path="/tools/wheel"
+                    element={
+                      <ErrorBoundary>
+                        <Suspense fallback={<Loading fullScreen message="載入輪盤工具..." />}>
+                          <Wheel />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="/tools/grouping"
+                    element={
+                      <ErrorBoundary>
+                        <Suspense fallback={<Loading fullScreen message="載入分組工具..." />}>
+                          <Grouping />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="/tools/order"
+                    element={
+                      <ErrorBoundary>
+                        <Suspense fallback={<Loading fullScreen message="載入順序工具..." />}>
+                          <Order />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="/tools/clock"
+                    element={
+                      <ErrorBoundary>
+                        <Suspense fallback={<Loading fullScreen message="載入時鐘..." />}>
+                          <Clock />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="/tools/timer"
+                    element={
+                      <ErrorBoundary>
+                        <Suspense fallback={<Loading fullScreen message="載入計時器..." />}>
+                          <Timer />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </ErrorBoundary>
+            </BrowserRouter>
+          </SettingsProvider>
         </TooltipProvider>
       </QueryClientProvider>
     </ErrorBoundary>

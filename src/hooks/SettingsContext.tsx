@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { createContext, useContext, useState, useEffect, useRef, useMemo } from "react";
 
 export interface ComponentSettings {
     id: string;
@@ -11,6 +11,18 @@ export interface AppSettings {
     components: ComponentSettings[];
     themeMode: "light" | "dark" | "system";
     themeColor: string;
+}
+
+interface SettingsContextType {
+    settings: AppSettings;
+    toggleComponent: (id: string) => void;
+    moveComponentUp: (id: string) => void;
+    moveComponentDown: (id: string) => void;
+    setTheme: (themeColor: string) => void;
+    setThemeMode: (themeMode: "light" | "dark" | "system") => void;
+    setThemeColor: (themeColor: string) => void;
+    resetToDefault: () => void;
+    showAll: () => void;
 }
 
 const DEFAULT_COMPONENTS: ComponentSettings[] = [
@@ -32,6 +44,8 @@ const DEFAULT_SETTINGS: AppSettings = {
 const STORAGE_KEY = "cmjh-app-settings";
 const OLD_COMPONENT_KEY = "cmjh-component-visibility";
 const OLD_THEME_KEY = "active-theme";
+
+const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
 const migrateOldSettings = (): AppSettings | null => {
     const oldVisibility = localStorage.getItem(OLD_COMPONENT_KEY);
@@ -101,7 +115,7 @@ const applyTheme = (mode: "light" | "dark" | "system", color: string) => {
     root.dataset.theme = color;
 };
 
-export function useComponentSettings() {
+export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const isInitialMount = useRef(true);
 
     const [settings, setSettings] = useState<AppSettings>(() => {
@@ -151,9 +165,6 @@ export function useComponentSettings() {
     }, [settings.themeMode, settings.themeColor]);
 
     useEffect(() => {
-        if (isInitialMount.current) {
-            isInitialMount.current = false;
-        }
         applyTheme(settings.themeMode, settings.themeColor);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
     }, [settings]);
@@ -220,15 +231,29 @@ export function useComponentSettings() {
         }));
     };
 
-    return {
+    const value = useMemo(() => ({
         settings,
         toggleComponent,
         moveComponentUp,
         moveComponentDown,
-        setTheme: setThemeColor, // 相容舊版名稱
+        setTheme: setThemeColor,
         setThemeMode,
         setThemeColor,
         resetToDefault,
-        showAll,
-    };
-}
+        showAll
+    }), [settings]);
+
+    return (
+        <SettingsContext.Provider value={value}>
+            {children}
+        </SettingsContext.Provider>
+    );
+};
+
+export const useSettings = () => {
+    const context = useContext(SettingsContext);
+    if (context === undefined) {
+        throw new Error("useSettings must be used within a SettingsProvider");
+    }
+    return context;
+};

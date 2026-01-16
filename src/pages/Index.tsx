@@ -12,12 +12,13 @@ import { SiteAnnouncementsPage } from "@/components/SiteAnnouncementsPage";
 import { FavoritesPage } from "@/components/FavoritesPage";
 import { SettingsPage } from "@/components/SettingsPage";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { useComponentSettings } from "@/hooks/useComponentSettings";
+import { useSettings } from "@/hooks/SettingsContext";
 import { useIsMobile } from "@/hooks/use-mobile";
 import React from "react";
 
 const Index = () => {
-    const { settings } = useComponentSettings();
+    const { settings } = useSettings();
+
     const isMobile = useIsMobile();
     const [currentPage, setCurrentPage] = useState<NavPage>("home");
 
@@ -70,7 +71,7 @@ const Index = () => {
     };
 
     return (
-        <div className={`h-[100dvh] w-full flex overflow-hidden bg-background ${isMobile ? 'flex-col' : 'flex-row'}`}>
+        <div className={`h-[100dvh] w-screen max-w-full flex overflow-hidden bg-background ${isMobile ? 'flex-col' : 'flex-row'}`}>
             {/* 桌面版側邊導航 (作為 Flex 項目而非 fixed) */}
             {!isMobile && <ResponsiveNav currentPage={currentPage} onPageChange={setCurrentPage} />}
 
@@ -80,8 +81,8 @@ const Index = () => {
             )}
 
             {/* 主內容區塊 */}
-            <div className="flex-1 flex flex-col min-h-0">
-                <main className="flex-1 overflow-y-auto px-4 lg:p-8 max-w-5xl w-full mx-auto">
+            <div className="flex-1 flex flex-col min-h-0 w-full overflow-x-hidden">
+                <main className="flex-1 overflow-y-auto px-4 lg:p-8 max-w-5xl w-full mx-auto overflow-x-hidden">
                     <div className="py-4">
                         {renderPageContent()}
                     </div>
@@ -89,7 +90,7 @@ const Index = () => {
                     {/* 版權資訊 */}
                     {currentPage === "home" && (
                         <footer className="mt-12 border-t border-primary/20 bg-gradient-to-r from-background to-primary/5 py-12 px-4 lg:px-6 rounded-t-3xl text-center text-sm text-muted-foreground">
-                            <p>© 2025 崇明國中 by nocfond</p>
+                            <p>© 2026 崇明國中 by nocfond</p>
                         </footer>
                     )}
                 </main>

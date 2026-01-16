@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useComponentSettings } from "@/hooks/useComponentSettings";
+import { useSettings } from "@/hooks/SettingsContext";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 
@@ -15,81 +15,30 @@ const loadingHints = [
 
 const SETUP_STORAGE_KEY = "cmjh-first-setup-completed";
 
-interface Theme {
-    id: string;
-    name: string;
-    primaryColor: string;
-    accentColor: string;
-    description: string;
-}
 
-const THEMES: Theme[] = [
-    {
-        id: "light",
-        name: "淺色",
-        primaryColor: "hsl(210 75% 48%)",
-        accentColor: "hsl(45 93% 58%)",
-        description: "明亮清新的淺色主題",
-    },
-    {
-        id: "dark",
-        name: "深色",
-        primaryColor: "hsl(210 75% 55%)",
-        accentColor: "hsl(0 0% 15%)",
-        description: "護眼舒適的深色主題",
-    },
-    {
-        id: "blue",
-        name: "藍色",
-        primaryColor: "hsl(210 75% 48%)",
-        accentColor: "hsl(210 75% 55%)",
-        description: "經典沉穩的藍色主題",
-    },
-    {
-        id: "green",
-        name: "綠色",
-        primaryColor: "hsl(142 71% 45%)",
-        accentColor: "hsl(142 71% 50%)",
-        description: "清新自然的綠色主題",
-    },
-    {
-        id: "orange",
-        name: "橙色",
-        primaryColor: "hsl(30 95% 55%)",
-        accentColor: "hsl(30 95% 60%)",
-        description: "活力充沛的橙色主題",
-    },
-    {
-        id: "red",
-        name: "紅色",
-        primaryColor: "hsl(0 84% 60%)",
-        accentColor: "hsl(0 84% 65%)",
-        description: "熱情洋溢的紅色主題",
-    },
-    {
-        id: "purple",
-        name: "紫色",
-        primaryColor: "hsl(271 81% 56%)",
-        accentColor: "hsl(271 81% 61%)",
-        description: "優雅神秘的紫色主題",
-    },
-    {
-        id: "gradient",
-        name: "漸變",
-        primaryColor: "hsl(240 75% 52%)",
-        accentColor: "hsl(271 81% 56%)",
-        description: "多彩絢麗的漸變主題",
-    },
+const THEMES = [
+    { id: "blue", name: "活力藍", color: "#3b82f6" },
+    { id: "red", name: "熱情紅", color: "#ef4444" },
+    { id: "green", name: "清新綠", color: "#10b981" },
+    { id: "orange", name: "亮麗橙", color: "#f59e0b" },
+    { id: "purple", name: "神秘紫", color: "#8b5cf6" },
+    { id: "neon", name: "極光霓虹", color: "#00f3ff" },
+    { id: "modern", name: "現代漸層", color: "linear-gradient(135deg, #fbbf24, #f97316)" },
+    { id: "gradient", name: "主題漸層", color: "linear-gradient(135deg, #3b82f6, #8b5cf6, #ef4444)" },
 ];
+
+import { updateVersionToLatest } from "@/lib/app-version";
 
 interface FirstTimeSetupProps {
     onComplete: () => void;
 }
 
 export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
+
     const [step, setStep] = useState<"loading" | "selecting">("loading");
     const [selectedTheme, setSelectedTheme] = useState<string | null>(null);
-    const { setTheme } = useComponentSettings();
+    const { setThemeColor } = useSettings();
+
     const [progress, setProgress] = useState(0);
     const [currentHintIndex, setCurrentHintIndex] = useState(0);
     const [isFading, setIsFading] = useState(false);
@@ -138,11 +87,14 @@ export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
 
     const handleConfirm = () => {
         if (selectedTheme) {
-            // 儲存主題設定
-            setTheme(selectedTheme);
+            // 儲存主題顏色
+            setThemeColor(selectedTheme);
 
             // 標記首次設定已完成
             localStorage.setItem(SETUP_STORAGE_KEY, "true");
+
+            // 寫入最新版本號
+            updateVersionToLatest();
 
             // 延遲一點讓主題先套用
             setTimeout(() => {
@@ -229,24 +181,15 @@ export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
                             )}
 
                             <div className="flex flex-col items-center gap-3">
-                                <div className="flex gap-2">
-                                    <div
-                                        className="w-8 h-8 rounded-full shadow-md"
-                                        style={{ background: theme.primaryColor }}
-                                    ></div>
-                                    <div
-                                        className="w-8 h-8 rounded-full shadow-md"
-                                        style={{ background: theme.accentColor }}
-                                    ></div>
-                                </div>
+                                <div
+                                    className="w-16 h-16 rounded-full shadow-lg border-4 border-white dark:border-gray-700 transition-transform group-hover:rotate-12"
+                                    style={{ background: theme.color }}
+                                ></div>
 
                                 <div className="text-center">
-                                    <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-1">
+                                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">
                                         {theme.name}
                                     </h3>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                                        {theme.description}
-                                    </p>
                                 </div>
                             </div>
                         </button>

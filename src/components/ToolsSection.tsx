@@ -57,7 +57,7 @@ export function ToolsSection() {
         <section id="tools" className="scroll-mt-20">
             <div className="flex items-center gap-3 mb-6">
                 <Wrench className="h-8 w-8 text-primary" />
-                <h2 className="text-3xl font-bold text-foreground">小工具</h2>
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">小工具</h2>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
