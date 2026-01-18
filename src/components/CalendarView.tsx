@@ -10,6 +10,9 @@ import {
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCalendarEvents } from "@/hooks/useCalendarEvents";
 import { CalendarDialog } from "@/components/CalendarDialog";
+import { motion } from "framer-motion";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { User, GraduationCap, Sparkles } from "lucide-react";
 
 interface CalendarEvent {
   date: string;
@@ -26,6 +29,7 @@ export function CalendarView() {
   const [selectedMonth, setSelectedMonth] = useState("");
   const [loading, setLoading] = useState(true);
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const [direction, setDirection] = useState(0); // -1 for left, 1 for right
   const { customEvents, getCustomEventsByMonth } = useCalendarEvents();
 
   useEffect(() => {
@@ -80,6 +84,7 @@ export function CalendarView() {
 
   const handlePrevMonth = () => {
     if (currentMonthIndex > 0) {
+      setDirection(-1);
       setSelectedDay(null);
       setSelectedMonth(months[currentMonthIndex - 1]);
     }
@@ -87,6 +92,7 @@ export function CalendarView() {
 
   const handleNextMonth = () => {
     if (currentMonthIndex < months.length - 1) {
+      setDirection(1);
       setSelectedDay(null);
       setSelectedMonth(months[currentMonthIndex + 1]);
     }
@@ -146,8 +152,9 @@ export function CalendarView() {
       // 如果是選中的日期，佔滿整週
       if (isSelected) {
         calendarCells.push(
-          <div
-            key={`day-${day}`}
+          <motion.div
+            key={`day-${day}-selected`}
+            layoutId={`day-${day}`}
             onClick={() => setSelectedDay(null)}
             className="col-span-7 bg-primary/5 border-2 border-primary rounded-lg p-4 cursor-pointer"
           >
@@ -181,16 +188,17 @@ export function CalendarView() {
                 </div>
               )}
             </div>
-          </div>
+          </motion.div>
         );
         continue;
       }
 
       calendarCells.push(
-        <div
+        <motion.div
           key={`day-${day}`}
+          layoutId={`day-${day}`}
           onClick={() => setSelectedDay(day)}
-          className={`min-h-[80px] md:min-h-[100px] p-1.5 md:p-3 rounded-lg border cursor-pointer ${isToday
+          className={`min-h-[80px] md:min-h-[100px] p-1.5 md:p-3 rounded-lg border cursor-pointer transition-colors ${isToday
             ? "bg-primary/10 border-primary ring-2 ring-primary/20"
             : "bg-card border-border hover:border-primary/50"
             }`}
@@ -233,14 +241,37 @@ export function CalendarView() {
               )}
             </div>
           </div>
-        </div>
+        </motion.div>
       );
     }
 
     return calendarCells;
   };
 
-  const selectedEvents = selectedMonth ? mergedCalendarData[selectedMonth] || [] : [];
+  const { defaultEvents, customEventsForMonth } = useMemo(() => {
+    const events = selectedMonth ? mergedCalendarData[selectedMonth] || [] : [];
+    return {
+      defaultEvents: events.filter(e => !e.isCustom),
+      customEventsForMonth: events.filter(e => e.isCustom)
+    };
+  }, [selectedMonth, mergedCalendarData]);
+
+  const variants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 20 : -20,
+      opacity: 0,
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      zIndex: 0,
+      x: direction < 0 ? 20 : -20,
+      opacity: 0,
+    }),
+  };
 
   if (loading) {
     return (
@@ -255,7 +286,7 @@ export function CalendarView() {
 
   return (
     <section id="calendar" className="mb-12 scroll-mt-20">
-      <div className="relative rounded-2xl p-8 border border-primary/20 overflow-hidden shadow-[var(--shadow-card)]"
+      <div className="relative rounded-2xl p-4 sm:p-8 border border-primary/20 overflow-hidden shadow-[var(--shadow-card)]"
         style={{ background: 'var(--gradient-calendar)' }}>
         <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-50"></div>
 
@@ -265,19 +296,24 @@ export function CalendarView() {
               <h2 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">行事曆</h2>
               <CalendarDialog />
             </div>
-            <div className="flex items-center gap-3 bg-background/80 rounded-full p-1.5">
+            <div className="flex items-center gap-3 bg-background/80 rounded-full p-1.5 backdrop-blur-sm border border-white/10 shadow-sm">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={handlePrevMonth}
                 disabled={currentMonthIndex === 0}
-                className="h-9 w-9 disabled:opacity-30"
+                className="h-9 w-9 disabled:opacity-30 rounded-full hover:bg-primary/10 transition-colors"
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
 
-              <Select value={selectedMonth} onValueChange={(value) => { setSelectedDay(null); setSelectedMonth(value); }}>
-                <SelectTrigger className="w-[180px] border-primary/20 bg-background/90">
+              <Select value={selectedMonth} onValueChange={(value) => {
+                const newIndex = months.indexOf(value);
+                setDirection(newIndex > currentMonthIndex ? 1 : -1);
+                setSelectedDay(null);
+                setSelectedMonth(value);
+              }}>
+                <SelectTrigger className="w-[180px] border-primary/20 bg-background/90 rounded-full">
                   <SelectValue placeholder="選擇月份">
                     {selectedMonth && (() => {
                       const [year, month] = selectedMonth.split("-");
@@ -320,55 +356,122 @@ export function CalendarView() {
                 size="icon"
                 onClick={handleNextMonth}
                 disabled={currentMonthIndex === months.length - 1}
-                className="h-9 w-9 disabled:opacity-30"
+                className="h-9 w-9 disabled:opacity-30 rounded-full hover:bg-primary/10 transition-colors"
               >
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </div>
           </div>
 
-          <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-            <div
+          <div className="overflow-hidden relative min-h-[500px]">
+            <motion.div
               key={selectedMonth}
-              className="grid grid-cols-7 gap-2 bg-background/50 rounded-xl p-4 border border-border/50 min-w-[300px]"
-              style={{ willChange: 'transform' }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
+              className="grid grid-cols-7 gap-1 md:gap-2 bg-background/50 rounded-xl p-2 md:p-4 border border-border/50"
             >
               {renderCalendar()}
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
 
-      {selectedEvents.length > 0 && (
-        <div className="mt-8 relative rounded-2xl p-8 border border-primary/20 overflow-hidden shadow-[var(--shadow-card)]"
-          style={{ background: 'var(--gradient-calendar)' }}>
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/5 via-transparent to-primary/5 opacity-50"></div>
-
+      {(defaultEvents.length > 0 || customEventsForMonth.length > 0) && (
+        <div className="mt-8 relative rounded-2xl p-6 md:p-8 border border-primary/20 overflow-hidden shadow-lg transition-all duration-300 bg-card/50 backdrop-blur-sm">
           <div className="relative z-10">
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-6">
-              本月活動 ({selectedEvents.length})
-            </h3>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {selectedEvents.map((event, idx) => (
-                <div
-                  key={idx}
-                  className="bg-background/70 rounded-xl p-5 border border-border/50"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 bg-gradient-to-br from-primary/20 to-accent/20 text-primary rounded-xl px-4 py-2.5 text-sm font-bold border border-primary/20">
-                      {event.date.split("-")[2]}日
-                    </div>
-                    <div className="flex-1 flex items-center gap-2">
-                      <p className="text-foreground leading-relaxed">{event.title}</p>
-                      {event.isCustom && (
-                        <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded shrink-0">
-                          自訂
-                        </span>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-6">
+              <div className="space-y-1">
+                <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-primary" />
+                  本月行程規劃
+                </h3>
+                <p className="text-xs text-muted-foreground font-medium">
+                  掌握校園動態與個人重要時刻
+                </p>
+              </div>
+
+              <Tabs defaultValue="school" className="w-full md:w-auto">
+                <TabsList className="grid w-full grid-cols-2 h-10 p-1 bg-muted/50 border border-border/50 rounded-lg">
+                  <TabsTrigger value="school" className="rounded-md data-[state=active]:bg-primary data-[state=active]:text-white transition-all gap-2 text-sm">
+                    <GraduationCap className="h-4 w-4" />
+                    <span>學校校曆</span>
+                    <span className="ml-1 px-1.5 py-0.5 rounded-full bg-black/10 dark:bg-white/10 text-[10px] font-bold">
+                      {defaultEvents.length}
+                    </span>
+                  </TabsTrigger>
+                  <TabsTrigger value="personal" className="rounded-md data-[state=active]:bg-accent data-[state=active]:text-white transition-all gap-2 text-sm">
+                    <User className="h-4 w-4" />
+                    <span>個人自訂</span>
+                    <span className="ml-1 px-1.5 py-0.5 rounded-full bg-black/10 dark:bg-white/10 text-[10px] font-bold">
+                      {customEventsForMonth.length}
+                    </span>
+                  </TabsTrigger>
+                </TabsList>
+
+                <div className="mt-6">
+                  <TabsContent value="school" className="mt-0 focus-visible:outline-none">
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {defaultEvents.length > 0 ? (
+                        defaultEvents.map((event, idx) => (
+                          <div
+                            key={`default-${idx}`}
+                            className="group relative bg-muted/20 hover:bg-muted/30 rounded-xl p-4 border border-border transition-all duration-200"
+                          >
+                            <div className="flex items-center gap-4 relative z-10">
+                              <div className="flex-shrink-0 flex flex-col items-center justify-center bg-primary/10 text-primary rounded-lg w-12 h-12 font-bold border border-primary/10">
+                                <span className="text-base">{event.date.split("-")[2]}</span>
+                                <span className="text-[10px] opacity-70 uppercase">日</span>
+                              </div>
+                              <div className="flex-1">
+                                <p className="text-foreground font-semibold text-base leading-tight group-hover:text-primary transition-colors">{event.title}</p>
+                                <p className="text-[10px] font-medium text-muted-foreground mt-1 uppercase tracking-wider">校園公務事件</p>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="col-span-full py-12 text-center bg-muted/10 rounded-xl border border-dashed border-border">
+                          <GraduationCap className="h-10 w-10 mx-auto text-muted-foreground/30 mb-3" />
+                          <p className="text-sm text-muted-foreground">本月尚無校園活動</p>
+                        </div>
                       )}
                     </div>
-                  </div>
+                  </TabsContent>
+
+                  <TabsContent value="personal" className="mt-0 focus-visible:outline-none">
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {customEventsForMonth.length > 0 ? (
+                        customEventsForMonth.map((event, idx) => (
+                          <div
+                            key={`custom-${idx}`}
+                            className="group relative bg-muted/20 hover:bg-muted/30 rounded-xl p-4 border border-border transition-all duration-200"
+                          >
+                            <div className="flex items-center gap-4 relative z-10">
+                              <div className="flex-shrink-0 flex flex-col items-center justify-center bg-accent/10 text-accent rounded-lg w-12 h-12 font-bold border border-accent/10">
+                                <span className="text-base">{event.date.split("-")[2]}</span>
+                                <span className="text-[10px] opacity-70 uppercase">日</span>
+                              </div>
+                              <div className="flex-1">
+                                <p className="text-foreground font-semibold text-base leading-tight group-hover:text-accent transition-colors">{event.title}</p>
+                                <p className="text-[10px] font-medium text-muted-foreground mt-1 uppercase tracking-wider">個人自訂日程</p>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="col-span-full py-12 text-center bg-muted/10 rounded-xl border border-dashed border-border">
+                          <User className="h-10 w-10 mx-auto text-muted-foreground/30 mb-3" />
+                          <p className="text-sm text-muted-foreground">尚未添加個人日程</p>
+                          <div className="mt-3">
+                            <CalendarDialog />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </TabsContent>
                 </div>
-              ))}
+              </Tabs>
             </div>
           </div>
         </div>

@@ -109,6 +109,7 @@ export function useCommonSites() {
     moveSiteUp,
     moveSiteDown,
     resetToDefault,
+    setSites,
   };
 }
 

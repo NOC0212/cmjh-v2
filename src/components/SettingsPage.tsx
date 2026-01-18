@@ -1,4 +1,4 @@
-import { Settings, ChevronUp, ChevronDown, Sun, Moon, Palette, RefreshCw, Download, Upload, Monitor } from "lucide-react";
+import { Settings, ChevronUp, ChevronDown, Sun, Moon, Palette, RefreshCw, Download, Upload, Monitor, GripVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -7,6 +7,7 @@ import { useSettings } from "@/hooks/SettingsContext";
 import { getCurrentVersion, LATEST_VERSION, exportUserData, importUserData } from "@/lib/app-version";
 import { useToast } from "@/hooks/use-toast";
 import { useRef, useState } from "react";
+import { Reorder } from "framer-motion";
 
 // 主題模式定義
 const MODES = [
@@ -23,13 +24,13 @@ const COLORS = [
     { name: "橙色", value: "orange", color: "#f59e0b" },
     { name: "紫色", value: "purple", color: "#8b5cf6" },
     { name: "霓虹", value: "neon", color: "#00f3ff" },
-    { name: "現代漸層", value: "modern", color: "#fbbf24" },
+    { name: "現代漸層", value: "modern", color: "linear-gradient(135deg, #fbbf24, #f97316)" },
     { name: "主題漸層", value: "gradient", color: "linear-gradient(135deg, #3b82f6, #8b5cf6, #ef4444)" },
 ];
 
 export function SettingsPage() {
 
-    const { settings, toggleComponent, moveComponentUp, moveComponentDown, setThemeMode, setThemeColor, resetToDefault, showAll } =
+    const { settings, toggleComponent, moveComponentUp, moveComponentDown, setThemeMode, setThemeColor, setDisableUpdatePrompt, resetToDefault, showAll, reorderComponents } =
         useSettings();
 
     const { toast } = useToast();
@@ -150,13 +151,22 @@ export function SettingsPage() {
                             </Button>
                         </div>
                     </div>
-                    <div className="space-y-2 bg-muted/30 rounded-lg p-3">
+                    <Reorder.Group
+                        axis="y"
+                        values={enabledComponents}
+                        onReorder={reorderComponents}
+                        className="space-y-2 bg-muted/30 rounded-lg p-3"
+                    >
                         {enabledComponents.length > 0 ? (
                             enabledComponents.map((component, index) => (
-                                <div
+                                <Reorder.Item
                                     key={component.id}
-                                    className="flex items-center gap-2 bg-background rounded-md p-2 border border-border"
+                                    value={component}
+                                    className="flex items-center gap-2 bg-background rounded-md p-2 border border-border shadow-sm active:shadow-md transition-shadow"
                                 >
+                                    <div className="cursor-grab active:cursor-grabbing p-1 text-muted-foreground hover:text-primary transition-colors">
+                                        <GripVertical className="h-4 w-4" />
+                                    </div>
                                     <Checkbox
                                         id={`enabled-${component.id}`}
                                         checked={true}
@@ -185,12 +195,12 @@ export function SettingsPage() {
                                             <ChevronDown className="h-4 w-4" />
                                         </Button>
                                     </div>
-                                </div>
+                                </Reorder.Item>
                             ))
                         ) : (
                             <p className="text-sm text-muted-foreground text-center py-4">目前沒有啟用的組件</p>
                         )}
-                    </div>
+                    </Reorder.Group>
                 </div>
 
                 <Separator />
@@ -271,7 +281,15 @@ export function SettingsPage() {
                                     onClick={() => setThemeColor(color.value)}
                                     className="justify-start gap-2 text-foreground data-[state=active]:text-background"
                                 >
-                                    <Palette className="h-4 w-4" style={{ color: color.color && !isActive ? color.color : undefined }} />
+                                    <div className="relative">
+                                        <Palette className="h-4 w-4" style={{ color: color.color.includes("linear-gradient") || isActive ? undefined : color.color }} />
+                                        {color.color.includes("linear-gradient") && !isActive && (
+                                            <div
+                                                className="absolute inset-0 rounded-full"
+                                                style={{ background: color.color, maskImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'black\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Ccircle cx=\'13.5\' cy=\'6.5\' r=\'.5\' fill=\'black\'/%3E%3Ccircle cx=\'17.5\' cy=\'10.5\' r=\'.5\' fill=\'black\'/%3E%3Ccircle cx=\'8.5\' cy=\'7.5\' r=\'.5\' fill=\'black\'/%3E%3Ccircle cx=\'6.5\' cy=\'12.5\' r=\'.5\' fill=\'black\'/%3E%3Cpath d=\'M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.5-.7 1.5-1.5 0-.4-.15-.74-.41-1.01-.25-.25-.4-.59-.4-1.01 0-.85.7-1.5 1.5-1.5h2.14c2.93 0 5.27-2.36 5.27-5.27 0-5.27-4.25-9.21-9.6-9.21Z\'/%3E%3C/svg%3E")', maskSize: 'contain', maskRepeat: 'no-repeat' }}
+                                            />
+                                        )}
+                                    </div>
                                     <span>{color.name}</span>
                                     {isActive && <div className="ml-auto w-2 h-2 rounded-full bg-background" />}
                                 </Button>
@@ -310,7 +328,18 @@ export function SettingsPage() {
                                             {canUpdate ? "立即更新" : "已是最新版"}
                                         </Button>
                                     </div>
-                                    {canUpdate && (
+                                    <div className="flex items-center justify-between pt-2 border-t border-border/50">
+                                        <div className="space-y-0.5">
+                                            <Label htmlFor="disable-update" className="text-sm font-medium cursor-pointer">關閉更新提醒</Label>
+                                            <p className="text-[10px] text-muted-foreground">開啟後將不再主動提醒有新版本可用</p>
+                                        </div>
+                                        <Checkbox
+                                            id="disable-update"
+                                            checked={settings.disableUpdatePrompt}
+                                            onCheckedChange={(checked) => setDisableUpdatePrompt(!!checked)}
+                                        />
+                                    </div>
+                                    {canUpdate && !settings.disableUpdatePrompt && (
                                         <p className="text-[10px] text-destructive">
                                             * 注意：更新將會重置所有本地設定，建議先進行備份。
                                         </p>

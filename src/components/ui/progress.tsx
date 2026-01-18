@@ -25,8 +25,8 @@ const Progress = React.forwardRef<
     >
       {gradient && (
         <>
-          {/* Static blue to purple gradient */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[hsl(210,75%,55%)] via-[hsl(240,75%,52%)] to-[hsl(271,81%,56%)]" />
+          {/* Theme-aware gradient */}
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,var(--gradient-progress-from,hsl(var(--primary))),var(--gradient-progress-to,hsl(var(--accent))))]" />
 
           {/* Edge glow effect */}
           {value && value > 0 && (

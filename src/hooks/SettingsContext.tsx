@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useRef, useMemo } from "react";
+import React, { createContext, useContext, useState, useEffect, useMemo } from "react";
 
 export interface ComponentSettings {
     id: string;
@@ -11,6 +11,7 @@ export interface AppSettings {
     components: ComponentSettings[];
     themeMode: "light" | "dark" | "system";
     themeColor: string;
+    disableUpdatePrompt: boolean;
 }
 
 interface SettingsContextType {
@@ -21,8 +22,10 @@ interface SettingsContextType {
     setTheme: (themeColor: string) => void;
     setThemeMode: (themeMode: "light" | "dark" | "system") => void;
     setThemeColor: (themeColor: string) => void;
+    setDisableUpdatePrompt: (disabled: boolean) => void;
     resetToDefault: () => void;
     showAll: () => void;
+    reorderComponents: (newComponents: ComponentSettings[]) => void;
 }
 
 const DEFAULT_COMPONENTS: ComponentSettings[] = [
@@ -39,6 +42,7 @@ const DEFAULT_SETTINGS: AppSettings = {
     components: DEFAULT_COMPONENTS,
     themeMode: "system",
     themeColor: "blue",
+    disableUpdatePrompt: false,
 };
 
 const STORAGE_KEY = "cmjh-app-settings";
@@ -70,6 +74,7 @@ const migrateOldSettings = (): AppSettings | null => {
             components,
             themeMode: (oldTheme === "dark" ? "dark" : "light") as any,
             themeColor: (oldTheme && oldTheme !== "dark" && oldTheme !== "light" ? oldTheme : "blue"),
+            disableUpdatePrompt: false,
         };
 
         localStorage.setItem(STORAGE_KEY, JSON.stringify(newSettings));
@@ -116,7 +121,6 @@ const applyTheme = (mode: "light" | "dark" | "system", color: string) => {
 };
 
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const isInitialMount = useRef(true);
 
     const [settings, setSettings] = useState<AppSettings>(() => {
         try {
@@ -141,6 +145,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
                 return {
                     ...parsedSettings,
                     components: mergedComponents,
+                    disableUpdatePrompt: parsedSettings.disableUpdatePrompt ?? false,
                 };
             }
         } catch (error) {
@@ -220,6 +225,10 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setSettings((prev) => ({ ...prev, themeColor }));
     };
 
+    const setDisableUpdatePrompt = (disableUpdatePrompt: boolean) => {
+        setSettings((prev) => ({ ...prev, disableUpdatePrompt }));
+    };
+
     const resetToDefault = () => {
         setSettings(DEFAULT_SETTINGS);
     };
@@ -231,6 +240,22 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         }));
     };
 
+    const reorderComponents = (newComponents: ComponentSettings[]) => {
+        setSettings((prev) => {
+            // 更新順序
+            const updated = newComponents.map((c, i) => ({ ...c, order: i }));
+
+            // 與原本未顯示或禁用的組合
+            const currentIds = new Set(updated.map(c => c.id));
+            const otherComponents = prev.components.filter(c => !currentIds.has(c.id));
+
+            return {
+                ...prev,
+                components: [...updated, ...otherComponents]
+            };
+        });
+    };
+
     const value = useMemo(() => ({
         settings,
         toggleComponent,
@@ -239,8 +264,10 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setTheme: setThemeColor,
         setThemeMode,
         setThemeColor,
+        setDisableUpdatePrompt,
         resetToDefault,
-        showAll
+        showAll,
+        reorderComponents
     }), [settings]);
 
     return (

@@ -28,7 +28,9 @@
     /* Custom tokens */
     --gradient-primary: linear-gradient(135deg, hsl(210 75% 48%), hsl(210 75% 60%));
     --gradient-accent: linear-gradient(135deg, hsl(45 93% 58%), hsl(45 93% 68%));
-    --gradient-progress: linear-gradient(90deg, hsl(210 75% 55%), hsl(271 81% 56%));
+    --gradient-progress-from: hsl(var(--primary));
+    --gradient-progress-to: hsl(var(--accent));
+    --gradient-progress: linear-gradient(90deg, var(--gradient-progress-from), var(--gradient-progress-to));
     --gradient-card: linear-gradient(135deg, hsl(210 20% 99%), hsl(210 40% 97%));
     --gradient-calendar: linear-gradient(to bottom right, hsl(210 75% 48% / 0.05), hsl(271 81% 56% / 0.05));
     --gradient-timer: linear-gradient(135deg, hsl(210 75% 48% / 0.15), hsl(271 81% 56% / 0.1));
@@ -220,7 +222,9 @@
   --gradient-calendar: linear-gradient(to bottom right, hsl(48 100% 50% / 0.1), hsl(38 100% 50% / 0.05));
   --gradient-timer: linear-gradient(135deg, hsl(48 100% 50% / 0.2), hsl(25 100% 50% / 0.15));
   --gradient-site: linear-gradient(to bottom right, hsl(48 100% 50% / 0.08), hsl(32 100% 50% / 0.08));
-  --gradient-progress: linear-gradient(90deg, hsl(48 100% 50%), hsl(32 100% 50%));
+  --gradient-progress-from: hsl(48 100% 50%);
+  --gradient-progress-to: hsl(32 100% 50%);
+  --gradient-progress: linear-gradient(90deg, var(--gradient-progress-from), var(--gradient-progress-to));
 }
 
 /* Gradient scheme colors */
@@ -228,6 +232,8 @@
 [data-theme="gradient"] {
   --primary: 240 75% 52%;
   --ring: 240 75% 52%;
+  --gradient-progress-from: hsl(210 75% 55%);
+  --gradient-progress-to: hsl(271 81% 56%);
   --gradient-primary: linear-gradient(135deg, hsl(210 75% 48%), hsl(271 81% 56%), hsl(45 93% 58%));
   --gradient-accent: linear-gradient(135deg, hsl(271 81% 56%), hsl(210 75% 55%), hsl(45 93% 58%));
 }
@@ -294,12 +300,12 @@
 
 .theme-gradient .border-primary,
 [data-theme="gradient"] .border-primary {
-  border-image: linear-gradient(135deg, hsl(210 75% 48% / 0.08) 0%, hsl(271 81% 56% / 0.08) 50%, hsl(45 93% 58% / 0.08) 100%) 1;
+  border-color: hsl(240 75% 52% / 0.5);
 }
 
 .theme-modern .border-primary,
 [data-theme="modern"] .border-primary {
-  border-image: linear-gradient(135deg, hsl(48 100% 50% / 0.08) 0%, hsl(38 100% 50% / 0.08) 50%, hsl(25 100% 50% / 0.08) 100%) 1;
+  border-color: hsl(43 100% 52% / 0.5);
 }
 
 .theme-gradient [role="dialog"],

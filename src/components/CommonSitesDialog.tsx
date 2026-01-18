@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Settings, Trash2, ChevronUp, ChevronDown, RotateCcw, Edit } from "lucide-react";
+import { Settings, Trash2, ChevronUp, ChevronDown, RotateCcw, Edit, GripVertical } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -23,13 +23,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Reorder } from "framer-motion";
 
 export function CommonSitesDialog() {
   const [open, setOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [formData, setFormData] = useState({ name: "", url: "" });
-  const { sites, addSite, updateSite, deleteSite, moveSiteUp, moveSiteDown, resetToDefault } =
+  const { sites, addSite, updateSite, deleteSite, moveSiteUp, moveSiteDown, resetToDefault, setSites } =
     useCommonSites();
   const { toast } = useToast();
 
@@ -104,6 +105,15 @@ export function CommonSitesDialog() {
     });
   };
 
+  const handleReorder = (newSites: CommonSite[]) => {
+    // 更新每個項目的 order
+    const orderedSites = newSites.map((site, index) => ({
+      ...site,
+      order: index
+    }));
+    setSites(orderedSites);
+  };
+
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
@@ -166,20 +176,29 @@ export function CommonSitesDialog() {
             {/* 網站列表 */}
             <div className="space-y-3">
               <div className="flex items-center justify-between flex-wrap gap-2">
-                <h3 className="text-sm font-semibold text-foreground">網站列表（可調整順序）</h3>
+                <h3 className="text-sm font-semibold text-foreground">網站列表（可拖曳或按鈕調整）</h3>
                 <Button variant="outline" size="sm" onClick={handleReset} className="gap-2 shrink-0">
                   <RotateCcw className="h-4 w-4" />
                   <span className="hidden sm:inline">重置為預設</span>
                   <span className="sm:hidden">重置</span>
                 </Button>
               </div>
-              <div className="space-y-2">
+              <Reorder.Group
+                axis="y"
+                values={sites}
+                onReorder={handleReorder}
+                className="space-y-2"
+              >
                 {sites.length > 0 ? (
                   sites.map((site, index) => (
-                    <div
+                    <Reorder.Item
                       key={site.id}
-                      className="flex items-center gap-2 bg-background rounded-lg p-3 border border-border"
+                      value={site}
+                      className="flex items-center gap-2 bg-background rounded-lg p-3 border border-border shadow-sm active:shadow-md transition-shadow"
                     >
+                      <div className="cursor-grab active:cursor-grabbing p-1 text-muted-foreground hover:text-primary transition-colors">
+                        <GripVertical className="h-4 w-4" />
+                      </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-medium text-sm break-words text-foreground">{site.name}</div>
                         <div className="text-xs text-muted-foreground break-all">{site.url}</div>
@@ -224,14 +243,14 @@ export function CommonSitesDialog() {
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
-                    </div>
+                    </Reorder.Item>
                   ))
                 ) : (
                   <p className="text-sm text-muted-foreground text-center py-4">
                     沒有網站，請新增
                   </p>
                 )}
-              </div>
+              </Reorder.Group>
             </div>
           </div>
 

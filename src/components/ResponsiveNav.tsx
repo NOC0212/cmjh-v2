@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useFavorites } from "@/hooks/useFavorites";
 import { AppSidebar } from "@/components/AppSidebar";
+import { motion } from "framer-motion";
 
 // 頁面選單類型定義
 export type NavPage = "home" | "search" | "announcements" | "favorites" | "settings";
@@ -34,21 +35,30 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
             <Button
                 key={item.id}
                 variant="ghost"
-                className={`flex flex-col items-center justify-center gap-1 h-auto py-2 px-3 transition-all rounded-xl ${isActive
-                    ? 'bg-primary/10 text-primary'
+                className={`relative flex flex-col items-center justify-center gap-1 h-auto py-2 px-3 transition-colors rounded-xl ${isActive
+                    ? 'text-primary'
                     : 'hover:bg-primary/5 hover:text-primary text-muted-foreground'
                     } ${isMobile ? 'flex-1 min-w-0' : 'w-12 h-12'}`}
                 onClick={() => onPageChange(item.id)}
             >
-                <div className="relative">
-                    <Icon className="h-5 w-5" />
-                    {item.id === "favorites" && favorites.length > 0 && (
-                        <span className="absolute -top-1 -right-2 bg-red-500 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center">
-                            {favorites.length > 9 ? "9+" : favorites.length}
-                        </span>
-                    )}
+                {isActive && (
+                    <motion.div
+                        layoutId="nav-active-bg"
+                        className="absolute inset-0 bg-primary/15 rounded-xl z-0"
+                        transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                    />
+                )}
+                <div className="relative z-10 flex flex-col items-center justify-center gap-1">
+                    <div className="relative">
+                        <Icon className="h-5 w-5" />
+                        {item.id === "favorites" && favorites.length > 0 && (
+                            <span className="absolute -top-1 -right-2 bg-red-500 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center">
+                                {favorites.length > 9 ? "9+" : favorites.length}
+                            </span>
+                        )}
+                    </div>
+                    {isMobile && <span className="text-[10px]">{item.label}</span>}
                 </div>
-                {isMobile && <span className="text-[10px]">{item.label}</span>}
             </Button>
         );
     };
@@ -75,13 +85,13 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
 
         if (mode === "footer") {
             return (
-                <nav className="bg-background/90 backdrop-blur-md border-t border-border/50 shrink-0 z-50 w-full overflow-hidden touch-none select-none">
-                    <div className="pb-[env(safe-area-inset-bottom)]">
-                        <div className="flex items-center justify-around h-16 w-full">
+                <div className="fixed bottom-6 left-0 right-0 px-4 z-50 pointer-events-none flex justify-center">
+                    <nav className="bg-background/40 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg rounded-full overflow-hidden touch-none select-none pointer-events-auto max-w-md w-full">
+                        <div className="flex items-center justify-around h-16 w-full px-2">
                             {navItems.map((item) => renderNavItem(item))}
                         </div>
-                    </div>
-                </nav>
+                    </nav>
+                </div>
             );
         }
 

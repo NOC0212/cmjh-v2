@@ -2,14 +2,16 @@ import { useState, useEffect } from "react";
 import { RefreshCw, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getCurrentVersion, LATEST_VERSION } from "@/lib/app-version";
+import { useSettings } from "@/hooks/SettingsContext";
 
 export function UpdatePrompt() {
     const [show, setShow] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const currentVersion = getCurrentVersion();
+    const { settings } = useSettings();
 
     useEffect(() => {
-        if (currentVersion && currentVersion !== LATEST_VERSION) {
+        if (currentVersion && currentVersion !== LATEST_VERSION && !settings.disableUpdatePrompt) {
             setShow(true);
         }
 
@@ -65,19 +67,23 @@ export function UpdatePrompt() {
                                 <div className="bg-muted/50 rounded-lg p-3 text-xs space-y-2 max-h-[120px] overflow-y-auto custom-scrollbar">
                                     <div className="flex gap-2">
                                         <span className="text-primary">✨</span>
-                                        <p className="text-foreground/90"><span className="font-bold text-foreground">佈景主題修復及重作</span>：解決刷新頁面時主題重置的問題，並且對主題系統進行重做</p>
+                                        <p className="text-foreground/90"><span className="font-bold text-foreground">全新首次設定</span>：重製為英雄版面（Hero Section），加入動態浮空插圖與高質感漸層設計。</p>
                                     </div>
                                     <div className="flex gap-2">
-                                        <span className="text-primary">🛠️</span>
-                                        <p className="text-foreground/90"><span className="font-bold text-foreground">全域設定管理</span>：優化內部儲存機制與組件管理流程，大幅提升系統穩定性。</p>
-                                    </div>
-                                    <div className="flex gap-2">
-                                        <span className="text-primary">🚀</span>
-                                        <p className="text-foreground/90"><span className="font-bold text-foreground">效能優化</span>：提升頁面切換與資源載入效率，提供更流暢的使用體驗。</p>
+                                        <span className="text-primary">🔄️</span>
+                                        <p className="text-foreground/90"><span className="font-bold text-foreground">響應式優化</span>：讀取動畫支援手機/電腦自動切換佈局，並修復了移動端文字顯示問題。</p>
                                     </div>
                                     <div className="flex gap-2">
                                         <span className="text-primary">🎨</span>
-                                        <p className="text-foreground/90"><span className="font-bold text-foreground">UI/UX 優化</span>：精緻化彈窗圓角與排版結構，並優化手機版的顯示效果。</p>
+                                        <p className="text-foreground/90"><span className="font-bold text-foreground">UI 優化</span>：新增導覽列滑動指示器，並優化了深色模式下的文字對比度。</p>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <span className="text-primary">🛠️</span>
+                                        <p className="text-foreground/90"><span className="font-bold text-foreground">穩定性修正</span>：修復行事曆月份選擇器寬度擠壓問題，並更新系統版本識別。</p>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <span className="text-primary">✅</span>
+                                        <p className="text-foreground/90"><span className="font-bold text-foreground">組件更新</span>：將倒數計時器、行事曆、天氣的UI更新，更加美觀</p>
                                     </div>
                                 </div>
                             </div>
