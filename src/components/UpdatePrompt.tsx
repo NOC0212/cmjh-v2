@@ -66,24 +66,24 @@ export function UpdatePrompt() {
                                 </h3>
                                 <div className="bg-muted/50 rounded-lg p-3 text-xs space-y-2 max-h-[120px] overflow-y-auto custom-scrollbar">
                                     <div className="flex gap-2">
-                                        <span className="text-primary">✨</span>
-                                        <p className="text-foreground/90"><span className="font-bold text-foreground">全新首次設定</span>：重製為英雄版面（Hero Section），加入動態浮空插圖與高質感漸層設計。</p>
+                                        <span className="text-primary">📝</span>
+                                        <p className="text-foreground/90"><span className="font-bold text-foreground">Markdown 快速便籤</span>：新增支援即時預覽與自動儲存的筆記工具，方便隨手紀錄教學重點。</p>
                                     </div>
                                     <div className="flex gap-2">
-                                        <span className="text-primary">🔄️</span>
-                                        <p className="text-foreground/90"><span className="font-bold text-foreground">響應式優化</span>：讀取動畫支援手機/電腦自動切換佈局，並修復了移動端文字顯示問題。</p>
+                                        <span className="text-primary">�</span>
+                                        <p className="text-foreground/90"><span className="font-bold text-foreground">PWA 應用支援</span>：現在可以將網頁安裝到桌面或手機，並支援離線資源快取。</p>
                                     </div>
                                     <div className="flex gap-2">
                                         <span className="text-primary">🎨</span>
-                                        <p className="text-foreground/90"><span className="font-bold text-foreground">UI 優化</span>：新增導覽列滑動指示器，並優化了深色模式下的文字對比度。</p>
+                                        <p className="text-foreground/90"><span className="font-bold text-foreground">UI 美化</span>：優化全站組件圓角細節，並引入便利貼圖示營造親和感。</p>
                                     </div>
                                     <div className="flex gap-2">
                                         <span className="text-primary">🛠️</span>
-                                        <p className="text-foreground/90"><span className="font-bold text-foreground">穩定性修正</span>：修復行事曆月份選擇器寬度擠壓問題，並更新系統版本識別。</p>
+                                        <p className="text-foreground/90"><span className="font-bold text-foreground">排版優化</span>：整合 Tailwind Typography，提供更專業的 Markdown 閱讀體驗。</p>
                                     </div>
                                     <div className="flex gap-2">
                                         <span className="text-primary">✅</span>
-                                        <p className="text-foreground/90"><span className="font-bold text-foreground">組件更新</span>：將倒數計時器、行事曆、天氣的UI更新，更加美觀</p>
+                                        <p className="text-foreground/90"><span className="font-bold text-foreground">穩定性更新</span>：清理冗餘代碼並修復部分型別檢查錯誤。</p>
                                     </div>
                                 </div>
                             </div>

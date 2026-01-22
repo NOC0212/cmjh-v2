@@ -1,9 +1,11 @@
-import { Home, Search, Megaphone, Star, Settings, School } from "lucide-react";
+import { Home, Search, Megaphone, Star, Settings, School, StickyNote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useFavorites } from "@/hooks/useFavorites";
 import { AppSidebar } from "@/components/AppSidebar";
 import { motion } from "framer-motion";
+import { Scratchpad } from "@/components/Scratchpad";
+import { useState } from "react";
 
 // 頁面選單類型定義
 export type NavPage = "home" | "search" | "announcements" | "favorites" | "settings";
@@ -25,6 +27,7 @@ interface ResponsiveNavProps {
 export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: ResponsiveNavProps) {
     const isMobile = useIsMobile();
     const { favorites } = useFavorites();
+    const [scratchpadOpen, setScratchpadOpen] = useState(false);
 
     // 渲染導航按鈕項目
     const renderNavItem = (item: typeof navItems[0]) => {
@@ -76,9 +79,20 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
                                     崇明國中
                                 </h1>
                             </div>
-                            <AppSidebar />
+                            <div className="flex items-center gap-2">
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() => setScratchpadOpen(true)}
+                                    className="hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all"
+                                >
+                                    <StickyNote className="h-5 w-5" />
+                                </Button>
+                                <AppSidebar />
+                            </div>
                         </div>
                     </div>
+                    <Scratchpad open={scratchpadOpen} onOpenChange={setScratchpadOpen} />
                 </header>
             );
         }
@@ -102,10 +116,19 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
     return (
         <nav className="w-16 bg-background border-r border-border/50 flex flex-col items-center shrink-0 h-full py-4 z-50">
             {/* Logo 區域 */}
-            <div className="mb-4">
+            <div className="mb-4 flex flex-col gap-2 items-center">
                 <div className="p-2 bg-primary/10 rounded-xl">
                     <School className="h-5 w-5 text-primary" />
                 </div>
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setScratchpadOpen(true)}
+                    className="h-10 w-10 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all rounded-xl mt-2"
+                    title="快速便籤"
+                >
+                    <StickyNote className="h-5 w-5" />
+                </Button>
             </div>
 
             {/* 功能項區域 */}
@@ -117,6 +140,7 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
             <div className="mt-auto">
                 <AppSidebar />
             </div>
+            <Scratchpad open={scratchpadOpen} onOpenChange={setScratchpadOpen} />
         </nav>
     );
 }

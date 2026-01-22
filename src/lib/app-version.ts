@@ -1,4 +1,4 @@
-export const LATEST_VERSION = "v1.3.1";
+export const LATEST_VERSION = "v1.3.2";
 const VERSION_STORAGE_KEY = "cmjh-app-version";
 
 export const STORAGE_KEYS = {
@@ -8,6 +8,7 @@ export const STORAGE_KEYS = {
     COUNTDOWNS: "cmjh-custom-countdowns",
     FAVORITES: "favorites",
     SETUP_COMPLETED: "cmjh-first-setup-completed",
+    SCRATCHPAD: "cmjh_scratchpad_notes",
 };
 
 export function getCurrentVersion(): string {

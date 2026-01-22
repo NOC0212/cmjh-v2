@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -11,7 +12,55 @@ export default defineConfig(({ mode }) => ({
   preview: {
     port: 8080,
   },
-  plugins: [react()],
+  plugins: [
+    react(),
+    VitePWA({
+      registerType: "autoUpdate",
+      includeAssets: ["favicon.png", "robots.txt", "placeholder.svg"],
+      manifest: {
+        name: "崇明國中 v2",
+        short_name: "崇明國中 v2",
+        description: "專為崇明國中設計的數位工具平台",
+        theme_color: "#ffffff",
+        background_color: "#ffffff",
+        display: "standalone",
+        icons: [
+          {
+            src: "favicon.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "favicon.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
+          {
+            src: "favicon.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any maskable",
+          },
+        ],
+      },
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,json}"],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/www\.cmjh\.tn\.edu\.tw\/.*$/,
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "cmjh-api-cache",
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24, // 1 day
+              },
+            },
+          },
+        ],
+      },
+    }),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
