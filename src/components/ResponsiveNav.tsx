@@ -141,7 +141,7 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
             <div className={`mb-8 flex flex-col gap-4 w-full ${isHovered ? 'items-start' : 'items-center'}`}>
                 <div className="flex items-center w-full overflow-hidden">
                     <div className="w-8 flex items-center justify-center shrink-0">
-                        <div className="p-2.5 bg-primary/10 rounded-xl">
+                        <div className="p-1 bg-primary/10 rounded-xl">
                             <School className="h-5 w-5 text-primary" />
                         </div>
                     </div>

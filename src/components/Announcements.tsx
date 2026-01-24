@@ -25,7 +25,7 @@ export function Announcements() {
       .then((data) => {
         setAnnouncements(data);
         setLoading(false);
-        // Cleanup favorites when announcements are loaded
+        // 當公告加載時清理收藏夾
         const validIds = data.map((ann: Announcement) =>
           `announcement-${ann.date}-${ann.title}`
         );

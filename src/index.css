@@ -101,9 +101,17 @@
   ::-webkit-scrollbar-thumb:hover {
     background-color: hsl(var(--primary) / 0.5);
   }
+
+  /* 日曆圖標 */
+  .dark input[type="date"]::-webkit-calendar-picker-indicator,
+  .dark input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.7;
+    cursor: pointer;
+  }
 }
 
-/* Color scheme definitions - These only override primary colors and gradients */
+/* 配色定義 - 僅含單色及漸層色 */
 .theme-blue,
 [data-theme="blue"] {
   --primary: 210 75% 48%;
@@ -144,7 +152,7 @@
   --gradient-primary: linear-gradient(135deg, hsl(271 81% 56%), hsl(271 81% 66%));
 }
 
-/* Neon is a special skin - works best in dark mode, but now supports light mode */
+/* 霓虹 - 未適配淺色模式 深色較佳 */
 .theme-neon,
 [data-theme="neon"] {
   --primary: 190 100% 40%;
@@ -200,7 +208,7 @@
   border: 1px solid hsl(190 100% 50% / 0.2);
 }
 
-/* Modern is a high-contrast skin - Linkvertise inspired */
+/* 現代 */
 .theme-modern,
 [data-theme="modern"] {
   --primary: 43 100% 52%;
@@ -210,7 +218,7 @@
   --gradient-accent: linear-gradient(135deg, hsl(38 100% 50%), hsl(32 100% 50%), hsl(25 100% 48%));
 }
 
-/* Modern Specifics - High Contrast Dark Theme but with Gradient Logic */
+/* 現代 - 高對比深色模式 但具有漸層邏輯 */
 .dark.theme-modern,
 .dark[data-theme="modern"] {
   --background: 0 0% 7%;
@@ -227,7 +235,7 @@
   --gradient-progress: linear-gradient(90deg, var(--gradient-progress-from), var(--gradient-progress-to));
 }
 
-/* Gradient scheme colors */
+/* 漸層 */
 .theme-gradient,
 [data-theme="gradient"] {
   --primary: 240 75% 52%;
@@ -238,7 +246,7 @@
   --gradient-accent: linear-gradient(135deg, hsl(271 81% 56%), hsl(210 75% 55%), hsl(45 93% 58%));
 }
 
-/* Gradient Light Mode specifics */
+/* 漸層 - 淺色模式 */
 :root:not(.dark) .theme-gradient,
 :root:not(.dark)[data-theme="gradient"] {
   --background: 220 60% 99%;
@@ -249,7 +257,7 @@
   --card-foreground: 220 20% 20%;
 }
 
-/* Gradient Dark Mode specifics */
+/* 漸層 - 深色模式 */
 .dark.theme-gradient,
 .dark[data-theme="gradient"] {
   --background: 225 30% 6%;
@@ -259,7 +267,7 @@
   --gradient-card: linear-gradient(135deg, hsl(210 75% 48% / 0.1), hsl(271 81% 56% / 0.1), hsl(45 93% 58% / 0.05));
 }
 
-/* Utility classes for the new theme system */
+/* 新主題配色 */
 .bg-primary {
   background-color: hsl(var(--primary));
 }
@@ -276,8 +284,7 @@
   --tw-ring-color: hsl(var(--primary));
 }
 
-/* Gradient component styles */
-/* Gradient component styles - Shared between Theme Gradient and Modern Gradient */
+/* 漸層配色 */
 .theme-gradient .bg-card,
 [data-theme="gradient"] .bg-card {
   background: linear-gradient(135deg, hsl(210 75% 48% / 0.12) 0%, hsl(271 81% 56% / 0.12) 50%, hsl(45 93% 58% / 0.12) 100%), hsl(var(--card));
@@ -324,7 +331,7 @@
   box-shadow: 0 8px 32px hsl(48 100% 50% / 0.15), 0 4px 16px hsl(38 100% 50% / 0.1), 0 2px 8px hsl(25 100% 50% / 0.08);
 }
 
-/* Button hover effect */
+/* 按鈕 */
 .theme-gradient button:hover,
 [data-theme="gradient"] button:hover,
 .theme-modern button:hover,
@@ -332,7 +339,7 @@
   filter: brightness(1.05);
 }
 
-/* Animated gradient for progress bar */
+/* 漸層進度條 */
 @keyframes gradient-shift {
 
   0%,
@@ -350,7 +357,7 @@
   animation: gradient-shift 3s ease-in-out infinite;
 }
 
-/* Fade-in animation for first-time setup */
+/* 首次設定淡入動畫 */
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -367,12 +374,12 @@
   animation: fade-in 0.6s ease-out;
 }
 
-/* Safe area for mobile devices */
+/* 修正手機安全區域 */
 .safe-area-bottom {
   padding-bottom: env(safe-area-inset-bottom, 20px);
 }
 
-/* Fix mobile scroll jitter and layout stretching */
+/* 修正手機滾動抖動和佈局拉伸 */
 html,
 body {
   height: 100%;
@@ -383,7 +390,7 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Navigation hover effects */
+/* 導航列懸停效果 */
 .nav-item-hover {
   transition: all 0.2s ease-in-out;
 }

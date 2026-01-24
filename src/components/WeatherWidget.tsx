@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import {
   Sun, Cloud, CloudRain, CloudLightning, CloudDrizzle,
   CloudSun, CloudSnow, CloudFog, Droplets, Thermometer,
-  Eye, Compass, Sunrise, Sunset, Navigation, ChevronUp, ChevronDown
+  Compass, Sunrise, Navigation, ChevronUp, ChevronDown
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -475,8 +475,8 @@ export const WeatherWidget = () => {
                       className="group"
                     >
                       <div className={`p-4 rounded-2xl transition-all duration-300 border ${expandedDay === index
-                          ? 'bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20 shadow-md translate-x-1'
-                          : 'bg-muted/30 border-border/50 hover:bg-muted/50 hover:border-primary/20'
+                        ? 'bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20 shadow-md translate-x-1'
+                        : 'bg-muted/30 border-border/50 hover:bg-muted/50 hover:border-primary/20'
                         }`}>
                         <CollapsibleTrigger className="w-full cursor-pointer focus:outline-none">
                           <div className="flex items-center gap-4">

@@ -9,18 +9,19 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border border-input bg-background text-foreground hover:bg-accent hover:text-accent-foreground",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "text-foreground hover:bg-accent hover:text-accent-foreground",
+        default: "bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl shadow-[0_4px_14px_0_hsl(var(--primary)/.3)] hover:scale-[1.02] active:scale-[0.98] transition-all",
+        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-xl hover:scale-[1.02] active:scale-[0.98] transition-all",
+        outline: "border-2 border-primary/20 bg-background/50 text-foreground hover:bg-primary/10 hover:border-primary/30 rounded-xl backdrop-blur-sm hover:scale-[1.02] active:scale-[0.98] transition-all",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-xl hover:scale-[1.02] active:scale-[0.98] transition-all",
+        ghost: "text-foreground hover:bg-primary/10 hover:text-primary rounded-xl transition-all",
         link: "text-primary underline-offset-4 hover:underline",
+        gradient: "bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 rounded-xl shadow-lg border-none hover:scale-[1.02] active:scale-[0.98] transition-all",
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10",
+        default: "h-10 px-6 py-2",
+        sm: "h-9 rounded-lg px-4 text-xs",
+        lg: "h-12 rounded-2xl px-10 text-base font-bold",
+        icon: "h-10 w-10 rounded-xl",
       },
     },
     defaultVariants: {

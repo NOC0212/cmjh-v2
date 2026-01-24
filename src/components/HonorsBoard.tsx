@@ -25,7 +25,7 @@ export function HonorsBoard() {
             .then((data) => {
                 setHonors(data);
                 setLoading(false);
-                // Cleanup favorites when honors are loaded
+                // 當榮譽榜加載時清理收藏夾
                 const validIds = data.map((honor: Honor) =>
                     `honor-${honor.date}-${honor.title}`
                 );

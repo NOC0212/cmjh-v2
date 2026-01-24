@@ -15,7 +15,7 @@ export default function Timer() {
     const [timeLeft, setTimeLeft] = useState(0);
     const [isCountdownRunning, setIsCountdownRunning] = useState(false);
 
-    // 碼表狀態
+    // 音效引用
     const [stopwatchTime, setStopwatchTime] = useState(0);
     const [isStopwatchRunning, setIsStopwatchRunning] = useState(false);
 
@@ -238,10 +238,10 @@ export default function Timer() {
 
                     {/* 碼表 */}
                     <TabsContent value="stopwatch">
-                        <Card className="p-8 md:p-12 text-center bg-gradient-to-br from-green-500/5 to-emerald-500/5">
+                        <Card className="p-8 md:p-12 text-center bg-gradient-to-br from-primary/5 to-accent/5">
                             <div className="space-y-8">
                                 {/* 碼表顯示 */}
-                                <div className="text-7xl md:text-9xl font-bold font-mono bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                                <div className="text-7xl md:text-9xl font-bold font-mono bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                                     {stopwatchMinutes.toString().padStart(2, "0")}:
                                     {stopwatchSeconds.toString().padStart(2, "0")}.
                                     <span className="text-5xl">{stopwatchMillis.toString().padStart(2, "0")}</span>
@@ -250,7 +250,7 @@ export default function Timer() {
                                 {/* 控制按鈕 */}
                                 <div className="flex justify-center gap-4">
                                     {!isStopwatchRunning ? (
-                                        <Button onClick={handleStopwatchStart} size="lg" className="w-32 bg-green-600 hover:bg-green-700">
+                                        <Button onClick={handleStopwatchStart} size="lg" className="w-32">
                                             <Play className="mr-2 h-5 w-5" />
                                             開始
                                         </Button>

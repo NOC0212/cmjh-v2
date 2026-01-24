@@ -164,7 +164,7 @@ const App = () => {
                     }
                   />
 
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  {/* 在 CATCH-ALL "*" 路由之前添加所有自定義路由 */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </ErrorBoundary>

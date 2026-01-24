@@ -1,4 +1,4 @@
-# Logs
+# 紀錄檔
 logs
 *.log
 npm-debug.log*
@@ -12,12 +12,12 @@ dist
 dist-ssr
 *.local
 
-# Environment variables
+# 環境變數
 .env
 .env.local
 .env.*.local
 
-# Editor directories and files
+# 編輯器目錄和檔案
 .vscode/*
 !.vscode/extensions.json
 .idea

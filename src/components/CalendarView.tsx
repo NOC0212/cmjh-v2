@@ -29,7 +29,6 @@ export function CalendarView() {
   const [selectedMonth, setSelectedMonth] = useState("");
   const [loading, setLoading] = useState(true);
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
-  const [direction, setDirection] = useState(0); // -1 for left, 1 for right
   const { customEvents, getCustomEventsByMonth } = useCalendarEvents();
 
   useEffect(() => {
@@ -45,11 +44,11 @@ export function CalendarView() {
           }));
         });
         setCalendarData(markedData);
-        // Set current month or closest available month
+        // 設置當前月份或最接近的可用月份
         const today = new Date();
         const currentYM = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
-        const months = Object.keys(markedData).sort();
-        setSelectedMonth(months.includes(currentYM) ? currentYM : months[0] || "");
+        const monthsSorted = Object.keys(markedData).sort();
+        setSelectedMonth(monthsSorted.includes(currentYM) ? currentYM : monthsSorted[0] || "");
         setLoading(false);
       })
       .catch((error) => {
@@ -84,7 +83,6 @@ export function CalendarView() {
 
   const handlePrevMonth = () => {
     if (currentMonthIndex > 0) {
-      setDirection(-1);
       setSelectedDay(null);
       setSelectedMonth(months[currentMonthIndex - 1]);
     }
@@ -92,7 +90,6 @@ export function CalendarView() {
 
   const handleNextMonth = () => {
     if (currentMonthIndex < months.length - 1) {
-      setDirection(1);
       setSelectedDay(null);
       setSelectedMonth(months[currentMonthIndex + 1]);
     }
@@ -124,7 +121,7 @@ export function CalendarView() {
     const weekdays = ["日", "一", "二", "三", "四", "五", "六"];
     const calendarCells = [];
 
-    // Weekday headers
+    // 星期標題
     weekdays.forEach((day) => {
       calendarCells.push(
         <div key={`header-${day}`} className="text-center font-semibold text-muted-foreground py-3 text-sm md:text-base">
@@ -133,12 +130,12 @@ export function CalendarView() {
       );
     });
 
-    // Empty cells before first day
+    // 第一天之前的空儲存格
     for (let i = 0; i < startWeekday; i++) {
       calendarCells.push(<div key={`empty-${i}`} className="min-h-[100px] md:min-h-[100px]" />);
     }
 
-    // Day cells
+    // 日期儲存格
     for (let day = 1; day <= daysInMonth; day++) {
       const isToday =
         year === today.getFullYear() &&
@@ -214,7 +211,7 @@ export function CalendarView() {
             )}
           </div>
           <div className="space-y-0.5">
-            {/* 桌面版：顯示前2個事件 */}
+            {/* 桌面版：顯示前 2 個事件 */}
             <div className="hidden md:block">
               {dayEvents.slice(0, 2).map((event, idx) => (
                 <div key={idx} className="flex items-center gap-1 text-xs text-muted-foreground line-clamp-2 mb-0.5">
@@ -256,23 +253,6 @@ export function CalendarView() {
     };
   }, [selectedMonth, mergedCalendarData]);
 
-  const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 20 : -20,
-      opacity: 0,
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? 20 : -20,
-      opacity: 0,
-    }),
-  };
-
   if (loading) {
     return (
       <section id="calendar" className="mb-12 scroll-mt-20">
@@ -308,8 +288,6 @@ export function CalendarView() {
               </Button>
 
               <Select value={selectedMonth} onValueChange={(value) => {
-                const newIndex = months.indexOf(value);
-                setDirection(newIndex > currentMonthIndex ? 1 : -1);
                 setSelectedDay(null);
                 setSelectedMonth(value);
               }}>
@@ -323,7 +301,7 @@ export function CalendarView() {
                 </SelectTrigger>
                 <SelectContent>
                   {(() => {
-                    // Group months by year
+                    // 按年份分組月份
                     const groupedByYear: { [year: string]: string[] } = {};
                     months.forEach((m) => {
                       const year = m.split("-")[0];

@@ -1,7 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { AppSidebar } from "@/components/AppSidebar";
 
 interface ToolLayoutProps {
     children: React.ReactNode;
@@ -44,8 +43,7 @@ export function ToolLayout({ children, title }: ToolLayoutProps) {
 
                     {/* 右側按鈕 */}
                     <div className="flex items-center gap-2">
-                        {/* 選單 */}
-                        <AppSidebar />
+                        {/* 選單已被移除 */}
                     </div>
                 </div>
             </header>
@@ -59,7 +57,7 @@ export function ToolLayout({ children, title }: ToolLayoutProps) {
                 {/* Footer - 放在可捲動區域內以確保能看到 */}
                 <footer className="mt-12 border-t border-primary/20 bg-gradient-to-r from-background to-primary/5 py-6 px-4 lg:px-6 rounded-t-3xl">
                     <div className="max-w-7xl mx-auto text-center text-sm text-muted-foreground">
-                        <p>© 2026 崇明國中 by nocfond</p>
+                        <p>© 2026 崇明國中 by cy.noc0531</p>
                     </div>
                 </footer>
             </main>

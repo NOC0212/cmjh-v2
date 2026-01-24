@@ -97,7 +97,7 @@ const Index = () => {
                     {/* 版權資訊 - 在手機版如果不是首頁則隱藏，避免重疊 */}
                     {currentPage === "home" && (
                         <footer className={`mt-12 border-t border-primary/20 bg-gradient-to-r from-background to-primary/5 py-12 px-4 lg:px-6 rounded-t-3xl text-center text-sm text-muted-foreground ${isMobile ? 'mb-8' : ''}`}>
-                            <p>© 2026 崇明國中 by nocfond</p>
+                            <p>© 2026 崇明國中 by cy.noc0531</p>
                         </footer>
                     )}
                 </main>

@@ -43,7 +43,7 @@ export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
     useEffect(() => {
         const duration = 3000;
         const interval = 30;
-        const increment = 100 / (duration / interval);
+        const increment = 100 / (duration / interval); // 進度增量
 
         const progressTimer = setInterval(() => {
             setProgress((prev) => {
@@ -57,7 +57,7 @@ export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
 
         const fadeTimer = setTimeout(() => setIsFading(true), 3500);
         const timer = setTimeout(() => {
-            setStep("welcome");
+            setStep("welcome"); // 設定步驟為歡迎頁面
             setIsFading(false);
         }, 4000);
 
@@ -109,9 +109,9 @@ export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
                     </p>
 
                     <div className="relative w-full flex flex-col items-center gap-12">
-                        {/* Main Transmission Container: Stack vertically on mobile, horizontally on desktop */}
+                        {/* 主要傳輸容器：在行動裝置上垂直堆疊，在桌面版上水平排列 */}
                         <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-0 px-12 relative">
-                            {/* Source: Cloud/Server */}
+                            {/* 來源：雲端/伺服器 */}
                             <div className="relative z-10 transition-transform hover:scale-105 duration-300">
                                 <motion.div
                                     animate={{ boxShadow: ["0 0 0px rgba(59, 130, 246, 0)", "0 0 30px rgba(59, 130, 246, 0.3)", "0 0 0px rgba(59, 130, 246, 0)"] }}
@@ -123,7 +123,7 @@ export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
                                 <p className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-black font-mono text-blue-500/80 uppercase whitespace-nowrap tracking-widest">伺服器</p>
                             </div>
 
-                            {/* Horizontal Transmission Path (Desktop) */}
+                            {/* 水平傳輸路徑（桌面版） */}
                             <div className="hidden lg:flex absolute inset-0 items-center justify-center pointer-events-none px-32">
                                 <div className="w-full h-1 bg-gray-800 rounded-full relative overflow-hidden">
                                     {[0, 1, 2].map((i) => (
@@ -140,7 +140,7 @@ export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
                                 </div>
                             </div>
 
-                            {/* Vertical Transmission Path (Mobile) */}
+                            {/* 垂直傳輸路徑（行動裝置） */}
                             <div className="lg:hidden absolute inset-0 flex items-center justify-center pointer-events-none py-12">
                                 <div className="w-1 h-24 bg-gray-800 rounded-full relative overflow-hidden">
                                     {[0, 1, 2].map((i) => (
@@ -155,7 +155,7 @@ export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
                                 </div>
                             </div>
 
-                            {/* Destination: Local Client */}
+                            {/* 目的地：本地用戶端 */}
                             <div className="relative z-10 transition-transform hover:scale-105 duration-300">
                                 <motion.div
                                     animate={{ boxShadow: ["0 0 0px rgba(139, 92, 246, 0)", "0 0 30px rgba(139, 92, 246, 0.3)", "0 0 0px rgba(139, 92, 246, 0)"] }}

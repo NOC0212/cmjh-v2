@@ -42,17 +42,14 @@ const MaintenancePage = ({
             setTimeLeft(calculateTimeLeft());
         }, 1000);
 
-        // Initial calculation
         setTimeLeft(calculateTimeLeft());
 
         return () => clearInterval(timer);
     }, [maintenanceEndTime]);
 
     return (
-        <div className="min-h-screen w-full bg-[#030303] flex items-center justify-center p-4 font-sans text-white overflow-hidden relative">
-            {/* Background Orbs */}
-            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="min-h-screen w-full bg-[#020617] flex items-center justify-center p-4 font-sans text-white overflow-hidden relative">
+            <div className="fixed inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20 pointer-events-none"></div>
 
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -60,7 +57,7 @@ const MaintenancePage = ({
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 className="max-w-2xl w-full text-center z-10"
             >
-                <div className="mb-8 flex justify-center">
+                <div className="mb-10 flex justify-center">
                     <motion.div
                         animate={{
                             rotate: [0, -10, 10, -10, 0],
@@ -71,15 +68,15 @@ const MaintenancePage = ({
                             repeat: Infinity,
                             ease: "easeInOut"
                         }}
-                        className="w-24 h-24 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-3xl flex items-center justify-center border border-white/10 backdrop-blur-xl shadow-2xl relative"
+                        className="w-24 h-24 bg-gradient-to-br from-primary/20 to-accent/20 rounded-[2rem] flex items-center justify-center border border-white/10 backdrop-blur-xl shadow-2xl relative"
                     >
-                        <Hammer className="w-12 h-12 text-blue-400" />
+                        <Hammer className="w-12 h-12 text-primary" />
                         <div className="absolute -top-1 -right-1">
                             <motion.div
                                 animate={{ opacity: [1, 0.5, 1] }}
                                 transition={{ duration: 2, repeat: Infinity }}
                             >
-                                <AlertCircle className="w-6 h-6 text-yellow-500/80 fill-yellow-500/10" />
+                                <AlertCircle className="w-6 h-6 text-yellow-500 fill-yellow-500/10" />
                             </motion.div>
                         </div>
                     </motion.div>
@@ -95,7 +92,7 @@ const MaintenancePage = ({
 
                 {showTimer && (
                     <div className="space-y-8">
-                        <div className="flex items-center justify-center gap-2 text-blue-400 font-medium tracking-wider uppercase text-sm mb-4">
+                        <div className="flex items-center justify-center gap-2 text-primary font-medium tracking-wider uppercase text-sm mb-4">
                             <Clock className="w-4 h-4" />
                             <span>預計剩餘時間</span>
                         </div>
@@ -108,8 +105,8 @@ const MaintenancePage = ({
                                 { label: "秒", value: timeLeft.seconds }
                             ].map((item) => (
                                 <div key={item.label} className="relative group">
-                                    <div className="bg-white/5 border border-white/10 rounded-2xl p-4 md:p-6 backdrop-blur-md transition-all duration-300 group-hover:bg-white/10 group-hover:border-white/20">
-                                        <span className="text-3xl md:text-5xl font-mono font-bold block mb-1">
+                                    <div className="bg-white/5 border border-white/10 rounded-2xl p-4 md:p-6 backdrop-blur-md shadow-xl transition-all duration-300 group-hover:bg-white/10 group-hover:border-primary/20">
+                                        <span className="text-3xl md:text-5xl font-mono font-bold block mb-1 text-white">
                                             {item.value.toString().padStart(2, '0')}
                                         </span>
                                         <span className="text-[10px] md:text-xs text-white/40 uppercase tracking-widest font-semibold">
@@ -126,9 +123,9 @@ const MaintenancePage = ({
                                     initial={{ opacity: 0, scale: 0.9 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.9 }}
-                                    className="mt-8 py-3 px-6 bg-blue-500/20 border border-blue-500/30 rounded-full inline-block backdrop-blur-sm"
+                                    className="mt-8 py-3 px-6 bg-primary/20 border border-primary/30 rounded-full inline-block backdrop-blur-sm"
                                 >
-                                    <span className="text-blue-300 font-bold tracking-wide">
+                                    <span className="text-primary font-bold tracking-wide">
                                         ✨ 維修即將完成
                                     </span>
                                 </motion.div>
@@ -143,16 +140,6 @@ const MaintenancePage = ({
                     </p>
                 </div>
             </motion.div>
-
-            {/* Grid Overlay */}
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none" />
-            <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                    backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0)`,
-                    backgroundSize: '40px 40px'
-                }}
-            />
         </div>
     );
 };

@@ -28,13 +28,13 @@ export const LunchMenu: React.FC = () => {
                 const data = await response.json();
                 setLunchData(data);
 
-                // Auto-expand today if it's weekday
+                // 如果是工作日則自動展開今天
                 const todayStr = format(today, "yyyy-MM-dd");
-                const dayOfWeek = today.getDay(); // 0 is Sunday, 1-5 is Mon-Fri
+                const dayOfWeek = today.getDay(); // 0 是週日，1-5 是週一至週五
                 if (dayOfWeek >= 1 && dayOfWeek <= 5) {
                     setExpandedDay(todayStr);
                 } else {
-                    // If weekend, expand Monday
+                    // 如果是週末，展開週一
                     const monday = startOfWeek(today, { weekStartsOn: 1 });
                     setExpandedDay(format(monday, "yyyy-MM-dd"));
                 }

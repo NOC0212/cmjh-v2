@@ -305,12 +305,12 @@ export function CountdownTimer() {
         WebkitBackdropFilter: 'blur(20px) saturate(180%)',
       }}
     >
-      {/* Decorative background glass elements */}
+      {/* 裝飾性背景磨砂玻璃元素 */}
       <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
       <div className="absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-accent/10 blur-3xl" />
 
       <div className="relative z-10 flex flex-col gap-6 md:gap-8">
-        {/* Header - Optimized for Mobile */}
+        {/* 標題 - 針對行動裝置進行優化 */}
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4 min-w-0">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/15 shadow-inner">
@@ -476,7 +476,7 @@ export function CountdownTimer() {
           </div>
         </div>
 
-        {/* Timer Content with Animation */}
+        {/* 帶有動畫的計時器內容 */}
         <div className="relative overflow-hidden min-h-[280px] md:min-h-[300px]">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
@@ -510,7 +510,6 @@ export function CountdownTimer() {
                       { label: "分", value: timeLeft?.minutes || 0, color: "primary" as const },
                       { label: "秒", value: timeLeft?.seconds || 0, color: "accent" as const }
                     ].map((item, idx) => {
-                      // 定義靜態類別映射，避免 Vercel 佈署時 PurgeCSS 誤刪
                       const styles = {
                         primary: {
                           container: "border-primary/15 bg-gradient-to-br from-primary/10 to-transparent hover:border-primary/30",
@@ -522,7 +521,7 @@ export function CountdownTimer() {
                           glow: "bg-accent/5 group-hover:bg-accent/10",
                           text: "from-accent to-primary"
                         }
-                      };
+                      }; // 設定樣式映射
                       const style = styles[item.color];
 
                       return (
