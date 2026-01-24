@@ -64,26 +64,22 @@ export function UpdatePrompt() {
                                     <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                                     更新內容
                                 </h3>
-                                <div className="bg-muted/50 rounded-lg p-3 text-xs space-y-2 max-h-[120px] overflow-y-auto custom-scrollbar">
-                                    <div className="flex gap-2">
-                                        <span className="text-primary">📝</span>
-                                        <p className="text-foreground/90"><span className="font-bold text-foreground">Markdown 快速便籤</span>：新增支援即時預覽與自動儲存的筆記工具，方便隨手紀錄教學重點。</p>
+                                <div className="bg-muted/50 rounded-lg p-4 text-xs space-y-3 max-h-[180px] overflow-y-auto custom-scrollbar">
+                                    <div className="flex gap-2 text-foreground/90">
+                                        <span className="text-primary font-bold">🍱</span>
+                                        <p><span className="font-bold">新增營養午餐組件</span>：即時查看本週校園餐點。</p>
                                     </div>
-                                    <div className="flex gap-2">
-                                        <span className="text-primary">�</span>
-                                        <p className="text-foreground/90"><span className="font-bold text-foreground">PWA 應用支援</span>：現在可以將網頁安裝到桌面或手機，並支援離線資源快取。</p>
+                                    <div className="flex gap-2 text-foreground/90">
+                                        <span className="text-primary font-bold">📅</span>
+                                        <p><span className="font-bold">行事曆樣式優化</span>：提升分頁切換的穩定性與視覺一致性。</p>
                                     </div>
-                                    <div className="flex gap-2">
-                                        <span className="text-primary">🎨</span>
-                                        <p className="text-foreground/90"><span className="font-bold text-foreground">UI 美化</span>：優化全站組件圓角細節，並引入便利貼圖示營造親和感。</p>
+                                    <div className="flex gap-2 text-foreground/90">
+                                        <span className="text-primary font-bold">↔️</span>
+                                        <p><span className="font-bold">新增側邊欄懸停展開</span>：電腦版導覽列導覽列支援滑鼠懸停展開標籤。</p>
                                     </div>
-                                    <div className="flex gap-2">
-                                        <span className="text-primary">🛠️</span>
-                                        <p className="text-foreground/90"><span className="font-bold text-foreground">排版優化</span>：整合 Tailwind Typography，提供更專業的 Markdown 閱讀體驗。</p>
-                                    </div>
-                                    <div className="flex gap-2">
-                                        <span className="text-primary">✅</span>
-                                        <p className="text-foreground/90"><span className="font-bold text-foreground">穩定性更新</span>：清理冗餘代碼並修復部分型別檢查錯誤。</p>
+                                    <div className="flex gap-2 text-foreground/90">
+                                        <span className="text-primary font-bold">🐞</span>
+                                        <p><span className="font-bold">問題修復</span>：優化組件排版並修復潛在的顯示錯誤。</p>
                                     </div>
                                 </div>
                             </div>

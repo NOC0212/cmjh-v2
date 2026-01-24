@@ -391,19 +391,19 @@ export function CalendarView() {
                 </p>
               </div>
 
-              <Tabs defaultValue="school" className="w-full md:w-auto">
-                <TabsList className="grid w-full grid-cols-2 h-10 p-1 bg-muted/50 border border-border/50 rounded-lg">
-                  <TabsTrigger value="school" className="rounded-md data-[state=active]:bg-primary data-[state=active]:text-white transition-all gap-2 text-sm">
+              <Tabs defaultValue="school" className="w-full md:w-3/4">
+                <TabsList className="grid w-full grid-cols-2 h-11 p-1 bg-muted/50 border border-border/50 rounded-xl">
+                  <TabsTrigger value="school" className="rounded-lg data-[state=active]:bg-primary data-[state=active]:text-white transition-all gap-2 text-sm font-bold">
                     <GraduationCap className="h-4 w-4" />
                     <span>學校校曆</span>
-                    <span className="ml-1 px-1.5 py-0.5 rounded-full bg-black/10 dark:bg-white/10 text-[10px] font-bold">
+                    <span className="flex items-center justify-center min-w-[22px] h-5 px-1.5 rounded-full bg-black/10 dark:bg-white/10 text-[10px] font-black">
                       {defaultEvents.length}
                     </span>
                   </TabsTrigger>
-                  <TabsTrigger value="personal" className="rounded-md data-[state=active]:bg-accent data-[state=active]:text-white transition-all gap-2 text-sm">
+                  <TabsTrigger value="personal" className="rounded-lg data-[state=active]:bg-primary data-[state=active]:text-white transition-all gap-2 text-sm font-bold">
                     <User className="h-4 w-4" />
                     <span>個人自訂</span>
-                    <span className="ml-1 px-1.5 py-0.5 rounded-full bg-black/10 dark:bg-white/10 text-[10px] font-bold">
+                    <span className="flex items-center justify-center min-w-[22px] h-5 px-1.5 rounded-full bg-black/10 dark:bg-white/10 text-[10px] font-black">
                       {customEventsForMonth.length}
                     </span>
                   </TabsTrigger>

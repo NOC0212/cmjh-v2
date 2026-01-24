@@ -19,7 +19,7 @@ const navItems = [
   { title: "行事曆", path: "#calendar", icon: Calendar },
 ];
 
-export function AppSidebar() {
+export function AppSidebar({ expanded = false }: { expanded?: boolean }) {
 
   const scrollToSection = (path: string) => {
     const id = path.replace("#", "");
@@ -32,8 +32,15 @@ export function AppSidebar() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Menu className="h-5 w-5" />
+        <Button
+          variant="ghost"
+          size={expanded ? "default" : "icon"}
+          className={expanded ? "w-full justify-start p-0 px-2 h-12 rounded-xl" : "h-12 w-12 rounded-xl"}
+        >
+          <div className="w-8 flex items-center justify-center shrink-0">
+            <Menu className="h-5 w-5" />
+          </div>
+          {expanded && <span className="font-medium text-sm ml-2">快速導航</span>}
           <span className="sr-only">選單</span>
         </Button>
       </DropdownMenuTrigger>

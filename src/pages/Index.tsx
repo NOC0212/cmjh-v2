@@ -6,6 +6,7 @@ import { CountdownTimer } from "@/components/CountdownTimer";
 import { WeatherWidget } from "@/components/WeatherWidget";
 import { ToolsSection } from "@/components/ToolsSection";
 import { HonorsBoard } from "@/components/HonorsBoard";
+import { LunchMenu } from "@/components/LunchMenu";
 import { ResponsiveNav, NavPage } from "@/components/ResponsiveNav";
 import { SearchPage } from "@/components/SearchPage";
 import { SiteAnnouncementsPage } from "@/components/SiteAnnouncementsPage";
@@ -41,6 +42,7 @@ const Index = () => {
             case "honors": return <HonorsBoard key="honors" />;
             case "announcements": return <Announcements key="announcements" />;
             case "calendar": return <CalendarView key="calendar" />;
+            case "lunch": return <LunchMenu key="lunch" />;
             default: return null;
         }
     };
@@ -72,8 +74,13 @@ const Index = () => {
 
     return (
         <div className={`h-[100dvh] w-screen max-w-full flex overflow-hidden bg-background ${isMobile ? 'flex-col' : 'flex-row'}`}>
-            {/* 桌面版側邊導航 (作為 Flex 項目而非 fixed) */}
-            {!isMobile && <ResponsiveNav currentPage={currentPage} onPageChange={setCurrentPage} />}
+            {/* 桌面版側邊導航 (使用固定定位，所以這裡加一個占位區) */}
+            {!isMobile && (
+                <>
+                    <ResponsiveNav currentPage={currentPage} onPageChange={setCurrentPage} />
+                    <div className="w-16 shrink-0" />
+                </>
+            )}
 
             {/* 手機版頂部標題列 */}
             {isMobile && (

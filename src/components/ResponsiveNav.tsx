@@ -28,6 +28,7 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
     const isMobile = useIsMobile();
     const { favorites } = useFavorites();
     const [scratchpadOpen, setScratchpadOpen] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
 
     // 渲染導航按鈕項目
     const renderNavItem = (item: typeof navItems[0]) => {
@@ -38,10 +39,13 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
             <Button
                 key={item.id}
                 variant="ghost"
-                className={`relative flex flex-col items-center justify-center gap-1 h-auto py-2 px-3 transition-colors rounded-xl ${isActive
-                    ? 'text-primary'
+                className={`relative flex items-center transition-all duration-300 rounded-xl overflow-hidden ${isActive
+                    ? 'text-primary font-bold'
                     : 'hover:bg-primary/5 hover:text-primary text-muted-foreground'
-                    } ${isMobile ? 'flex-1 min-w-0' : 'w-12 h-12'}`}
+                    } ${isMobile
+                        ? 'flex-col justify-center h-auto py-2 px-3 flex-1 min-w-0 gap-1'
+                        : `h-12 justify-start p-0 px-2 ${isHovered ? 'w-full' : 'w-12'}`
+                    }`}
                 onClick={() => onPageChange(item.id)}
             >
                 {isActive && (
@@ -51,16 +55,27 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
                         transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     />
                 )}
-                <div className="relative z-10 flex flex-col items-center justify-center gap-1">
-                    <div className="relative">
-                        <Icon className="h-5 w-5" />
-                        {item.id === "favorites" && favorites.length > 0 && (
-                            <span className="absolute -top-1 -right-2 bg-red-500 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center">
-                                {favorites.length > 9 ? "9+" : favorites.length}
-                            </span>
-                        )}
+                <div className={`relative z-10 flex items-center ${isMobile ? 'flex-col gap-1' : ''}`}>
+                    <div className={`shrink-0 flex items-center justify-center ${isMobile ? '' : 'w-8'}`}>
+                        <div className="relative">
+                            <Icon className={`h-5 w-5 ${isActive ? 'stroke-[2.5px]' : ''}`} />
+                            {item.id === "favorites" && favorites.length > 0 && (
+                                <span className="absolute -top-1 -right-2 bg-red-500 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center">
+                                    {favorites.length > 9 ? "9+" : favorites.length}
+                                </span>
+                            )}
+                        </div>
                     </div>
-                    {isMobile && <span className="text-[10px]">{item.label}</span>}
+                    {/* 手機版標籤或是桌面版展開時標籤 */}
+                    {(isMobile || isHovered) && (
+                        <motion.span
+                            initial={!isMobile ? { opacity: 0, x: -10 } : false}
+                            animate={{ opacity: 1, x: 0 }}
+                            className={`${isMobile ? 'text-[10px]' : 'text-sm font-medium whitespace-nowrap'}`}
+                        >
+                            {item.label}
+                        </motion.span>
+                    )}
                 </div>
             </Button>
         );
@@ -112,35 +127,59 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
         return null;
     }
 
-    // 桌面版渲染邏輯 (改為結構化佈局，移除 fixed 定位以避免偏移)
+    // 桌面版渲染邏輯
     return (
-        <nav className="w-16 bg-background border-r border-border/50 flex flex-col items-center shrink-0 h-full py-4 z-50">
+        <motion.nav
+            initial={false}
+            animate={{ width: isHovered ? 240 : 64 }}
+            transition={{ type: "tween", duration: 0.2 }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className="fixed left-0 top-0 bg-background border-r border-border/50 flex flex-col items-center shrink-0 h-full py-6 z-50 shadow-xl px-4 overflow-hidden"
+        >
             {/* Logo 區域 */}
-            <div className="mb-4 flex flex-col gap-2 items-center">
-                <div className="p-2 bg-primary/10 rounded-xl">
-                    <School className="h-5 w-5 text-primary" />
+            <div className={`mb-8 flex flex-col gap-4 w-full ${isHovered ? 'items-start' : 'items-center'}`}>
+                <div className="flex items-center w-full overflow-hidden">
+                    <div className="w-8 flex items-center justify-center shrink-0">
+                        <div className="p-2.5 bg-primary/10 rounded-xl">
+                            <School className="h-5 w-5 text-primary" />
+                        </div>
+                    </div>
+                    {isHovered && (
+                        <motion.h1
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent whitespace-nowrap pl-1"
+                        >
+                            崇明國中
+                        </motion.h1>
+                    )}
                 </div>
+
                 <Button
                     variant="ghost"
-                    size="icon"
+                    size={isHovered ? "default" : "icon"}
                     onClick={() => setScratchpadOpen(true)}
-                    className="h-10 w-10 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all rounded-xl mt-2"
+                    className={`h-12 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all rounded-xl p-0 px-2 ${isHovered ? 'w-full justify-start' : 'w-12 justify-center'}`}
                     title="快速便籤"
                 >
-                    <StickyNote className="h-5 w-5" />
+                    <div className={`shrink-0 flex items-center justify-center ${isHovered ? 'w-8' : 'w-8'}`}>
+                        <StickyNote className="h-5 w-5" />
+                    </div>
+                    {isHovered && <span className="font-medium text-sm">快速便籤</span>}
                 </Button>
             </div>
 
             {/* 功能項區域 */}
-            <div className="flex-1 flex flex-col items-center justify-center gap-2">
+            <div className={`flex-1 flex flex-col justify-center gap-2 w-full ${isHovered ? 'items-start' : 'items-center'}`}>
                 {navItems.map((item) => renderNavItem(item))}
             </div>
 
             {/* 側邊欄腳部選單 */}
-            <div className="mt-auto">
-                <AppSidebar />
+            <div className={`mt-auto w-full flex flex-col ${isHovered ? 'items-start' : 'items-center'}`}>
+                <AppSidebar expanded={isHovered} />
             </div>
             <Scratchpad open={scratchpadOpen} onOpenChange={setScratchpadOpen} />
-        </nav>
+        </motion.nav>
     );
 }

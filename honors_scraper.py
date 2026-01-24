@@ -10,7 +10,7 @@ URLS = [
     "https://www.cmjh.tn.edu.tw/modules/tadnews/index.php?ncsn=10&g2p=3",
 ]
 
-# 輸出位置改成 /public/data
+# 輸出位置
 OUTPUT_DIR = os.path.join("public", "data")
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "honors.json")
 
@@ -64,7 +64,7 @@ def parse_honors(html, source_url):
             "date": date,
             "title": title,
             "url": url,
-            "source_page": source_url  # 可選：紀錄來源網址
+            "source_page": source_url  # 紀錄來源網址
         })
 
     return honors

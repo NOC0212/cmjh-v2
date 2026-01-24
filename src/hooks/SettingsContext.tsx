@@ -35,7 +35,8 @@ const DEFAULT_COMPONENTS: ComponentSettings[] = [
     { id: "tools", label: "小工具", enabled: true, order: 3 },
     { id: "honors", label: "榮譽榜", enabled: false, order: 4 },
     { id: "announcements", label: "行政公告", enabled: true, order: 5 },
-    { id: "calendar", label: "行事曆", enabled: true, order: 6 },
+    { id: "lunch", label: "營養午餐", enabled: false, order: 6 },
+    { id: "calendar", label: "行事曆", enabled: true, order: 7 },
 ];
 
 const DEFAULT_SETTINGS: AppSettings = {

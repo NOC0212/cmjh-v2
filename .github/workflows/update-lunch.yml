@@ -1,12 +1,12 @@
-name: Update Announcements
+name: Update Lunch Data
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # 每 30 分鐘執行一次
+    - cron: '0 */3 * * *'  # 每 3 小時執行一次
   workflow_dispatch:
 
 permissions:
-  contents: write  
+  contents: write
 
 jobs:
   update:
@@ -25,15 +25,14 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Run scrapers
+      - name: Run lunch scraper
         run: |
-          python scraper.py
-          python honors_scraper.py
+          python lunch.py
 
       - name: Commit and push if changed
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add public/data/announcements.json public/data/honors.json
-          git commit -m "Update announcements and honors" || echo "No changes to commit"
+          git add public/data/lunch.json
+          git commit -m "Update lunch data [skip ci]" || echo "No changes to commit"
           git push
