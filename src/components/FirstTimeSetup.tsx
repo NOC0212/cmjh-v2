@@ -240,7 +240,7 @@ export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
                     </h1>
                     <p className="text-xl text-slate-400 font-medium max-w-lg leading-relaxed">
                         重新定義網站，結合現代美學與智能工具。
-                        探索更直覺、更流暢的體驗。
+                        探索更直覺、更流暢的體驗。  此為非官方網站，請注意
                     </p>
                 </div>
 

@@ -66,24 +66,12 @@ export function UpdatePrompt() {
                                 </h3>
                                 <div className="bg-muted/50 rounded-lg p-4 text-xs space-y-3 max-h-[180px] overflow-y-auto custom-scrollbar">
                                     <div className="flex gap-2 text-foreground/90">
-                                        <span className="text-primary font-bold">🎨</span>
-                                        <p><span className="font-bold">UI 視覺現代化</span>：全站組件導入毛玻璃質感與大圓角設計。</p>
+                                        <span className="text-primary font-bold">☑️</span>
+                                        <p><span className="font-bold">QRcode產生器</span>：新增 QRcode 產生器功能，方便快速生成 QRcode。</p>
                                     </div>
                                     <div className="flex gap-2 text-foreground/90">
                                         <span className="text-primary font-bold">🌑</span>
-                                        <p><span className="font-bold">深色模式優化</span>：修正深色主題下的原生日期選擇器與對齊問題。</p>
-                                    </div>
-                                    <div className="flex gap-2 text-foreground/90">
-                                        <span className="text-primary font-bold">🚨</span>
-                                        <p><span className="font-bold">錯誤頁面重構</span>：404 與維護頁面現在擁有與系統一致的動態背景。</p>
-                                    </div>
-                                    <div className="flex gap-2 text-foreground/90">
-                                        <span className="text-primary font-bold">📝</span>
-                                        <p><span className="font-bold">便籤體驗提升</span>：將刪除提示改為內建對話框，優化整體流程。</p>
-                                    </div>
-                                    <div className="flex gap-2 text-foreground/90">
-                                        <span className="text-primary font-bold">🧹</span>
-                                        <p><span className="font-bold">效能與穩定性</span>：清理冗餘程式碼，修復 IDE 警告，提升運行效率。</p>
+                                        <p><span className="font-bold">編入google搜尋</span>：新增至Google Search Console將在未來可用google搜尋找到</p>
                                     </div>
                                 </div>
                             </div>
