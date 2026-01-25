@@ -1,4 +1,4 @@
-import { Wrench, Target, Users, Shuffle, Clock as ClockIcon, Timer as TimerIcon } from "lucide-react";
+import { Wrench, Target, Users, Shuffle, Clock as ClockIcon, Timer as TimerIcon, QrCode } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 
@@ -47,6 +47,15 @@ const tools = [
         color: "text-red-500",
         bgColor: "bg-red-500/10",
         path: "/tools/timer",
+    },
+    {
+        id: "qrcode",
+        icon: QrCode,
+        title: "QR Code 產生器",
+        description: "快速生成 QR Code",
+        color: "text-slate-600 dark:text-slate-300",
+        bgColor: "bg-slate-500/10",
+        path: "/tools/qrcode",
     },
 ];
 

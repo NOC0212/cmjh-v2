@@ -18,6 +18,7 @@ const Grouping = lazy(() => import("./pages/tools/Grouping"));
 const Order = lazy(() => import("./pages/tools/Order"));
 const Clock = lazy(() => import("./pages/tools/Clock"));
 const Timer = lazy(() => import("./pages/tools/Timer"));
+const QRCode = lazy(() => import("./pages/tools/QRCode"));
 
 import MaintenancePage from "./pages/Maintenance";
 
@@ -159,6 +160,16 @@ const App = () => {
                       <ErrorBoundary>
                         <Suspense fallback={<Loading fullScreen message="載入計時器..." />}>
                           <Timer />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="/tools/qrcode"
+                    element={
+                      <ErrorBoundary>
+                        <Suspense fallback={<Loading fullScreen message="載入 QR Code 工具..." />}>
+                          <QRCode />
                         </Suspense>
                       </ErrorBoundary>
                     }

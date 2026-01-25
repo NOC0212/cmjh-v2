@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ToolLayout } from "@/components/ToolLayout";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { Target, Play, Trash2, Plus } from "lucide-react";
+import { Target, Play, Trash2, Plus, History, XCircle, CheckCircle2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+
+interface HistoryItem {
+    id: string;
+    result: string;
+    timestamp: number;
+}
 
 export default function Wheel() {
     const defaultContent = Array.from({ length: 30 }, (_, i) => (i + 1).toString()).join("\n");
@@ -13,7 +19,26 @@ export default function Wheel() {
     const [spinning, setSpinning] = useState(false);
     const [result, setResult] = useState<string>("");
     const [rotation, setRotation] = useState(0);
+    const [history, setHistory] = useState<HistoryItem[]>([]);
+    const [excludeDrawn, setExcludeDrawn] = useState(false);
     const { toast } = useToast();
+
+    // 載入歷史紀錄
+    useEffect(() => {
+        const savedHistory = localStorage.getItem("wheel_history");
+        if (savedHistory) {
+            try {
+                setHistory(JSON.parse(savedHistory));
+            } catch (e) {
+                console.error("Failed to parse wheel history");
+            }
+        }
+    }, []);
+
+    // 儲存歷史紀錄
+    useEffect(() => {
+        localStorage.setItem("wheel_history", JSON.stringify(history));
+    }, [history]);
 
     const handleSetOptions = () => {
         const lines = input
@@ -39,10 +64,15 @@ export default function Wheel() {
     };
 
     const handleSpin = () => {
-        if (options.length < 2) {
+        // 過濾已抽中的選項 (如果開啟排除功能)
+        const currentOptions = excludeDrawn
+            ? options.filter(opt => !history.some(h => h.result === opt))
+            : options;
+
+        if (currentOptions.length < 2) {
             toast({
-                title: "請先設定選項",
-                description: "點擊「確定」按鈕",
+                title: excludeDrawn ? "可抽選項不足" : "請先設定選項",
+                description: excludeDrawn ? "所有選項皆已抽過，請清除歷史紀錄或關閉排除功能。" : "點擊「確定」按鈕",
                 variant: "destructive",
             });
             return;
@@ -59,11 +89,21 @@ export default function Wheel() {
 
         setTimeout(() => {
             const normalizedAngle = totalRotation % 360;
-            const sectorAngle = 360 / options.length;
-            const selectedIndex = Math.floor((360 - normalizedAngle) / sectorAngle) % options.length;
+            const sectorAngle = 360 / currentOptions.length;
+            const selectedIndex = Math.floor((360 - normalizedAngle) / sectorAngle) % currentOptions.length;
+            const selectedResult = currentOptions[selectedIndex];
 
-            setResult(options[selectedIndex]);
+            setResult(selectedResult);
             setSpinning(false);
+
+            // 加入歷史紀錄
+            const newItem: HistoryItem = {
+                id: Math.random().toString(36).substr(2, 9),
+                result: selectedResult,
+                timestamp: Date.now(),
+            };
+            setHistory(prev => [newItem, ...prev]);
+
         }, 3000);
     };
 
@@ -74,57 +114,50 @@ export default function Wheel() {
         setRotation(0);
     };
 
+    const clearHistory = () => {
+        setHistory([]);
+        toast({
+            title: "歷史紀錄已清除",
+        });
+    };
+
     const colors = [
         "#3b82f6", "#ec4899", "#10b981", "#f59e0b",
         "#8b5cf6", "#ef4444", "#06b6d4", "#84cc16"
     ];
 
+    // 計算目前有效的選項內容 (用於轉盤顯示)
+    const effectiveOptions = excludeDrawn
+        ? options.filter(opt => !history.some(h => h.result === opt))
+        : options;
+
     return (
         <ToolLayout title="隨機抽籤輪盤">
             <div className="space-y-6">
                 <div className="text-center">
-                    <h2 className="text-2xl font-bold mb-2 text-foreground">🎯 隨機抽籤輪盤</h2>
+                    <h2 className="text-2xl font-bold mb-2 text-foreground flex items-center justify-center gap-2">
+                        <Target className="h-8 w-8 text-primary" />
+                        隨機抽籤輪盤
+                    </h2>
                     <p className="text-muted-foreground">轉動輪盤，隨機抽選幸運兒！</p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                    <Card className="p-6">
-                        <h3 className="text-lg font-semibold mb-4 text-foreground">選項設定</h3>
-                        <Textarea
-                            placeholder="請輸入選項，每行一個&#10;例如：&#10;第一項&#10;第二項&#10;第三項"
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            className="min-h-[200px] font-mono mb-4"
-                            disabled={spinning}
-                        />
-                        <div className="flex gap-2">
-                            <Button onClick={handleSetOptions} className="flex-1" disabled={spinning}>
-                                <Plus className="mr-2 h-4 w-4" />
-                                確定
-                            </Button>
-                            <Button onClick={handleClear} variant="outline" disabled={spinning}>
-                                <Trash2 className="mr-2 h-4 w-4" />
-                                清空
-                            </Button>
-                        </div>
-                        <p className="text-xs text-muted-foreground mt-2">
-                            {options.length > 0 ? `已設定 ${options.length} 個選項` : "尚未設定選項"}
-                        </p>
-                    </Card>
-
-                    <Card className="p-6 flex flex-col items-center justify-center">
-                        {options.length > 0 ? (
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    {/* 左側：轉盤 (佔據較大空間) */}
+                    <Card className="lg:col-span-8 p-6 flex flex-col items-center justify-center min-h-[500px]">
+                        {effectiveOptions.length > 0 ? (
                             <div className="relative">
+                                {/* 箭頭指標 */}
                                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 z-20">
-                                    <div className="w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[40px] border-t-red-500 drop-shadow-2xl" />
+                                    <div className="w-0 h-0 border-l-[25px] border-l-transparent border-r-[25px] border-r-transparent border-t-[50px] border-t-red-500 drop-shadow-2xl" />
                                 </div>
 
                                 <div className="relative">
                                     <svg
-                                        width="300"
-                                        height="300"
+                                        width="450"
+                                        height="450"
                                         viewBox="0 0 300 300"
-                                        className="drop-shadow-2xl"
+                                        className="drop-shadow-[0_20px_50px_rgba(0,0,0,0.2)] max-w-full h-auto"
                                         style={{
                                             transform: `rotate(${rotation}deg)`,
                                             transition: spinning ? "transform 3s cubic-bezier(0.17, 0.67, 0.12, 0.99)" : "none",
@@ -132,8 +165,8 @@ export default function Wheel() {
                                     >
                                         <circle cx="150" cy="150" r="150" fill="white" />
 
-                                        {options.map((option, index) => {
-                                            const angle = 360 / options.length;
+                                        {effectiveOptions.map((option, index) => {
+                                            const angle = 360 / effectiveOptions.length;
                                             const startAngle = angle * index - 90;
                                             const endAngle = startAngle + angle;
 
@@ -157,59 +190,138 @@ export default function Wheel() {
 
                                             return (
                                                 <g key={index}>
-                                                    <path d={path} fill={color} stroke="white" strokeWidth="2" />
+                                                    <path d={path} fill={color} stroke="white" strokeWidth="1" />
                                                     <text
                                                         x={textX}
                                                         y={textY}
                                                         fill="white"
-                                                        fontSize="14"
+                                                        fontSize={effectiveOptions.length > 20 ? "8" : "12"}
                                                         fontWeight="bold"
                                                         textAnchor="middle"
                                                         dominantBaseline="middle"
                                                         transform={`rotate(${textAngle + 90}, ${textX}, ${textY})`}
                                                     >
-                                                        {option.length > 8 ? option.substring(0, 8) + "..." : option}
+                                                        {option.length > 10 ? option.substring(0, 10) + "..." : option}
                                                     </text>
                                                 </g>
                                             );
                                         })}
-
-                                        <circle cx="150" cy="150" r="148" fill="none" stroke="#e5e7eb" strokeWidth="4" />
+                                        <circle cx="150" cy="150" r="148" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
                                     </svg>
-
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-white shadow-2xl flex items-center justify-center z-10 border-4 border-gray-300">
-                                        <Target className="h-10 w-10 text-gray-600" />
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-white shadow-2xl flex items-center justify-center z-10 border-4 border-gray-100">
+                                        <Target className="h-10 w-10 text-primary/80" />
                                     </div>
                                 </div>
                             </div>
                         ) : (
-                            <div className="w-64 h-64 flex items-center justify-center border-2 border-dashed rounded-full text-muted-foreground">
-                                請先設定選項
+                            <div className="w-80 h-80 flex items-center justify-center border-2 border-dashed rounded-full text-muted-foreground text-center p-8 text-lg">
+                                {excludeDrawn && options.length > 0 ? "所有選項已排除\n請清除歷史紀錄" : "請先在右側設定選項並點擊確定"}
                             </div>
                         )}
 
-                        <Button
-                            onClick={handleSpin}
-                            disabled={spinning || options.length < 2}
-                            size="lg"
-                            className="mt-6 w-40"
-                        >
-                            {spinning ? (
-                                <>旋轉中...</>
-                            ) : (
-                                <>
-                                    <Play className="mr-2 h-5 w-5" />
-                                    開始抽籤
-                                </>
-                            )}
-                        </Button>
+                        <div className="flex flex-col items-center gap-4 mt-8 w-full max-w-md">
+                            <Button
+                                onClick={handleSpin}
+                                disabled={spinning || effectiveOptions.length < 2}
+                                size="lg"
+                                className="w-full h-16 text-xl font-bold shadow-lg hover:shadow-xl transition-all"
+                            >
+                                {spinning ? "抽籤中..." : (
+                                    <><Play className="mr-3 h-6 w-6" />開始隨機抽籤</>
+                                )}
+                            </Button>
 
-                        {result && (
-                            <div className="mt-6 p-4 bg-primary/10 rounded-lg border-2 border-primary">
-                                <div className="text-center">
-                                    <div className="text-sm text-muted-foreground mb-1">抽中結果</div>
-                                    <div className="text-3xl font-bold text-primary">🎉 {result}</div>
+                            {result && (
+                                <div className="w-full p-6 bg-primary/10 rounded-2xl border-2 border-primary animate-in zoom-in duration-500 shadow-inner">
+                                    <div className="text-center">
+                                        <div className="text-sm text-muted-foreground mb-2">抽中結果</div>
+                                        <div className="text-4xl font-black text-primary truncate drop-shadow-sm">🎉 {result}</div>
+                                    </div>
                                 </div>
+                            )}
+                        </div>
+                    </Card>
+
+                    {/* 右側：名單設定 */}
+                    <Card className="lg:col-span-4 p-6 space-y-4 flex flex-col">
+                        <div className="flex items-center justify-between">
+                            <h3 className="text-xl font-bold text-foreground">名單設定</h3>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setExcludeDrawn(!excludeDrawn)}
+                                className={excludeDrawn ? "bg-primary/10 text-primary border-primary/30" : "text-muted-foreground"}
+                            >
+                                {excludeDrawn ? (
+                                    <CheckCircle2 className="h-4 w-4 mr-2" />
+                                ) : (
+                                    <XCircle className="h-4 w-4 mr-2" />
+                                )}
+                                排除已中獎
+                            </Button>
+                        </div>
+                        <Textarea
+                            placeholder="請在此輸入名單，每行一個..."
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            className="flex-1 min-h-[300px] font-mono text-base mb-2 leading-relaxed"
+                            disabled={spinning}
+                        />
+                        <div className="flex gap-3">
+                            <Button onClick={handleSetOptions} className="flex-1 h-12" disabled={spinning}>
+                                <Plus className="mr-2 h-5 w-5" />
+                                確定名單
+                            </Button>
+                            <Button onClick={handleClear} variant="ghost" className="h-12" disabled={spinning}>
+                                <Trash2 className="h-5 w-5" />
+                            </Button>
+                        </div>
+                        <p className="text-xs text-muted-foreground italic">
+                            提示：更改名單後務必點擊「確定名單」按鈕。
+                        </p>
+                    </Card>
+
+                    {/* 下方：歷史紀錄 (Full Width) */}
+                    <Card className="lg:col-span-full p-6">
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-xl font-bold text-foreground flex items-center gap-3">
+                                <History className="h-6 w-6 text-primary" />
+                                抽籤歷史紀錄
+                                <span className="bg-muted px-2.5 py-0.5 rounded-full text-xs font-medium text-muted-foreground">
+                                    {history.length}
+                                </span>
+                            </h3>
+                            {history.length > 0 && (
+                                <Button variant="outline" size="sm" onClick={clearHistory} className="text-destructive hover:bg-destructive/10">
+                                    清除所有紀錄
+                                </Button>
+                            )}
+                        </div>
+
+                        {history.length > 0 ? (
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                                {history.map((item, index) => (
+                                    <div
+                                        key={item.id}
+                                        className={`p-4 rounded-xl border flex flex-col items-center justify-center gap-1 transition-all ${index === 0
+                                                ? 'bg-primary/10 border-primary ring-2 ring-primary/20 scale-105 z-10'
+                                                : 'bg-card hover:border-muted-foreground/30 shadow-sm'
+                                            }`}
+                                    >
+                                        <span className={`text-lg font-bold truncate w-full text-center ${index === 0 ? 'text-primary' : 'text-foreground'}`}>
+                                            {index === 0 && <span className="mr-1">✨</span>}
+                                            {item.result}
+                                        </span>
+                                        <span className="text-[10px] text-muted-foreground opacity-70">
+                                            {new Date(item.timestamp).toLocaleTimeString([], { hour12: false })}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="py-20 text-center text-muted-foreground border-2 border-dashed rounded-2xl">
+                                <History className="h-12 w-12 mx-auto mb-3 opacity-20" />
+                                <p className="italic">尚未有抽籤紀錄，快開始第一次抽獎吧！</p>
                             </div>
                         )}
                     </Card>
@@ -221,11 +333,9 @@ export default function Wheel() {
                         使用說明
                     </h3>
                     <ul className="text-sm text-muted-foreground space-y-1">
-                        <li>• 預設已填入 1-30 的數字，可直接抽籤</li>
-                        <li>• 在左側輸入選項，每行一個（至少 2 個）</li>
-                        <li>• 點擊「確定」生成輪盤</li>
-                        <li>• 點擊「開始抽籤」轉動輪盤</li>
-                        <li>• 輪盤會自動停止並顯示結果</li>
+                        <li>• <b>排除已中獎</b>：開啟後，已抽中的項目將不會再次出現在轉盤中。</li>
+                        <li>• <b>歷史紀錄</b>：系統會自動保存本次的抽籤結果，並持久化存儲於瀏覽器中。</li>
+                        <li>• <b>設定選項</b>：在左側輸入後點擊「確定」即可更新轉盤，支援快速輸入大量名單。</li>
                     </ul>
                 </Card>
             </div>
