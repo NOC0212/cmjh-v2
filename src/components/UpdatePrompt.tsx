@@ -67,11 +67,7 @@ export function UpdatePrompt() {
                                 <div className="bg-muted/50 rounded-lg p-4 text-xs space-y-3 max-h-[180px] overflow-y-auto custom-scrollbar">
                                     <div className="flex gap-2 text-foreground/90">
                                         <span className="text-primary font-bold">☑️</span>
-                                        <p><span className="font-bold">QRcode產生器</span>：新增 QRcode 產生器功能，方便快速生成 QRcode。</p>
-                                    </div>
-                                    <div className="flex gap-2 text-foreground/90">
-                                        <span className="text-primary font-bold">🌑</span>
-                                        <p><span className="font-bold">編入google搜尋</span>：新增至Google Search Console將在未來可用google搜尋找到</p>
+                                        <p><span className="font-bold">更新行事曆及倒數計時器</span>：將行事曆及倒數計時器更新至下學期</p>
                                     </div>
                                 </div>
                             </div>

@@ -57,6 +57,14 @@ const getDefaultConfigs = (): CountdownConfig[] => [
   },
   {
     id: "default-2",
+    targetDate: taiwanTime(2026, 3, 25, 0, 0, 0),
+    startDate: taiwanTime(2026, 1, 17, 0, 0, 0),
+    label: "第一次段考倒數 3/25 3/26",
+    progressLabel: "上次至本次段考進度條",
+    isDefault: true
+  },
+  {
+    id: "default-3",
     targetDate: taiwanTime(2027, 1, 1, 0, 0, 0),
     startDate: taiwanTime(2026, 1, 1, 0, 0, 0),
     label: "2027年倒數",
