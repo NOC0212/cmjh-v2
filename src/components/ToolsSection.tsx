@@ -1,4 +1,4 @@
-import { Wrench, Target, Users, Shuffle, Clock as ClockIcon, Timer as TimerIcon, QrCode } from "lucide-react";
+import { Wrench, Target, Users, Shuffle, Clock as ClockIcon, Timer as TimerIcon, QrCode, Pencil, ClipboardCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 
@@ -56,6 +56,24 @@ const tools = [
         color: "text-slate-600 dark:text-slate-300",
         bgColor: "bg-slate-500/10",
         path: "/tools/qrcode",
+    },
+    {
+        id: "whiteboard",
+        icon: Pencil,
+        title: "電子白板",
+        description: "即時繪圖與標記",
+        color: "text-sky-500",
+        bgColor: "bg-sky-500/10",
+        path: "/tools/whiteboard",
+    },
+    {
+        id: "attendance",
+        icon: ClipboardCheck,
+        title: "課堂點名",
+        description: "出席狀況管理",
+        color: "text-indigo-500",
+        bgColor: "bg-indigo-500/10",
+        path: "/tools/attendance",
     },
 ];
 

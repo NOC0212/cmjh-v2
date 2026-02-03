@@ -8,6 +8,7 @@ import { FirstTimeSetup, checkFirstTimeSetup } from "@/components/FirstTimeSetup
 import { UpdatePrompt } from "@/components/UpdatePrompt";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Loading } from "@/components/Loading";
+import { Analytics } from "@vercel/analytics/react";
 import { ensureVersion } from "@/lib/app-version";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -19,6 +20,8 @@ const Order = lazy(() => import("./pages/tools/Order"));
 const Clock = lazy(() => import("./pages/tools/Clock"));
 const Timer = lazy(() => import("./pages/tools/Timer"));
 const QRCode = lazy(() => import("./pages/tools/QRCode"));
+const Whiteboard = lazy(() => import("./pages/tools/Whiteboard"));
+const Attendance = lazy(() => import("./pages/tools/Attendance"));
 
 import MaintenancePage from "./pages/Maintenance";
 
@@ -94,6 +97,7 @@ const App = () => {
   // 已完成設定，顯示正常應用
   return (
     <ErrorBoundary>
+      <Analytics />
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <SettingsProvider>
@@ -170,6 +174,26 @@ const App = () => {
                       <ErrorBoundary>
                         <Suspense fallback={<Loading fullScreen message="載入 QR Code 工具..." />}>
                           <QRCode />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="/tools/whiteboard"
+                    element={
+                      <ErrorBoundary>
+                        <Suspense fallback={<Loading fullScreen message="載入電子白板..." />}>
+                          <Whiteboard />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="/tools/attendance"
+                    element={
+                      <ErrorBoundary>
+                        <Suspense fallback={<Loading fullScreen message="載入課堂點名..." />}>
+                          <Attendance />
                         </Suspense>
                       </ErrorBoundary>
                     }

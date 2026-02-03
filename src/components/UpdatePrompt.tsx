@@ -66,8 +66,16 @@ export function UpdatePrompt() {
                                 </h3>
                                 <div className="bg-muted/50 rounded-lg p-4 text-xs space-y-3 max-h-[180px] overflow-y-auto custom-scrollbar">
                                     <div className="flex gap-2 text-foreground/90">
-                                        <span className="text-primary font-bold">☑️</span>
-                                        <p><span className="font-bold">更新行事曆及倒數計時器</span>：將行事曆及倒數計時器更新至下學期</p>
+                                        <span className="text-primary font-bold">🛠️</span>
+                                        <p><span className="font-bold">新增「電子白板」工具</span>：支援畫筆、直線、虛線繪製，具備全螢幕及 12 色調色盤，並優化縮放顯示。</p>
+                                    </div>
+                                    <div className="flex gap-2 text-foreground/90">
+                                        <span className="text-primary font-bold">📋</span>
+                                        <p><span className="font-bold">新增「課堂點名」工具</span>：具備高效模式切換點名功能、統計數據顯示及頁面離開安全攔截。</p>
+                                    </div>
+                                    <div className="flex gap-2 text-foreground/90">
+                                        <span className="text-primary font-bold">📈</span>
+                                        <p><span className="font-bold">系統優化與 SEO</span>：整合 Vercel Analytics、優化搜尋引擎 Meta 標籤及 Sitemap 更新。</p>
                                     </div>
                                 </div>
                             </div>

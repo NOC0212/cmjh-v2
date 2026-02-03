@@ -5,12 +5,17 @@ import { Button } from "@/components/ui/button";
 interface ToolLayoutProps {
     children: React.ReactNode;
     title: string;
+    onBack?: () => void;
 }
 
-export function ToolLayout({ children, title }: ToolLayoutProps) {
+export function ToolLayout({ children, title, onBack }: ToolLayoutProps) {
     const navigate = useNavigate();
 
     const handleBack = () => {
+        if (onBack) {
+            onBack();
+            return;
+        }
         navigate("/");
         // 等待導航完成後滾動到小工具區塊
         setTimeout(() => {
