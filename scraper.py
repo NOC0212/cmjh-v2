@@ -2,7 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import os
-from urllib.parse import urljoin
+import time
+import re
+from urllib.parse import urljoin, quote
 
 URLS = [
     "https://www.cmjh.tn.edu.tw/modules/tadnews/index.php?ncsn=1&nsn=&tag_sn=&g2p=1",
@@ -10,86 +12,113 @@ URLS = [
     "https://www.cmjh.tn.edu.tw/modules/tadnews/index.php?ncsn=1&g2p=3",
 ]
 
-# 輸出位置
 OUTPUT_DIR = os.path.join("public", "data")
-OUTPUT_FILE = os.path.join(OUTPUT_DIR, "announcements.json")
 
 def fetch_page(url):
-    """取得單一頁面的 HTML"""
     try:
-        resp = requests.get(url, timeout=10)
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
+        resp = requests.get(url, headers=headers, timeout=15)
         resp.raise_for_status()
         resp.encoding = 'utf-8'
         return resp.text
-    except requests.RequestException as e:
-        print(f"無法取得 {url}: {e}")
+    except Exception as e:
+        print(f"連線失敗: {e}")
         return None
 
+def fetch_details(url):
+    print(f"  --> 深入解析：{url}")
+    html = fetch_page(url)
+    if not html: return "無法取得內容", []
+    
+    soup = BeautifulSoup(html, "html.parser")
+    content_text = ""
+    attachments = []
+
+    # 1. 內文抓取與排版優化
+    content_area = soup.find("div", class_="news_page_content")
+    if content_area:
+        # 移除發佈資訊區塊
+        info_div = content_area.find("div", class_="news_page_info")
+        if info_div: info_div.decompose()
+
+        # --- 精準換行處理 ---
+        # 遍歷所有標籤，只在特定標籤前後加換行
+        for tag in content_area.find_all(['p', 'div', 'li', 'tr', 'h1', 'h2', 'h3', 'h4', 'br']):
+            if tag.name == 'br':
+                tag.replace_with('\n')
+            else:
+                # 在塊狀標籤內容後方插入換行標記
+                tag.append('\n')
+
+        # 取得純文字（此時不使用 separator，避免 span 再次導致換行）
+        raw_text = content_area.get_text()
+        
+        # 清理邏輯：
+        # - 移除每一行前後的空白
+        # - 將三個以上的換行縮減為兩個（保持段落感但不過空）
+        lines = [line.strip() for line in raw_text.split('\n')]
+        clean_text = '\n'.join([l for l in lines if l]) # 移除完全空白的行
+        content_text = clean_text
+
+    # 2. 附件抓取
+    file_list = soup.find("ul", class_="tuf-icon")
+    if file_list:
+        for li in file_list.find_all("li"):
+            a_tag = li.find("a")
+            desc_div = li.find("div", class_="file_description")
+            if a_tag and desc_div:
+                raw_name = desc_div.get_text(strip=True)
+                clean_name = re.sub(r"^\d+\)\s*", "", raw_name)
+                href = a_tag.get("href", "")
+                onclick = a_tag.get("onclick", "")
+                
+                if "javascript:void(0)" in href and onclick:
+                    match = re.search(r"downloadFile\((\d+),", onclick)
+                    if match:
+                        file_sn = match.group(1)
+                        final_link = f"https://www.cmjh.tn.edu.tw/modules/tadnews/index.php?op=tufdl&fn={quote(clean_name)}&files_sn={file_sn}"
+                else:
+                    final_link = urljoin(url, href)
+
+                attachments.append({"name": clean_name, "link": final_link})
+
+    return content_text, attachments
+
 def parse_announcements(html, source_url):
-    """解析 HTML 並回傳公告資料"""
     soup = BeautifulSoup(html, "html.parser")
     table = soup.find("table", class_="table-striped")
-    if not table:
-        print(f"{source_url} 找不到 table")
-        return []
-
+    if not table: return []
     tbody = table.find("tbody")
-    if not tbody:
-        print(f"{source_url} 找不到 tbody")
-        return []
-
-    rows = tbody.find_all("tr")
     announcements = []
-
-    for tr in rows:
+    for tr in tbody.find_all("tr"):
         td = tr.find("td")
-        if not td:
-            continue
-
-        # 取得日期（前10字元，例如 2024-10-01）
-        full_text = td.get_text(separator=" ", strip=True)
-        date = full_text[:10]
-
-        # 排除 class 含 badge 的 a
+        if not td: continue
+        date = td.get_text(strip=True)[:10]
         a_tags = [a for a in td.find_all("a") if "badge" not in a.get("class", [])]
-        if not a_tags:
-            continue
-
-        a_target = a_tags[0]
-        title = a_target.text.strip()
-        href = a_target.get("href", "")
-        url = urljoin(source_url, href)
-
+        if not a_tags: continue
+        title = a_tags[0].text.strip()
+        link = urljoin(source_url, a_tags[0].get("href", ""))
+        content, links = fetch_details(link)
+        time.sleep(0.5)
         announcements.append({
             "date": date,
             "title": title,
-            "url": url,
-            "source_page": source_url  # 紀錄來源網址
+            "url": link,
+            "content": content,
+            "links": links
         })
-
     return announcements
 
-def save_to_file(data, filepath):
-    os.makedirs(os.path.dirname(filepath), exist_ok=True)
-    with open(filepath, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-    print(f"總共寫入 {len(data)} 筆公告到 {filepath}")
-
 def main():
-    all_announcements = []
-
-    # 按照 URL 順序（頁數小到大）
-    for url in URLS:
-        print(f"正在擷取：{url}")
+    for index, url in enumerate(URLS):
+        page_num = index + 1
+        print(f"\n[第 {page_num} 頁] 開始處理...")
         html = fetch_page(url)
         if html:
-            page_data = parse_announcements(html, url)
-            all_announcements.extend(page_data)
-
-    if all_announcements:
-        save_to_file(all_announcements, OUTPUT_FILE)
-    else:
-        print("沒有抓到任何公告。")
+            data = parse_announcements(html, url)
+            os.makedirs(OUTPUT_DIR, exist_ok=True)
+            with open(os.path.join(OUTPUT_DIR, f"announcements-p{page_num}.json"), "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
 
 if __name__ == "__main__":
     main()

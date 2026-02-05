@@ -6,6 +6,8 @@ export interface Favorite {
   title: string;
   date: string;
   url?: string;
+  content?: string;
+  links?: { name: string; link: string }[];
 }
 
 export function useFavorites() {

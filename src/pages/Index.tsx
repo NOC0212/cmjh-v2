@@ -12,7 +12,6 @@ import { SearchPage } from "@/components/SearchPage";
 import { SiteAnnouncementsPage } from "@/components/SiteAnnouncementsPage";
 import { FavoritesPage } from "@/components/FavoritesPage";
 import { SettingsPage } from "@/components/SettingsPage";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useSettings } from "@/hooks/SettingsContext";
 import { useIsMobile } from "@/hooks/use-mobile";
 import React from "react";
@@ -88,7 +87,7 @@ const Index = () => {
             )}
 
             {/* 主內容區塊 */}
-            <div className="flex-1 flex flex-col min-h-0 w-full overflow-x-hidden">
+            <div className="flex-1 flex flex-col min-h-0 w-full overflow-x-hidden animate-fade-in">
                 <main className={`flex-1 overflow-y-auto px-4 lg:p-8 max-w-5xl w-full mx-auto overflow-x-hidden ${isMobile ? 'pb-28' : ''}`}>
                     <div className="py-4">
                         {renderPageContent()}
@@ -111,15 +110,10 @@ const Index = () => {
     );
 };
 
-// 動態區塊包裝器
+// 動態區塊包裝器 (已移除動畫)
 const HomeSection = ({ children, id }: { children: React.ReactNode; id: string }) => {
-    const { ref, isVisible } = useScrollAnimation();
     return (
-        <div
-            id={id}
-            ref={ref}
-            className={`transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-        >
+        <div id={id}>
             {children}
         </div>
     );

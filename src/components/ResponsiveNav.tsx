@@ -43,7 +43,7 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
                     ? 'text-primary font-bold'
                     : 'hover:bg-primary/5 hover:text-primary text-muted-foreground'
                     } ${isMobile
-                        ? 'flex-col justify-center h-auto py-2 px-3 flex-1 min-w-0 gap-1'
+                        ? 'flex-col justify-center h-12 px-0 flex-1 min-w-0 rounded-2xl'
                         : `h-12 justify-start p-0 px-2 ${isHovered ? 'w-full' : 'w-12'}`
                     }`}
                 onClick={() => onPageChange(item.id)}
@@ -51,7 +51,7 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
                 {isActive && (
                     <motion.div
                         layoutId="nav-active-bg"
-                        className="absolute inset-0 bg-primary/15 rounded-xl z-0"
+                        className={`absolute inset-0 bg-primary/15 ${isMobile ? 'rounded-2xl' : 'rounded-xl'} z-0`}
                         transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     />
                 )}
@@ -66,12 +66,12 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
                             )}
                         </div>
                     </div>
-                    {/* 手機版標籤或是桌面版展開時標籤 */}
-                    {(isMobile || isHovered) && (
+                    {/* 桌面版展開時標籤 */}
+                    {!isMobile && isHovered && (
                         <motion.span
-                            initial={!isMobile ? { opacity: 0, x: -10 } : false}
+                            initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
-                            className={`${isMobile ? 'text-[10px]' : 'text-sm font-medium whitespace-nowrap'}`}
+                            className="text-sm font-medium whitespace-nowrap"
                         >
                             {item.label}
                         </motion.span>
@@ -88,13 +88,13 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
                 <header className="bg-background/90 backdrop-blur-md border-b border-border/50 shrink-0 z-50">
                     <div className="pt-[env(safe-area-inset-top)]">
                         <div className="flex items-center justify-between h-14 px-4">
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 animate-slide-in-left">
                                 <School className="h-5 w-5 text-primary" />
                                 <h1 className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                                     崇明國中
                                 </h1>
                             </div>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 animate-slide-in-right">
                                 <Button
                                     variant="ghost"
                                     size="icon"
@@ -114,9 +114,9 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
 
         if (mode === "footer") {
             return (
-                <div className="fixed bottom-6 left-0 right-0 px-4 z-50 pointer-events-none flex justify-center">
+                <div className="fixed bottom-4 left-0 right-0 px-4 z-50 pointer-events-none flex justify-center">
                     <nav className="bg-background/40 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg rounded-full overflow-hidden touch-none select-none pointer-events-auto max-w-md w-full">
-                        <div className="flex items-center justify-around h-16 w-full px-2">
+                        <div className="flex items-center justify-around h-14 w-full px-1">
                             {navItems.map((item) => renderNavItem(item))}
                         </div>
                     </nav>

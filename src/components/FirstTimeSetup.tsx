@@ -1,19 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSettings } from "@/hooks/SettingsContext";
 import { Button } from "@/components/ui/button";
 import { Check, Sparkles, ArrowRight, Globe, Monitor } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { updateVersionToLatest } from "@/lib/app-version";
 
-const loadingHints = [
-    "正在載入 CalendarView.tsx...",
-    "正在載入 WeatherWidget.tsx...",
-    "正在載入 CountdownTimer.tsx...",
-    "正在載入 ToolLayout.tsx...",
-    "正在初始化應用程式...",
-    "正在載入首次使用者介面...",
-    "即將完成..."
-];
 
 const SETUP_STORAGE_KEY = "cmjh-first-setup-completed";
 
@@ -33,47 +24,10 @@ interface FirstTimeSetupProps {
 }
 
 export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
-    const [step, setStep] = useState<"loading" | "welcome" | "selecting">("loading");
+    const [step, setStep] = useState<"welcome" | "selecting">("welcome");
     const [selectedTheme, setSelectedTheme] = useState<string | null>(null);
     const { setThemeColor } = useSettings();
-    const [progress, setProgress] = useState(0);
-    const [currentHintIndex, setCurrentHintIndex] = useState(0);
-    const [isFading, setIsFading] = useState(false);
 
-    useEffect(() => {
-        const duration = 3000;
-        const interval = 30;
-        const increment = 100 / (duration / interval); // 進度增量
-
-        const progressTimer = setInterval(() => {
-            setProgress((prev) => {
-                if (prev >= 100) {
-                    clearInterval(progressTimer);
-                    return 100;
-                }
-                return Math.min(prev + increment, 100);
-            });
-        }, interval);
-
-        const fadeTimer = setTimeout(() => setIsFading(true), 3500);
-        const timer = setTimeout(() => {
-            setStep("welcome"); // 設定步驟為歡迎頁面
-            setIsFading(false);
-        }, 4000);
-
-        return () => {
-            clearInterval(progressTimer);
-            clearTimeout(fadeTimer);
-            clearTimeout(timer);
-        };
-    }, []);
-
-    useEffect(() => {
-        const hintTimer = setInterval(() => {
-            setCurrentHintIndex((prev) => (prev + 1) % loadingHints.length);
-        }, 600);
-        return () => clearInterval(hintTimer);
-    }, []);
 
     const handleConfirm = () => {
         if (selectedTheme) {
@@ -84,146 +38,17 @@ export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
         }
     };
 
-    const totalFiles = 839;
-    const currentFile = Math.min(Math.floor((progress / 100) * totalFiles), totalFiles);
-    const filePaths = [
-        "src/components/CalendarView.tsx",
-        "src/components/WeatherWidget.tsx",
-        "src/hooks/SettingsContext.tsx",
-        "src/lib/utils.ts",
-        "public/data/announcements.json",
-        "src/components/ui/button.tsx",
-        "src/components/ResponsiveNav.tsx",
-        "src/App.tsx",
-        "src/index.css"
-    ];
 
-    if (step === "loading") {
-        return (
-            <div className="fixed inset-0 flex items-center justify-center bg-[#020617] p-8 overflow-hidden">
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20"></div>
-
-                <div className={`flex flex-col items-center justify-center gap-10 p-8 w-full max-w-xl transition-all duration-500 relative z-10 ${isFading ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}>
-                    <p className="text-sm font-bold text-blue-400/60 tracking-widest uppercase animate-pulse">
-                        CMJH V2
-                    </p>
-
-                    <div className="relative w-full flex flex-col items-center gap-12">
-                        {/* 主要傳輸容器：在行動裝置上垂直堆疊，在桌面版上水平排列 */}
-                        <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-0 px-12 relative">
-                            {/* 來源：雲端/伺服器 */}
-                            <div className="relative z-10 transition-transform hover:scale-105 duration-300">
-                                <motion.div
-                                    animate={{ boxShadow: ["0 0 0px rgba(59, 130, 246, 0)", "0 0 30px rgba(59, 130, 246, 0.3)", "0 0 0px rgba(59, 130, 246, 0)"] }}
-                                    transition={{ duration: 2, repeat: Infinity }}
-                                    className="p-5 rounded-3xl bg-gray-800 shadow-2xl border border-blue-900 flex items-center justify-center group"
-                                >
-                                    <Globe className="w-10 h-10 text-blue-500 group-hover:rotate-12 transition-transform" />
-                                </motion.div>
-                                <p className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-black font-mono text-blue-500/80 uppercase whitespace-nowrap tracking-widest">伺服器</p>
-                            </div>
-
-                            {/* 水平傳輸路徑（桌面版） */}
-                            <div className="hidden lg:flex absolute inset-0 items-center justify-center pointer-events-none px-32">
-                                <div className="w-full h-1 bg-gray-800 rounded-full relative overflow-hidden">
-                                    {[0, 1, 2].map((i) => (
-                                        <motion.div
-                                            key={i}
-                                            initial={{ left: "-10%" }}
-                                            animate={{ left: "110%" }}
-                                            transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.5, ease: "linear" }}
-                                            className="absolute top-0 h-full w-8 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-80 flex items-center justify-center"
-                                        >
-                                            <ArrowRight className="w-4 h-4 text-blue-400 opacity-50" />
-                                        </motion.div>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* 垂直傳輸路徑（行動裝置） */}
-                            <div className="lg:hidden absolute inset-0 flex items-center justify-center pointer-events-none py-12">
-                                <div className="w-1 h-24 bg-gray-800 rounded-full relative overflow-hidden">
-                                    {[0, 1, 2].map((i) => (
-                                        <motion.div
-                                            key={i}
-                                            initial={{ top: "-10%" }}
-                                            animate={{ top: "110%" }}
-                                            transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.5, ease: "linear" }}
-                                            className="absolute left-0 w-full h-8 bg-gradient-to-b from-transparent via-blue-500 to-transparent opacity-80 flex items-center justify-center"
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* 目的地：本地用戶端 */}
-                            <div className="relative z-10 transition-transform hover:scale-105 duration-300">
-                                <motion.div
-                                    animate={{ boxShadow: ["0 0 0px rgba(139, 92, 246, 0)", "0 0 30px rgba(139, 92, 246, 0.3)", "0 0 0px rgba(139, 92, 246, 0)"] }}
-                                    transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-                                    className="p-5 rounded-3xl bg-gray-800 shadow-2xl border border-purple-900 flex items-center justify-center group"
-                                >
-                                    <Monitor className="w-10 h-10 text-purple-500 group-hover:-rotate-12 transition-transform" />
-                                </motion.div>
-                                <p className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-black font-mono text-purple-500/80 uppercase whitespace-nowrap tracking-widest">本地端</p>
-                            </div>
-                        </div>
-
-                        <div className="mt-8 flex flex-col items-center gap-6 w-full">
-                            <AnimatePresence mode="wait">
-                                <motion.p
-                                    key={currentFile}
-                                    initial={{ opacity: 0, y: 5 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -5 }}
-                                    className="text-[11px] font-mono font-bold text-blue-400 bg-blue-500/5 px-4 py-1.5 rounded-full border border-blue-500/10"
-                                >
-                                    SYNCING: {filePaths[currentFile % filePaths.length]}
-                                </motion.p>
-                            </AnimatePresence>
-
-                            <div className="flex flex-col items-center gap-1">
-                                <div className="flex items-center gap-4">
-                                    <div className="flex items-baseline gap-1">
-                                        <span className="text-5xl font-black font-mono tracking-tighter bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                                            {currentFile}
-                                        </span>
-                                        <span className="text-gray-600 font-mono text-sm">Files</span>
-                                    </div>
-                                    <div className="h-10 w-[2px] bg-gray-800 rotate-[20deg]" />
-                                    <div className="flex items-baseline gap-1">
-                                        <span className="text-2xl font-black font-mono text-gray-700">
-                                            {totalFiles}
-                                        </span>
-                                        <span className="text-gray-600 font-mono text-[10px]">Files</span>
-                                    </div>
-                                </div>
-                                <div className="w-48 h-1 bg-gray-800 rounded-full mt-4 overflow-hidden relative">
-                                    <motion.div
-                                        className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500"
-                                        style={{ width: `${progress}%` }}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="h-6 flex items-center justify-center mt-4 text-xs text-white/30 font-mono italic">
-                        {loadingHints[currentHintIndex]}
-                    </div>
-                </div>
-            </div>
-        );
-    }
 
     const welcomeStep = (
         <motion.div
             key="welcome"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             className="w-full max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10"
         >
-            <div className="flex-1 text-left space-y-8">
+            <div className="flex-1 text-left space-y-8 animate-slide-in-left">
                 <div>
                     <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-bold border border-primary/30 mb-6 uppercase tracking-wider">
                         <Sparkles className="w-3 h-3" />
@@ -264,7 +89,7 @@ export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
                 </div>
             </div>
 
-            <div className="flex-1 relative flex justify-center lg:justify-end">
+            <div className="flex-1 relative flex justify-center lg:justify-end animate-slide-in-right">
                 <div className="relative w-80 h-80 md:w-[480px] md:h-[480px]">
                     <motion.div
                         animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
@@ -377,7 +202,7 @@ export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
                                 size="lg"
                                 className="h-16 px-16 text-xl font-bold rounded-2xl shadow-2xl hover:scale-105 transition-all duration-300 disabled:opacity-30 disabled:grayscale"
                             >
-                                {selectedTheme ? "完成並進入系統" : "請選擇一個主題"}
+                                {selectedTheme ? "完成並開始體驗" : "請選擇一個主題"}
                             </Button>
                         </div>
                     </motion.div>

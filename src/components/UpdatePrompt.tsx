@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { RefreshCw, X } from "lucide-react";
+import { RefreshCw, X, Check } from "lucide-react";
+ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { getCurrentVersion, LATEST_VERSION } from "@/lib/app-version";
 import { useSettings } from "@/hooks/SettingsContext";
@@ -7,6 +8,8 @@ import { useSettings } from "@/hooks/SettingsContext";
 export function UpdatePrompt() {
     const [show, setShow] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
+    const [isUpdating, setIsUpdating] = useState(false);
+    const [progress, setProgress] = useState(0);
     const currentVersion = getCurrentVersion();
     const { settings } = useSettings();
 
@@ -18,11 +21,27 @@ export function UpdatePrompt() {
         const handleShowUpdate = () => setShow(true);
         window.addEventListener("show-update-prompt", handleShowUpdate);
         return () => window.removeEventListener("show-update-prompt", handleShowUpdate);
-    }, [currentVersion]);
+    }, [currentVersion, settings.disableUpdatePrompt]);
 
     const handleUpdate = () => {
-        localStorage.clear();
-        window.location.reload();
+        setIsUpdating(true);
+        const duration = 3000; // 3 秒
+        const interval = 30;
+        const increment = 100 / (duration / interval);
+        
+        const timer = setInterval(() => {
+            setProgress(prev => {
+                if (prev >= 100) {
+                    clearInterval(timer);
+                    setTimeout(() => {
+                        localStorage.clear();
+                        window.location.reload();
+                    }, 500);
+                    return 100;
+                }
+                return prev + increment;
+            });
+        }, interval);
     };
 
     if (!show) return null;
@@ -30,7 +49,51 @@ export function UpdatePrompt() {
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm animate-in fade-in duration-300 text-foreground">
             <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
-                {!isConfirming ? (
+                {isUpdating ? (
+                    <div className="p-10 space-y-8 flex flex-col items-center justify-center text-center">
+                        <div className="relative">
+                            <div className="w-20 h-20 rounded-full border-4 border-primary/20 flex items-center justify-center">
+                                <RefreshCw className={`h-10 w-10 text-primary ${progress < 100 ? 'animate-spin' : ''}`} />
+                            </div>
+                            {progress >= 100 && (
+                                <motion.div 
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    className="absolute -top-1 -right-1 bg-green-500 text-white rounded-full p-1"
+                                >
+                                    <Check className="h-4 w-4" />
+                                </motion.div>
+                            )}
+                        </div>
+                        
+                        <div className="space-y-4 w-full">
+                            <div className="space-y-2">
+                                <h2 className="text-2xl font-black italic tracking-tighter">
+                                    {progress < 100 ? "正在執行更新..." : "更新完成！"}
+                                </h2>
+                                <p className="text-sm text-muted-foreground font-medium">
+                                    {progress < 40 ? "正在備份環境變數..." : 
+                                     progress < 70 ? "正在下載核心組件..." : 
+                                     progress < 100 ? "正在編譯並套用設定..." : "即將重新完成更新"}
+                                </p>
+                            </div>
+                            
+                            <div className="relative w-full h-3 bg-primary/10 rounded-full overflow-hidden border border-primary/5">
+                                <motion.div 
+                                    className="absolute inset-y-0 left-0 bg-primary shadow-[0_0_15px_rgba(var(--primary),0.5)]"
+                                    style={{ width: `${progress}%` }}
+                                    transition={{ type: "spring", bounce: 0, duration: 0.1 }}
+                                />
+                            </div>
+                            
+                            <div className="flex justify-end pr-1">
+                                <span className="text-xs font-black font-mono text-primary italic">
+                                    {Math.round(progress)}%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                ) : !isConfirming ? (
                     <>
                         <div className="bg-primary/10 p-6 flex items-center justify-between">
                             <div className="flex items-center gap-3">
@@ -66,16 +129,20 @@ export function UpdatePrompt() {
                                 </h3>
                                 <div className="bg-muted/50 rounded-lg p-4 text-xs space-y-3 max-h-[180px] overflow-y-auto custom-scrollbar">
                                     <div className="flex gap-2 text-foreground/90">
-                                        <span className="text-primary font-bold">🛠️</span>
-                                        <p><span className="font-bold">新增「電子白板」工具</span>：支援畫筆、直線、虛線繪製，具備全螢幕及 12 色調色盤，並優化縮放顯示。</p>
-                                    </div>
-                                    <div className="flex gap-2 text-foreground/90">
                                         <span className="text-primary font-bold">📋</span>
-                                        <p><span className="font-bold">新增「課堂點名」工具</span>：具備高效模式切換點名功能、統計數據顯示及頁面離開安全攔截。</p>
+                                        <p><span className="font-bold">行政公告系統升級</span>：支援摺疊展開詳情、自動換行處理，並優化附件連結的導覽與樣式。</p>
                                     </div>
                                     <div className="flex gap-2 text-foreground/90">
-                                        <span className="text-primary font-bold">📈</span>
-                                        <p><span className="font-bold">系統優化與 SEO</span>：整合 Vercel Analytics、優化搜尋引擎 Meta 標籤及 Sitemap 更新。</p>
+                                        <span className="text-primary font-bold">⚡</span>
+                                        <p><span className="font-bold">極速啟動優化</span>：移除冗長的模擬載入動畫與頁面捲動延遲，改用更絲滑的 1.5s 漸顯與雙向滑入特效。</p>
+                                    </div>
+                                    <div className="flex gap-2 text-foreground/90">
+                                        <span className="text-primary font-bold">📱</span>
+                                        <p><span className="font-bold">手機導航精簡</span>：縮減底部選單高度，移除文字標籤僅保留圖示，並優化選中狀態的圓角形狀。</p>
+                                    </div>
+                                    <div className="flex gap-2 text-foreground/90">
+                                        <span className="text-primary font-bold">🔄</span>
+                                        <p><span className="font-bold">全新更新體驗</span>：在執行版本更新時加入讀取進度條與狀態描述，提供更詳細的視覺反饋。</p>
                                     </div>
                                 </div>
                             </div>

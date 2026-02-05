@@ -56,7 +56,7 @@ export function Scratchpad({ open, onOpenChange }: ScratchpadProps) {
     return (
         <>
             <Dialog open={open} onOpenChange={onOpenChange}>
-                <DialogContent className="w-[95vw] max-w-3xl h-[80vh] flex flex-col p-4 sm:p-6 gap-4 rounded-2xl sm:rounded-[2rem] overflow-hidden">
+                <DialogContent className="w-[95vw] max-w-3xl h-[80vh] flex flex-col p-4 sm:p-6 gap-4 rounded-2xl sm:rounded-[2rem] overflow-hidden bg-background">
                     <DialogHeader className="flex-row items-center justify-between space-y-0">
                         <div>
                             <DialogTitle className="flex items-center gap-2">
@@ -71,7 +71,7 @@ export function Scratchpad({ open, onOpenChange }: ScratchpadProps) {
 
                     <Tabs defaultValue="edit" className="flex-1 flex flex-col overflow-hidden">
                         <div className="flex items-center justify-between mb-2">
-                            <TabsList className="grid grid-cols-2 w-40 rounded-xl">
+                            <TabsList className="grid grid-cols-2 w-40 rounded-xl bg-primary/10">
                                 <TabsTrigger value="edit" className="flex items-center gap-2 rounded-lg">
                                     <Edit3 className="h-4 w-4" />
                                     編輯
@@ -103,12 +103,12 @@ export function Scratchpad({ open, onOpenChange }: ScratchpadProps) {
                                 value={notes}
                                 onChange={(e) => setNotes(e.target.value)}
                                 placeholder="在這裡輸入 Markdown 內容..."
-                                className="h-full resize-none font-mono text-sm border-2 rounded-xl focus-visible:ring-primary/20 p-4 transition-all"
+                                className="h-full resize-none font-mono text-sm border-2 border-primary/20 rounded-xl focus-visible:ring-primary/20 p-4 transition-all outline-none bg-primary/5"
                             />
                         </TabsContent>
 
                         <TabsContent value="preview" className="flex-1 mt-0 overflow-hidden">
-                            <ScrollArea className="h-full border-2 rounded-xl p-4 bg-muted/30 transition-all">
+                            <ScrollArea className="h-full border-2 border-primary/20 rounded-xl p-4 bg-primary/5 transition-all outline-none">
                                 <div className="prose prose-sm dark:prose-invert max-w-none">
                                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
                                         {notes || "*無內容*"}
