@@ -27,6 +27,8 @@ jobs:
 
       - name: Run scrapers
         run: |
+          # 確保資料夾存在，避免爬蟲寫入失敗
+          mkdir -p public/data
           python scraper.py
           python honors_scraper.py
 
@@ -34,6 +36,11 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add public/data/announcements.json public/data/honors.json
-          git commit -m "Update announcements and honors" || echo "No changes to commit"
+          
+          # 修改這裡：add 整個資料夾下的所有 json 檔案
+          git add public/data/*.json
+          
+          # 執行 commit，如果沒有變動則顯示 No changes
+          git commit -m "Update announcements and honors data" || echo "No changes to commit"
+          
           git push
