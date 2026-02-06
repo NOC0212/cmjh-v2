@@ -129,20 +129,8 @@ export function UpdatePrompt() {
                                 </h3>
                                 <div className="bg-muted/50 rounded-lg p-4 text-xs space-y-3 max-h-[180px] overflow-y-auto custom-scrollbar">
                                     <div className="flex gap-2 text-foreground/90">
-                                        <span className="text-primary font-bold">📋</span>
-                                        <p><span className="font-bold">行政公告系統升級</span>：支援摺疊展開詳情、自動換行處理，並優化附件連結的導覽與樣式。</p>
-                                    </div>
-                                    <div className="flex gap-2 text-foreground/90">
-                                        <span className="text-primary font-bold">⚡</span>
-                                        <p><span className="font-bold">極速啟動優化</span>：移除冗長的模擬載入動畫與頁面捲動延遲，改用更絲滑的 1.5s 漸顯與雙向滑入特效。</p>
-                                    </div>
-                                    <div className="flex gap-2 text-foreground/90">
-                                        <span className="text-primary font-bold">📱</span>
-                                        <p><span className="font-bold">手機導航精簡</span>：縮減底部選單高度，移除文字標籤僅保留圖示，並優化選中狀態的圓角形狀。</p>
-                                    </div>
-                                    <div className="flex gap-2 text-foreground/90">
-                                        <span className="text-primary font-bold">🔄</span>
-                                        <p><span className="font-bold">全新更新體驗</span>：在執行版本更新時加入讀取進度條與狀態描述，提供更詳細的視覺反饋。</p>
+                                        <span className="text-primary font-bold">🛠️</span>
+                                        <p><span className="font-bold">搜尋功能修復</span>：修復無法正確搜尋行政公告內容的問題。</p>
                                     </div>
                                 </div>
                             </div>
