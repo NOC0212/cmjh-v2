@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { getCurrentVersion, LATEST_VERSION } from "@/lib/app-version";
 import { useSettings } from "@/hooks/SettingsContext";
 
-export function UpdatePrompt() {
+export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
     const [show, setShow] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
@@ -22,6 +22,8 @@ export function UpdatePrompt() {
         window.addEventListener("show-update-prompt", handleShowUpdate);
         return () => window.removeEventListener("show-update-prompt", handleShowUpdate);
     }, [currentVersion, settings.disableUpdatePrompt]);
+
+    if (!show || isHidden) return null;
 
     const handleUpdate = () => {
         setIsUpdating(true);

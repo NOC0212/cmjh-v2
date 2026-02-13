@@ -1,6 +1,7 @@
 {
-    "isMaintenance": false,
-    "showTimer": false,
-    "maintenanceEndTime": "2026-01-25T22:00:00+08:00",
-    "message": "網頁發生了一些問題，正在修復中。"
+    "isMaintenance": true,
+    "showTimer": true,
+    "maintenanceEndTime": "2026-02-22T12:00:00+08:00",
+    "title": "過年期間暫停服務",
+    "message": "2/14-2/22 期間網頁不開放，請留意"
 }

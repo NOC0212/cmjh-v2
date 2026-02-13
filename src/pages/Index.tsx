@@ -14,9 +14,16 @@ import { FavoritesPage } from "@/components/FavoritesPage";
 import { SettingsPage } from "@/components/SettingsPage";
 import { useSettings } from "@/hooks/SettingsContext";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Skeleton } from "@/components/ui/skeleton";
+import MaintenanceModal from "@/components/MaintenanceModal";
+import { MaintenanceConfig } from "@/App";
 import React from "react";
 
-const Index = () => {
+interface IndexProps {
+    maintenanceConfig: MaintenanceConfig | null;
+}
+
+const Index = ({ maintenanceConfig }: IndexProps) => {
     const { settings } = useSettings();
 
     const isMobile = useIsMobile();
@@ -33,6 +40,18 @@ const Index = () => {
 
     // 渲染首頁組件
     const renderHomePageComponent = (id: string) => {
+        if (maintenanceConfig?.isMaintenance) {
+            return (
+                <div className="space-y-4 w-full">
+                    <Skeleton className="h-48 w-full rounded-2xl" />
+                    <div className="space-y-2">
+                        <Skeleton className="h-4 w-3/4" />
+                        <Skeleton className="h-4 w-1/2" />
+                    </div>
+                </div>
+            );
+        }
+
         switch (id) {
             case "countdown": return <CountdownTimer key="countdown" />;
             case "weather": return <WeatherWidget key="weather" />;
@@ -87,7 +106,7 @@ const Index = () => {
             )}
 
             {/* 主內容區塊 */}
-            <div className="flex-1 flex flex-col min-h-0 w-full overflow-x-hidden animate-fade-in">
+            <div className="flex-1 flex flex-col min-h-0 w-full overflow-x-hidden animate-fade-in relative">
                 <main className={`flex-1 overflow-y-auto px-4 lg:p-8 max-w-5xl w-full mx-auto overflow-x-hidden ${isMobile ? 'pb-28' : ''}`}>
                     <div className="py-4">
                         {renderPageContent()}
@@ -100,6 +119,17 @@ const Index = () => {
                         </footer>
                     )}
                 </main>
+
+                {/* 維護模式彈窗 */}
+                {maintenanceConfig?.isMaintenance && (
+                    <MaintenanceModal
+                        isOpen={true}
+                        maintenanceEndTime={maintenanceConfig.maintenanceEndTime}
+                        showTimer={maintenanceConfig.showTimer}
+                        title={maintenanceConfig.title}
+                        message={maintenanceConfig.message}
+                    />
+                )}
             </div>
 
             {/* 手機版底部導航列 */}

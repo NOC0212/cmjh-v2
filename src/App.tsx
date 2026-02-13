@@ -23,14 +23,14 @@ const QRCode = lazy(() => import("./pages/tools/QRCode"));
 const Whiteboard = lazy(() => import("./pages/tools/Whiteboard"));
 const Attendance = lazy(() => import("./pages/tools/Attendance"));
 
-import MaintenancePage from "./pages/Maintenance";
 
 const queryClient = new QueryClient();
 
-interface MaintenanceConfig {
+export interface MaintenanceConfig {
   isMaintenance: boolean;
   showTimer: boolean;
   maintenanceEndTime: string;
+  title: string;
   message: string;
 }
 
@@ -71,15 +71,6 @@ const App = () => {
     return showLoadingUi ? <Loading fullScreen message="正在讀取設定..." /> : null;
   }
 
-  if (maintenanceConfig?.isMaintenance) {
-    return (
-      <MaintenancePage
-        maintenanceEndTime={maintenanceConfig.maintenanceEndTime}
-        showTimer={maintenanceConfig.showTimer}
-        message={maintenanceConfig.message}
-      />
-    );
-  }
 
   // 如果尚未完成首次設定，顯示設定畫面
   if (!setupCompleted) {
@@ -101,106 +92,118 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <SettingsProvider>
-            <UpdatePrompt />
+            <UpdatePrompt isHidden={maintenanceConfig?.isMaintenance} />
             <Toaster />
             <Sonner />
             <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
               <ErrorBoundary>
                 <Routes>
+                  {maintenanceConfig?.isMaintenance ? (
+                    <Route 
+                      path="*" 
+                      element={
+                        <ErrorBoundary>
+                          <Index maintenanceConfig={maintenanceConfig} />
+                        </ErrorBoundary>
+                      } 
+                    />
+                  ) : (
+                    <>
+                      <Route
+                        path="/"
+                        element={
+                          <ErrorBoundary>
+                            <Index maintenanceConfig={maintenanceConfig} />
+                          </ErrorBoundary>
+                        }
+                      />
 
-                  <Route
-                    path="/"
-                    element={
-                      <ErrorBoundary>
-                        <Index />
-                      </ErrorBoundary>
-                    }
-                  />
+                      {/* 工具頁面路由 - 使用代碼分割和錯誤邊界 */}
+                      <Route
+                        path="/tools/wheel"
+                        element={
+                          <ErrorBoundary>
+                            <Suspense fallback={<Loading fullScreen message="載入輪盤工具..." />}>
+                              <Wheel />
+                            </Suspense>
+                          </ErrorBoundary>
+                        }
+                      />
+                      <Route
+                        path="/tools/grouping"
+                        element={
+                          <ErrorBoundary>
+                            <Suspense fallback={<Loading fullScreen message="載入分組工具..." />}>
+                              <Grouping />
+                            </Suspense>
+                          </ErrorBoundary>
+                        }
+                      />
+                      <Route
+                        path="/tools/order"
+                        element={
+                          <ErrorBoundary>
+                            <Suspense fallback={<Loading fullScreen message="載入順序工具..." />}>
+                              <Order />
+                            </Suspense>
+                          </ErrorBoundary>
+                        }
+                      />
+                      <Route
+                        path="/tools/clock"
+                        element={
+                          <ErrorBoundary>
+                            <Suspense fallback={<Loading fullScreen message="載入時鐘..." />}>
+                              <Clock />
+                            </Suspense>
+                          </ErrorBoundary>
+                        }
+                      />
+                      <Route
+                        path="/tools/timer"
+                        element={
+                          <ErrorBoundary>
+                            <Suspense fallback={<Loading fullScreen message="載入計時器..." />}>
+                              <Timer />
+                            </Suspense>
+                          </ErrorBoundary>
+                        }
+                      />
+                      <Route
+                        path="/tools/qrcode"
+                        element={
+                          <ErrorBoundary>
+                            <Suspense fallback={<Loading fullScreen message="載入 QR Code 工具..." />}>
+                              <QRCode />
+                            </Suspense>
+                          </ErrorBoundary>
+                        }
+                      />
+                      <Route
+                        path="/tools/whiteboard"
+                        element={
+                          <ErrorBoundary>
+                            <Suspense fallback={<Loading fullScreen message="載入電子白板..." />}>
+                              <Whiteboard />
+                            </Suspense>
+                          </ErrorBoundary>
+                        }
+                      />
+                      <Route
+                        path="/tools/attendance"
+                        element={
+                          <ErrorBoundary>
+                            <Suspense fallback={<Loading fullScreen message="載入課堂點名..." />}>
+                              <Attendance />
+                            </Suspense>
+                          </ErrorBoundary>
+                        }
+                      />
 
-                  {/* 工具頁面路由 - 使用代碼分割和錯誤邊界 */}
-                  <Route
-                    path="/tools/wheel"
-                    element={
-                      <ErrorBoundary>
-                        <Suspense fallback={<Loading fullScreen message="載入輪盤工具..." />}>
-                          <Wheel />
-                        </Suspense>
-                      </ErrorBoundary>
-                    }
-                  />
-                  <Route
-                    path="/tools/grouping"
-                    element={
-                      <ErrorBoundary>
-                        <Suspense fallback={<Loading fullScreen message="載入分組工具..." />}>
-                          <Grouping />
-                        </Suspense>
-                      </ErrorBoundary>
-                    }
-                  />
-                  <Route
-                    path="/tools/order"
-                    element={
-                      <ErrorBoundary>
-                        <Suspense fallback={<Loading fullScreen message="載入順序工具..." />}>
-                          <Order />
-                        </Suspense>
-                      </ErrorBoundary>
-                    }
-                  />
-                  <Route
-                    path="/tools/clock"
-                    element={
-                      <ErrorBoundary>
-                        <Suspense fallback={<Loading fullScreen message="載入時鐘..." />}>
-                          <Clock />
-                        </Suspense>
-                      </ErrorBoundary>
-                    }
-                  />
-                  <Route
-                    path="/tools/timer"
-                    element={
-                      <ErrorBoundary>
-                        <Suspense fallback={<Loading fullScreen message="載入計時器..." />}>
-                          <Timer />
-                        </Suspense>
-                      </ErrorBoundary>
-                    }
-                  />
-                  <Route
-                    path="/tools/qrcode"
-                    element={
-                      <ErrorBoundary>
-                        <Suspense fallback={<Loading fullScreen message="載入 QR Code 工具..." />}>
-                          <QRCode />
-                        </Suspense>
-                      </ErrorBoundary>
-                    }
-                  />
-                  <Route
-                    path="/tools/whiteboard"
-                    element={
-                      <ErrorBoundary>
-                        <Suspense fallback={<Loading fullScreen message="載入電子白板..." />}>
-                          <Whiteboard />
-                        </Suspense>
-                      </ErrorBoundary>
-                    }
-                  />
-                  <Route
-                    path="/tools/attendance"
-                    element={
-                      <ErrorBoundary>
-                        <Suspense fallback={<Loading fullScreen message="載入課堂點名..." />}>
-                          <Attendance />
-                        </Suspense>
-                      </ErrorBoundary>
-                    }
-                  />
-
-                  {/* 在 CATCH-ALL "*" 路由之前添加所有自定義路由 */}
-                  <Route path="*" element={<NotFound />} />
+                      {/* 在 CATCH-ALL "*" 路由之前添加所有自定義路由 */}
+                      <Route path="*" element={<NotFound />} />
+                    </>
+                  )}
                 </Routes>
               </ErrorBoundary>
             </BrowserRouter>
