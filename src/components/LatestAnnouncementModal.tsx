@@ -16,6 +16,11 @@ interface SiteAnnouncement {
 
 const READ_ANNOUNCEMENTS_KEY = "cmjh-read-announcements";
 
+// 使用模組層級變數來記錄 SPA Session 狀態
+// 這樣「切換分頁」時會保留，但「重新整理網頁 (F5)」時會重置
+let hasCheckedInSession = false;
+let isUpdateDismissedInSession = false;
+
 export function LatestAnnouncementModal() {
     const { settings } = useSettings();
     const [isOpen, setIsOpen] = useState(false);
@@ -32,19 +37,15 @@ export function LatestAnnouncementModal() {
 
     useEffect(() => {
         if (!settings.showLatestAnnouncementOnStartup) return;
-
-        // 如果在這個 session 中已經檢查過並顯示過公告，就不要再顯示了
-        const hasCheckedInSession = sessionStorage.getItem("cmjh-announcement-checked");
         
         const checkLatestAnnouncement = async (isManualTrigger = false) => {
             // 自動觸發且本 session 已經檢查過的話，就不再執行
-            if (!isManualTrigger && hasCheckedInSession === "true") return;
+            if (!isManualTrigger && hasCheckedInSession) return;
 
             // 如果偵測到有新版本需要更新且更新提醒未關閉，且「尚未」被使用者手動關閉，則不顯示公告
             const currentVersion = getCurrentVersion();
-            const isDismissedInSession = sessionStorage.getItem("cmjh-update-dismissed") === "true";
             
-            if (currentVersion && currentVersion !== LATEST_VERSION && !disableUpdatePromptRef.current && !isDismissedInSession && !isManualTrigger) {
+            if (currentVersion && currentVersion !== LATEST_VERSION && !disableUpdatePromptRef.current && !isUpdateDismissedInSession && !isManualTrigger) {
                 return;
             }
 
@@ -70,7 +71,7 @@ export function LatestAnnouncementModal() {
                         setUnreadAnns(recentUnread);
                         setCurrentIndex(0);
                         // 標記本 session 已經檢查過，避免切換頁面回來又彈出
-                        sessionStorage.setItem("cmjh-announcement-checked", "true");
+                        hasCheckedInSession = true;
                         
                         // 如果是手動觸發（Dismiss 後），不延遲直接顯示
                         if (isManualTrigger) {
@@ -88,7 +89,7 @@ export function LatestAnnouncementModal() {
         checkLatestAnnouncement();
 
         const handleUpdateClosed = () => {
-            sessionStorage.setItem("cmjh-update-dismissed", "true");
+            isUpdateDismissedInSession = true;
             checkLatestAnnouncement(true);
         };
 
