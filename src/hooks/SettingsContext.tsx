@@ -12,6 +12,7 @@ export interface AppSettings {
     themeMode: "light" | "dark" | "system";
     themeColor: string;
     disableUpdatePrompt: boolean;
+    showLatestAnnouncementOnStartup: boolean;
 }
 
 interface SettingsContextType {
@@ -23,6 +24,7 @@ interface SettingsContextType {
     setThemeMode: (themeMode: "light" | "dark" | "system") => void;
     setThemeColor: (themeColor: string) => void;
     setDisableUpdatePrompt: (disabled: boolean) => void;
+    setShowLatestAnnouncementOnStartup: (show: boolean) => void;
     resetToDefault: () => void;
     showAll: () => void;
     reorderComponents: (newComponents: ComponentSettings[]) => void;
@@ -44,6 +46,7 @@ const DEFAULT_SETTINGS: AppSettings = {
     themeMode: "system",
     themeColor: "blue",
     disableUpdatePrompt: false,
+    showLatestAnnouncementOnStartup: true,
 };
 
 const STORAGE_KEY = "cmjh-app-settings";
@@ -76,6 +79,7 @@ const migrateOldSettings = (): AppSettings | null => {
             themeMode: (oldTheme === "dark" ? "dark" : "light") as any,
             themeColor: (oldTheme && oldTheme !== "dark" && oldTheme !== "light" ? oldTheme : "blue"),
             disableUpdatePrompt: false,
+            showLatestAnnouncementOnStartup: true,
         };
 
         localStorage.setItem(STORAGE_KEY, JSON.stringify(newSettings));
@@ -138,6 +142,12 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
                     delete parsedSettings.theme;
                 }
 
+                // 處理剛才過渡期的 showUpdatePrompt 回到 disableUpdatePrompt 的遷移
+                let disableUpdatePrompt = parsedSettings.disableUpdatePrompt;
+                if (disableUpdatePrompt === undefined && parsedSettings.showUpdatePrompt !== undefined) {
+                    disableUpdatePrompt = !parsedSettings.showUpdatePrompt;
+                }
+
                 const existingComponents = parsedSettings.components || [];
                 const existingIds = new Set(existingComponents.map((c: ComponentSettings) => c.id));
                 const newComponents = DEFAULT_COMPONENTS.filter((c) => !existingIds.has(c.id));
@@ -146,7 +156,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
                 return {
                     ...parsedSettings,
                     components: mergedComponents,
-                    disableUpdatePrompt: parsedSettings.disableUpdatePrompt ?? false,
+                    disableUpdatePrompt: disableUpdatePrompt ?? false,
+                    showLatestAnnouncementOnStartup: parsedSettings.showLatestAnnouncementOnStartup ?? true,
                 };
             }
         } catch (error) {
@@ -230,6 +241,10 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setSettings((prev) => ({ ...prev, disableUpdatePrompt }));
     };
 
+    const setShowLatestAnnouncementOnStartup = (showLatestAnnouncementOnStartup: boolean) => {
+        setSettings((prev) => ({ ...prev, showLatestAnnouncementOnStartup }));
+    };
+
     const resetToDefault = () => {
         setSettings(DEFAULT_SETTINGS);
     };
@@ -266,6 +281,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setThemeMode,
         setThemeColor,
         setDisableUpdatePrompt,
+        setShowLatestAnnouncementOnStartup,
         resetToDefault,
         showAll,
         reorderComponents

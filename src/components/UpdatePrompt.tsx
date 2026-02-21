@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { RefreshCw, X, Check } from "lucide-react";
- import { motion } from "framer-motion";
+import { RefreshCw, Check } from "lucide-react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { getCurrentVersion, LATEST_VERSION } from "@/lib/app-version";
 import { useSettings } from "@/hooks/SettingsContext";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
 export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
     const [show, setShow] = useState(false);
@@ -16,9 +18,13 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
     useEffect(() => {
         if (currentVersion && currentVersion !== LATEST_VERSION && !settings.disableUpdatePrompt) {
             setShow(true);
+        } else {
+            setShow(false);
         }
 
-        const handleShowUpdate = () => setShow(true);
+        const handleShowUpdate = () => {
+            if (!settings.disableUpdatePrompt) setShow(true);
+        };
         window.addEventListener("show-update-prompt", handleShowUpdate);
         return () => window.removeEventListener("show-update-prompt", handleShowUpdate);
     }, [currentVersion, settings.disableUpdatePrompt]);
@@ -46,11 +52,25 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
         }, interval);
     };
 
-    if (!show) return null;
-
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm animate-in fade-in duration-300 text-foreground">
-            <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
+        <Dialog 
+            open={show} 
+            onOpenChange={(open) => {
+                // 如果正在更新，不允許手動關閉
+                if (isUpdating) return;
+                setShow(open);
+            }}
+        >
+            <DialogContent 
+                className={cn(
+                    "max-w-md p-0 overflow-hidden border-border bg-card shadow-2xl rounded-2xl outline-none",
+                    isUpdating && "[&>button]:hidden" // 當正在更新時，隱藏 shadcn/ui Dialog 內建的關閉按鈕
+                )}
+                onPointerDownOutside={(e) => isUpdating && e.preventDefault()}
+                onEscapeKeyDown={(e) => isUpdating && e.preventDefault()}
+            >
+                <DialogTitle className="sr-only">發現新版本</DialogTitle>
+                
                 {isUpdating ? (
                     <div className="p-10 space-y-8 flex flex-col items-center justify-center text-center">
                         <div className="relative">
@@ -70,7 +90,7 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
                         
                         <div className="space-y-4 w-full">
                             <div className="space-y-2">
-                                <h2 className="text-2xl font-black italic tracking-tighter">
+                                <h2 className="text-2xl font-black italic tracking-tighter text-foreground">
                                     {progress < 100 ? "正在執行更新..." : "更新完成！"}
                                 </h2>
                                 <p className="text-sm text-muted-foreground font-medium">
@@ -97,19 +117,11 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
                     </div>
                 ) : !isConfirming ? (
                     <>
-                        <div className="bg-primary/10 p-6 flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                                <div className="p-2 bg-primary/20 rounded-lg text-primary">
-                                    <RefreshCw className="h-6 w-6 animate-spin-slow" />
-                                </div>
-                                <h2 className="text-xl font-bold text-foreground">發現新版本</h2>
+                        <div className="bg-primary/10 p-6 flex items-center gap-3">
+                            <div className="p-2 bg-primary/20 rounded-lg text-primary">
+                                <RefreshCw className="h-6 w-6 animate-spin-slow" />
                             </div>
-                            <button
-                                onClick={() => setShow(false)}
-                                className="p-1 hover:bg-primary/20 rounded-full transition-colors text-muted-foreground hover:text-foreground"
-                            >
-                                <X className="h-5 w-5" />
-                            </button>
+                            <h2 className="text-xl font-bold text-foreground">發現新版本</h2>
                         </div>
 
                         <div className="p-6 space-y-4">
@@ -125,14 +137,14 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
                             </div>
 
                             <div className="space-y-2">
-                                <h3 className="text-sm font-bold flex items-center gap-2">
+                                <h3 className="text-sm font-bold flex items-center gap-2 text-foreground">
                                     <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                                     更新內容
                                 </h3>
                                 <div className="bg-muted/50 rounded-lg p-4 text-xs space-y-3 max-h-[180px] overflow-y-auto custom-scrollbar">
                                     <div className="flex gap-2 text-foreground/90">
-                                        <span className="text-primary font-bold">🛠️</span>
-                                        <p><span className="font-bold">搜尋功能修復</span>：修復無法正確搜尋行政公告內容的問題。</p>
+                                        <span className="text-primary font-bold">🌟</span>
+                                        <p><span className="font-bold">更新本站公告</span>：調整排版及新增公告彈窗</p>
                                     </div>
                                 </div>
                             </div>
@@ -155,7 +167,11 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
                                 <Button
                                     variant="outline"
                                     className="flex-1 h-11 text-base font-medium"
-                                    onClick={() => setShow(false)}
+                                    onClick={() => {
+                                        setShow(false);
+                                        // 拋出事件，通知其他組件更新提醒已關閉
+                                        window.dispatchEvent(new CustomEvent("update-prompt-closed"));
+                                    }}
                                 >
                                     稍後再說
                                 </Button>
@@ -191,7 +207,8 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
                         </div>
                     </div>
                 )}
-            </div>
-        </div>
+            </DialogContent>
+        </Dialog>
     );
 }
+

@@ -16,6 +16,7 @@ import { useSettings } from "@/hooks/SettingsContext";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Skeleton } from "@/components/ui/skeleton";
 import MaintenanceModal from "@/components/MaintenanceModal";
+import { LatestAnnouncementModal } from "@/components/LatestAnnouncementModal";
 import { MaintenanceConfig } from "@/App";
 import React from "react";
 
@@ -130,6 +131,9 @@ const Index = ({ maintenanceConfig }: IndexProps) => {
                         message={maintenanceConfig.message}
                     />
                 )}
+                
+                {/* 最新公告彈窗 - 只在首頁顯示 */}
+                {currentPage === "home" && <LatestAnnouncementModal />}
             </div>
 
             {/* 手機版底部導航列 */}

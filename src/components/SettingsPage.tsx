@@ -30,7 +30,7 @@ const COLORS = [
 
 export function SettingsPage() {
 
-    const { settings, toggleComponent, moveComponentUp, moveComponentDown, setThemeMode, setThemeColor, setDisableUpdatePrompt, resetToDefault, showAll, reorderComponents } =
+    const { settings, toggleComponent, moveComponentUp, moveComponentDown, setThemeMode, setThemeColor, setDisableUpdatePrompt, setShowLatestAnnouncementOnStartup, resetToDefault, showAll, reorderComponents } =
         useSettings();
 
     const { toast } = useToast();
@@ -330,13 +330,24 @@ export function SettingsPage() {
                                     </div>
                                     <div className="flex items-center justify-between pt-2 border-t border-border/50">
                                         <div className="space-y-0.5">
-                                            <Label htmlFor="disable-update" className="text-sm font-medium cursor-pointer">關閉更新提醒</Label>
-                                            <p className="text-[10px] text-muted-foreground">開啟後將不再主動提醒有新版本可用</p>
+                                            <Label htmlFor="show-update-prompt" className="text-sm font-medium cursor-pointer">顯示版本更新提醒</Label>
+                                            <p className="text-[10px] text-muted-foreground">開啟後，系統會主動提醒您有新版本可用</p>
                                         </div>
                                         <Checkbox
-                                            id="disable-update"
-                                            checked={settings.disableUpdatePrompt}
-                                            onCheckedChange={(checked) => setDisableUpdatePrompt(!!checked)}
+                                            id="show-update-prompt"
+                                            checked={!settings.disableUpdatePrompt}
+                                            onCheckedChange={(checked) => setDisableUpdatePrompt(!checked)}
+                                        />
+                                    </div>
+                                    <div className="flex items-center justify-between pt-2 border-t border-border/50">
+                                        <div className="space-y-0.5">
+                                            <Label htmlFor="disable-startup-announcement" className="text-sm font-medium cursor-pointer">進入網頁顯示最新公告</Label>
+                                            <p className="text-[10px] text-muted-foreground">開啟後，若有7天內的新公告會在重新整理時自動彈出</p>
+                                        </div>
+                                        <Checkbox
+                                            id="disable-startup-announcement"
+                                            checked={settings.showLatestAnnouncementOnStartup}
+                                            onCheckedChange={(checked) => setShowLatestAnnouncementOnStartup(!!checked)}
                                         />
                                     </div>
                                     {canUpdate && !settings.disableUpdatePrompt && (
