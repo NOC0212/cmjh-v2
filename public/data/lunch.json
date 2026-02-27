@@ -1,49 +1,114 @@
 {
-    "2026-01-19": {
-        "Menu": [
-            "紫米飯",
-            "阿肚肉",
-            "翠玉虱目魚羹",
-            "雙色青江",
-            "涼藷蛋花湯",
-            "櫻桃"
-        ]
-    },
-    "2026-01-20": {
-        "Menu": [
-            "奶露麵包",
-            "蘿宋麵包",
-            "葡萄餐包",
-            "蘋果汁　"
-        ]
-    },
-    "2026-01-21": {
-        "Menu": [
-            "肉燥炒泡麵",
-            "燒烤三節翅",
-            "評選麵包",
-            "銀蘿片味噌湯",
-            "優酪乳"
-        ]
-    },
-    "2026-01-22": {
-        "Menu": [
-            "糙米飯",
-            "金瓜咖哩虱目魚",
-            "麻婆豆腐",
-            "有機奶油白菜",
-            "冬瓜軟骨排湯"
-        ]
-    },
-    "2026-01-23": {
-        "Menu": [
-            "五穀飯",
-            "台式可樂燉豬腳",
-            "蠔油燒養生菇豆腐",
-            "有機油菜",
-            "廿味關東煮",
-            "小番茄"
-        ]
-    },
-    "LastUpdate": "2026-01-23 22:11:58"
+    "last_updated": "2026-02-27 10:57:20",
+    "week_data": {
+        "2026-02-23": [
+            {
+                "category": "主食",
+                "name": "五穀飯",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1767151539077921"
+            },
+            {
+                "category": "主菜",
+                "name": "好彩頭紅燒肉",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1768891234004505"
+            },
+            {
+                "category": "副菜",
+                "name": "麻婆豆腐",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020150993"
+            },
+            {
+                "category": "蔬菜",
+                "name": "紅彩花花世界",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970644009954"
+            },
+            {
+                "category": "湯品",
+                "name": "珠芹魚丸湯",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074679019955"
+            },
+            {
+                "category": "附餐",
+                "name": "香蕉",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1410407383153087"
+            }
+        ],
+        "2026-02-24": [
+            {
+                "category": "主食",
+                "name": "糙米飯",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144959"
+            },
+            {
+                "category": "主菜",
+                "name": "咖哩雞",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1416809951229770"
+            },
+            {
+                "category": "副菜",
+                "name": "豆薯炒肉",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1636611293063459"
+            },
+            {
+                "category": "蔬菜",
+                "name": "有機油菜",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074706020035"
+            },
+            {
+                "category": "湯品",
+                "name": "蔥香濃味噌湯",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970622014875"
+            }
+        ],
+        "2026-02-25": [
+            {
+                "category": "主食",
+                "name": "台式大滷麵",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1761709761074838"
+            },
+            {
+                "category": "主菜",
+                "name": "滷蛋",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144985"
+            },
+            {
+                "category": "副菜",
+                "name": "奶酥麵包",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074643018655"
+            },
+            {
+                "category": "附餐",
+                "name": "國產豆奶",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1759469191048385"
+            }
+        ],
+        "2026-02-26": [
+            {
+                "category": "主食",
+                "name": "紫米飯",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1767151490077612"
+            },
+            {
+                "category": "主菜",
+                "name": "義大利醬虱目魚",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1768891236045314"
+            },
+            {
+                "category": "副菜",
+                "name": "黃金泡菜寬粉",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970624009929"
+            },
+            {
+                "category": "蔬菜",
+                "name": "有機荷葉白菜",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1637203876015559"
+            },
+            {
+                "category": "湯品",
+                "name": "養生蛋花湯",
+                "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1768891236045315"
+            }
+        ],
+        "2026-02-27": "無資料"
+    }
 }

@@ -2,8 +2,9 @@ name: Update Lunch Data
 
 on:
   schedule:
-    - cron: '0 */3 * * *'  # 每 3 小時執行一次
-  workflow_dispatch:
+    # 台灣時間每週一早上 8:00 執行 (UTC 0:00)
+    - cron: '0 0 * * 1'
+  workflow_dispatch: 
 
 permissions:
   contents: write
@@ -23,7 +24,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          # 如果沒有 requirements.txt，可以直接寫 pip install requests beautifulsoup4
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install requests beautifulsoup4; fi
 
       - name: Run lunch scraper
         run: |
@@ -33,6 +35,12 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add public/data/lunch.json
-          git commit -m "Update lunch data [skip ci]" || echo "No changes to commit"
-          git push
+          if [ -f "public/data/lunch.json" ]; then
+            git add public/data/lunch.json
+            # 只有在有變動時才 commit，避免空 commit 報錯
+            git commit -m "Update lunch data [skip ci]" || echo "No changes to commit"
+            git push
+          else
+            echo "Error: public/data/lunch.json not found. Check if your python script creates the directory."
+            exit 1
+          fi

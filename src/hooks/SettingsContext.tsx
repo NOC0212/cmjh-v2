@@ -13,6 +13,7 @@ export interface AppSettings {
     themeColor: string;
     disableUpdatePrompt: boolean;
     showLatestAnnouncementOnStartup: boolean;
+    showSiteFavicons: boolean;
 }
 
 interface SettingsContextType {
@@ -25,6 +26,7 @@ interface SettingsContextType {
     setThemeColor: (themeColor: string) => void;
     setDisableUpdatePrompt: (disabled: boolean) => void;
     setShowLatestAnnouncementOnStartup: (show: boolean) => void;
+    setShowSiteFavicons: (show: boolean) => void;
     resetToDefault: () => void;
     showAll: () => void;
     reorderComponents: (newComponents: ComponentSettings[]) => void;
@@ -37,7 +39,7 @@ const DEFAULT_COMPONENTS: ComponentSettings[] = [
     { id: "tools", label: "小工具", enabled: true, order: 3 },
     { id: "honors", label: "榮譽榜", enabled: false, order: 4 },
     { id: "announcements", label: "行政公告", enabled: true, order: 5 },
-    { id: "lunch", label: "營養午餐", enabled: false, order: 6 },
+    { id: "lunch", label: "營養午餐", enabled: true, order: 6 },
     { id: "calendar", label: "行事曆", enabled: true, order: 7 },
 ];
 
@@ -47,6 +49,7 @@ const DEFAULT_SETTINGS: AppSettings = {
     themeColor: "blue",
     disableUpdatePrompt: false,
     showLatestAnnouncementOnStartup: true,
+    showSiteFavicons: false,
 };
 
 const STORAGE_KEY = "cmjh-app-settings";
@@ -80,6 +83,7 @@ const migrateOldSettings = (): AppSettings | null => {
             themeColor: (oldTheme && oldTheme !== "dark" && oldTheme !== "light" ? oldTheme : "blue"),
             disableUpdatePrompt: false,
             showLatestAnnouncementOnStartup: true,
+            showSiteFavicons: false,
         };
 
         localStorage.setItem(STORAGE_KEY, JSON.stringify(newSettings));
@@ -158,6 +162,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
                     components: mergedComponents,
                     disableUpdatePrompt: disableUpdatePrompt ?? false,
                     showLatestAnnouncementOnStartup: parsedSettings.showLatestAnnouncementOnStartup ?? true,
+                    showSiteFavicons: parsedSettings.showSiteFavicons ?? true,
                 };
             }
         } catch (error) {
@@ -245,6 +250,10 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setSettings((prev) => ({ ...prev, showLatestAnnouncementOnStartup }));
     };
 
+    const setShowSiteFavicons = (showSiteFavicons: boolean) => {
+        setSettings((prev) => ({ ...prev, showSiteFavicons }));
+    };
+
     const resetToDefault = () => {
         setSettings(DEFAULT_SETTINGS);
     };
@@ -282,6 +291,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setThemeColor,
         setDisableUpdatePrompt,
         setShowLatestAnnouncementOnStartup,
+        setShowSiteFavicons,
         resetToDefault,
         showAll,
         reorderComponents

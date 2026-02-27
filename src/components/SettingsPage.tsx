@@ -1,4 +1,4 @@
-import { Settings, ChevronUp, ChevronDown, Sun, Moon, Palette, RefreshCw, Download, Upload, Monitor, GripVertical } from "lucide-react";
+import { Settings, ChevronUp, ChevronDown, Sun, Moon, Palette, RefreshCw, Download, Upload, Monitor, GripVertical, SunMoon, ListChecks, List, Zap, HardDrive } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -30,7 +30,7 @@ const COLORS = [
 
 export function SettingsPage() {
 
-    const { settings, toggleComponent, moveComponentUp, moveComponentDown, setThemeMode, setThemeColor, setDisableUpdatePrompt, setShowLatestAnnouncementOnStartup, resetToDefault, showAll, reorderComponents } =
+    const { settings, toggleComponent, moveComponentUp, moveComponentDown, setThemeMode, setThemeColor, setDisableUpdatePrompt, setShowLatestAnnouncementOnStartup, setShowSiteFavicons, resetToDefault, showAll, reorderComponents } =
         useSettings();
 
     const { toast } = useToast();
@@ -134,7 +134,7 @@ export function SettingsPage() {
                     <div className="flex items-center justify-between gap-4">
                         <div>
                             <h3 className="text-sm font-semibold flex items-center gap-2">
-                                <span className="text-primary">📍</span>
+                                <ListChecks className="h-4 w-4 text-primary" />
                                 已啟用的組件
                             </h3>
                             <p className="text-xs text-muted-foreground">拖曳或使用按鈕調整組件順序</p>
@@ -208,7 +208,7 @@ export function SettingsPage() {
                 {/* 未啟用的組件管理 */}
                 <div className="space-y-3">
                     <h3 className="text-sm font-semibold flex items-center gap-2">
-                        <span className="text-muted-foreground">📍</span>
+                        <List className="h-4 w-4 text-muted-foreground" />
                         未啟用的組件
                     </h3>
                     <div className="space-y-2">
@@ -239,7 +239,7 @@ export function SettingsPage() {
                 {/* 主題模式 */}
                 <div className="space-y-3">
                     <h3 className="text-sm font-semibold flex items-center gap-2">
-                        <span>🌓</span>
+                        <SunMoon className="h-4 w-4" />
                         主題模式
                     </h3>
                     <div className="grid grid-cols-3 gap-2">
@@ -267,7 +267,7 @@ export function SettingsPage() {
                 {/* 主題顏色 */}
                 <div className="space-y-3">
                     <h3 className="text-sm font-semibold flex items-center gap-2">
-                        <span>🎨</span>
+                        <Palette className="h-4 w-4" />
                         顏色方案
                     </h3>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -304,7 +304,7 @@ export function SettingsPage() {
                 <div className="space-y-4">
                     <div className="space-y-3">
                         <h3 className="text-sm font-semibold flex items-center gap-2">
-                            <span className="text-primary">🚀</span>
+                            <Zap className="h-4 w-4 text-primary" />
                             系統更新
                         </h3>
                         <div className="bg-muted/30 rounded-lg p-4 space-y-3">
@@ -350,6 +350,17 @@ export function SettingsPage() {
                                             onCheckedChange={(checked) => setShowLatestAnnouncementOnStartup(!!checked)}
                                         />
                                     </div>
+                                    <div className="flex items-center justify-between pt-2 border-t border-border/50">
+                                        <div className="space-y-0.5">
+                                            <Label htmlFor="show-site-favicons" className="text-sm font-medium cursor-pointer">常用網站顯示網站圖標</Label>
+                                            <p className="text-[10px] text-muted-foreground">開啟後，常用網站卡片會載入各網站的 favicon 圖示</p>
+                                        </div>
+                                        <Checkbox
+                                            id="show-site-favicons"
+                                            checked={settings.showSiteFavicons}
+                                            onCheckedChange={(checked) => setShowSiteFavicons(!!checked)}
+                                        />
+                                    </div>
                                     {canUpdate && !settings.disableUpdatePrompt && (
                                         <p className="text-[10px] text-destructive">
                                             * 注意：更新將會重置所有本地設定，建議先進行備份。
@@ -380,7 +391,7 @@ export function SettingsPage() {
 
                     <div className="space-y-3">
                         <h3 className="text-sm font-semibold flex items-center gap-2">
-                            <span className="text-primary">💾</span>
+                            <HardDrive className="h-4 w-4 text-primary" />
                             資料管理
                         </h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

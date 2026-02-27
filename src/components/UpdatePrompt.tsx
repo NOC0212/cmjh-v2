@@ -143,8 +143,20 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
                                 </h3>
                                 <div className="bg-muted/50 rounded-lg p-4 text-xs space-y-3 max-h-[180px] overflow-y-auto custom-scrollbar">
                                     <div className="flex gap-2 text-foreground/90">
-                                        <span className="text-primary font-bold">🌟</span>
-                                        <p><span className="font-bold">更新本站公告</span>：調整排版及新增公告彈窗</p>
+                                        <span className="text-primary font-bold">🛠️</span>
+                                        <p><span className="font-bold">小工具切換</span>：新增小工具導覽列快速切換功能</p>
+                                    </div>
+                                    <div className="flex gap-2 text-foreground/90">
+                                        <span className="text-primary font-bold">🍕</span>
+                                        <p><span className="font-bold">營養午餐</span>：調整爬蟲的網站及新增圖片顯示</p>
+                                    </div>
+                                    <div className="flex gap-2 text-foreground/90">
+                                        <span className="text-primary font-bold">🆕</span>
+                                        <p><span className="font-bold">常用網站更新</span>：將常用網站的顯示方式從列表改為卡片</p>
+                                    </div>
+                                    <div className="flex gap-2 text-foreground/90">
+                                        <span className="text-primary font-bold">🆕</span>
+                                        <p><span className="font-bold">設定頁面更新</span>：將設定頁面的 emoji 區段標題換為 icon</p>
                                     </div>
                                 </div>
                             </div>
