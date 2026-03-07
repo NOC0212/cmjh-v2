@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect, lazy, Suspense } from "react";
 import { FirstTimeSetup, checkFirstTimeSetup } from "@/components/FirstTimeSetup";
 import { UpdatePrompt } from "@/components/UpdatePrompt";
@@ -72,19 +72,6 @@ const App = () => {
   }
 
 
-  // 如果尚未完成首次設定，顯示設定畫面
-  if (!setupCompleted) {
-    return (
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <SettingsProvider>
-            <FirstTimeSetup onComplete={() => setSetupCompleted(true)} />
-          </SettingsProvider>
-        </TooltipProvider>
-      </QueryClientProvider>
-    );
-  }
-
   // 已完成設定，顯示正常應用
   return (
     <ErrorBoundary>
@@ -92,13 +79,24 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <SettingsProvider>
-            <UpdatePrompt isHidden={maintenanceConfig?.isMaintenance} />
+            {setupCompleted && <UpdatePrompt isHidden={maintenanceConfig?.isMaintenance} />}
             <Toaster />
             <Sonner />
             <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
               <ErrorBoundary>
                 <Routes>
-                  {maintenanceConfig?.isMaintenance ? (
+                  {!setupCompleted ? (
+                    <>
+                      <Route 
+                        path="/home" 
+                        element={<FirstTimeSetup onComplete={() => {
+                          setSetupCompleted(true);
+                          window.location.href = '/';
+                        }} />} 
+                      />
+                      <Route path="*" element={<Navigate to="/home" replace />} />
+                    </>
+                  ) : maintenanceConfig?.isMaintenance ? (
                     <Route 
                       path="*" 
                       element={
@@ -114,6 +112,14 @@ const App = () => {
                         element={
                           <ErrorBoundary>
                             <Index maintenanceConfig={maintenanceConfig} />
+                          </ErrorBoundary>
+                        }
+                      />
+                      <Route
+                        path="/home"
+                        element={
+                          <ErrorBoundary>
+                            <FirstTimeSetup onComplete={() => window.location.href = '/'} />
                           </ErrorBoundary>
                         }
                       />

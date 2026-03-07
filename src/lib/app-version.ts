@@ -1,4 +1,4 @@
-export const LATEST_VERSION = "v1.4.4";
+export const LATEST_VERSION = "v1.5.0";
 const VERSION_STORAGE_KEY = "cmjh-app-version";
 
 export const STORAGE_KEYS = {

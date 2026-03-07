@@ -1,11 +1,19 @@
 [
     {
         "id": "sticky-top",
-        "title": "v1.4.3更新公告",
-        "date": "2026-02-21",
-        "type": "update",
+        "title": "cmjh-v2專案公告",
+        "date": "2026-03-07",
+        "type": "alert",
         "pinned": true,
-        "content": "我們調整了本站公告的邏輯及顯示方式，過往公告將不會留存"
+        "content": "由於多種因素影響，本專案將於2026/03/07結束功能性開發，也就是說日後將不會推出新的組件或系統，但仍會持續進行維護，歡迎於github提交issues或pull requests"
+    },
+    {
+        "id": "2026-03-07",
+        "title": "v1.5.0更新公告",
+        "date": "2026-03-07",
+        "type": "update",
+        "pinned": false,
+        "content": "我們的網站更新了新的首頁!!!"
     },
     {
         "id": "2026-02-27",

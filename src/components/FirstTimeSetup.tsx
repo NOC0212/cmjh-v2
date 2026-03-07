@@ -1,214 +1,330 @@
-import { useState } from "react";
-import { useSettings } from "@/hooks/SettingsContext";
 import { Button } from "@/components/ui/button";
-import { Check, Sparkles, ArrowRight, Globe, Monitor } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Sparkles, ArrowRight, Star, Download, Megaphone, Utensils, Calendar, Globe, Github, MessageSquare } from "lucide-react";
+import { motion, AnimatePresence, useMotionValue, useTransform, animate } from "framer-motion";
+import { useEffect, useState } from "react";
 import { updateVersionToLatest } from "@/lib/app-version";
 
 
 const SETUP_STORAGE_KEY = "cmjh-first-setup-completed";
 
-const THEMES = [
-    { id: "blue", name: "活力藍", color: "#3b82f6" },
-    { id: "red", name: "熱情紅", color: "#ef4444" },
-    { id: "green", name: "清新綠", color: "#10b981" },
-    { id: "orange", name: "亮麗橙", color: "#f59e0b" },
-    { id: "purple", name: "神秘紫", color: "#8b5cf6" },
-    { id: "neon", name: "極光霓虹", color: "#00f3ff" },
-    { id: "modern", name: "現代漸層", color: "linear-gradient(135deg, #fbbf24, #f97316)" },
-    { id: "gradient", name: "主題漸層", color: "linear-gradient(135deg, #3b82f6, #8b5cf6, #ef4444)" },
-];
 
 interface FirstTimeSetupProps {
     onComplete: () => void;
 }
 
-export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
-    const [step, setStep] = useState<"welcome" | "selecting">("welcome");
-    const [selectedTheme, setSelectedTheme] = useState<string | null>(null);
-    const { setThemeColor } = useSettings();
+const AnimatedNumber = ({ value }: { value: number }) => {
+    const count = useMotionValue(0);
+    const rounded = useTransform(count, (latest) => Math.round(latest));
+    const [displayValue, setDisplayValue] = useState(0);
 
+    useEffect(() => {
+        const controls = animate(count, value, { duration: 5, ease: "easeOut" });
+        return controls.stop;
+    }, [value, count]);
+
+    useEffect(() => {
+        return rounded.on("change", (latest) => setDisplayValue(latest));
+    }, [rounded]);
+
+    return <>{displayValue}</>;
+};
+
+export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
 
     const handleConfirm = () => {
-        if (selectedTheme) {
-            setThemeColor(selectedTheme);
-            localStorage.setItem(SETUP_STORAGE_KEY, "true");
-            updateVersionToLatest();
-            setTimeout(() => onComplete(), 100);
-        }
+        localStorage.setItem(SETUP_STORAGE_KEY, "true");
+        updateVersionToLatest();
+        setTimeout(() => onComplete(), 100);
     };
 
-
-
-    const welcomeStep = (
-        <motion.div
-            key="welcome"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="w-full max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10"
-        >
-            <div className="flex-1 text-left space-y-8 animate-slide-in-left">
-                <div>
-                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-bold border border-primary/30 mb-6 uppercase tracking-wider">
-                        <Sparkles className="w-3 h-3" />
-                        歡迎來到 崇明國中 V2
-                    </span>
-                    <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-none mb-6">
-                        <div className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                            CMJH-V2
-                        </div>
-                        <div className="text-white flex items-center gap-4">
-                            全新升級
-                            <div className="h-2 w-24 md:w-48 bg-gradient-to-r from-primary to-transparent rounded-full hidden md:block" />
-                        </div>
-                    </h1>
-                    <p className="text-xl text-slate-400 font-medium max-w-lg leading-relaxed">
-                        重新定義網站，結合現代美學與智能工具。
-                        探索更直覺、更流暢的體驗。  此為非官方網站，請注意
-                    </p>
-                </div>
-
-                <div className="flex flex-wrap gap-4 pt-4">
-                    <Button
-                        size="lg"
-                        className="h-16 px-12 text-xl font-bold rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:scale-[1.02] active:scale-95 transition-all gap-3 overflow-hidden relative group shadow-[0_0_40px_rgba(79,70,229,0.3)]"
-                        onClick={() => setStep("selecting")}
-                    >
-                        立即體驗
-                        <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-                    </Button>
-                    <Button
-                        variant="outline"
-                        size="lg"
-                        className="h-16 px-10 text-xl font-bold rounded-2xl border-2 border-slate-700 bg-transparent hover:bg-slate-800 transition-all text-white"
-                        onClick={() => window.open('https://github.com/NOC0212/cmjh-v2', '_blank')}
-                    >
-                        開發日誌及原碼
-                    </Button>
-                </div>
-            </div>
-
-            <div className="flex-1 relative flex justify-center lg:justify-end animate-slide-in-right">
-                <div className="relative w-80 h-80 md:w-[480px] md:h-[480px]">
-                    <motion.div
-                        animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-                        transition={{ duration: 4, repeat: Infinity }}
-                        className="absolute inset-0 bg-gradient-to-br from-indigo-500/30 to-purple-600/30 blur-[100px] rounded-full"
-                    />
-
-                    <motion.div
-                        animate={{ y: [0, -20, 0] }}
-                        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                        className="relative z-10 w-full h-full flex items-center justify-center p-8"
-                    >
-                        <div className="w-full h-full rounded-[4rem] bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 shadow-2xl flex items-center justify-center relative overflow-hidden group border border-white/10">
-                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <div className="flex gap-6">
-                                <motion.div
-                                    animate={{ scale: [1, 1.1, 1], y: [0, -5, 0] }}
-                                    transition={{ duration: 3, repeat: Infinity }}
-                                    className="w-16 h-16 md:w-24 md:h-24 rounded-full bg-white shadow-[0_0_40px_rgba(255,255,255,0.4)]"
-                                />
-                                <motion.div
-                                    animate={{ scale: [1, 1.1, 1], y: [0, 5, 0] }}
-                                    transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-                                    className="w-16 h-16 md:w-24 md:h-24 rounded-full bg-white shadow-[0_0_40px_rgba(255,255,255,0.4)]"
-                                />
-                            </div>
-                            <div className="absolute bottom-16 right-16 w-32 md:w-48 h-10 bg-white/20 rounded-full blur-xl animate-pulse" />
-                            <div className="absolute top-16 left-16 w-16 md:w-24 h-16 md:h-24 bg-white/10 rounded-full blur-md" />
-                        </div>
-
-                        <motion.div
-                            animate={{ x: [-15, 15, -15], y: [-15, 15, -15], rotate: [0, 10, 0] }}
-                            transition={{ duration: 8, repeat: Infinity }}
-                            className="absolute -bottom-4 -left-4 w-24 h-24 md:w-32 md:h-32 rounded-3xl bg-indigo-500/40 backdrop-blur-xl shadow-2xl border border-white/20 flex items-center justify-center"
-                        >
-                            <Monitor className="w-10 h-10 md:w-16 md:h-16 text-white/80" />
-                        </motion.div>
-                        <motion.div
-                            animate={{ x: [15, -15, 15], y: [15, -15, 15], rotate: [0, -10, 0] }}
-                            transition={{ duration: 7, repeat: Infinity, delay: 1 }}
-                            className="absolute top-4 -right-4 w-16 h-16 md:w-24 md:h-24 rounded-2xl bg-purple-500/40 backdrop-blur-xl shadow-2xl border border-white/20 flex items-center justify-center"
-                        >
-                            <Globe className="w-6 h-6 md:w-12 md:h-12 text-white/80" />
-                        </motion.div>
-                    </motion.div>
-                </div>
-            </div>
-        </motion.div>
-    );
-
     return (
-        <div className="fixed inset-0 flex items-start md:items-center justify-center bg-[#020617] p-4 md:p-8 overflow-y-auto overflow-x-hidden">
-            <div className="fixed inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20"></div>
+        <main className="fixed inset-0 w-full h-full bg-white dark:bg-[#020617] transition-colors duration-500 overflow-y-auto">
+            {/* 環境背景光圈 */}
+            <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+                <div className="absolute -bottom-32 -left-32 w-[800px] h-[800px] rounded-full bg-teal-500/10 dark:bg-teal-500/15 blur-[130px]" />
+                <div className="absolute -top-32 -right-32 w-[800px] h-[800px] rounded-full bg-emerald-500/10 dark:bg-emerald-500/15 blur-[130px]" />
+            </div>
 
-            <AnimatePresence mode="wait">
-                {step === "welcome" ? welcomeStep : (
+            {/* 內容置中容器 */}
+            <div className="relative z-10 min-h-screen w-full flex flex-col items-center justify-center p-6 md:p-12">
+                <AnimatePresence mode="wait">
                     <motion.div
-                        key="selecting"
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="w-full max-w-5xl mx-auto relative z-10 pt-12 md:pt-0 pb-12"
+                        key="welcome"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        className="w-full max-w-7xl flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-32 text-center lg:text-left"
                     >
-                        <div className="text-center mb-10 md:mb-16 space-y-4">
-                            <h1 className="text-3xl md:text-6xl font-black text-white tracking-tighter leading-tight">
-                                定義您的
-                                <span className="block md:inline px-2 md:px-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">專屬風格</span>
-                            </h1>
-                            <p className="text-lg md:text-xl text-slate-400 font-medium">
-                                選擇一個主題，讓 cmjh-v2 展現您的個性。
-                            </p>
-                        </div>
-
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-                            {THEMES.map((theme) => (
-                                <button
-                                    key={theme.id}
-                                    onClick={() => setSelectedTheme(theme.id)}
-                                    className={`group relative p-8 rounded-[2.5rem] border-2 transition-all duration-500 hover:scale-[1.05] ${selectedTheme === theme.id
-                                        ? "border-blue-500 bg-blue-500/10 shadow-[0_0_50px_rgba(59,130,246,0.2)]"
-                                        : "border-slate-800 bg-slate-900/50 hover:border-slate-600"
-                                        }`}
-                                >
-                                    {selectedTheme === theme.id && (
-                                        <motion.div
-                                            layoutId="checked"
-                                            className="absolute -top-3 -right-3 w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center shadow-lg z-10 border-4 border-[#020617]"
-                                        >
-                                            <Check className="w-6 h-6 text-white" />
-                                        </motion.div>
-                                    )}
-
-                                    <div className="flex flex-col items-center gap-6">
-                                        <div
-                                            className="w-20 h-20 rounded-full shadow-2xl border-4 border-slate-800 transition-transform group-hover:rotate-12 group-hover:scale-110 duration-500"
-                                            style={{ background: theme.color }}
-                                        ></div>
-
-                                        <h3 className={`text-xl font-bold transition-colors ${selectedTheme === theme.id ? "text-white" : "text-slate-400"}`}>
-                                            {theme.name}
-                                        </h3>
+                        {/* 文字內容 */}
+                        <div className="space-y-8 animate-slide-in-left max-w-2xl">
+                            <div>
+                                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400 text-xs font-bold border border-teal-500/20 dark:border-teal-500/30 mb-6 uppercase tracking-wider transition-colors">
+                                    <Sparkles className="w-3 h-3" />
+                                    歡迎來到 崇明國中 V2
+                                </span>
+                                <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-none mb-6 flex flex-col">
+                                    <span className="bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-600 dark:from-cyan-400 dark:via-teal-400 dark:to-emerald-400 bg-clip-text text-transparent inline-block pb-3 leading-tight">
+                                        CMJH-V2
+                                    </span>
+                                    <div className="text-slate-900 dark:text-white flex items-center justify-center lg:justify-start gap-4 transition-colors">
+                                        全新升級
+                                        <div className="h-2 w-24 md:w-48 bg-gradient-to-r from-teal-500 to-transparent rounded-full hidden md:block" />
                                     </div>
-                                </button>
-                            ))}
+                                </h1>
+                                <p className="text-xl text-slate-600 dark:text-slate-400 font-medium max-w-lg mx-auto lg:mx-0 leading-relaxed transition-colors">
+                                    重新定義網站，結合現代美學與智能工具。
+                                    探索更直覺、更流暢的體驗。 此為非官方網站，請注意
+                                </p>
+                            </div>
+
+                            <div className="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
+                                <Button
+                                    size="lg"
+                                    className="h-16 px-12 text-xl font-bold rounded-2xl text-white bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-500 hover:to-emerald-500 hover:scale-[1.02] active:scale-95 transition-all gap-3 overflow-hidden relative group shadow-[0_0_40px_rgba(16,185,129,0.3)]"
+                                    onClick={handleConfirm}
+                                >
+                                    立即體驗
+                                    <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    size="lg"
+                                    className="h-16 px-10 text-xl font-bold rounded-2xl border-2 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-white bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 transition-all font-bold"
+                                    onClick={() => window.open('https://github.com/NOC0212/cmjh-v2', '_blank')}
+                                >
+                                    開發日誌及原碼
+                                </Button>
+                            </div>
                         </div>
 
-                        <div className="flex justify-center">
-                            <Button
-                                onClick={handleConfirm}
-                                disabled={!selectedTheme}
-                                size="lg"
-                                className="h-16 px-16 text-xl font-bold rounded-2xl shadow-2xl hover:scale-105 transition-all duration-300 disabled:opacity-30 disabled:grayscale"
-                            >
-                                {selectedTheme ? "完成並開始體驗" : "請選擇一個主題"}
-                            </Button>
+                        {/* 圖形側 - 手機圖片 */}
+                        <div className="relative w-80 h-[500px] md:w-[500px] md:h-[650px] animate-slide-in-right flex-shrink-0 flex items-center justify-center">
+                            {/* 手機後方的環境光圈 */}
+                            <motion.div
+                                animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.3, 0.2] }}
+                                transition={{ duration: 4, repeat: Infinity }}
+                                className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-emerald-500/10 blur-[80px] rounded-full"
+                            />
+
+                            {/* 背後手機 (phone2.png) - 僅限桌面版 */}
+                            <motion.img
+                                src="/phone2.png"
+                                alt="App Preview Back"
+                                initial={{ x: 40, y: 40, opacity: 0, rotate: 0 }}
+                                animate={{ x: 110, y: -40, opacity: 0.9, rotate: 15 }}
+                                transition={{ delay: 0.4, duration: 1 }}
+                                className="absolute z-10 w-[90%] h-[90%] object-contain drop-shadow-2xl brightness-95 dark:brightness-80 hidden lg:block"
+                            />
+
+                            {/* 前方手機 (phone.png) */}
+                            <motion.img
+                                src="/phone.png"
+                                alt="App Preview Front"
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.2, duration: 0.8 }}
+                                className="relative z-20 w-full h-full object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:drop-shadow-[0_20px_50px_rgba(16,185,129,0.3)]"
+                            />
                         </div>
                     </motion.div>
-                )}
-            </AnimatePresence>
-        </div>
+                </AnimatePresence>
+            </div>
+            {/* 功能亮點 Bento Grid */}
+            <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-32 min-h-screen flex flex-col justify-center space-y-16">
+                <div className="text-center lg:text-left space-y-4">
+                    <span className="text-teal-600 dark:text-teal-400 font-bold tracking-widest uppercase text-sm flex items-center gap-3">
+                        <div className="w-8 h-[2px] bg-teal-500" /> 功能亮點
+                    </span>
+                    <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-tight text-slate-900 dark:text-white transition-colors">
+                        為你打造的<br />
+                        <span className="bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-600 dark:from-cyan-400 dark:via-teal-400 dark:to-emerald-400 bg-clip-text text-transparent">校園體驗</span>
+                    </h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    {/* 主要主視覺卡片 (最新公告) */}
+                    <motion.div 
+                        whileHover={{ y: -5 }}
+                        className="md:col-span-8 md:row-span-2 p-8 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-[0_20px_60px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] flex flex-col justify-between group transition-all duration-500"
+                    >
+                        <div className="space-y-4">
+                            <div className="w-14 h-14 rounded-2xl bg-teal-500/10 dark:bg-teal-500/20 flex items-center justify-center text-teal-600 dark:text-teal-400">
+                                <Megaphone className="w-7 h-7" />
+                            </div>
+                            <div className="space-y-2">
+                                <h3 className="text-3xl font-black tracking-tighter text-slate-900 dark:text-white">最新公告</h3>
+                                <p className="text-slate-500 dark:text-slate-400 text-base leading-relaxed max-w-md font-medium">即時同步崇明國中官方網站資訊。自動抓取、精準推播，讓您不再錯過任何重要的校園消息與緊急通知。</p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-4 mt-8">
+                            <div className="flex -space-x-4">
+                                {[1,2,3].map(i => (
+                                    <div key={i} className="w-12 h-12 rounded-full border-4 border-white dark:border-slate-900 bg-gradient-to-br from-teal-400 to-emerald-500 opacity-50" />
+                                ))}
+                            </div>
+                            <span className="text-base font-bold text-slate-400">50+ 用戶信賴</span>
+                        </div>
+                    </motion.div>
+
+                    {/* 統計卡片 (訪問次數) */}
+                    <motion.div 
+                        whileHover={{ y: -5 }}
+                        className="md:col-span-4 p-8 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-[0_20px_60px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] flex flex-col gap-4 transition-all duration-500"
+                    >
+                        <Download className="w-7 h-7 text-slate-400" />
+                        <div className="space-y-2">
+                            <p className="text-5xl font-black tracking-tighter text-slate-900 dark:text-white flex items-baseline">
+                                <AnimatedNumber value={1000} /><span className="text-3xl text-slate-300 ml-1">+</span>
+                            </p>
+                            <p className="text-base font-bold text-slate-400">累積訪問次數</p>
+                        </div>
+                    </motion.div>
+
+                    {/* 評分卡片 */}
+                    <motion.div 
+                        whileHover={{ y: -5 }}
+                        className="md:col-span-4 p-8 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-[0_20px_60px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] flex flex-col justify-between transition-all duration-500"
+                    >
+                        <div className="flex gap-1.5">
+                            {[1,2,3,4,5].map(i => <Star key={i} className={`w-4 h-4 ${i <= 4 ? 'text-yellow-400 fill-yellow-400' : 'text-slate-200 fill-slate-200'}`} />)}
+                        </div>
+                        <h4 className="text-lg font-bold text-slate-400 mt-2">總體評價</h4>
+                        <div className="space-y-4 mt-2">
+                            <div className="flex justify-between items-center text-sm font-bold">
+                                <span className="text-slate-400 font-medium">介面美觀度</span>
+                                <span className="text-xl font-black text-slate-900 dark:text-white">4.8<span className="text-slate-300 font-bold ml-1">/5</span></span>
+                            </div>
+                            <div className="flex justify-between items-center text-sm font-bold">
+                                <span className="text-slate-400 font-medium">功能實用度</span>
+                                <span className="text-xl font-black text-slate-900 dark:text-white">4.5<span className="text-slate-300 font-bold ml-1">/5</span></span>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* 下方卡片 1 (午餐) */}
+                    <motion.div 
+                        whileHover={{ y: -5 }}
+                        className="md:col-span-5 p-8 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-[0_20px_60px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] space-y-4 transition-all duration-500"
+                    >
+                        <Utensils className="w-7 h-7 text-emerald-500" />
+                        <div className="space-y-2">
+                            <h4 className="text-xl font-black tracking-tighter text-slate-900 dark:text-white">午餐菜單</h4>
+                            <p className="text-sm font-bold text-slate-500 leading-relaxed">當日菜色與熱量分析，美味第一手掌握</p>
+                        </div>
+                    </motion.div>
+
+                    {/* 下方卡片 2 (行事曆) */}
+                    <motion.div 
+                        whileHover={{ y: -5 }}
+                        className="md:col-span-3 p-8 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-[0_20px_60px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] space-y-4 transition-all duration-500"
+                    >
+                        <Calendar className="w-7 h-7 text-blue-500" />
+                        <div className="space-y-2">
+                            <h4 className="text-xl font-black tracking-tighter text-slate-900 dark:text-white">校園行事曆</h4>
+                            <p className="text-sm font-bold text-slate-500 leading-relaxed">重要時程、考程全面掌握</p>
+                        </div>
+                    </motion.div>
+
+                    {/* 下方卡片 3 (連結) */}
+                    <motion.div 
+                        whileHover={{ y: -5 }}
+                        className="md:col-span-4 p-8 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-[0_20px_60px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] space-y-4 transition-all duration-500"
+                    >
+                        <Globe className="w-7 h-7 text-cyan-500" />
+                        <div className="space-y-2">
+                            <h4 className="text-xl font-black tracking-tighter text-slate-900 dark:text-white">常用網址</h4>
+                            <p className="text-sm font-bold text-slate-500 leading-relaxed">收錄最常用的各類校園系統</p>
+                        </div>
+                    </motion.div>
+                </div>
+            </div>
+
+            {/* 開源區塊 */}
+            <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-32 min-h-screen flex flex-col justify-center">
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="p-12 md:p-16 rounded-[3rem] bg-gradient-to-br from-white to-slate-50/50 dark:from-slate-900 dark:to-slate-900/50 border border-slate-100 dark:border-slate-800 shadow-[0_40px_100px_rgba(0,0,0,0.03)] dark:shadow-[0_40px_100px_rgba(0,0,0,0.4)] relative overflow-hidden"
+                >
+                    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <div className="space-y-10">
+                            <div className="space-y-6">
+                                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 text-sm font-bold border border-cyan-500/20">
+                                    <Github className="w-4 h-4" /> Open Source
+                                </span>
+                                <div className="space-y-2">
+                                    <h2 className="text-5xl md:text-6xl font-black tracking-tighter text-slate-900 dark:text-white leading-tight">
+                                        完全開源<br />
+                                        <span className="text-teal-500">社群驅動</span>
+                                    </h2>
+                                </div>
+                                <p className="text-slate-500 dark:text-slate-400 text-lg font-medium leading-relaxed max-w-md">
+                                    CMJH-V2 以開源為核心理念，程式碼公開可審視、可貢獻。每一次改進，都來自社群的力量。
+                                </p>
+                            </div>
+
+                            <div className="flex flex-wrap gap-4">
+                                <Button className="h-14 px-8 rounded-2xl bg-[#0f172a] hover:bg-[#1e293b] text-white font-bold gap-3 text-lg shadow-xl shadow-slate-200 dark:shadow-none transition-all hover:scale-105 active:scale-95" onClick={() => window.open('https://github.com/NOC0212/cmjh-v2', '_blank')}>
+                                    <Github className="w-6 h-6" /> 檢視原始碼
+                                </Button>
+                                <Button variant="outline" className="h-14 px-8 rounded-2xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-transparent font-bold gap-3 text-lg transition-all hover:bg-slate-50 dark:hover:bg-slate-800 hover:scale-105 active:scale-95 shadow-sm text-slate-900 dark:text-white" onClick={() => window.open('https://github.com/NOC0212/cmjh-v2/issues', '_blank')}>
+                                    <MessageSquare className="w-6 h-6" /> 提出建議
+                                </Button>
+                            </div>
+
+                            <div className="grid grid-cols-3 gap-8 pt-6 border-t border-slate-100 dark:border-slate-800">
+                                <div>
+                                    <p className="text-3xl font-black text-slate-900 dark:text-white mb-1 tracking-tighter">100+</p>
+                                    <p className="text-sm font-bold text-slate-400 tracking-wider uppercase">GitHub 提交數</p>
+                                </div>
+                                <div>
+                                    <p className="text-3xl font-black text-slate-900 dark:text-white mb-1 tracking-tighter">20+</p>
+                                    <p className="text-sm font-bold text-slate-400 tracking-wider uppercase">版本數</p>
+                                </div>
+                                <div>
+                                    <p className="text-3xl font-black text-slate-900 dark:text-white mb-1 tracking-tighter text-teal-500">MIT</p>
+                                    <p className="text-sm font-bold text-slate-400 tracking-wider uppercase">License</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 控制台 UI */}
+                        <div className="relative group">
+                            <div className="absolute -inset-4 bg-gradient-to-tr from-cyan-500/20 to-teal-500/20 blur-3xl rounded-[3rem] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                            <div className="relative bg-[#1e2233] rounded-[2rem] border border-slate-700/50 shadow-2xl overflow-hidden font-mono text-sm leading-relaxed shadow-[0_50px_100px_rgba(0,0,0,0.5)]">
+                                <div className="border-b border-white/5 bg-white/5 px-6 py-4 flex items-center justify-between">
+                                    <div className="flex gap-2">
+                                        <div className="w-3.5 h-3.5 rounded-full bg-red-500/80" />
+                                        <div className="w-3.5 h-3.5 rounded-full bg-yellow-500/80" />
+                                        <div className="w-3.5 h-3.5 rounded-full bg-green-500/80" />
+                                    </div>
+                                    <span className="text-slate-500 text-xs font-bold uppercase tracking-widest">Console</span>
+                                </div>
+                                <div className="p-8 space-y-6 text-slate-300">
+                                    <div className="space-y-2">
+                                        <p className="text-slate-500">// 複製儲存庫</p>
+                                        <p><span className="text-purple-400">git</span> clone <span className="text-cyan-400">https://github.com/NOC0212/cmjh-v2.git</span></p>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <p className="text-slate-500">// 安裝依賴</p>
+                                        <p><span className="text-purple-400">npm</span> install</p>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <p className="text-slate-500">// 啟動開發環境</p>
+                                        <p><span className="text-purple-400">npm</span> run dev</p>
+                                    </div>
+                                    <div className="pt-4 flex items-center gap-3 text-emerald-400 font-bold">
+                                        <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                                        準備好開始貢獻！
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+            </div>
+        </main>
     );
 };
 

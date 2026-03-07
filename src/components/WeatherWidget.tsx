@@ -11,7 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 // 從環境變數讀取 API 金鑰，如果沒有設置則使用預設值（僅用於開發）
-const API_KEY = import.meta.env.VITE_CWA_API_KEY || "CWA-6AEC6F91-948A-464F-9DC1-AC1B8361153D";
+const API_KEY = import.meta.env.VITE_CWA_API_KEY || "CWA-35A44161-D173-480D-993E-93CDF144E198";
 
 const DISTRICTS = [
   { value: "中西區", label: "中西區" },
