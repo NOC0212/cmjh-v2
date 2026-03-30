@@ -144,11 +144,7 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
                                 <div className="bg-muted/50 rounded-lg p-4 text-xs space-y-3 max-h-[180px] overflow-y-auto custom-scrollbar">
                                     <div className="flex gap-2 text-foreground/90">
                                         <span className="text-primary font-bold">🆕</span>
-                                        <p><span className="font-bold">首頁更新</span>：將首頁的排版更新並改為/home頁面</p>
-                                    </div>
-                                    <div className="flex gap-2 text-foreground/90">
-                                        <span className="text-primary font-bold">❌</span>
-                                        <p><span className="font-bold">首次主題設定移除</span>：將首次主題設定移除</p>
+                                        <p><span className="font-bold">組件適配</span>：將所有組件適配新版依賴項</p>
                                     </div>
                                 </div>
                             </div>
