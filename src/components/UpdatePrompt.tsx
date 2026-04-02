@@ -149,8 +149,8 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
                                 </h3>
                                 <div className="bg-muted/50 rounded-lg p-4 text-xs space-y-3 max-h-[180px] overflow-y-auto custom-scrollbar">
                                     <div className="flex gap-2 text-foreground/90">
-                                        <span className="text-primary font-bold">🆕</span>
-                                        <p><span className="font-bold">組件適配</span>：將所有組件適配新版依賴項</p>
+                                        <span className="text-primary font-bold">⬆️</span>
+                                        <p><span className="font-bold">效能優化</span>：針對低端設備進行流暢優化</p>
                                     </div>
                                 </div>
                             </div>
