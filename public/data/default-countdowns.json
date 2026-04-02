@@ -1,0 +1,18 @@
+[
+  {
+    "id": "default-1",
+    "targetDate": "2026-05-04T16:00:00.000Z",
+    "startDate": "2026-03-26T16:00:00.000Z",
+    "label": "📅第二次段考倒數 5/5 5/6",
+    "progressLabel": "上次至本次進度條",
+    "isDefault": true
+  },
+  {
+    "id": "default-2",
+    "targetDate": "2026-12-31T16:00:00.000Z",
+    "startDate": "2025-12-31T16:00:00.000Z",
+    "label": "2027年倒數",
+    "progressLabel": "2026年進度條",
+    "isDefault": true
+  }
+]

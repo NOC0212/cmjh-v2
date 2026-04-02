@@ -40,9 +40,40 @@ const getTaiwanNow = () => {
   return new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + (8 * 60 * 60 * 1000));
 };
 
-// 輔助函數：直接輸入台灣時間，自動轉換為正確的 Date 對象
 const taiwanTime = (year: number, month: number, day: number, hour = 0, minute = 0, second = 0): Date => {
   return new Date(Date.UTC(year, month - 1, day, hour - 8, minute, second));
+};
+
+// 輔助函數：處理 Emoji 與漸層文字衝突
+const renderLabelWithEmoji = (text: string) => {
+  // 使用更全面的正則表達式匹配 Emoji
+  const emojiRegex = /(\ud83c[\udf00-\udfff]|\ud83d[\udc00-\ude4f]|\ud83d[\ude80-\udeff]|\ud83e[\udd00-\uddff]|\ud83f[\udc00-\udfff]|[\u2600-\u26FF]|[\u2700-\u27BF]|\u00a9|\u00ae)/g;
+  const parts = text.split(emojiRegex);
+  
+  return parts.map((part, index) => {
+    if (emojiRegex.test(part)) {
+      // 關鍵修復：補回缺失的 return 並精確重置樣式
+      return (
+        <span 
+          key={index} 
+          className="inline-block translate-y-[-1px]"
+          style={{ 
+            display: 'inline-block',
+            opacity: 1,
+            color: 'initial',
+            background: 'none',
+            WebkitBackgroundClip: 'initial',
+            WebkitTextFillColor: 'initial',
+            fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", "Android Emoji", "EmojiSymbols", sans-serif',
+            verticalAlign: 'middle'
+          }}
+        >
+          {part}
+        </span>
+      );
+    }
+    return <span key={index}>{part}</span>;
+  });
 };
 
 // 預設倒數計時配置
@@ -90,25 +121,68 @@ export function CountdownTimer() {
     progressLabel: ""
   });
 
-  // 載入倒計時 (初始化)
+  // 載入倒計時 (含伺服器同步邏輯)
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        const configs = parsed.map((c: any) => ({
-          ...c,
-          targetDate: new Date(c.targetDate),
-          startDate: c.startDate ? new Date(c.startDate) : undefined,
-        }));
-        setAllCountdowns(configs);
-      } catch (error) {
-        console.error("Failed to load countdowns:", error);
-        setAllCountdowns(getDefaultConfigs());
+    const syncCountdowns = async () => {
+      let finalConfigs: CountdownConfig[] = [];
+      const stored = localStorage.getItem(STORAGE_KEY);
+      let localConfigs: CountdownConfig[] = [];
+
+      // 1. 讀取本地快取
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          localConfigs = parsed.map((c: any) => ({
+            ...c,
+            targetDate: new Date(c.targetDate),
+            startDate: c.startDate ? new Date(c.startDate) : undefined,
+          }));
+        } catch (e) {
+          console.error("Local storage parse error:", e);
+        }
       }
-    } else {
-      setAllCountdowns(getDefaultConfigs());
-    }
+
+      // 2. 嘗試獲取伺服器預設值
+      try {
+        const response = await fetch("/data/default-countdowns.json");
+        if (response.ok) {
+          const serverDefaults: any[] = await response.json();
+          const parsedDefaults: CountdownConfig[] = serverDefaults.map(c => ({
+            ...c,
+            targetDate: new Date(c.targetDate),
+            startDate: c.startDate ? new Date(c.startDate) : undefined,
+            isDefault: true
+          }));
+
+          if (localConfigs.length > 0) {
+            // 合併邏輯：
+            // a. 保留使用者的自訂項目 (!isDefault)
+            // b. 使用伺服器的新預設項目取代本地的舊預設項目
+            const userCustomItems = localConfigs.filter(item => !item.isDefault);
+            
+            // 為了保持排序，我們可以在預設項目後加上自訂項目
+            // 或者更進階：如果本地原本就有這些 ID，按原位置替換
+            finalConfigs = [...parsedDefaults, ...userCustomItems];
+            
+            // 檢查是否有排序變動或是新項目提示
+            console.log("倒計時器已與伺服器同步成功");
+          } else {
+            // 完全沒有本地資料，直接使用伺服器預設
+            finalConfigs = parsedDefaults;
+          }
+        } else {
+          throw new Error("Server response not ok");
+        }
+      } catch (error) {
+        console.warn("無法串接伺服器預設值，使用本地緩存或代碼預設:", error);
+        // 失敗時：若有本地資料就用本地，若無則用代碼硬編碼的備份
+        finalConfigs = localConfigs.length > 0 ? localConfigs : getDefaultConfigs();
+      }
+
+      setAllCountdowns(finalConfigs);
+    };
+
+    syncCountdowns();
   }, []);
 
   // 自動持久化儲存
@@ -298,16 +372,16 @@ export function CountdownTimer() {
 
   return (
     <div
-      className="relative w-full max-w-[calc(100vw-2rem)] overflow-hidden rounded-3xl border border-primary/20 p-6 shadow-2xl backdrop-blur-xl md:p-10"
+      className="relative w-full max-w-[calc(100vw-2rem)] overflow-hidden rounded-3xl border border-primary/20 p-6 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-md md:p-10"
       style={{
         background: 'linear-gradient(135deg, var(--primary-light) 0%, var(--accent-light) 100%)',
-        backdropFilter: 'blur(20px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+        backdropFilter: 'blur(12px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(12px) saturate(180%)',
       }}
     >
       {/* 裝飾性背景磨砂玻璃元素 */}
-      <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
-      <div className="absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-accent/10 blur-3xl" />
+      <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/5 blur-3xl transition-colors" />
+      <div className="absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-accent/5 blur-3xl transition-colors" />
 
       <div className="relative z-10 flex flex-col gap-6 md:gap-8">
         {/* 標題 - 針對行動裝置進行優化 */}
@@ -318,7 +392,7 @@ export function CountdownTimer() {
             </div>
             <div className="flex flex-col min-w-0">
               <h2 className="text-2xl font-black tracking-tight text-primary md:bg-gradient-to-r md:from-primary md:via-primary md:to-accent md:bg-clip-text md:text-transparent md:text-4xl break-words leading-tight">
-                {label}
+                {renderLabelWithEmoji(label)}
               </h2>
               <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 md:text-xs">
                 倒數計時器
@@ -445,7 +519,7 @@ export function CountdownTimer() {
                 <div className="p-6 pt-2 bg-muted/10 border-t border-primary/5">
                   <DialogFooter className="flex-row items-center justify-between gap-4">
                     <Button variant="ghost" onClick={handleReset} className="text-xs font-bold gap-2 text-muted-foreground hover:text-primary rounded-xl px-0"><RotateCcw className="h-3.5 w-3.5" />重置為預設</Button>
-                    <Button className="rounded-xl px-8 font-bold" onClick={() => setManageDialogOpen(false)}>完成</Button>
+                    <Button className="rounded-xl px-8 font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.05] active:scale-[0.95]" onClick={() => setManageDialogOpen(false)}>完成</Button>
                   </DialogFooter>
                 </div>
               </DialogContent>
@@ -482,10 +556,10 @@ export function CountdownTimer() {
             <motion.div
               key={currentConfig.id}
               custom={direction}
-              initial={{ opacity: 0, x: direction * 50, scale: 0.98 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: -direction * 50, scale: 0.98 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2, ease: "linear" }}
               className="w-full flex flex-col gap-8"
             >
               {isComplete ? (
@@ -538,7 +612,7 @@ export function CountdownTimer() {
                     })}
                   </div>
 
-                  <div className="relative overflow-hidden space-y-4 rounded-3xl border border-primary/10 bg-background/30 backdrop-blur-md p-6 shadow-sm">
+                  <div className="relative overflow-hidden space-y-4 rounded-3xl border border-primary/10 bg-background/30 backdrop-blur-sm p-6 shadow-sm">
                     <div className="flex items-end justify-between">
                       <div className="flex flex-col gap-0.5">
                         <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">進度條</span>

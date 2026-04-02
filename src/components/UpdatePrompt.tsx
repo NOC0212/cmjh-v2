@@ -2,14 +2,13 @@ import { useState, useEffect } from "react";
 import { RefreshCw, Check } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { getCurrentVersion, LATEST_VERSION } from "@/lib/app-version";
+import { getCurrentVersion, LATEST_VERSION, migrateData } from "@/lib/app-version";
 import { useSettings } from "@/hooks/SettingsContext";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
 export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
     const [show, setShow] = useState(false);
-    const [isConfirming, setIsConfirming] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
     const [progress, setProgress] = useState(0);
     const currentVersion = getCurrentVersion();
@@ -33,21 +32,28 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
 
     const handleUpdate = () => {
         setIsUpdating(true);
-        const duration = 3000; // 3 秒
         const interval = 30;
-        const increment = 100 / (duration / interval);
         
         const timer = setInterval(() => {
             setProgress(prev => {
                 if (prev >= 100) {
                     clearInterval(timer);
                     setTimeout(() => {
-                        localStorage.clear();
+                        migrateData();
                         window.location.reload();
                     }, 500);
                     return 100;
                 }
-                return prev + increment;
+                
+                // 動態增加速率：在 80% 到 85% 之間極慢速，模擬「數據校驗中」
+                let increment = 0.8;
+                if (prev >= 80 && prev < 85) {
+                    increment = 0.05;
+                } else if (prev >= 85) {
+                    increment = 1.5; // 最後衝刺
+                }
+                
+                return Math.min(prev + increment, 100);
             });
         }, interval);
     };
@@ -115,7 +121,7 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
                             </div>
                         </div>
                     </div>
-                ) : !isConfirming ? (
+                ) : (
                     <>
                         <div className="bg-primary/10 p-6 flex items-center gap-3">
                             <div className="p-2 bg-primary/20 rounded-lg text-primary">
@@ -149,17 +155,16 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
                                 </div>
                             </div>
 
-                            <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
-
-                                <p className="text-xs text-destructive font-medium leading-relaxed">
-                                    * 注意：更新將會重置所有本地設定（如自訂網站、計時器、行事曆等）。如果您有重要資料，請先關閉此視窗至「設定」中下載備份。
+                            <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
+                                <p className="text-xs text-primary font-medium leading-relaxed">
+                                    * 此版本更新將會「自動遷移」您的本地設定（如自訂網站、計時器、行事曆等）。如果您擔心資料安全，也可以先在「設定」中下載備份後再執行更新。
                                 </p>
                             </div>
 
                             <div className="flex flex-col sm:flex-row gap-2 pt-2">
                                 <Button
                                     className="flex-1 h-11 gap-2 text-base font-semibold"
-                                    onClick={() => setIsConfirming(true)}
+                                    onClick={handleUpdate}
                                 >
                                     <RefreshCw className="h-4 w-4" />
                                     立即更新
@@ -178,34 +183,6 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
                             </div>
                         </div>
                     </>
-                ) : (
-                    <div className="p-8 space-y-6 text-center animate-in slide-in-from-right-4 duration-300">
-                        <div className="mx-auto w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center text-destructive mb-2">
-                            <RefreshCw className="h-8 w-8 animate-spin" />
-                        </div>
-                        <div className="space-y-2">
-                            <h2 className="text-xl font-bold text-foreground">確定要執行更新嗎？</h2>
-                            <p className="text-sm text-muted-foreground">
-                                此動作無法復原。更新後，您的所有個人設定將會被清空並恢復至預設狀態。
-                            </p>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <Button
-                                variant="destructive"
-                                className="h-12 text-base font-bold"
-                                onClick={handleUpdate}
-                            >
-                                我了解風險，確認更新
-                            </Button>
-                            <Button
-                                variant="ghost"
-                                className="h-11 text-sm text-muted-foreground hover:text-foreground"
-                                onClick={() => setIsConfirming(false)}
-                            >
-                                返回上一步
-                            </Button>
-                        </div>
-                    </div>
                 )}
             </DialogContent>
         </Dialog>

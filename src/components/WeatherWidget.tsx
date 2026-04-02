@@ -327,17 +327,14 @@ export const WeatherWidget = () => {
   const forecast = getDailyForecast();
 
   return (
-    <Card className="overflow-hidden border-primary/20 bg-gradient-to-br from-card via-card to-primary/5 hover:shadow-lg transition-all duration-300 rounded-2xl">
+    <Card className="overflow-hidden border-primary/20 bg-gradient-to-br from-card via-card to-primary/5 hover:shadow-lg transition-shadow duration-300 rounded-2xl">
       <CardHeader className="pb-3">
         <div className="flex flex-col gap-1">
           <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
             天氣動態
           </CardTitle>
           <p className="text-xs text-muted-foreground flex items-center gap-1">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-            </span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             台南市即時天氣
           </p>
         </div>
@@ -395,7 +392,7 @@ export const WeatherWidget = () => {
           ) : current ? (
             <>
               {/* 當前天氣 */}
-              <div className="relative group overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 p-5 transition-all duration-500 hover:shadow-inner">
+              <div className="relative group overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 p-5 transition-shadow duration-300 hover:shadow-inner">
                 <div className="absolute -right-4 -top-4 opacity-10 group-hover:scale-110 transition-transform duration-700">
                   {getWeatherIcon(current.weather, (current as any).weatherCode)}
                 </div>
@@ -512,7 +509,7 @@ export const WeatherWidget = () => {
                         </CollapsibleTrigger>
 
                         <CollapsibleContent>
-                          <div className="mt-4 pt-4 border-t border-primary/10 grid grid-cols-2 sm:grid-cols-4 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                          <div className="mt-4 pt-4 border-t border-primary/10 grid grid-cols-2 sm:grid-cols-4 gap-4 animate-in fade-in duration-200">
                             <div className="bg-background/40 p-2 rounded-xl border border-border/10">
                               <p className="text-[10px] text-muted-foreground mb-0.5">體感溫度</p>
                               <p className="text-xs font-bold">{day.feelTemp}°C</p>

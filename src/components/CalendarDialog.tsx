@@ -180,22 +180,26 @@ export function CalendarDialog() {
             <span className="hidden sm:inline">管理</span>
           </Button>
         </DialogTrigger>
-        <DialogContent className="w-[95vw] max-w-md max-h-[85vh] overflow-y-auto rounded-2xl">
-          <DialogHeader>
-            <DialogTitle className="text-foreground">管理自訂事件</DialogTitle>
+        <DialogContent className="w-[95vw] max-w-md h-[85vh] md:h-auto md:max-h-[85vh] flex flex-col overflow-hidden rounded-[32px] bg-card border-none shadow-2xl p-0">
+          <DialogHeader className="p-6 pb-2 shrink-0">
+            <DialogTitle className="text-xl font-bold tracking-tight text-foreground">管理自訂事件</DialogTitle>
           </DialogHeader>
 
-          <div className="space-y-6 py-4">
+          <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6 custom-scrollbar">
             {/* 新增/編輯表單 */}
-            <div className="space-y-4 p-4 bg-muted/30 rounded-xl border border-border">
-              <div className="flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-foreground">
-                  {editingId ? "編輯事件" : "新增事件"}
+            <div className="space-y-4 p-5 bg-primary/5 rounded-[24px] border border-primary/10 shadow-sm relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none transition-transform group-hover:rotate-12 text-primary">
+                <Settings className="h-12 w-12" />
+              </div>
+              <div className="flex items-center justify-between relative z-10">
+                <h3 className="text-sm font-black text-primary">
+                  {editingId ? "編輯事件內容" : "新增自訂事件"}
                 </h3>
                 {editingId && (
                   <Button
                     variant="ghost"
                     size="sm"
+                    className="h-7 text-[10px] uppercase font-bold text-muted-foreground hover:text-destructive"
                     onClick={() => {
                       setEditingId(null);
                       setSelectedMonth("");
@@ -208,31 +212,30 @@ export function CalendarDialog() {
                 )}
               </div>
 
-              {/* 日期選擇：先選月份，再選日期 */}
-              <div className="space-y-3">
-                <Label className="text-foreground">日期</Label>
+              {/* 日期選擇 */}
+              <div className="space-y-3 relative z-10">
+                <Label className="text-xs font-bold text-muted-foreground ml-1 text-foreground">事件日期</Label>
                 <div className="grid grid-cols-2 gap-3">
-                  {/* 月份選擇 */}
                   <Select
                     value={selectedMonth}
                     onValueChange={(value) => {
                       setSelectedMonth(value);
-                      setSelectedDay(""); // 重置日期
+                      setSelectedDay("");
                     }}
                   >
-                    <SelectTrigger>
-                      <SelectValue placeholder="選擇月份" />
+                    <SelectTrigger className="h-10 rounded-xl bg-background/50 border-border/40">
+                      <SelectValue placeholder="月份" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="rounded-2xl border-border/40">
                       {Object.keys(groupedMonths).sort().map((year) => (
                         <div key={year}>
-                          <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground bg-muted/50">
+                          <div className="px-2 py-1.5 text-[10px] font-black uppercase text-muted-foreground/60 bg-muted/30">
                             {year}年
                           </div>
                           {groupedMonths[year].map((m) => {
                             const month = parseInt(m.split("-")[1]);
                             return (
-                              <SelectItem key={m} value={m}>
+                              <SelectItem key={m} value={m} className="text-sm rounded-lg">
                                 {month}月
                               </SelectItem>
                             );
@@ -242,82 +245,74 @@ export function CalendarDialog() {
                     </SelectContent>
                   </Select>
 
-                  {/* 日期選擇 */}
                   <Select
                     value={selectedDay}
                     onValueChange={setSelectedDay}
                     disabled={!selectedMonth}
                   >
-                    <SelectTrigger>
-                      <SelectValue placeholder={selectedMonth ? "選擇日期" : "請先選月份"} />
+                    <SelectTrigger className="h-10 rounded-xl bg-background/50 border-border/40">
+                      <SelectValue placeholder={selectedMonth ? "日期" : "先選月"} />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="rounded-2xl border-border/40">
                       {daysInMonth.map((day) => (
-                        <SelectItem key={day} value={String(day)}>
+                        <SelectItem key={day} value={String(day)} className="text-sm rounded-lg">
                           {day}日
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </div>
-                {formData.date && (
-                  <p className="text-xs text-muted-foreground">
-                    已選擇：{formData.date}
-                  </p>
-                )}
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="event-title" className="text-foreground">名稱</Label>
+              <div className="space-y-1.5 relative z-10">
+                <Label htmlFor="event-title" className="text-xs font-bold text-muted-foreground ml-1 text-foreground">事件標題</Label>
                 <Input
                   id="event-title"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  placeholder="例如：考試、活動"
+                  placeholder="例如：段考、活動名稱"
+                  className="h-10 rounded-xl bg-background/50 border-border/40 focus:border-primary/50"
                 />
               </div>
-              <Button onClick={handleSave} className="w-full">
-                {editingId ? "更新" : "新增"}
+              <Button onClick={handleSave} className="w-full h-11 rounded-xl font-bold shadow-lg shadow-primary/20 relative z-10">
+                {editingId ? "更新變更" : "儲存事件"}
               </Button>
             </div>
 
             {/* 事件列表 */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between flex-wrap gap-2">
-                <h3 className="text-sm font-semibold text-foreground">自訂事件列表</h3>
-                <Button variant="outline" size="sm" onClick={handleReset} className="gap-2 shrink-0">
-                  <RotateCcw className="h-4 w-4" />
-                  <span className="hidden sm:inline">清除所有</span>
-                  <span className="sm:hidden">清除</span>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between px-2">
+                <h3 className="text-xs font-black tracking-widest uppercase text-muted-foreground">已安排的事件</h3>
+                <Button variant="ghost" size="sm" onClick={handleReset} className="h-7 text-[10px] font-bold text-muted-foreground hover:text-destructive gap-1">
+                  <RotateCcw className="h-3.3 w-3" />
+                  全部清除
                 </Button>
               </div>
-              <div className="space-y-2">
+              <div className="flex flex-col gap-2.5">
                 {sortedEvents.length > 0 ? (
                   sortedEvents.map((event) => (
                     <div
                       key={event.id}
-                      className="flex items-center gap-2 bg-background rounded-lg p-3 border border-border"
+                      className="flex items-center gap-3 bg-background rounded-2xl p-4 border border-border/50 shadow-sm hover:shadow-md transition-all group"
                     >
                       <div className="flex-1 min-w-0">
-                        <div className="font-medium text-sm break-words text-foreground">{event.title}</div>
-                        <div className="text-xs text-muted-foreground break-all">{event.date}</div>
+                        <div className="font-bold text-sm text-foreground break-words">{event.title}</div>
+                        <div className="text-[10px] text-muted-foreground font-mono mt-0.5">{event.date}</div>
                       </div>
-                      <div className="flex gap-1 shrink-0">
+                      <div className="flex gap-1 shrink-0 opacity-40 group-hover:opacity-100 transition-opacity">
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-8 w-8"
+                          className="h-8 w-8 rounded-lg hover:bg-primary/10 hover:text-primary"
                           onClick={() => handleEdit(event)}
-                          title="編輯"
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-8 w-8 text-destructive"
+                          className="h-8 w-8 rounded-lg hover:bg-destructive/10 text-destructive/70 hover:text-destructive"
                           onClick={() => handleDelete(event.id)}
-                          title="刪除"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -325,16 +320,16 @@ export function CalendarDialog() {
                     </div>
                   ))
                 ) : (
-                  <p className="text-sm text-muted-foreground text-center py-4">
-                    沒有自訂事件，請新增
-                  </p>
+                  <div className="text-center py-8 bg-muted/10 rounded-3xl border border-dashed border-border/60">
+                    <p className="text-xs font-bold text-muted-foreground">尚未新增任何自訂事件</p>
+                  </div>
                 )}
               </div>
             </div>
           </div>
 
-          <DialogFooter>
-            <Button onClick={() => setOpen(false)}>完成</Button>
+          <DialogFooter className="p-6 bg-muted/5 border-t border-border/10 shrink-0">
+            <Button onClick={() => setOpen(false)} className="w-full h-11 rounded-xl font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]">完成管理</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
