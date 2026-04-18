@@ -7,6 +7,8 @@ export interface Favorite {
   date: string;
   url?: string;
   content?: string;
+  category?: string;
+  source?: string;
   links?: { name: string; link: string }[];
 }
 

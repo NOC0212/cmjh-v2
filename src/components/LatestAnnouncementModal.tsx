@@ -1,183 +1,198 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Megaphone, Calendar } from "lucide-react";
+import { Calendar, Megaphone, BellRing } from "lucide-react";
 import { useSettings } from "@/hooks/SettingsContext";
-import { getCurrentVersion, LATEST_VERSION } from "@/lib/app-version";
+import { getCurrentVersion, LATEST_VERSION, STORAGE_KEYS } from "@/lib/app-version";
 
 interface SiteAnnouncement {
-    id: string;
-    title: string;
-    date: string;
-    type?: string;
-    pinned?: boolean;
-    content?: string;
+  id: string;
+  title: string;
+  date: string;
+  type?: string;
+  pinned?: boolean;
+  content?: string;
 }
 
-const READ_ANNOUNCEMENTS_KEY = "cmjh-read-announcements";
+const READ_ANNOUNCEMENTS_KEY = STORAGE_KEYS.READ_ANNOUNCEMENTS;
 
-// 使用模組層級變數來記錄 SPA Session 狀態
-// 這樣「切換分頁」時會保留，但「重新整理網頁 (F5)」時會重置
 let hasCheckedInSession = false;
 let isUpdateDismissedInSession = false;
 
 export function LatestAnnouncementModal() {
-    const { settings } = useSettings();
-    const [isOpen, setIsOpen] = useState(false);
-    
-    // 支援多個公告
-    const [unreadAnns, setUnreadAnns] = useState<SiteAnnouncement[]>([]);
-    const [currentIndex, setCurrentIndex] = useState(0);
+  const { settings } = useSettings();
+  const [isOpen, setIsOpen] = useState(false);
+  const [unreadAnns, setUnreadAnns] = useState<SiteAnnouncement[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-    // 使用 ref 追蹤 disableUpdatePrompt，避免其變化觸發 useEffect 重新執行
-    const disableUpdatePromptRef = useRef(settings.disableUpdatePrompt);
-    useEffect(() => {
-        disableUpdatePromptRef.current = settings.disableUpdatePrompt;
-    }, [settings.disableUpdatePrompt]);
+  const disableUpdatePromptRef = useRef(settings.disableUpdatePrompt);
+  useEffect(() => {
+    disableUpdatePromptRef.current = settings.disableUpdatePrompt;
+  }, [settings.disableUpdatePrompt]);
 
-    useEffect(() => {
-        if (!settings.showLatestAnnouncementOnStartup) return;
-        
-        const checkLatestAnnouncement = async (isManualTrigger = false) => {
-            // 自動觸發且本 session 已經檢查過的話，就不再執行
-            if (!isManualTrigger && hasCheckedInSession) return;
+  useEffect(() => {
+    if (!settings.showLatestAnnouncementOnStartup) return;
 
-            // 如果偵測到有新版本需要更新且更新提醒未關閉，且「尚未」被使用者手動關閉，則不顯示公告
-            const currentVersion = getCurrentVersion();
-            
-            if (currentVersion && currentVersion !== LATEST_VERSION && !disableUpdatePromptRef.current && !isUpdateDismissedInSession && !isManualTrigger) {
-                return;
-            }
+    const checkLatestAnnouncement = async (isManualTrigger = false) => {
+      if (!isManualTrigger && hasCheckedInSession) return;
 
-            try {
-                const res = await fetch("/data/site-announcements.json");
-                const data: SiteAnnouncement[] = await res.json();
-                
-                if (data && data.length > 0) {
-                    const sortedData = [...data].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-                    const now = new Date();
-                    const readStr = localStorage.getItem(READ_ANNOUNCEMENTS_KEY);
-                    const readList: string[] = readStr ? JSON.parse(readStr) : [];
-                    
-                    // 過濾出 7 天內且未讀的公告
-                    const recentUnread = sortedData.filter(ann => {
-                        const annDate = new Date(ann.date);
-                        const diffTime = Math.abs(now.getTime() - annDate.getTime());
-                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                        return diffDays <= 7 && !readList.includes(ann.id);
-                    });
-                    
-                    if (recentUnread.length > 0) {
-                        setUnreadAnns(recentUnread);
-                        setCurrentIndex(0);
-                        // 標記本 session 已經檢查過，避免切換頁面回來又彈出
-                        hasCheckedInSession = true;
-                        
-                        // 如果是手動觸發（Dismiss 後），不延遲直接顯示
-                        if (isManualTrigger) {
-                            setIsOpen(true);
-                        } else {
-                            setTimeout(() => setIsOpen(true), 800);
-                        }
-                    }
-                }
-            } catch (error) {
-                console.error("Failed to fetch latest announcement:", error);
-            }
-        };
+      const currentVersion = getCurrentVersion();
+      if (
+        currentVersion &&
+        currentVersion !== LATEST_VERSION &&
+        !disableUpdatePromptRef.current &&
+        !isUpdateDismissedInSession &&
+        !isManualTrigger
+      ) {
+        return;
+      }
 
-        checkLatestAnnouncement();
+      try {
+        const res = await fetch("/data/site-announcements.json");
+        const data: SiteAnnouncement[] = await res.json();
+        if (!data?.length) return;
 
-        const handleUpdateClosed = () => {
-            isUpdateDismissedInSession = true;
-            checkLatestAnnouncement(true);
-        };
+        const sortedData = [...data].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        const now = new Date();
+        const readStr = localStorage.getItem(READ_ANNOUNCEMENTS_KEY);
+        const readList: string[] = readStr ? JSON.parse(readStr) : [];
 
-        // 監聽更新提醒關閉事件
-        window.addEventListener("update-prompt-closed", handleUpdateClosed);
-        return () => window.removeEventListener("update-prompt-closed", handleUpdateClosed);
-    }, [settings.showLatestAnnouncementOnStartup]);
+        const recentUnread = sortedData.filter((ann) => {
+          const annDate = new Date(ann.date);
+          const diffTime = Math.abs(now.getTime() - annDate.getTime());
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          return diffDays <= 7 && !readList.includes(ann.id);
+        });
 
-    const handleClose = () => {
-        if (currentIndex < unreadAnns.length - 1) {
-            setCurrentIndex(prev => prev + 1);
+        if (!recentUnread.length) return;
+
+        setUnreadAnns(recentUnread);
+        setCurrentIndex(0);
+        hasCheckedInSession = true;
+
+        if (isManualTrigger) {
+          setIsOpen(true);
         } else {
-            setIsOpen(false);
+          setTimeout(() => setIsOpen(true), 800);
         }
+      } catch (error) {
+        console.error("Failed to fetch latest announcement:", error);
+      }
     };
 
-    const handleNeverShow = () => {
-        const currentAnn = unreadAnns[currentIndex];
-        if (currentAnn) {
-            const readStr = localStorage.getItem(READ_ANNOUNCEMENTS_KEY);
-            const readList: string[] = readStr ? JSON.parse(readStr) : [];
-            if (!readList.includes(currentAnn.id)) {
-                readList.push(currentAnn.id);
-                localStorage.setItem(READ_ANNOUNCEMENTS_KEY, JSON.stringify(readList));
-            }
-        }
-        handleClose();
+    checkLatestAnnouncement();
+
+    const handleUpdateClosed = () => {
+      isUpdateDismissedInSession = true;
+      checkLatestAnnouncement(true);
     };
 
+    window.addEventListener("update-prompt-closed", handleUpdateClosed);
+    return () => window.removeEventListener("update-prompt-closed", handleUpdateClosed);
+  }, [settings.showLatestAnnouncementOnStartup]);
+
+  const handleNextOrClose = () => {
+    if (currentIndex < unreadAnns.length - 1) {
+      setCurrentIndex((prev) => prev + 1);
+      return;
+    }
+    setIsOpen(false);
+  };
+
+  const markCurrentAsRead = () => {
     const currentAnn = unreadAnns[currentIndex];
-    if (!currentAnn) return null;
+    if (!currentAnn) return;
 
-    return (
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogContent className="sm:max-w-[425px] w-[92vw] p-0 overflow-hidden border-border/50 bg-background shadow-2xl rounded-2xl outline-none">
-                {/* 隱藏預設 Title 以滿足無障礙需求，但我們在畫面中有自己渲染的標題 */}
-                <DialogTitle className="sr-only">最新公告</DialogTitle>
-                
-                <div className="relative p-6 sm:p-8 flex flex-col items-center text-center">
-                    {/* Icon 區域 */}
-                    <div className="relative mb-6 mt-2">
-                        <div className="relative h-16 w-16 bg-primary/10 rounded-xl flex items-center justify-center border border-primary/20 shadow-sm">
-                            <Megaphone className="h-8 w-8 text-primary" />
-                        </div>
-                        {/* 浮動標籤 */}
-                        <div className="absolute -top-3 -right-3 bg-destructive text-destructive-foreground text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-md animate-bounce">
-                            NEW
-                        </div>
-                    </div>
+    const readStr = localStorage.getItem(READ_ANNOUNCEMENTS_KEY);
+    const readList: string[] = readStr ? JSON.parse(readStr) : [];
+    if (!readList.includes(currentAnn.id)) {
+      readList.push(currentAnn.id);
+      localStorage.setItem(READ_ANNOUNCEMENTS_KEY, JSON.stringify(readList));
+    }
+    handleNextOrClose();
+  };
 
-                    {/* 標題與日期 */}
-                    <h2 className="text-xl sm:text-2xl font-bold tracking-tight mb-3 text-foreground leading-snug flex justify-center items-center gap-2 flex-wrap">
-                        {currentAnn.title}
-                        {unreadAnns.length > 1 && (
-                            <span className="text-sm font-normal text-muted-foreground bg-muted px-2.5 py-0.5 rounded-full whitespace-nowrap">
-                                {currentIndex + 1} / {unreadAnns.length}
-                            </span>
-                        )}
-                    </h2>
-                    <div className="flex items-center justify-center gap-1.5 text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full mb-6 border border-primary/20">
-                        <Calendar className="h-3.5 w-3.5" />
-                        {currentAnn.date}
-                    </div>
+  const currentAnn = unreadAnns[currentIndex];
+  if (!currentAnn) return null;
 
-                    {/* 內容區塊 */}
-                    {currentAnn.content && (
-                        <div className="w-full text-left text-sm text-foreground/80 leading-relaxed bg-muted/40 p-5 rounded-xl border border-border/50 shadow-inner mb-8 max-h-[35vh] overflow-y-auto">
-                            <div className="whitespace-pre-wrap">{currentAnn.content}</div>
-                        </div>
-                    )}
+  const hasMore = currentIndex < unreadAnns.length - 1;
 
-                    {/* 按鈕操作區 */}
-                    <div className="w-full flex flex-col gap-3 mt-auto">
-                        <Button 
-                            onClick={handleClose} 
-                            className="w-full rounded-lg py-6 text-base font-semibold shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
-                        >
-                            {currentIndex < unreadAnns.length - 1 ? "下一則" : "我知道了"}
-                        </Button>
-                        <button 
-                            onClick={handleNeverShow}
-                            className="text-xs text-muted-foreground hover:text-foreground transition-colors underline-offset-4 hover:underline py-2"
-                        >
-                            {currentIndex < unreadAnns.length - 1 ? "已讀此訊息，並前往下一則" : "已讀此訊息，近期內不再顯示"}
-                        </button>
-                    </div>
+  return (
+    <Dialog 
+      open={isOpen} 
+      onOpenChange={(open) => {
+        if (!open) {
+          markCurrentAsRead();
+        }
+        setIsOpen(open);
+      }}
+    >
+      <DialogContent className="w-[92vw] max-w-xl overflow-hidden rounded-3xl border-border bg-card p-0 shadow-2xl outline-none [&>button]:right-5 [&>button]:top-5 [&>button]:flex [&>button]:h-8 [&>button]:w-8 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-full [&>button]:bg-black/30 [&>button]:text-white [&>button]:backdrop-blur-md hover:[&>button]:bg-black/50 focus:[&>button]:ring-0 transition-all duration-300">
+        <DialogTitle className="sr-only">站內公告通知</DialogTitle>
+
+        {/* 16:9 Header Image */}
+        <div className="relative aspect-video w-full overflow-hidden">
+          <img 
+            src="/announcement.png" 
+            alt="Announcement Header" 
+            className="h-full w-full object-cover"
+          />
+        </div>
+
+        <div className="p-6 sm:p-8">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="rounded-xl bg-primary/10 p-2.5 text-primary">
+                <Megaphone className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold leading-tight text-foreground">{currentAnn.title}</h3>
+                <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                  <Calendar className="h-3.5 w-3.5" />
+                  {currentAnn.date}
                 </div>
-            </DialogContent>
-        </Dialog>
-    );
+              </div>
+            </div>
+            
+            {unreadAnns.length > 1 && (
+              <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
+                {currentIndex + 1} / {unreadAnns.length}
+              </span>
+            )}
+          </div>
+
+          <div className="max-h-[35vh] overflow-y-auto pr-2 custom-scrollbar">
+            {currentAnn.content ? (
+              <div className="whitespace-pre-wrap text-base leading-relaxed text-foreground/90">
+                {currentAnn.content}
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-dashed border-border bg-muted/30 p-8 text-center text-muted-foreground">
+                <BellRing className="mx-auto mb-3 h-8 w-8 opacity-20" />
+                <p>這則公告沒有附加詳細內容。</p>
+              </div>
+            )}
+          </div>
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Button 
+              className="h-12 flex-[2] rounded-2xl text-lg font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]" 
+              onClick={handleNextOrClose}
+            >
+              {hasMore ? "下一則公告" : "不再顯示"}
+            </Button>
+            {hasMore ? (
+              <Button 
+                variant="outline" 
+                className="h-12 flex-1 rounded-2xl font-semibold" 
+                onClick={markCurrentAsRead}
+              >
+                略過此通知
+              </Button>
+            ) : null}
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
 }

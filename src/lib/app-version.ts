@@ -1,4 +1,4 @@
-export const LATEST_VERSION = "v1.5.0 x0402";
+export const LATEST_VERSION = "v1.5.1";
 const VERSION_STORAGE_KEY = "cmjh-app-version";
 
 export const STORAGE_KEYS = {
@@ -9,6 +9,7 @@ export const STORAGE_KEYS = {
     FAVORITES: "favorites",
     SETUP_COMPLETED: "cmjh-first-setup-completed",
     SCRATCHPAD: "cmjh_scratchpad_notes",
+    READ_ANNOUNCEMENTS: "cmjh-read-announcements",
 };
 
 export function getCurrentVersion(): string {
@@ -41,6 +42,9 @@ export function migrateData() {
 
     // 在此加入特定版本的遷移邏輯（範例）
     // if (current < "v1.5.0") { ... }
+
+    // 每次更新版本時，自動清除已讀公告記錄
+    localStorage.removeItem(STORAGE_KEYS.READ_ANNOUNCEMENTS);
 
     // 通用檢查：確保所有存儲的 JSON 格式正確，避免組件崩潰
     Object.values(STORAGE_KEYS).forEach(storageKey => {

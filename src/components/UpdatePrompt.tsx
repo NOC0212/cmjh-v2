@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { RefreshCw, Check } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -7,185 +7,188 @@ import { useSettings } from "@/hooks/SettingsContext";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
+const RELEASE_HIGHLIGHTS = ["適配新版網站","行政公告及午餐組件UI更新", "彈窗組件UI更新"];
+
 export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
-    const [show, setShow] = useState(false);
-    const [isUpdating, setIsUpdating] = useState(false);
-    const [progress, setProgress] = useState(0);
-    const currentVersion = getCurrentVersion();
-    const { settings } = useSettings();
+  const [show, setShow] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const currentVersion = getCurrentVersion();
+  const { settings } = useSettings();
 
-    useEffect(() => {
-        if (currentVersion && currentVersion !== LATEST_VERSION && !settings.disableUpdatePrompt) {
-            setShow(true);
-        } else {
-            setShow(false);
-        }
+  useEffect(() => {
+    if (currentVersion && currentVersion !== LATEST_VERSION && !settings.disableUpdatePrompt) {
+      setShow(true);
+    } else {
+      setShow(false);
+    }
 
-        const handleShowUpdate = () => {
-            if (!settings.disableUpdatePrompt) setShow(true);
-        };
-        window.addEventListener("show-update-prompt", handleShowUpdate);
-        return () => window.removeEventListener("show-update-prompt", handleShowUpdate);
-    }, [currentVersion, settings.disableUpdatePrompt]);
-
-    if (!show || isHidden) return null;
-
-    const handleUpdate = () => {
-        setIsUpdating(true);
-        const interval = 30;
-        
-        const timer = setInterval(() => {
-            setProgress(prev => {
-                if (prev >= 100) {
-                    clearInterval(timer);
-                    setTimeout(() => {
-                        migrateData();
-                        window.location.reload();
-                    }, 500);
-                    return 100;
-                }
-                
-                // 動態增加速率：在 80% 到 85% 之間極慢速，模擬「數據校驗中」
-                let increment = 0.8;
-                if (prev >= 80 && prev < 85) {
-                    increment = 0.05;
-                } else if (prev >= 85) {
-                    increment = 1.5; // 最後衝刺
-                }
-                
-                return Math.min(prev + increment, 100);
-            });
-        }, interval);
+    const handleShowUpdate = () => {
+      if (!settings.disableUpdatePrompt) setShow(true);
     };
 
-    return (
-        <Dialog 
-            open={show} 
-            onOpenChange={(open) => {
-                // 如果正在更新，不允許手動關閉
-                if (isUpdating) return;
-                setShow(open);
-            }}
-        >
-            <DialogContent 
-                className={cn(
-                    "max-w-md p-0 overflow-hidden border-border bg-card shadow-2xl rounded-2xl outline-none",
-                    isUpdating && "[&>button]:hidden" // 當正在更新時，隱藏 shadcn/ui Dialog 內建的關閉按鈕
-                )}
-                onPointerDownOutside={(e) => isUpdating && e.preventDefault()}
-                onEscapeKeyDown={(e) => isUpdating && e.preventDefault()}
-            >
-                <DialogTitle className="sr-only">發現新版本</DialogTitle>
-                
-                {isUpdating ? (
-                    <div className="p-10 space-y-8 flex flex-col items-center justify-center text-center">
-                        <div className="relative">
-                            <div className="w-20 h-20 rounded-full border-4 border-primary/20 flex items-center justify-center">
-                                <RefreshCw className={`h-10 w-10 text-primary ${progress < 100 ? 'animate-spin' : ''}`} />
-                            </div>
-                            {progress >= 100 && (
-                                <motion.div 
-                                    initial={{ scale: 0 }}
-                                    animate={{ scale: 1 }}
-                                    className="absolute -top-1 -right-1 bg-green-500 text-white rounded-full p-1"
-                                >
-                                    <Check className="h-4 w-4" />
-                                </motion.div>
-                            )}
-                        </div>
-                        
-                        <div className="space-y-4 w-full">
-                            <div className="space-y-2">
-                                <h2 className="text-2xl font-black italic tracking-tighter text-foreground">
-                                    {progress < 100 ? "正在執行更新..." : "更新完成！"}
-                                </h2>
-                                <p className="text-sm text-muted-foreground font-medium">
-                                    {progress < 40 ? "正在備份環境變數..." : 
-                                     progress < 70 ? "正在下載核心組件..." : 
-                                     progress < 100 ? "正在編譯並套用設定..." : "即將重新完成更新"}
-                                </p>
-                            </div>
-                            
-                            <div className="relative w-full h-3 bg-primary/10 rounded-full overflow-hidden border border-primary/5">
-                                <motion.div 
-                                    className="absolute inset-y-0 left-0 bg-primary shadow-[0_0_15px_rgba(var(--primary),0.5)]"
-                                    style={{ width: `${progress}%` }}
-                                    transition={{ type: "spring", bounce: 0, duration: 0.1 }}
-                                />
-                            </div>
-                            
-                            <div className="flex justify-end pr-1">
-                                <span className="text-xs font-black font-mono text-primary italic">
-                                    {Math.round(progress)}%
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                ) : (
-                    <>
-                        <div className="bg-primary/10 p-6 flex items-center gap-3">
-                            <div className="p-2 bg-primary/20 rounded-lg text-primary">
-                                <RefreshCw className="h-6 w-6 animate-spin-slow" />
-                            </div>
-                            <h2 className="text-xl font-bold text-foreground">發現新版本</h2>
-                        </div>
+    window.addEventListener("show-update-prompt", handleShowUpdate);
+    return () => window.removeEventListener("show-update-prompt", handleShowUpdate);
+  }, [currentVersion, settings.disableUpdatePrompt]);
 
-                        <div className="p-6 space-y-4">
-                            <div className="space-y-2">
-                                <p className="text-sm text-foreground/80 leading-relaxed">
-                                    崇明國中-v2 已有新版本發佈！為了確保功能的穩定性與最新體驗，建議您立即更新。
-                                </p>
-                                <div className="flex items-center gap-2 text-xs font-mono bg-muted p-2 rounded-md">
-                                    <span className="text-muted-foreground">目前: {currentVersion}</span>
-                                    <span className="text-primary-foreground bg-primary px-1 rounded">→</span>
-                                    <span className="text-primary font-bold">最新: {LATEST_VERSION}</span>
-                                </div>
-                            </div>
+  const versionSummary = useMemo(
+    () => ({ from: currentVersion || "舊版", to: LATEST_VERSION }),
+    [currentVersion]
+  );
 
-                            <div className="space-y-2">
-                                <h3 className="text-sm font-bold flex items-center gap-2 text-foreground">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                                    更新內容
-                                </h3>
-                                <div className="bg-muted/50 rounded-lg p-4 text-xs space-y-3 max-h-[180px] overflow-y-auto custom-scrollbar">
-                                    <div className="flex gap-2 text-foreground/90">
-                                        <span className="text-primary font-bold">⬆️</span>
-                                        <p><span className="font-bold">效能優化</span>：針對低端設備進行流暢優化</p>
-                                    </div>
-                                </div>
-                            </div>
+  if (!show || isHidden) return null;
 
-                            <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
-                                <p className="text-xs text-primary font-medium leading-relaxed">
-                                    * 此版本更新將會「自動遷移」您的本地設定（如自訂網站、計時器、行事曆等）。如果您擔心資料安全，也可以先在「設定」中下載備份後再執行更新。
-                                </p>
-                            </div>
+  const closePrompt = () => {
+    setShow(false);
+    window.dispatchEvent(new CustomEvent("update-prompt-closed"));
+  };
 
-                            <div className="flex flex-col sm:flex-row gap-2 pt-2">
-                                <Button
-                                    className="flex-1 h-11 gap-2 text-base font-semibold"
-                                    onClick={handleUpdate}
-                                >
-                                    <RefreshCw className="h-4 w-4" />
-                                    立即更新
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    className="flex-1 h-11 text-base font-medium"
-                                    onClick={() => {
-                                        setShow(false);
-                                        // 拋出事件，通知其他組件更新提醒已關閉
-                                        window.dispatchEvent(new CustomEvent("update-prompt-closed"));
-                                    }}
-                                >
-                                    稍後再說
-                                </Button>
-                            </div>
-                        </div>
-                    </>
-                )}
-            </DialogContent>
-        </Dialog>
-    );
+  const handleUpdate = () => {
+    setIsUpdating(true);
+    const timer = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(timer);
+          setTimeout(() => {
+            migrateData();
+            window.location.reload();
+          }, 500);
+          return 100;
+        }
+        let increment = 0.8;
+        if (prev >= 80 && prev < 85) increment = 0.05;
+        if (prev >= 85) increment = 1.5;
+        return Math.min(prev + increment, 100);
+      });
+    }, 30);
+  };
+
+  return (
+    <Dialog
+      open={show}
+      onOpenChange={(open) => {
+        if (isUpdating) return;
+        if (!open) {
+          closePrompt();
+        } else {
+          setShow(true);
+        }
+      }}
+    >
+      <DialogContent
+        className={cn(
+          "w-[92vw] max-w-md overflow-hidden rounded-3xl border-border bg-card p-0 shadow-2xl outline-none",
+          isUpdating && "[&>button]:hidden",
+          !isUpdating && "[&>button]:right-4 [&>button]:top-4 [&>button]:flex [&>button]:h-8 [&>button]:w-8 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-full [&>button]:bg-black/20 [&>button]:text-white [&>button]:backdrop-blur-md hover:[&>button]:bg-black/40 focus:[&>button]:ring-0"
+        )}
+        onPointerDownOutside={(e) => isUpdating && e.preventDefault()}
+        onEscapeKeyDown={(e) => isUpdating && e.preventDefault()}
+      >
+        <DialogTitle className="sr-only">版本更新</DialogTitle>
+
+        {isUpdating ? (
+          <div className="flex flex-col items-center justify-center gap-10 p-12 text-center">
+            <div className="relative h-32 w-32">
+              {/* Circular Background */}
+              <svg className="h-full w-full -rotate-90 transform">
+                <circle
+                  cx="64"
+                  cy="64"
+                  r="58"
+                  fill="transparent"
+                  stroke="currentColor"
+                  strokeWidth="8"
+                  className="text-primary/10"
+                />
+                {/* Progress Circle */}
+                <motion.circle
+                  cx="64"
+                  cy="64"
+                  r="58"
+                  fill="transparent"
+                  stroke="currentColor"
+                  strokeWidth="8"
+                  strokeDasharray={364.4}
+                  initial={{ strokeDashoffset: 364.4 }}
+                  animate={{ strokeDashoffset: 364.4 - (364.4 * progress) / 100 }}
+                  transition={{ type: "spring", bounce: 0, duration: 0.1 }}
+                  strokeLinecap="round"
+                  className="text-primary"
+                />
+              </svg>
+
+              {/* Icon in Center */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="relative">
+                  <img
+                    src="/favicon.png"
+                    alt="App Icon"
+                    className={cn(
+                      "h-16 w-16 rounded-2xl shadow-lg transition-transform duration-500",
+                      progress < 100 ? "scale-100" : "scale-110"
+                    )}
+                  />
+                  {progress >= 100 && (
+                    <motion.div
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      className="absolute -right-2 -top-2 flex h-8 w-8 items-center justify-center rounded-full bg-green-500 text-white shadow-lg border-2 border-card"
+                    >
+                      <Check className="h-5 w-5" />
+                    </motion.div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h2 className="text-2xl font-black tracking-tight text-foreground">
+                {progress < 100 ? "正在更新..." : "更新完成"}
+              </h2>
+              <p className="text-lg font-mono font-medium text-primary">
+                {Math.round(progress)}%
+              </p>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="relative h-48 w-full overflow-hidden bg-muted sm:h-56">
+              <img 
+                src="/update.png" 
+                alt="Update Header" 
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+            </div>
+
+            <div className="p-6 sm:px-8">
+              <div className="mb-6 flex items-center justify-center gap-3 text-sm font-medium">
+                <span className="rounded-md bg-muted px-3 py-1.5 text-muted-foreground">{versionSummary.from}</span>
+                <span className="text-primary">→</span>
+                <span className="rounded-md bg-primary/10 px-3 py-1.5 text-primary">{versionSummary.to}</span>
+              </div>
+              
+              <ul className="space-y-4 text-base text-foreground/90">
+                {RELEASE_HIGHLIGHTS.map((item, index) => (
+                  <li key={item} className="flex items-start gap-4">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
+                      {index + 1}
+                    </span>
+                    <span className="pt-0.5">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="p-6 pt-2 pb-8 sm:px-8">
+              <Button className="h-12 w-full gap-2 text-lg font-bold shadow-lg shadow-primary/25 transition-transform hover:scale-[1.02] active:scale-[0.98]" onClick={handleUpdate}>
+                <RefreshCw className="h-5 w-5" />
+                立即更新
+              </Button>
+            </div>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
 }
-

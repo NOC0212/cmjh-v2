@@ -4,121 +4,141 @@ import json
 import os
 import time
 import re
-from urllib.parse import urljoin, quote
+from urllib.parse import urljoin, unquote
 
-URLS = [
-    "https://www.cmjh.tn.edu.tw/modules/tadnews/index.php?ncsn=1&nsn=&tag_sn=&g2p=1",
-    "https://www.cmjh.tn.edu.tw/modules/tadnews/index.php?ncsn=1&g2p=2",
-    "https://www.cmjh.tn.edu.tw/modules/tadnews/index.php?ncsn=1&g2p=3",
-]
-
+# === 設定區 ===
+BASE_URL = "https://www.cmjh.tn.edu.tw/"
+LIST_URL = "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=all_news"
 OUTPUT_DIR = os.path.join("public", "data")
 
-def fetch_page(url):
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+    'Accept-Language': 'zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7',
+}
+
+def fetch_details(detail_url):
+    """
+    進入公告內頁，抓取內容文字與精確的附件下載連結
+    """
+    print(f"  --> 深入解析：{detail_url}")
     try:
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
-        resp = requests.get(url, headers=headers, timeout=15)
-        resp.raise_for_status()
-        resp.encoding = 'utf-8'
-        return resp.text
-    except Exception as e:
-        print(f"連線失敗: {e}")
-        return None
-
-def fetch_details(url):
-    print(f"  --> 深入解析：{url}")
-    html = fetch_page(url)
-    if not html: return "無法取得內容", []
-    
-    soup = BeautifulSoup(html, "html.parser")
-    content_text = ""
-    attachments = []
-
-    # 1. 內文抓取與排版優化
-    content_area = soup.find("div", class_="news_page_content")
-    if content_area:
-        # 移除發佈資訊區塊
-        info_div = content_area.find("div", class_="news_page_info")
-        if info_div: info_div.decompose()
-
-        # --- 精準換行處理 ---
-        # 遍歷所有標籤，只在特定標籤前後加換行
-        for tag in content_area.find_all(['p', 'div', 'li', 'tr', 'h1', 'h2', 'h3', 'h4', 'br']):
-            if tag.name == 'br':
-                tag.replace_with('\n')
-            else:
-                # 在塊狀標籤內容後方插入換行標記
-                tag.append('\n')
-
-        # 取得純文字（此時不使用 separator，避免 span 再次導致換行）
-        raw_text = content_area.get_text()
+        resp = requests.get(detail_url, headers=headers, timeout=15)
+        resp.encoding = resp.apparent_encoding
+        soup = BeautifulSoup(resp.text, "html.parser")
         
-        # 清理邏輯：
-        # - 移除每一行前後的空白
-        # - 將三個以上的換行縮減為兩個（保持段落感但不過空）
-        lines = [line.strip() for line in raw_text.split('\n')]
-        clean_text = '\n'.join([l for l in lines if l]) # 移除完全空白的行
-        content_text = clean_text
+        # 1. 抓取公告本文 (#print_content 是最準確的區塊)
+        content_area = soup.select_one('#print_content')
+        if content_area:
+            temp_soup = BeautifulSoup(str(content_area), "html.parser")
+            # 移除內文末尾的附件清單標籤，避免文字重複
+            file_list_part = temp_soup.select_one('ul.tuf-icon')
+            if file_list_part:
+                file_list_part.decompose()
+            content_text = temp_soup.get_text(separator="\n", strip=True)
+        else:
+            content_text = "無詳細內文"
 
-    # 2. 附件抓取
-    file_list = soup.find("ul", class_="tuf-icon")
-    if file_list:
-        for li in file_list.find_all("li"):
-            a_tag = li.find("a")
-            desc_div = li.find("div", class_="file_description")
-            if a_tag and desc_div:
-                raw_name = desc_div.get_text(strip=True)
-                clean_name = re.sub(r"^\d+\)\s*", "", raw_name)
-                href = a_tag.get("href", "")
-                onclick = a_tag.get("onclick", "")
+        # 2. 抓取附件連結
+        attachments = []
+        file_items = soup.select('li.tuf-icon-item')
+        
+        for li in file_items:
+            a_tag = li.find('a', onclick=True)
+            if a_tag:
+                onclick_text = a_tag.get('onclick', '')
+                # Regex 說明：抓取 downloadFile(數字, '原始檔名')
+                match = re.search(r"downloadFile\((\d+),\s*['\"](.+?)['\"]\)", onclick_text)
                 
-                if "javascript:void(0)" in href and onclick:
-                    match = re.search(r"downloadFile\((\d+),", onclick)
-                    if match:
-                        file_sn = match.group(1)
-                        final_link = f"https://www.cmjh.tn.edu.tw/modules/tadnews/index.php?op=tufdl&fn={quote(clean_name)}&files_sn={file_sn}"
-                else:
-                    final_link = urljoin(url, href)
-
-                attachments.append({"name": clean_name, "link": final_link})
-
-    return content_text, attachments
-
-def parse_announcements(html, source_url):
-    soup = BeautifulSoup(html, "html.parser")
-    table = soup.find("table", class_="table-striped")
-    if not table: return []
-    tbody = table.find("tbody")
-    announcements = []
-    for tr in tbody.find_all("tr"):
-        td = tr.find("td")
-        if not td: continue
-        date = td.get_text(strip=True)[:10]
-        a_tags = [a for a in td.find_all("a") if "badge" not in a.get("class", [])]
-        if not a_tags: continue
-        title = a_tags[0].text.strip()
-        link = urljoin(source_url, a_tags[0].get("href", ""))
-        content, links = fetch_details(link)
-        time.sleep(0.5)
-        announcements.append({
-            "date": date,
-            "title": title,
-            "url": link,
-            "content": content,
-            "links": links
-        })
-    return announcements
+                if match:
+                    file_sn = match.group(1)
+                    # 關鍵：直接使用網頁提供的原始檔名字串 (raw_fn)，不進行任何 quote 編碼
+                    raw_fn = match.group(2)
+                    
+                    # 按照學校網站 JS 邏輯拼接 URL
+                    final_link = f"{BASE_URL}modules/school/index.php?op=tufdl&fn={raw_fn}&files_sn={file_sn}"
+                    
+                    # 顯示名稱則還原成中文，方便閱讀
+                    display_name = unquote(raw_fn)
+                    
+                    attachments.append({
+                        "name": display_name,
+                        "link": final_link
+                    })
+            
+        return content_text, attachments
+    except Exception as e:
+        print(f"      [失敗] 內頁解析出錯: {e}")
+        return "內容讀取失敗", []
 
 def main():
-    for index, url in enumerate(URLS):
-        page_num = index + 1
-        print(f"\n[第 {page_num} 頁] 開始處理...")
-        html = fetch_page(url)
-        if html:
-            data = parse_announcements(html, url)
-            os.makedirs(OUTPUT_DIR, exist_ok=True)
-            with open(os.path.join(OUTPUT_DIR, f"announcements-p{page_num}.json"), "w", encoding="utf-8") as f:
-                json.dump(data, f, ensure_ascii=False, indent=2)
+    print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] 啟動崇明國中公告爬蟲...")
+    
+    try:
+        if not os.path.exists(OUTPUT_DIR):
+            os.makedirs(OUTPUT_DIR)
+
+        # 取得列表頁
+        response = requests.get(LIST_URL, headers=headers, timeout=15)
+        response.encoding = response.apparent_encoding
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        table = soup.select_one('#news_tableall')
+        if not table:
+            print("找不到公告表格，請檢查網路或網址。")
+            return
+
+        rows = table.select('tbody tr')
+        results = []
+
+        print(f"共偵測到 {len(rows)} 筆公告，開始爬取內頁...")
+
+        for row in rows:
+            try:
+                # 列表頁基本資料
+                date = row.select_one('time').text.strip() if row.select_one('time') else ""
+                source = row.select_one('td[headers="header_info"]').text.strip()
+                badge = row.select_one('a.my-badge')
+                category = badge.text.strip() if badge else "一般"
+
+                title_a = row.select_one('td[headers="header_title"] a[href*="content_id"]')
+                if not title_a:
+                    continue
+                
+                title = title_a.text.strip()
+                detail_url = urljoin(BASE_URL, title_a.get('href'))
+
+                # 爬取內頁詳細資訊
+                content, attachments = fetch_details(detail_url)
+
+                results.append({
+                    "date": date,
+                    "category": category,
+                    "source": source,
+                    "title": title,
+                    "url": detail_url,
+                    "content": content,
+                    "attachments": attachments
+                })
+
+                # 間隔 0.8 秒，保護伺服器也避免被封鎖
+                time.sleep(0.8)
+
+            except Exception as row_err:
+                print(f"  [跳過] 資料處理異常: {row_err}")
+                continue
+
+        # 儲存為 JSON
+        output_file = os.path.join(OUTPUT_DIR, "announcements.json")
+        with open(output_file, 'w', encoding='utf-8') as f:
+            json.dump(results, f, ensure_ascii=False, indent=4)
+
+        print("-" * 30)
+        print(f"爬取成功！總計 {len(results)} 筆。")
+        print(f"存檔路徑: {output_file}")
+
+    except Exception as e:
+        print(f"程式執行中斷: {e}")
 
 if __name__ == "__main__":
     main()
