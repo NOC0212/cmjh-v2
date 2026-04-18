@@ -62,8 +62,7 @@ def fetch_cmjh_lunch():
             })
 
         if not lunch_data["items"]:
-            print("未能抓取到菜色，請檢查網頁是否已更新或是否為動態載入。")
-            return
+            print("未能抓取到菜色（今日可能未提供），將僅更新時間戳記。")
 
         # 寫入 JSON
         output_path = "public/data/lunch.json"
