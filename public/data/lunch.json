@@ -1,30 +1,4 @@
 {
-    "last_updated": "2026-04-16 18:23:51",
-    "items": [
-        {
-            "category": "主食",
-            "name": "十穀飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144973"
-        },
-        {
-            "category": "主菜",
-            "name": "清蒸破朴子冬瓜水鯊魚丁",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853266000316"
-        },
-        {
-            "category": "副菜",
-            "name": "紅白花椰",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853266000317"
-        },
-        {
-            "category": "蔬菜",
-            "name": "有機高麗菜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1448841472205657"
-        },
-        {
-            "category": "湯品",
-            "name": "日式海帶芽豆腐湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853266000319"
-        }
-    ]
+    "last_updated": "2026-04-18 01:23:53",
+    "items": []
 }
