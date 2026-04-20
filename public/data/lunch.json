@@ -1,4 +1,35 @@
 {
-    "last_updated": "2026-04-19 01:53:15",
-    "items": []
+    "last_updated": "2026-04-20 01:54:33",
+    "items": [
+        {
+            "category": "主食",
+            "name": "十穀飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144973"
+        },
+        {
+            "category": "主菜",
+            "name": "可樂花生蹄膀",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1702212385030329"
+        },
+        {
+            "category": "副菜",
+            "name": "冰烤地瓜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853291096671"
+        },
+        {
+            "category": "蔬菜",
+            "name": "高麗菜炒紅蘿蔔",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853320096721"
+        },
+        {
+            "category": "湯品",
+            "name": "青菜蛋花湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1714457347043903"
+        },
+        {
+            "category": "附餐",
+            "name": "葡萄",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1412553444122491"
+        }
+    ]
 }
