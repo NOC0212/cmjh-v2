@@ -1,30 +1,30 @@
 {
-    "last_updated": "2026-04-21 01:50:14",
+    "last_updated": "2026-04-22 01:49:09",
     "items": [
         {
             "category": "主食",
-            "name": "燕麥飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020150992"
+            "name": "雞肉飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853292000454"
         },
         {
             "category": "主菜",
-            "name": "燒烤三節翅",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1767151538077892"
-        },
-        {
-            "category": "副菜",
-            "name": "南瓜馬鈴薯烘蛋",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853292000443"
+            "name": "評選麵包",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970624014895"
         },
         {
             "category": "蔬菜",
-            "name": "有機味美菜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853266000318"
+            "name": "蒜香油菜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1506563749338718"
         },
         {
             "category": "湯品",
-            "name": "里港餛飩湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970621009892"
+            "name": "紅豆湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1614134411195129"
+        },
+        {
+            "category": "附餐",
+            "name": "鮮乳",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1449102820125474"
         }
     ]
 }
