@@ -33,6 +33,38 @@
     },
     {
         "date": "2026-04-22",
+        "category": "研習",
+        "source": "教務處",
+        "title": "免費線上論壇《AI時代的賦能與SEL領導—師傅校長的變與不變》活動，歡迎本校教職員、家長踴躍報名參加",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=&page_id=12&content_id=91&type=news&from_op=all_news",
+        "content": "一、 活動宗旨\n為協助教育工作者掌握 AI 素養決策力並深化 SEL 實踐交流，親子天下股份有限公司與中華民國中小學校長協會共同主辦線上論壇，透過專題講座、縣市實務經驗分享及國際觀點交流，期能協助校長與教師打造兼具科技素養與人文關懷的幸福校園。並提供 SEL 校園團購優惠，支持校園教師增能、取得實踐靈感與資源。\n二、 論壇相關資訊\n活動日期：\n115年4月29日，線上直播（免費參與）\n活動議程：\n上午場\n（09:00-12:00） SEL與幸福校園\n下午場\n（13:00-16:00） AI素養與決策力\n詳細議程內容請參閱檢附文件。\n報名資訊：\n請於 4月28日 11:59 前，至\n教育領導力論壇線上報名系統\n完成報名手續。",
+        "attachments": [
+            {
+                "name": "議程表.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=議程表.pdf&files_sn=51"
+            }
+        ]
+    },
+    {
+        "date": "2026-04-22",
+        "category": "簡章",
+        "source": "輔導室",
+        "title": "高雄科技大學開設「勞動部產業新尖兵計畫專業職能班」",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=&page_id=39&content_id=90&type=news&from_op=all_news",
+        "content": "國立高雄科技大學 AI 金融科技中心\n開設 115 年度勞動部產業新尖兵計畫 2 個班專業職能班別\n說明：\n一、15 歲至 29 歲之本國籍待業者（非日間部在學學生、畢業生）。\n二、報名費用：全額免費（符合補助資格）。\n三、專業職能班別資訊如下：\n(一) AI 客服系統設計與大數據分析班\n課程特色：\n本課程將結合當下最熱門的「LLM 大型語言模型」與「RAG 檢索增強生成」議題，適合對於自動化客服、視窗軟體開發、數據分析有興趣的學員，從零開始傳授 Python 程式語法、PyQt GUI 視窗開發與 FastAPI 後端技術。運用所學進行 AI 大腦串接、自動讀檔回訊與商業機器學習實務演練，藉此培養學員多方面的 AI 客服系統設計與數據預測實戰力。本次課程將輔導學員考取 TQC+ Python 程式語言與 TQC+ MySQL 資料庫管理雙證照，不僅能透過專題成品充實作品集，更能藉由專業證照與企業媒合提升職業競爭力。\n課程時間：\n115/06/29～115/08/26；共 255 小時。\n報名連結：\n前往 AI 客服系統設計與大數據分析班報名頁面\n。\n【培訓完安排工作面試機會】\n(二) AI 機器學習與資料科學人才養成班\n課程特色：\n本課程將結合前沿的「機器學習」與「雲端生成式 AI」議題，適合對於資料清理、預測建模、商業統計有興趣的學員，從零開始傳授 Python 解決問題邏輯與 Power BI 數據視覺化分析技能。運用所學進行精準趨勢預測、雲端 Colab 數據處理與各類統計模型演練，藉此培養學員全方位的資料科學與機器學習實戰力。本次課程將輔導學員考取 TQC+ Python 程式語言與 iPAS AI 應用規劃師雙證照，除了展現技術實力外，結合專題競賽成果與履歷健檢服務，將進一步增加專業廣度並顯著提升職場優勢。\n課程時間：\n115/06/29～115/08/21；共 240 小時。\n報名連結：\n前往 AI 機器學習與資料科學人才養成班報名頁面\n。\n【培訓完安排工作面試機會】\n＊檢附各課程招訓簡章（如附件）。\n＊課程及報名相關請洽本校（燕巢校區）AI 金融科技中心洪先生，\n電話：07-3814526 分機 17018，\n電子郵件：aifintech@nkust.edu.tw。",
+        "attachments": [
+            {
+                "name": "115勞動部產業新尖兵計畫-1.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115勞動部產業新尖兵計畫-1.pdf&files_sn=49"
+            },
+            {
+                "name": "115勞動部產業新尖兵計畫-2.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115勞動部產業新尖兵計畫-2.pdf&files_sn=50"
+            }
+        ]
+    },
+    {
+        "date": "2026-04-22",
         "category": "活動",
         "source": "學務處",
         "title": "國家表演藝術中心衛武營國家藝術文化中心「115年花露露童樂節學生志願服務計畫」簡章",
@@ -283,62 +315,6 @@
             {
                 "name": "115E1024707-01.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115E1024707-01.pdf&files_sn=20"
-            }
-        ]
-    },
-    {
-        "date": "2026-04-16",
-        "category": "簡章",
-        "source": "輔導室",
-        "title": "115 學年度全國高級中等學校臺南區 技優甄審與實用技能學程 招生簡章",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=&page_id=39&content_id=69&type=news&from_op=all_news",
-        "content": "115 學年度全國高級中等學校臺南區 <技優甄審> 及 <實用技能學程> 招生簡章",
-        "attachments": [
-            {
-                "name": "115技優簡章.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115技優簡章.pdf&files_sn=18"
-            },
-            {
-                "name": "115學年度臺南區實用技能學程簡章.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115學年度臺南區實用技能學程簡章.pdf&files_sn=19"
-            }
-        ]
-    },
-    {
-        "date": "2026-04-16",
-        "category": "行政",
-        "source": "人事室",
-        "title": "公益揭弊者保護法",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=6&zone_id=&page_id=48&content_id=68&type=news&from_op=all_news",
-        "content": "公益揭弊者保護法\n一、法務部廉政署為提供揭弊者就揭弊案件相關法律問題之諮詢管道，已設置法律諮詢專線，相關資訊如下：\n（一）市話門號：（02）2382-6585（使用者付費，依市話通話費率計價）。\n（二）諮詢時段：每週一下午2點至5點（遇國定假日暫停）。\n（三）諮詢方式：由輪值律師提供線上專業法律諮詢服務。\n二、該署網頁/肅貪業務專區/揭弊者保護專區/諮詢與協助項下，置有法律諮詢相關資訊，供各機關參考運用，請參閱：\n法務部廉政署揭弊者保護專區",
-        "attachments": [
-            {
-                "name": "1公益揭弊者保護法問答輯.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=1公益揭弊者保護法問答輯.pdf&files_sn=10"
-            },
-            {
-                "name": "2公益揭弊者保護法懶人包-什麼是揭弊.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2公益揭弊者保護法懶人包-什麼是揭弊.pdf&files_sn=11"
-            },
-            {
-                "name": "3公益揭弊者保護法懶人包-可以直接外部通報嗎.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=3公益揭弊者保護法懶人包-可以直接外部通報嗎.pdf&files_sn=12"
-            },
-            {
-                "name": "4公益揭弊者保護法懶人包-受理揭弊機關的權責.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=4公益揭弊者保護法懶人包-受理揭弊機關的權責.pdf&files_sn=13"
-            },
-            {
-                "name": "5公益揭弊者保護法懶人包-揭弊者保護措施有哪些.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=5公益揭弊者保護法懶人包-揭弊者保護措施有哪些.pdf&files_sn=14"
-            },
-            {
-                "name": "6公益揭弊者保護法懶人包-誰是適用對象.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=6公益揭弊者保護法懶人包-誰是適用對象.pdf&files_sn=15"
-            },
-            {
-                "name": "7公益揭弊者保護法懶人包-遭受不利措施怎麼辦.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=7公益揭弊者保護法懶人包-遭受不利措施怎麼辦.pdf&files_sn=16"
             }
         ]
     }
