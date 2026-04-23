@@ -33,6 +33,15 @@
     },
     {
         "date": "2026-04-23",
+        "category": "活動",
+        "source": "輔導室",
+        "title": "高雄育英醫專舉辦「醫護美妝夢想啟航營」",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=&page_id=39&content_id=100&type=news&from_op=all_news",
+        "content": "育英醫護管理專科學校「醫護美妝夢想啟航營」\n說明：\n一、為協助九年級學生及家長更了解五專技職教育優勢及特色，獲得完整之技職教育升學進路與未來職涯發展資訊，特舉辦「育英醫護美妝夢想啟航營」。\n二、活動日期/時間：115年5月23日(星期六) 9:00-12:10。\n三、地點：高雄市三民區大昌二路420巷15號(本校至善樓1樓)。\n四、報名網址：\n醫護美妝夢想啟航營線上報名系統\n五、亦可至本校網站首頁重要公告連結報名。如有相關問題，請電洽教務處綜合業務組 07-3811765 分機 1115 或 1105。",
+        "attachments": []
+    },
+    {
+        "date": "2026-04-23",
         "category": "研習",
         "source": "教務處",
         "title": "中華心衛協會辦理「2026年心閱讀~以韌性為導向的社會情緒學習」線上論壇，歡迎本校教師踴躍報名參加",
@@ -266,20 +275,6 @@
             {
                 "name": "第五期國家癌症防治計畫.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=第五期國家癌症防治計畫.pdf&files_sn=34"
-            }
-        ]
-    },
-    {
-        "date": "2026-04-20",
-        "category": "宣導",
-        "source": "學務處",
-        "title": "轉知-未滿20歲懷孕服務宣傳單張",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=&page_id=21&content_id=79&type=news&from_op=all_news",
-        "content": "未滿20歲懷孕服務宣傳單張及其相關諮詢管道及社會資源,如附件",
-        "attachments": [
-            {
-                "name": "未滿20歲懷孕服務宣導單張.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=未滿20歲懷孕服務宣導單張.pdf&files_sn=33"
             }
         ]
     }
