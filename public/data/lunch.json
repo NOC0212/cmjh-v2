@@ -1,35 +1,4 @@
 {
-    "last_updated": "2026-04-24 01:52:43",
-    "items": [
-        {
-            "category": "主食",
-            "name": "紫米飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1767151490077612"
-        },
-        {
-            "category": "主菜",
-            "name": "橙汁嫩軟骨排",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970644009952"
-        },
-        {
-            "category": "副菜",
-            "name": "傳統滷菜羹",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853294000483"
-        },
-        {
-            "category": "蔬菜",
-            "name": "蒜香紅綠花菜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1767151517077745"
-        },
-        {
-            "category": "湯品",
-            "name": "玉米濃湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409898734221886"
-        },
-        {
-            "category": "附餐",
-            "name": "西瓜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1433809456208903"
-        }
-    ]
+    "last_updated": "2026-04-25 01:44:15",
+    "items": []
 }
