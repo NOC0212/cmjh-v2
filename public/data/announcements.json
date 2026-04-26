@@ -1,27 +1,5 @@
 [
     {
-        "date": "2026-04-21",
-        "category": "行政",
-        "source": "教務處",
-        "title": "2026年適性測驗考生及試場公告",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=&page_id=12&content_id=85&type=news&from_op=all_news",
-        "content": "一、 家長配合事項\n名單核對：\n若發現名單有遺漏，請致電「教務處」聯繫。\n入校規定：\n考場不開放家長進入校園，請於校門口接送。\n附件查閱：\n詳細的考試時間及學生試場配置，請參閱附件資料。\n二、 學生應考準備（檢查清單）\n必備文具：\n2B鉛筆、橡皮擦、黑色或藍色原子筆、修正帶（液）。\n注意： 禁止攜帶計算紙。\n計時工具：\n請配戴手錶（建議使用指針型手錶）。\n提醒：升上國中後，正式考試均禁止使用智慧型手環及智慧型手錶。\n身分證明：\n請攜帶個人身分證明文件（健保卡、身分證或學生證，三擇一）。\n考場資訊：\n請務必事先確認並記下自己的「試場編號」與「准考證號碼」。",
-        "attachments": [
-            {
-                "name": "2026崇明國中新生適性測驗 准考證編號網路公告.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2026崇明國中新生適性測驗 准考證編號網路公告.pdf&files_sn=38"
-            },
-            {
-                "name": "2026新生適性測驗教室配置圖.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2026新生適性測驗教室配置圖.pdf&files_sn=39"
-            },
-            {
-                "name": "崇明國中新生適性測驗流程.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=崇明國中新生適性測驗流程.pdf&files_sn=59"
-            }
-        ]
-    },
-    {
         "date": "2026-04-15",
         "category": "行政",
         "source": "教務處",
@@ -34,6 +12,15 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=114-2-2 考試範圍及考試日程表0416.pdf&files_sn=17"
             }
         ]
+    },
+    {
+        "date": "2026-04-26",
+        "category": "宣導",
+        "source": "教務處",
+        "title": "為推廣數位學習資源，臺南市立圖書館提供各類型數位資源，歡迎本校師生踴躍利用",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=&page_id=12&content_id=126&type=news&from_op=all_news",
+        "content": "一、為因應數位化學習趨勢，臺南市立圖書館已建置多項數位資源平台以支援線上教學及師生自主學習需求。\n二、本館數位資源涵蓋「電子書」、「英語學習」、「兒童數位資源」及「影音多媒體」四大類，相關平台說明如下：\n(一) 電子書：\n凌網HyRead ebook、台灣雲端書庫、華藝iRead ebooks、udn讀書館、HamiBook、FunPark童書夢工廠。\n(二) 英語學習：\nHighlights Library、TumbleBookLibrary。\n(三) 兒童數位資源：\n阿思克說科學故事、親子天下有聲故事書、FunPark童書夢工廠。\n(四) 影音多媒體：\n一刻鯨選有聲課程、拿索斯‧古典音樂圖書館、新傳媒數位公播平台。\n三、平台皆可透過登入「臺南市立圖書館借閱證號（或身份證字號）」及「個人密碼」即可免費使用，操作說明請參閱各平台網頁指示。",
+        "attachments": []
     },
     {
         "date": "2026-04-24",
