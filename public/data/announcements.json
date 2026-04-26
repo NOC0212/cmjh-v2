@@ -15,6 +15,20 @@
     },
     {
         "date": "2026-04-26",
+        "category": "行政",
+        "source": "教務處",
+        "title": "2026適性測驗成績查詢",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=&page_id=12&content_id=127&type=news&from_op=all_news",
+        "content": "請家長輸入正確身分證字號、與公告之准考證號碼查詢。\n本次相關題本均回收不公開。有任何問題請致電本校教務處。\n崇明國中適性測驗成績查詢系統\n週三放學前公告雙語社團第一階段通過名單與數資社團錄取名單。",
+        "attachments": [
+            {
+                "name": "2026新生適性測驗准考證號.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2026新生適性測驗准考證號.pdf&files_sn=70"
+            }
+        ]
+    },
+    {
+        "date": "2026-04-26",
         "category": "宣導",
         "source": "教務處",
         "title": "為推廣數位學習資源，臺南市立圖書館提供各類型數位資源，歡迎本校師生踴躍利用",
@@ -47,7 +61,16 @@
         "title": "臺中市私立洛克威爾藝術實驗教育學校入學說明會，請參考附件",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=&page_id=12&content_id=122&type=news&from_op=all_news",
         "content": "該校「115學年度入學說明會」活動資訊1份，有意就讀藝術實驗教育課程之學生及家長可以報名參加",
-        "attachments": []
+        "attachments": [
+            {
+                "name": "校園參觀日海報.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=校園參觀日海報.pdf&files_sn=71"
+            },
+            {
+                "name": "洛克威爾招生海報.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=洛克威爾招生海報.pdf&files_sn=72"
+            }
+        ]
     },
     {
         "date": "2026-04-24",
@@ -133,7 +156,12 @@
         "title": "轉知2026文藻國高中雙外語夏令營活動資訊",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=&page_id=12&content_id=108&type=news&from_op=all_news",
         "content": "一、時間：民國115年7月6日(一)至7月11日(六)，共6天5夜。\n二、地點：文藻學校財團法人文藻外語大學、美濃景點及天主教真福山社福文教中心。\n三、活動對象：國中一至三年級學生、高中一至三年級學生。\n四、活動人數：120人/梯次，額滿為止。\n五、詳情可至\n文藻學校財團法人文藻外語大學進修推廣部網頁\n查詢，或洽專線(07)3458212。",
-        "attachments": []
+        "attachments": [
+            {
+                "name": "2026文藻國高中雙外語夏令營海報.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2026文藻國高中雙外語夏令營海報.pdf&files_sn=73"
+            }
+        ]
     },
     {
         "date": "2026-04-24",
@@ -226,19 +254,5 @@
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=&page_id=39&content_id=96&type=news&from_op=all_news",
         "content": "長榮中學辦理「108新課綱全攻略：贏在高中起跑線」九年級升學講座\n說明：\n一、為協助九年級學生家長掌握關鍵資訊，降低對升學制度之不確定感，建立親子共同規劃未來的能力，本校特辦理本次專題講座，透過系統性整理與實務案例分享，協助家長在眾多資訊中，找到清楚而可行的方向。\n二、本講座以家長為主要對象，亦建議學生一同參與，讓親子對未來學習與升學規劃建立一致理解，共同做出更有信心的選擇。\n三、講座相關資訊如下：\n(一) 講座對象：九年級學生家長為主，並開放學生及對本議題有興趣之民眾參加。\n(二) 講座時間：115年5月30日（星期六）15時00分至16時30分（14時30分開放入場）。\n(三) 講座地點： 本校簡報室。（臺南市東區林森路二段79號）\n(四) 講座內容：\n１、自主學習規劃：如何讓孩子在彈性時間中建立優勢。\n２、學習歷程檔案：如何讓努力被看見，而非流於形式。\n３、升學與生涯布局：從高中到大學的關鍵選擇策略。\n四、線上報名：\n長榮中學九年級升學講座線上報名系統\n五、其他事項：完成報名可者於活動期間將車輛停放於本校教師停車場。\n六、教務處聯絡電話：06-2381711 分機2568、2234。",
         "attachments": []
-    },
-    {
-        "date": "2026-04-23",
-        "category": "活動",
-        "source": "輔導室",
-        "title": "臺南青少中心親職講座邀你115年5月23日一起－陪伴孩子理解情感，安心談情與性，建立信任，活動詳洽06-2981200。",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=&page_id=39&content_id=95&type=news&from_op=all_news",
-        "content": "臺南青少中心親職講座邀你115年5月23日一起－陪伴孩子理解情感，安心談情與性，建立信任，活動詳洽06-2981200。\n一、活動日期：115年5月23日(星期六)。\n二、活動時間：13：30~15：30（共2小時）。\n三、活動地點：臺南市社會福利綜合大樓(708臺南市安平區中華西路二段 315號5樓靜態培力空間)。\n四、對象：臺南市12歲至未滿19歲之青少年及其家屬。\n五、參加名額：20組親子(共40人)。\n六、報名方式：\n(一) 報名請至臺南市青少年福利服務中心linktree網頁/活動報名，進行線上報名，如報名後不確定是否完成報名，可來電洽詢。\n(二) 恕不接受活動當天現場報名。\n(三) 報名時間：4月14日(星期二)起至4月30日(星期四)或報名額滿為止。\n(四) 洽詢電話：06-2981200。",
-        "attachments": [
-            {
-                "name": "115E1026358-01.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115E1026358-01.pdf&files_sn=54"
-            }
-        ]
     }
 ]
