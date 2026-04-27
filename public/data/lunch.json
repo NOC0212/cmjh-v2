@@ -1,4 +1,35 @@
 {
-    "last_updated": "2026-04-26 01:55:47",
-    "items": []
+    "last_updated": "2026-04-27 01:59:14",
+    "items": [
+        {
+            "category": "主食",
+            "name": "糙米飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144959"
+        },
+        {
+            "category": "主菜",
+            "name": "滷雞腿",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1471998782311970"
+        },
+        {
+            "category": "副菜",
+            "name": "滷三角油豆腐",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853320096720"
+        },
+        {
+            "category": "蔬菜",
+            "name": "高麗菜炒紅蘿蔔",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853320096721"
+        },
+        {
+            "category": "湯品",
+            "name": "小白菜魚丸芹珠湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853320096722"
+        },
+        {
+            "category": "附餐",
+            "name": "葡萄",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1412553444122491"
+        }
+    ]
 }
