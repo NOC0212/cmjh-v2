@@ -15,6 +15,20 @@
     },
     {
         "date": "2026-04-28",
+        "category": "研習",
+        "source": "教務處",
+        "title": "台南二中11 4 學年度「媒體素養教案得獎經驗分享」研習 活動",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=138&type=news&from_op=all_news",
+        "content": "一、依教育部國民及學前教育署115年1月27日臺教國署高字第1145406390號函辦理。\n二、旨揭時間訂於115年5月19日（星期二）下午，全程採線上直播方式進行，歡迎對媒體素養有興趣之教師踴躍報名參加。\n三、報名頁面：即日起至115年5月17日(星期日)前至\n普通型高級中等學校學科資源平臺-高中資訊科技學科中心報名系統\n之最新消息查詢及報名。",
+        "attachments": [
+            {
+                "name": "114 學年度媒體素養教案得獎經驗分享研習 活動.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=114 學年度媒體素養教案得獎經驗分享研習 活動.pdf&files_sn=86"
+            }
+        ]
+    },
+    {
+        "date": "2026-04-28",
         "category": "競賽",
         "source": "教務處",
         "title": "教育部國民及學前教育署「114學年度高級中等以下學校轉型正義教育教案徵選計畫」收件至5月14日",
@@ -266,14 +280,5 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=新化公文.pdf&files_sn=56"
             }
         ]
-    },
-    {
-        "date": "2026-04-23",
-        "category": "活動",
-        "source": "輔導室",
-        "title": "高雄育英醫專舉辦「醫護美妝夢想啟航營」",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=100&type=news&from_op=all_news",
-        "content": "育英醫護管理專科學校「醫護美妝夢想啟航營」\n說明：\n一、為協助九年級學生及家長更了解五專技職教育優勢及特色，獲得完整之技職教育升學進路與未來職涯發展資訊，特舉辦「育英醫護美妝夢想啟航營」。\n二、活動日期/時間：115年5月23日(星期六) 9:00-12:10。\n三、地點：高雄市三民區大昌二路420巷15號(本校至善樓1樓)。\n四、報名網址：\n醫護美妝夢想啟航營線上報名系統\n五、亦可至本校網站首頁重要公告連結報名。如有相關問題，請電洽教務處綜合業務組 07-3811765 分機 1115 或 1105。",
-        "attachments": []
     }
 ]
