@@ -1,30 +1,25 @@
 {
-    "last_updated": "2026-04-28 02:06:00",
+    "last_updated": "2026-04-29 02:07:28",
     "items": [
         {
             "category": "主食",
-            "name": "胚芽飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1509074610361893"
+            "name": "鍋燒鮮蔬湯麵",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1553217415318822"
         },
         {
             "category": "主菜",
-            "name": "高昇杏鮑菇排骨",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853320096741"
+            "name": "溏心蛋",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1768891664035395"
         },
         {
             "category": "副菜",
-            "name": "青花玉米筍",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074642023429"
+            "name": "評選麵包",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970624014895"
         },
         {
-            "category": "蔬菜",
-            "name": "有機荷葉白菜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1637203876015559"
-        },
-        {
-            "category": "湯品",
-            "name": "紫菜豆腐湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1718153957028521"
+            "category": "附餐",
+            "name": "優格",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1761709761074840"
         }
     ]
 }
