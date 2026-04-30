@@ -1,25 +1,30 @@
 {
-    "last_updated": "2026-04-29 02:07:28",
+    "last_updated": "2026-04-30 02:07:12",
     "items": [
         {
             "category": "主食",
-            "name": "鍋燒鮮蔬湯麵",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1553217415318822"
+            "name": "小米飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020151003"
         },
         {
             "category": "主菜",
-            "name": "溏心蛋",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1768891664035395"
+            "name": "金瓜咖哩虱目魚",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970600009823"
         },
         {
             "category": "副菜",
-            "name": "評選麵包",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970624014895"
+            "name": "調料淋蒸的炸豆包",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853322096770"
         },
         {
-            "category": "附餐",
-            "name": "優格",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1761709761074840"
+            "category": "蔬菜",
+            "name": "有機青江菜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074643018665"
+        },
+        {
+            "category": "湯品",
+            "name": "關東煮",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1421895205126338"
         }
     ]
 }
