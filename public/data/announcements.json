@@ -14,6 +14,20 @@
         ]
     },
     {
+        "date": "2026-04-30",
+        "category": "活動",
+        "source": "教務處",
+        "title": "「2026臺南二中科學營」招生訊息，歡迎本校學生報名參加",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=151&type=news&from_op=all_news",
+        "content": "一、為啟發社區內國中生對科學的興趣，並促進本校實驗班教學發展，進一步整合與共享社區及學校教育資源，強化國高中之間的交流與支援，營造共好的教育環境，本屆「2026臺南二中科學營」由本校巴斯德生醫實驗班及圖靈電資實驗班共同發起並辦理，敬邀貴校學生報名參加。\n二、旨揭活動相關資訊如下：\n(一)時間：\n115年6月7日(星期日)8:30-16:30。\n(二)地點：\n本校科學館（臺南市北區北門路二段125號)。\n(三)招生對象及名額：\n臺南市各國中國一至國三學生共80名，國三生優先(額滿為止)。\n(四)報名費用：\n免費。\n(五)報名方式及期限：\n請至\n2026臺南二中科學營報名表單\n填寫資料，期限為即日起至115年5月18日，並於115年5月22日於本校網頁公告錄取名單並寄送錄取通知。",
+        "attachments": [
+            {
+                "name": "南2中科學營.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=南2中科學營.pdf&files_sn=97"
+            }
+        ]
+    },
+    {
         "date": "2026-04-29",
         "category": "研習",
         "source": "教務處",
@@ -264,23 +278,5 @@
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=121&type=news&from_op=all_news",
         "content": "開放時間：115年6月5日至6月25日，詳情請至\n樂學網官方網站\n查詢。\n該公司為私人企業，學校不負任何連帶責任，僅提供資訊，請家長斟酌使用。",
         "attachments": []
-    },
-    {
-        "date": "2026-04-24",
-        "category": "簡章",
-        "source": "教務處",
-        "title": "轉知國立成功大學辦理「115年度中等學校本土語文教師在職進修第二專長學分班」相關事宜。",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=112&type=news&from_op=all_news",
-        "content": "一、依據國立成功大學115年4月22日成大文院字第1152101268號函辦理。\n二、檢附旨揭學分班招生簡章。",
-        "attachments": [
-            {
-                "name": "成功大學函.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=成功大學函.pdf&files_sn=66"
-            },
-            {
-                "name": "簡章 (1).pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=簡章 (1).pdf&files_sn=67"
-            }
-        ]
     }
 ]
