@@ -7,7 +7,7 @@ import { useSettings } from "@/hooks/SettingsContext";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
-const RELEASE_HIGHLIGHTS = ["適配新版網站","行政公告及午餐組件UI更新", "彈窗組件UI更新"];
+const RELEASE_HIGHLIGHTS = ["更新行事曆排版","午餐爬取時間修復", "頁尾修復"];
 
 export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
   const [show, setShow] = useState(false);

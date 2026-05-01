@@ -108,14 +108,14 @@ const Index = ({ maintenanceConfig }: IndexProps) => {
 
             {/* 主內容區塊 */}
             <div className="flex-1 flex flex-col min-h-0 w-full overflow-x-hidden relative">
-                <main className={`flex-1 overflow-y-auto px-4 lg:p-8 max-w-5xl w-full mx-auto overflow-x-hidden ${isMobile ? 'pb-28' : ''}`}>
+                <main className={`flex-1 overflow-y-auto px-4 lg:p-8 max-w-5xl w-full mx-auto overflow-x-hidden ${isMobile ? 'pb-20' : ''}`}>
                     <div className="py-4">
                         {renderPageContent()}
                     </div>
 
                     {/* 版權資訊 - 在手機版如果不是首頁則隱藏，避免重疊 */}
                     {currentPage === "home" && (
-                        <footer className={`mt-12 border-t border-primary/20 bg-gradient-to-r from-background to-primary/5 py-12 px-4 lg:px-6 rounded-t-3xl text-center text-sm text-muted-foreground ${isMobile ? 'mb-8' : ''}`}>
+                        <footer className="mt-12 border-t border-primary/20 bg-gradient-to-r from-background to-primary/5 py-12 px-4 lg:px-6 rounded-t-3xl text-center text-sm text-muted-foreground">
                             <p>© 2026 崇明國中 by cy.noc0531</p>
                         </footer>
                     )}

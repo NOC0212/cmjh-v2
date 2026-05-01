@@ -2,10 +2,11 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 def fetch_cmjh_lunch():
     url = "https://www.cmjh.tn.edu.tw/"
+    taipei_now = datetime.now(timezone(timedelta(hours=8)))
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
@@ -21,7 +22,7 @@ def fetch_cmjh_lunch():
         soup = BeautifulSoup(response.text, 'html.parser')
         
         lunch_data = {
-            "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "last_updated": taipei_now.strftime("%Y-%m-%d %H:%M:%S"),
             "items": []
         }
         
