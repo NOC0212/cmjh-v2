@@ -1,35 +1,4 @@
 {
-    "last_updated": "2026-05-08 07:01:38",
-    "items": [
-        {
-            "category": "主食",
-            "name": "五穀飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1767151539077921"
-        },
-        {
-            "category": "主菜",
-            "name": "打拋豬",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1413871940174074"
-        },
-        {
-            "category": "副菜",
-            "name": "椒鹽毛豆莢",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1448841472205516"
-        },
-        {
-            "category": "蔬菜",
-            "name": "彩椒青花菜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1640074460080036"
-        },
-        {
-            "category": "湯品",
-            "name": "關東煮湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1411369448268268"
-        },
-        {
-            "category": "附餐",
-            "name": "葡萄",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1412553444122491"
-        }
-    ]
+    "last_updated": "2026-05-09 06:56:05",
+    "items": []
 }
