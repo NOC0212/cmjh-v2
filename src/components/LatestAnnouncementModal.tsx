@@ -20,7 +20,7 @@ let hasCheckedInSession = false;
 let isUpdateDismissedInSession = false;
 
 export function LatestAnnouncementModal() {
-  const { settings } = useSettings();
+  const { settings, setShowLatestAnnouncementOnStartup } = useSettings();
   const [isOpen, setIsOpen] = useState(false);
   const [unreadAnns, setUnreadAnns] = useState<SiteAnnouncement[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -99,8 +99,8 @@ export function LatestAnnouncementModal() {
     setIsOpen(false);
   };
 
-  const markCurrentAsRead = () => {
-    const currentAnn = unreadAnns[currentIndex];
+  const markAsRead = (announcement?: SiteAnnouncement) => {
+    const currentAnn = announcement ?? unreadAnns[currentIndex];
     if (!currentAnn) return;
 
     const readStr = localStorage.getItem(READ_ANNOUNCEMENTS_KEY);
@@ -109,7 +109,17 @@ export function LatestAnnouncementModal() {
       readList.push(currentAnn.id);
       localStorage.setItem(READ_ANNOUNCEMENTS_KEY, JSON.stringify(readList));
     }
+  };
+
+  const markCurrentAsRead = () => {
+    markAsRead();
     handleNextOrClose();
+  };
+
+  const handleDontShowAgain = () => {
+    markAsRead();
+    setShowLatestAnnouncementOnStartup(false);
+    setIsOpen(false);
   };
 
   const currentAnn = unreadAnns[currentIndex];
@@ -177,7 +187,7 @@ export function LatestAnnouncementModal() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button 
               className="h-12 flex-[2] rounded-2xl text-lg font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]" 
-              onClick={handleNextOrClose}
+              onClick={hasMore ? handleNextOrClose : handleDontShowAgain}
             >
               {hasMore ? "下一則公告" : "不再顯示"}
             </Button>

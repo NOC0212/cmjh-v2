@@ -287,7 +287,7 @@ export function CalendarView() {
   return (
     <section id="calendar" className="mb-12 scroll-mt-20">
       <div
-        className="relative overflow-hidden rounded-3xl border border-primary/15 p-4 shadow-[var(--shadow-card)] sm:p-6"
+        className="image-bg-surface relative overflow-hidden rounded-3xl border border-primary/15 p-4 shadow-[var(--shadow-card)] sm:p-6"
         style={{ background: "var(--gradient-calendar)" }}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
@@ -304,7 +304,7 @@ export function CalendarView() {
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-border/60 bg-background/80 p-2 backdrop-blur-sm">
+            <div className="image-bg-panel flex flex-wrap items-center gap-2 rounded-2xl border border-border/60 bg-background/80 p-2 backdrop-blur-sm">
               <Button
                 variant="ghost"
                 size="icon"
@@ -351,7 +351,7 @@ export function CalendarView() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
-            className="rounded-3xl border border-border/60 bg-background/75 p-3 backdrop-blur-sm md:p-4"
+            className="image-bg-panel rounded-3xl border border-border/60 bg-background/75 p-3 backdrop-blur-sm md:p-4"
           >
             <div className="grid grid-cols-7 gap-2">{renderCalendarCells()}</div>
           </motion.div>

@@ -183,7 +183,7 @@ export function Announcements() {
           行政公告
         </h2>
 
-        <div className="flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-2 py-1">
+        <div className="image-bg-panel flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-2 py-1">
           <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full" onClick={goPrev} disabled={currentPage === 1}>
             <ChevronLeft className="h-4 w-4" />
           </Button>
@@ -224,7 +224,7 @@ export function Announcements() {
           return (
             <article
               key={announcement.id}
-              className="overflow-hidden rounded-2xl border border-border bg-gradient-to-r from-card to-card/90 shadow-sm transition-all hover:border-primary/30 hover:shadow-md"
+              className="image-bg-panel overflow-hidden rounded-2xl border border-border bg-gradient-to-r from-card to-card/90 shadow-sm transition-all hover:border-primary/30 hover:shadow-md"
             >
               <button
                 className={cn("w-full px-4 py-4 text-left transition-colors", isExpanded ? "bg-primary/5" : "hover:bg-primary/5")}
@@ -280,7 +280,7 @@ export function Announcements() {
               {isExpanded && (
                 <div className="border-t border-border/60 px-4 pb-4 pt-3">
                   {announcement.content && (
-                    <p className="whitespace-pre-wrap rounded-xl border border-border/70 bg-muted/30 p-3 text-sm leading-relaxed text-foreground/90">
+                    <p className="image-bg-soft whitespace-pre-wrap rounded-xl border border-border/70 bg-muted/30 p-3 text-sm leading-relaxed text-foreground/90">
                       {announcement.content}
                     </p>
                   )}
@@ -293,12 +293,14 @@ export function Announcements() {
                           href={file.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group/file flex items-center gap-2 rounded-xl border border-primary/20 bg-primary/5 px-3 py-2 transition-all hover:bg-primary hover:text-primary-foreground"
+                          className="image-bg-soft group/file flex items-center gap-2 rounded-xl border border-primary/20 bg-primary/5 px-3 py-2 text-foreground transition-all hover:bg-primary hover:text-primary-foreground dark:bg-primary/10"
                         >
-                          <div className="rounded-md bg-primary/10 p-1.5 transition-colors group-hover/file:bg-white/20">
+                          <div className="rounded-md bg-primary/10 p-1.5 text-primary transition-colors group-hover/file:bg-white/20 group-hover/file:text-primary-foreground">
                             <FileText className="h-4 w-4" />
                           </div>
-                          <span className="truncate text-sm">{file.name}</span>
+                          <span className="truncate text-sm text-foreground transition-colors group-hover/file:text-primary-foreground">
+                            {file.name}
+                          </span>
                         </a>
                       ))}
                     </div>
@@ -323,7 +325,7 @@ export function Announcements() {
       </div>
 
       {filteredAnnouncements.length === 0 && (
-        <div className="mt-4 rounded-2xl border border-dashed border-border bg-muted/20 py-10 text-center text-sm text-muted-foreground">
+        <div className="image-bg-soft mt-4 rounded-2xl border border-dashed border-border bg-muted/20 py-10 text-center text-sm text-muted-foreground">
           <div className="mb-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
             <Calendar className="h-4 w-4" />
           </div>

@@ -22,8 +22,11 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useSettings } from "@/hooks/SettingsContext";
 import { useToast } from "@/hooks/use-toast";
 import { Reorder, AnimatePresence, motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { isImagePageBackground } from "@/lib/page-background";
 
 interface CountdownConfig {
   id: string;
@@ -96,10 +99,27 @@ const getDefaultConfigs = (): CountdownConfig[] => [
   }
 ];
 
+const mergeCountdownConfigs = (
+  localConfigs: CountdownConfig[],
+  parsedDefaults: CountdownConfig[]
+): CountdownConfig[] => {
+  const defaultMap = new Map(parsedDefaults.map(item => [item.id, item]));
+
+  const mergedConfigs = localConfigs.map(item => {
+    if (!item.isDefault) return item;
+    return defaultMap.get(item.id) ?? item;
+  });
+
+  const existingIds = new Set(mergedConfigs.map(item => item.id));
+  const missingDefaults = parsedDefaults.filter(item => !existingIds.has(item.id));
+  return [...mergedConfigs, ...missingDefaults];
+};
+
 const STORAGE_KEY = "cmjh-custom-countdowns";
 
 export function CountdownTimer() {
   const { toast } = useToast();
+  const { settings } = useSettings();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState<{
     days: number;
@@ -158,11 +178,10 @@ export function CountdownTimer() {
             // 合併邏輯：
             // a. 保留使用者的自訂項目 (!isDefault)
             // b. 使用伺服器的新預設項目取代本地的舊預設項目
-            const userCustomItems = localConfigs.filter(item => !item.isDefault);
             
             // 為了保持排序，我們可以在預設項目後加上自訂項目
             // 或者更進階：如果本地原本就有這些 ID，按原位置替換
-            finalConfigs = [...parsedDefaults, ...userCustomItems];
+            finalConfigs = mergeCountdownConfigs(localConfigs, parsedDefaults);
             
             // 檢查是否有排序變動或是新項目提示
             console.log("倒計時器已與伺服器同步成功");
@@ -367,16 +386,22 @@ export function CountdownTimer() {
   };
 
   const isComplete = progress >= 100;
+  const hasImageBackground = isImagePageBackground(settings.pageBackground, settings.pageBackgroundImage);
 
   if (!currentConfig) return null;
 
   return (
     <div
-      className="relative w-full max-w-[calc(100vw-2rem)] overflow-hidden rounded-3xl border border-primary/20 p-6 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-md md:p-10"
+      className={cn(
+        "image-bg-surface relative w-full max-w-[calc(100vw-2rem)] overflow-hidden rounded-3xl border border-primary/20 p-6 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-md md:p-10",
+        hasImageBackground && "shadow-2xl",
+      )}
       style={{
-        background: 'linear-gradient(135deg, var(--primary-light) 0%, var(--accent-light) 100%)',
-        backdropFilter: 'blur(12px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(12px) saturate(180%)',
+        background: hasImageBackground
+          ? 'linear-gradient(135deg, hsl(var(--card) / 0.9) 0%, hsl(var(--card) / 0.82) 100%)'
+          : 'linear-gradient(135deg, var(--primary-light) 0%, var(--accent-light) 100%)',
+        backdropFilter: hasImageBackground ? 'none' : 'blur(12px) saturate(180%)',
+        WebkitBackdropFilter: hasImageBackground ? 'none' : 'blur(12px) saturate(180%)',
       }}
     >
       {/* 裝飾性背景磨砂玻璃元素 */}
@@ -403,14 +428,14 @@ export function CountdownTimer() {
           <div className="flex items-center gap-3 self-end md:self-auto">
             <Dialog open={addDialogOpen} onOpenChange={setAddDialogOpen}>
               <DialogTrigger asChild>
-                <Button variant="outline" size="icon" className="h-10 w-10 border-primary/20 bg-background/40 backdrop-blur-sm hover:bg-primary/10 rounded-xl" onClick={() => {
+                <Button variant="outline" size="icon" className="image-bg-soft h-10 w-10 border-primary/20 bg-background/40 backdrop-blur-sm hover:bg-primary/10 rounded-xl" onClick={() => {
                   setEditingId(null);
                   setFormData({ label: "", targetDate: "", startDate: "", progressLabel: "" });
                 }}>
                   <Plus className="h-5 w-5" />
                 </Button>
               </DialogTrigger>
-              <DialogContent className="w-[95vw] max-w-md rounded-3xl border-primary/20 bg-background dark:bg-slate-900/95 backdrop-blur-2xl shadow-2xl">
+              <DialogContent className="image-bg-dialog w-[95vw] max-w-md rounded-3xl border-primary/20 bg-background dark:bg-slate-900/95 backdrop-blur-2xl shadow-2xl">
                 <DialogHeader>
                   <DialogTitle className="text-2xl font-bold">{editingId ? "編輯倒計時" : "新增倒計時"}</DialogTitle>
                 </DialogHeader>
@@ -443,11 +468,11 @@ export function CountdownTimer() {
 
             <Dialog open={manageDialogOpen} onOpenChange={setManageDialogOpen}>
               <DialogTrigger asChild>
-                <Button variant="outline" size="icon" className="h-10 w-10 border-primary/20 bg-background/40 backdrop-blur-sm hover:bg-primary/10 rounded-xl">
+                <Button variant="outline" size="icon" className="image-bg-soft h-10 w-10 border-primary/20 bg-background/40 backdrop-blur-sm hover:bg-primary/10 rounded-xl">
                   <Settings className="h-5 w-5" />
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-h-[85vh] w-[95vw] max-w-lg overflow-hidden flex flex-col p-0 rounded-3xl border-primary/20 bg-background dark:bg-slate-900/95 backdrop-blur-2xl shadow-2xl">
+              <DialogContent className="image-bg-dialog max-h-[85vh] w-[95vw] max-w-lg overflow-hidden flex flex-col p-0 rounded-3xl border-primary/20 bg-background dark:bg-slate-900/95 backdrop-blur-2xl shadow-2xl">
                 <DialogHeader className="p-6 pb-0">
                   <DialogTitle className="text-2xl font-bold">管理倒計時</DialogTitle>
                 </DialogHeader>
@@ -462,7 +487,7 @@ export function CountdownTimer() {
                       <Reorder.Item
                         key={countdown.id}
                         value={countdown}
-                        className="group flex items-center gap-3 rounded-2xl border border-primary/10 bg-muted/40 p-4 shadow-sm hover:shadow-md hover:border-primary/20"
+                        className="image-bg-soft group flex items-center gap-3 rounded-2xl border border-primary/10 bg-muted/40 p-4 shadow-sm hover:shadow-md hover:border-primary/20"
                       >
                         <div className="cursor-grab active:cursor-grabbing p-1.5 text-muted-foreground/40 group-hover:text-primary transition-colors">
                           <GripVertical className="h-4 w-4" />
@@ -540,7 +565,7 @@ export function CountdownTimer() {
               </AlertDialogContent>
             </AlertDialog>
 
-            <div className="flex items-center gap-1.5 rounded-2xl bg-background/30 backdrop-blur-md border border-primary/10 p-1">
+            <div className="image-bg-panel flex items-center gap-1.5 rounded-2xl bg-background/30 backdrop-blur-md border border-primary/10 p-1">
               <Button variant="ghost" size="icon" onClick={handlePrevious} className="h-8 w-8 rounded-xl hover:bg-primary/10"><ChevronLeft className="h-4 w-4" /></Button>
               <div className="min-w-[40px] text-center">
                 <span className="text-xs font-black text-primary/80">{currentIndex + 1} <span className="text-muted-foreground font-light mx-0.5">/</span> {allCountdowns.length}</span>
@@ -563,7 +588,7 @@ export function CountdownTimer() {
               className="w-full flex flex-col gap-8"
             >
               {isComplete ? (
-                <div className="relative group rounded-3xl bg-gradient-to-br from-primary/10 via-accent/5 to-primary/5 py-16 text-center border border-primary/20 shadow-inner overflow-hidden">
+                <div className="image-bg-tint relative group rounded-3xl bg-gradient-to-br from-primary/10 via-accent/5 to-primary/5 py-16 text-center border border-primary/20 shadow-inner overflow-hidden">
                   <div className="absolute inset-0 bg-grid-slate-100/50 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-slate-700/50" />
                   <div className="relative z-10">
                     <div className="mb-6 animate-bounce text-7xl inline-block">🎉</div>
@@ -599,7 +624,10 @@ export function CountdownTimer() {
                       const style = styles[item.color];
 
                       return (
-                        <div key={idx} className={`relative group overflow-hidden rounded-3xl border p-5 text-center transition-all hover:scale-[1.02] hover:shadow-lg md:p-7 ${style.container}`}>
+                        <div key={idx} className={cn(
+                          `relative group overflow-hidden rounded-3xl border p-5 text-center transition-all hover:scale-[1.02] hover:shadow-lg md:p-7 ${style.container}`,
+                          hasImageBackground && "image-bg-panel",
+                        )}>
                           <div className={`absolute -right-4 -top-4 h-16 w-16 rounded-full blur-2xl transition-colors ${style.glow}`} />
                           <div className={`mb-1 bg-gradient-to-r bg-clip-text text-4xl font-black tracking-tighter text-transparent md:text-6xl font-mono ${style.text}`}>
                             {(item.value).toString().padStart(2, '0')}
@@ -612,7 +640,7 @@ export function CountdownTimer() {
                     })}
                   </div>
 
-                  <div className="relative overflow-hidden space-y-4 rounded-3xl border border-primary/10 bg-background/30 backdrop-blur-sm p-6 shadow-sm">
+                  <div className="image-bg-panel relative overflow-hidden space-y-4 rounded-3xl border border-primary/10 bg-background/30 backdrop-blur-sm p-6 shadow-sm">
                     <div className="flex items-end justify-between">
                       <div className="flex flex-col gap-0.5">
                         <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">進度條</span>

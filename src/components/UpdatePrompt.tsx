@@ -7,7 +7,7 @@ import { useSettings } from "@/hooks/SettingsContext";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
-const RELEASE_HIGHLIGHTS = ["更新行事曆排版","午餐爬取時間修復", "頁尾修復"];
+const RELEASE_HIGHLIGHTS = ["新增自訂背景🆕","移除markdown快速便籤", "新增頁面刷新按鈕", "修復行政公告附件"];
 
 export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
   const [show, setShow] = useState(false);

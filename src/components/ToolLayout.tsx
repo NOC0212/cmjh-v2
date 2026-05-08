@@ -3,6 +3,8 @@ import { ArrowLeft, Menu, X, Target, Users, Shuffle, Clock as ClockIcon, Timer a
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useSettings } from "@/hooks/SettingsContext";
+import { getPageBackgroundStyle } from "@/lib/page-background";
 
 const tools = [
     { id: "wheel", icon: Target, title: "抽籤", path: "/tools/wheel", color: "text-blue-500" },
@@ -24,6 +26,7 @@ interface ToolLayoutProps {
 export function ToolLayout({ children, title, onBack }: ToolLayoutProps) {
     const navigate = useNavigate();
     const location = useLocation();
+    const { settings } = useSettings();
     const [menuOpen, setMenuOpen] = useState(false);
 
     const currentPath = location.pathname;
@@ -48,7 +51,7 @@ export function ToolLayout({ children, title, onBack }: ToolLayoutProps) {
     };
 
     return (
-        <div className="h-screen w-full bg-background flex flex-col overflow-hidden">
+        <div className="h-screen w-full flex flex-col overflow-hidden" style={getPageBackgroundStyle(settings.pageBackground, settings.pageBackgroundImage)}>
             {/* 導覽列 */}
             <header className="flex-none sticky top-0 z-40 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-primary/20">
                 <div className="flex h-14 items-center gap-2 px-3 lg:px-4">

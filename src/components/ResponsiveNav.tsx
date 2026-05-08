@@ -1,10 +1,9 @@
-import { Home, Search, Megaphone, Star, Settings, School, StickyNote } from "lucide-react";
+import { Home, Search, Megaphone, Star, Settings, School, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useFavorites } from "@/hooks/useFavorites";
 import { AppSidebar } from "@/components/AppSidebar";
 import { motion } from "framer-motion";
-import { Scratchpad } from "@/components/Scratchpad";
 import { useState } from "react";
 
 // 頁面選單類型定義
@@ -27,8 +26,11 @@ interface ResponsiveNavProps {
 export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: ResponsiveNavProps) {
     const isMobile = useIsMobile();
     const { favorites } = useFavorites();
-    const [scratchpadOpen, setScratchpadOpen] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
+
+    const handleRefresh = () => {
+        window.location.reload();
+    };
 
     // 渲染導航按鈕項目
     const renderNavItem = (item: typeof navItems[0]) => {
@@ -85,7 +87,7 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
     if (isMobile) {
         if (mode === "header") {
             return (
-                <header className="bg-background/90 backdrop-blur-md border-b border-border/50 shrink-0 z-50">
+                <header className="image-bg-surface bg-background/90 backdrop-blur-md border-b border-border/50 shrink-0 z-50">
                     <div className="pt-[env(safe-area-inset-top)]">
                         <div className="flex items-center justify-between h-14 px-4">
                             <div className="flex items-center gap-2 animate-slide-in-left">
@@ -98,16 +100,16 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
                                 <Button
                                     variant="ghost"
                                     size="icon"
-                                    onClick={() => setScratchpadOpen(true)}
+                                    onClick={handleRefresh}
                                     className="hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all"
+                                    title="重新整理頁面"
                                 >
-                                    <StickyNote className="h-5 w-5" />
+                                    <RefreshCw className="h-5 w-5" />
                                 </Button>
                                 <AppSidebar />
                             </div>
                         </div>
                     </div>
-                    <Scratchpad open={scratchpadOpen} onOpenChange={setScratchpadOpen} />
                 </header>
             );
         }
@@ -115,7 +117,7 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
         if (mode === "footer") {
             return (
                 <div className="fixed bottom-4 left-0 right-0 px-4 z-50 pointer-events-none flex justify-center">
-                    <nav className="bg-background/40 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg rounded-full overflow-hidden touch-none select-none pointer-events-auto max-w-md w-full">
+                    <nav className="image-bg-surface bg-background/40 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg rounded-full overflow-hidden touch-none select-none pointer-events-auto max-w-md w-full">
                         <div className="flex items-center justify-around h-14 w-full px-1">
                             {navItems.map((item) => renderNavItem(item))}
                         </div>
@@ -135,7 +137,7 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
             transition={{ type: "tween", duration: 0.2 }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="fixed left-0 top-0 bg-background border-r border-border/50 flex flex-col items-center shrink-0 h-full py-6 z-50 shadow-xl px-4 overflow-hidden"
+            className="image-bg-surface fixed left-0 top-0 bg-background border-r border-border/50 flex flex-col items-center shrink-0 h-full py-6 z-50 shadow-xl px-4 overflow-hidden"
         >
             {/* Logo 區域 */}
             <div className={`mb-8 flex flex-col gap-4 w-full ${isHovered ? 'items-start' : 'items-center'}`}>
@@ -159,14 +161,14 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
                 <Button
                     variant="ghost"
                     size={isHovered ? "default" : "icon"}
-                    onClick={() => setScratchpadOpen(true)}
+                    onClick={handleRefresh}
                     className={`h-12 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all rounded-xl p-0 px-2 ${isHovered ? 'w-full justify-start' : 'w-12 justify-center'}`}
-                    title="快速便籤"
+                    title="重新整理頁面"
                 >
                     <div className={`shrink-0 flex items-center justify-center ${isHovered ? 'w-8' : 'w-8'}`}>
-                        <StickyNote className="h-5 w-5" />
+                        <RefreshCw className="h-5 w-5" />
                     </div>
-                    {isHovered && <span className="font-medium text-sm">快速便籤</span>}
+                    {isHovered && <span className="font-medium text-sm">重新整理</span>}
                 </Button>
             </div>
 
@@ -179,7 +181,6 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
             <div className={`mt-auto w-full flex flex-col ${isHovered ? 'items-start' : 'items-center'}`}>
                 <AppSidebar expanded={isHovered} />
             </div>
-            <Scratchpad open={scratchpadOpen} onOpenChange={setScratchpadOpen} />
         </motion.nav>
     );
 }

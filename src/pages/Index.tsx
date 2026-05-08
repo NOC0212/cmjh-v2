@@ -14,6 +14,7 @@ import { FavoritesPage } from "@/components/FavoritesPage";
 import { SettingsPage } from "@/components/SettingsPage";
 import { useSettings } from "@/hooks/SettingsContext";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { getPageBackgroundStyle } from "@/lib/page-background";
 import { Skeleton } from "@/components/ui/skeleton";
 import MaintenanceModal from "@/components/MaintenanceModal";
 import { LatestAnnouncementModal } from "@/components/LatestAnnouncementModal";
@@ -92,7 +93,10 @@ const Index = ({ maintenanceConfig }: IndexProps) => {
     };
 
     return (
-        <div className={`h-[100dvh] w-screen max-w-full flex overflow-hidden bg-background ${isMobile ? 'flex-col' : 'flex-row'}`}>
+        <div
+            className={`h-[100dvh] w-screen max-w-full flex overflow-hidden ${isMobile ? 'flex-col' : 'flex-row'}`}
+            style={getPageBackgroundStyle(settings.pageBackground, settings.pageBackgroundImage)}
+        >
             {/* 桌面版側邊導航 (使用固定定位，所以這裡加一個占位區) */}
             {!isMobile && (
                 <>

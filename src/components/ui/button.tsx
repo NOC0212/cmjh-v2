@@ -11,7 +11,7 @@ const buttonVariants = cva(
       variant: {
         default: "bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl shadow-[0_4px_14px_0_hsl(var(--primary)/.3)] hover:scale-[1.02] active:scale-[0.98] transition-all",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-xl hover:scale-[1.02] active:scale-[0.98] transition-all",
-        outline: "border-2 border-primary/20 bg-background/50 text-foreground hover:bg-primary/10 hover:border-primary/30 rounded-xl backdrop-blur-sm hover:scale-[1.02] active:scale-[0.98] transition-all",
+        outline: "image-bg-soft border-2 border-primary/20 bg-background/50 text-foreground hover:bg-primary/10 hover:border-primary/30 rounded-xl backdrop-blur-sm hover:scale-[1.02] active:scale-[0.98] transition-all",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-xl hover:scale-[1.02] active:scale-[0.98] transition-all",
         ghost: "text-foreground hover:bg-primary/10 hover:text-primary rounded-xl transition-all",
         link: "text-primary underline-offset-4 hover:underline",

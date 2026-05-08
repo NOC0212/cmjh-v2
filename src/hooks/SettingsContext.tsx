@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from "react";
+import { isImagePageBackground } from "@/lib/page-background";
 
 export interface ComponentSettings {
     id: string;
@@ -11,6 +12,8 @@ export interface AppSettings {
     components: ComponentSettings[];
     themeMode: "light" | "dark" | "system";
     themeColor: string;
+    pageBackground: string;
+    pageBackgroundImage: string;
     disableUpdatePrompt: boolean;
     showLatestAnnouncementOnStartup: boolean;
     showSiteFavicons: boolean;
@@ -24,6 +27,8 @@ interface SettingsContextType {
     setTheme: (themeColor: string) => void;
     setThemeMode: (themeMode: "light" | "dark" | "system") => void;
     setThemeColor: (themeColor: string) => void;
+    setPageBackground: (pageBackground: string) => void;
+    setPageBackgroundImage: (pageBackgroundImage: string) => void;
     setDisableUpdatePrompt: (disabled: boolean) => void;
     setShowLatestAnnouncementOnStartup: (show: boolean) => void;
     setShowSiteFavicons: (show: boolean) => void;
@@ -47,6 +52,8 @@ const DEFAULT_SETTINGS: AppSettings = {
     components: DEFAULT_COMPONENTS,
     themeMode: "system",
     themeColor: "blue",
+    pageBackground: "default",
+    pageBackgroundImage: "",
     disableUpdatePrompt: false,
     showLatestAnnouncementOnStartup: true,
     showSiteFavicons: false,
@@ -81,6 +88,8 @@ const migrateOldSettings = (): AppSettings | null => {
             components,
             themeMode: (oldTheme === "dark" ? "dark" : "light") as any,
             themeColor: (oldTheme && oldTheme !== "dark" && oldTheme !== "light" ? oldTheme : "blue"),
+            pageBackground: "default",
+            pageBackgroundImage: "",
             disableUpdatePrompt: false,
             showLatestAnnouncementOnStartup: true,
             showSiteFavicons: false,
@@ -96,9 +105,15 @@ const migrateOldSettings = (): AppSettings | null => {
     return null;
 };
 
-const applyTheme = (mode: "light" | "dark" | "system", color: string) => {
+const applyTheme = (
+    mode: "light" | "dark" | "system",
+    color: string,
+    pageBackground: string,
+    pageBackgroundImage: string,
+) => {
     const root = document.documentElement;
     const body = document.body;
+    const appRoot = document.getElementById("root");
 
     // 清除舊的模式
     root.classList.remove("dark", "light");
@@ -110,6 +125,13 @@ const applyTheme = (mode: "light" | "dark" | "system", color: string) => {
         root.classList.remove(cls);
         body.classList.remove(cls);
     });
+
+    const pageBackgroundClasses = Array.from(body.classList).filter(cls => cls.startsWith("page-bg-"));
+    pageBackgroundClasses.forEach(cls => body.classList.remove(cls));
+    if (appRoot) {
+        const appRootBackgroundClasses = Array.from(appRoot.classList).filter(cls => cls.startsWith("page-bg-"));
+        appRootBackgroundClasses.forEach(cls => appRoot.classList.remove(cls));
+    }
 
     // 確定實際模式
     let actualMode = mode;
@@ -127,6 +149,17 @@ const applyTheme = (mode: "light" | "dark" | "system", color: string) => {
     root.classList.add(colorClass);
     body.classList.add(colorClass);
     root.dataset.theme = color;
+
+    const backgroundClass = `page-bg-${pageBackground}`;
+    const hasImageBackground = isImagePageBackground(pageBackground, pageBackgroundImage);
+    body.classList.add(backgroundClass);
+    body.dataset.pageBackground = pageBackground;
+    body.dataset.pageBackgroundImage = hasImageBackground ? "image" : "";
+    if (appRoot) {
+        appRoot.classList.add(backgroundClass);
+        appRoot.setAttribute("data-page-background", pageBackground);
+        appRoot.setAttribute("data-page-background-image", hasImageBackground ? "image" : "");
+    }
 };
 
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -143,6 +176,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
                     parsedSettings.themeColor = (parsedSettings.theme && parsedSettings.theme !== "dark" && parsedSettings.theme !== "light")
                         ? parsedSettings.theme
                         : "blue";
+                    parsedSettings.pageBackground = parsedSettings.pageBackground ?? "default";
+                    parsedSettings.pageBackgroundImage = parsedSettings.pageBackgroundImage ?? "";
                     delete parsedSettings.theme;
                 }
 
@@ -161,6 +196,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
                     ...parsedSettings,
                     components: mergedComponents,
                     disableUpdatePrompt: disableUpdatePrompt ?? false,
+                    pageBackground: parsedSettings.pageBackground ?? "default",
+                    pageBackgroundImage: parsedSettings.pageBackgroundImage ?? "",
                     showLatestAnnouncementOnStartup: parsedSettings.showLatestAnnouncementOnStartup ?? true,
                     showSiteFavicons: parsedSettings.showSiteFavicons ?? true,
                 };
@@ -180,14 +217,14 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         if (settings.themeMode !== "system") return;
 
         const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-        const handleChange = () => applyTheme("system", settings.themeColor);
+        const handleChange = () => applyTheme("system", settings.themeColor, settings.pageBackground, settings.pageBackgroundImage);
 
         mediaQuery.addEventListener("change", handleChange);
         return () => mediaQuery.removeEventListener("change", handleChange);
-    }, [settings.themeMode, settings.themeColor]);
+    }, [settings.themeMode, settings.themeColor, settings.pageBackground, settings.pageBackgroundImage]);
 
     useEffect(() => {
-        applyTheme(settings.themeMode, settings.themeColor);
+        applyTheme(settings.themeMode, settings.themeColor, settings.pageBackground, settings.pageBackgroundImage);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
     }, [settings]);
 
@@ -242,6 +279,14 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setSettings((prev) => ({ ...prev, themeColor }));
     };
 
+    const setPageBackground = (pageBackground: string) => {
+        setSettings((prev) => ({ ...prev, pageBackground }));
+    };
+
+    const setPageBackgroundImage = (pageBackgroundImage: string) => {
+        setSettings((prev) => ({ ...prev, pageBackgroundImage }));
+    };
+
     const setDisableUpdatePrompt = (disableUpdatePrompt: boolean) => {
         setSettings((prev) => ({ ...prev, disableUpdatePrompt }));
     };
@@ -289,6 +334,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setTheme: setThemeColor,
         setThemeMode,
         setThemeColor,
+        setPageBackground,
+        setPageBackgroundImage,
         setDisableUpdatePrompt,
         setShowLatestAnnouncementOnStartup,
         setShowSiteFavicons,
