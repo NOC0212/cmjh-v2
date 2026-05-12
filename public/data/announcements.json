@@ -15,6 +15,15 @@
     },
     {
         "date": "2026-05-12",
+        "category": "行政",
+        "source": "教務處",
+        "title": "114-2 三年級補考題庫專區 公告",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=212&type=news&from_op=all_news",
+        "content": "補考題庫專區\n將從補考題庫中抽考20題選擇題\n，\n每科考試只能限考一次\n。教務處將另行公布各班補考時間，預定於5/21~5/22於電腦教室進行補考，補考開始測驗期間將，\n移除補考題庫專區所有題庫檔案\n。請依通知時間到指定電腦教室線上測驗進行考試，通過補考者將在成績系統註記為補考通過。",
+        "attachments": []
+    },
+    {
+        "date": "2026-05-12",
         "category": "研習",
         "source": "教務處",
         "title": "台南市教育局辦理114學年度推動國民中小學讀報教育教學應用教師增能研習，歡迎本校教師踴躍報名參加",
@@ -281,14 +290,5 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=海報.pdf&files_sn=122"
             }
         ]
-    },
-    {
-        "date": "2026-05-06",
-        "category": "簡章",
-        "source": "教務處",
-        "title": "淡江大學推廣教育處辦理之「中等學校教師第二專長學分班」預計115年7月4日開課",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=191&type=news&from_op=all_news",
-        "content": "一、旨案業經教育部115年4月13日臺教師(三)字第1150033661號函核准。\n二、淡江大學擬開設國民中學綜合活動領域輔導專長、中等學校輔導教師、科技領域資訊科技專長、社會領域公民與社會專長、數學領域數學專長及語文領域國語文專長等6科教師在職進修學分班。\n三、招生簡章請至\n淡江大學推廣教育處網站「所有課程」之「師資培訓」\n參閱或下載。\n四、如有疑義，請逕洽聯絡人。",
-        "attachments": []
     }
 ]
