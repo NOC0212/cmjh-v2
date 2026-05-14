@@ -15,6 +15,20 @@
     },
     {
         "date": "2026-05-14",
+        "category": "活動",
+        "source": "輔導室",
+        "title": "敏惠醫專「校園參觀日暨優先免試入學輔導說明會」",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=217&type=news&from_op=all_news",
+        "content": "敏惠醫專校園 OPEN DAY 暨優先免試入學輔導說明會\n說明：\n一、活動時間：115年5月23日(六)下午 13:00 至 16:00。\n二、活動對象：對醫護類科有興趣之師長、國中生及家長。\n三、活動地點：敏惠醫護管理專科學校(73658臺南市柳營區中山東路二段1116號)。\n四、活動內容：本校升學管道說明及實地探訪場域。\n五、報名網址：\n敏惠醫專校園 OPEN DAY 線上報名表單\n※報名可抽大獎-平板，歡迎有意願就讀五專學生踴躍參加。",
+        "attachments": [
+            {
+                "name": "敏惠醫專校園參觀日.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=敏惠醫專校園參觀日.pdf&files_sn=148"
+            }
+        ]
+    },
+    {
+        "date": "2026-05-14",
         "category": "研習",
         "source": "輔導室",
         "title": "弘光科技大學「手語翻譯人才基礎訓練班」",
@@ -264,14 +278,5 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115聖功女中招生說明會.pdf&files_sn=128"
             }
         ]
-    },
-    {
-        "date": "2026-05-07",
-        "category": "活動",
-        "source": "教務處",
-        "title": "台南市教育局辦理布可星球響應世界閱讀日活動時間延至5月17日，歡迎本校學生踴躍參加",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=196&type=news&from_op=all_news",
-        "content": "說明：\n一、依據本局115年4月24日公告編號281328(諒達)辦理。\n二、本局辦理之布可星球響應世界閱讀日活動「翻開好書，拍進布可」，為讓更多學生能體驗 AR 閱讀新玩法，並落實深度閱讀理念，特將活動期間延長至 115 年 5 月 17 日。\n三、參與對象： 臺南市各級學校學生。\n四、活動詳情可參考以下連結：\n(一)\n布可星球臉書粉絲專頁\n(二)\n活動網頁",
-        "attachments": []
     }
 ]
