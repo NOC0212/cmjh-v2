@@ -1,19 +1,5 @@
 [
     {
-        "date": "2026-05-08",
-        "category": "升學",
-        "source": "輔導室",
-        "title": "【重要】公告臺南市115學年度國中音樂類藝術才能班鑑定錄取名單及報到相關，請參閱。",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=202&type=news&from_op=all_news",
-        "content": "本校國樂班錄取名單如附件\n錄取生報到：\n於 115 年 5 月 14 日（星期四）至 5 月 15 日（星期五），每日上午 8 時 30 分至 11 時 30 分，下午 1 時 30 分至 4 時 30 分，持「鑑定結果通知書」報到（若已完成他校普通班報到，需先至原報到學校取消報到，始可辦理國樂班報到），逾期未報到者視同放棄錄取資格。\n報到地點：崇明國中教務處註冊組（行政大樓 2 樓）\n請參閱：\n教育局公告：臺南市115學年度國中音樂類藝術才能班鑑定錄取名單，請查照",
-        "attachments": [
-            {
-                "name": "崇明國中藝術才能班鑑定錄取名單.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=崇明國中藝術才能班鑑定錄取名單.pdf&files_sn=132"
-            }
-        ]
-    },
-    {
         "date": "2026-05-14",
         "category": "研習",
         "source": "輔導室",
@@ -229,6 +215,20 @@
             {
                 "name": "臺南市115年無人機足球選拔賽實施計畫-公文.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市115年無人機足球選拔賽實施計畫-公文.pdf&files_sn=134"
+            }
+        ]
+    },
+    {
+        "date": "2026-05-08",
+        "category": "升學",
+        "source": "輔導室",
+        "title": "【重要】公告臺南市115學年度國中音樂類藝術才能班鑑定錄取名單及報到相關，請參閱。",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=202&type=news&from_op=all_news",
+        "content": "本校國樂班錄取名單如附件\n錄取生報到：\n於 115 年 5 月 14 日（星期四）至 5 月 15 日（星期五），每日上午 8 時 30 分至 11 時 30 分，下午 1 時 30 分至 4 時 30 分，持「鑑定結果通知書」報到（若已完成他校普通班報到，需先至原報到學校取消報到，始可辦理國樂班報到），逾期未報到者視同放棄錄取資格。\n報到地點：崇明國中教務處註冊組（行政大樓 2 樓）\n請參閱：\n教育局公告：臺南市115學年度國中音樂類藝術才能班鑑定錄取名單，請查照",
+        "attachments": [
+            {
+                "name": "崇明國中藝術才能班鑑定錄取名單.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=崇明國中藝術才能班鑑定錄取名單.pdf&files_sn=132"
             }
         ]
     },
