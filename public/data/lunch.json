@@ -1,4 +1,35 @@
 {
-    "last_updated": "2026-05-17 06:47:54",
-    "items": []
+    "last_updated": "2026-05-18 06:54:52",
+    "items": [
+        {
+            "category": "主食",
+            "name": "燕麥飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020150992"
+        },
+        {
+            "category": "主菜",
+            "name": "洋菇醬燒豬柳",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1734305470046198"
+        },
+        {
+            "category": "副菜",
+            "name": "南瓜炒蛋",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1631588870356504"
+        },
+        {
+            "category": "蔬菜",
+            "name": "豆皮油菜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020151098"
+        },
+        {
+            "category": "湯品",
+            "name": "高麗菜豆腐湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1714457328043809"
+        },
+        {
+            "category": "附餐",
+            "name": "哈密瓜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1464331207118877"
+        }
+    ]
 }
