@@ -1,4 +1,35 @@
 {
-    "last_updated": "2026-05-24 06:54:46",
-    "items": []
+    "last_updated": "2026-05-25 06:58:56",
+    "items": [
+        {
+            "category": "主食",
+            "name": "胚芽飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1509074610361893"
+        },
+        {
+            "category": "主菜",
+            "name": "馬鈴薯燜肉",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1427355616217791"
+        },
+        {
+            "category": "副菜",
+            "name": "素炒青花",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1545444980150238"
+        },
+        {
+            "category": "蔬菜",
+            "name": "芋香白菜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1413871776173453"
+        },
+        {
+            "category": "湯品",
+            "name": "味噌湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1413871775173227"
+        },
+        {
+            "category": "附餐",
+            "name": "香蕉",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1410407383153087"
+        }
+    ]
 }
