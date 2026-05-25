@@ -1,35 +1,30 @@
 {
-    "last_updated": "2026-05-25 06:58:56",
+    "last_updated": "2026-05-26 07:04:45",
     "items": [
         {
             "category": "主食",
-            "name": "胚芽飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1509074610361893"
+            "name": "燕麥飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020150992"
         },
         {
             "category": "主菜",
-            "name": "馬鈴薯燜肉",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1427355616217791"
+            "name": "蜜汁醬燒雞",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1714456389042528"
         },
         {
             "category": "副菜",
-            "name": "素炒青花",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1545444980150238"
+            "name": "粉絲絲瓜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1451024548219121"
         },
         {
             "category": "蔬菜",
-            "name": "芋香白菜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1413871776173453"
+            "name": "有機黑葉白菜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1480662293330983"
         },
         {
             "category": "湯品",
-            "name": "味噌湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1413871775173227"
-        },
-        {
-            "category": "附餐",
-            "name": "香蕉",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1410407383153087"
+            "name": "蘿蔔排骨湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1413871775173266"
         }
     ]
 }
