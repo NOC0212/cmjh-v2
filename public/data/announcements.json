@@ -1,6 +1,20 @@
 [
     {
         "date": "2026-05-26",
+        "category": "一般",
+        "source": "教務處",
+        "title": "[在校生] 115學年度各年級教科書用書版本",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=242&type=news&from_op=all_news",
+        "content": "一二三年級使用版本\n請見附件",
+        "attachments": [
+            {
+                "name": "臺南市崇明國中115學年度各年級教科書用書版本.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市崇明國中115學年度各年級教科書用書版本.pdf&files_sn=173"
+            }
+        ]
+    },
+    {
+        "date": "2026-05-26",
         "category": "簡章",
         "source": "教務處",
         "title": "國立高雄師範大學辦理115年「教師在職進修生命教育專長增能學分班」招生簡章",
@@ -38,20 +52,6 @@
             {
                 "name": "徵件公告.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=徵件公告.pdf&files_sn=174"
-            }
-        ]
-    },
-    {
-        "date": "2026-05-26",
-        "category": "一般",
-        "source": "教務處",
-        "title": "[在校生] 115學年度各年級教科書用書版本",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=242&type=news&from_op=all_news",
-        "content": "一二三年級使用版本\n請見附件",
-        "attachments": [
-            {
-                "name": "臺南市崇明國中115學年度各年級教科書用書版本.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市崇明國中115學年度各年級教科書用書版本.pdf&files_sn=173"
             }
         ]
     },
