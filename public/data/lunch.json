@@ -1,30 +1,35 @@
 {
-    "last_updated": "2026-05-28 07:18:05",
+    "last_updated": "2026-05-29 07:18:20",
     "items": [
         {
             "category": "主食",
-            "name": "糙米飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144959"
+            "name": "小米飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020151003"
         },
         {
             "category": "主菜",
-            "name": "大蒜奶油魚丁",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1734652230040569"
+            "name": "五香肉燥",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1416809950229451"
         },
         {
             "category": "副菜",
-            "name": "鐵板豆芽",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1697600617096968"
+            "name": "黃瓜肉片",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1697164799028729"
         },
         {
             "category": "蔬菜",
-            "name": "有機油菜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074706020035"
+            "name": "雙色高麗菜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1416809950229632"
         },
         {
             "category": "湯品",
-            "name": "海芽蛋花湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1458889021135534"
+            "name": "青菜豆腐湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1411369448268232"
+        },
+        {
+            "category": "附餐",
+            "name": "鳳梨",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1429487606301321"
         }
     ]
 }
