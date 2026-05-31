@@ -1,272 +1,497 @@
-# 🏫 崇明國中現代化組件重構專案 (CMJH-v2)
+<h1 align="center">崇明國中 CMJH V2</h1>
 
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=FFD62E)
-![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+<h3 align="center">現代化校園資訊整合平台 — React 18 SPA with PWA Support</h3>
 
-以 [崇明國中官網](https://www.cmjh.tn.edu.tw/) 為基礎，使用 React 18 + TypeScript 重新開發的現代化資訊整合平台。提供多項互動教學工具、天氣資訊、營養午餐等功能，支援深度個人化設定並持久保存於瀏覽器本地端。
+<p align="center">
+  <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white" alt="React"></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white" alt="TypeScript"></a>
+  <a href="https://vite.dev/"><img src="https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white" alt="Vite"></a>
+  <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Tailwind_CSS-3-38B2AC?logo=tailwindcss&logoColor=white" alt="Tailwind CSS"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+  <a href="https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps"><img src="https://img.shields.io/badge/PWA-enabled-blueviolet.svg" alt="PWA"></a>
+  <a href="https://vercel.com"><img src="https://img.shields.io/badge/Deployed_on-Vercel-000000?logo=vercel&logoColor=white" alt="Vercel"></a>
+  <a href=".github/workflows/"><img src="https://img.shields.io/badge/CI-GitHub_Actions-2088FF?logo=githubactions&logoColor=white" alt="GitHub Actions"></a>
+</p>
 
----
+## 快速開始
 
-## 功能總覽
+```bash
+git clone https://github.com/NOC0212/cmjh-v2.git
+cd cmjh-v2
+npm install
+npm run dev        # 啟動開發伺服器 → http://localhost:8080
+```
 
-| 組件 | 功能描述 | 預設啟用 |
-|------|---------|---------|
-| 倒數計時器 | 自訂多組日程倒數，含動態進度條 | ✅ |
-| 天氣動態 | 臺南各行政區即時天氣 + 3 天預報 | ✅ |
-| 常用網站 | 快速連結管理，支援 favicon 顯示 | ✅ |
-| 小工具 | 8 種互動教學工具（輪盤、計時器等） | ✅ |
-| 行政公告 | GitHub Actions 自動爬取並支援搜尋 | ✅ |
-| 行事曆 | 動態校曆整合，支援自訂事件 | ✅ |
-| 營養午餐 | 每週菜單含分類色標與圖片 | ✅ |
-| 榮譽榜 | 競賽獲獎資訊展示 | ❌ |
+天氣功能需設定 `VITE_CWA_API_KEY`（至 [中央氣象署 OpenData](https://opendata.cwa.gov.tw) 申請）。未設定金鑰時仍可使用內建備用金鑰，但可能遇到請求頻率限制。
 
----
+## 目錄
 
-## 核心功能詳解
+- [架構總覽](#架構總覽)
+- [核心功能](#核心功能)
+- [小工具套件](#小工具套件)
+- [導航系統](#導航系統)
+- [設定系統](#設定系統)
+- [維護與更新](#維護與更新)
+- [技術棧](#技術棧)
+- [自動化資料流](#自動化資料流)
+- [開發者指南](#開發者指南)
+- [建置與部署](#建置與部署)
+- [授權](#授權)
 
-### 1. 倒數計時器 (CountdownTimer)
+## 架構總覽
 
-追蹤重要日程的核心組件，支援同時管理多個倒數目標。
+```
+┌──────────────────────────────────────────────────────────┐
+│                    CMJH V2 SPA                           │
+│                                                          │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌─────────┐   │
+│  │ 首頁頁面  │  │ 搜尋頁面  │  │ 收藏頁面 │  │ 設定頁面 │   │
+│  └──────────┘  └──────────┘  └──────────┘  └─────────┘   │
+│                                                          │
+│  ┌───────────────────────────────────────────────────┐   │
+│  │              首頁組件 (可排序、可切換)              │   │
+│  │  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐     │   │
+│  │  │倒數器 │ │天氣  │ │常用  │ │工具  │ │榮譽榜 │     │   │
+│  │  │      │ │      │ │網站  │ │區塊  │ │       │     │   │
+│  │  └──────┘ └──────┘ └──────┘ └──────┘ └──────┘     │   │
+│  │  ┌──────┐ ┌──────┐ ┌──────┐                       │   │
+│  │  │公告  │ │行事曆 │ │午餐  │                       │   │
+│  │  └──────┘ └──────┘ └──────┘                       │   │
+│  └───────────────────────────────────────────────────┘   │
+│                                                          │
+│  ┌───────────────────────────────────────────────────┐   │
+│  │               8 種教學工具頁面                     │   │
+│  │  輪盤 · 分組 · 順序 · 時鐘 · 計時器 · QR Code       │   │
+│  │  電子白板 · 課堂點名                               │   │
+│  └───────────────────────────────────────────────────┘   │
+│                                                          │
+│  ┌───────────────────────────────────────────────────┐   │
+│  │              啟動流程 (首次訪問)                   │   │
+│  │  首次設定精靈 → 版本檢查 → 最新公告彈窗 → 首頁       │   │
+│  └───────────────────────────────────────────────────┘   │
+│                                                          │
+│  ┌──────────┐  ┌──────────────────┐  ┌──────────────┐    │
+│  │ React    │  │ TanStack Query   │  │ LocalStorage │    │
+│  │ Router   │  │ (資料快取)        │  │ (個人設定)   │    │
+│  └──────────┘  └──────────────────┘  └──────────────┘    │
+└──────────────────────────────────────────────────────────┘
+```
 
-- **多組設定**：可同時追蹤段考、結業式、會考等多個事件，左右切換瀏覽
-- **動態進度條**：根據「起始日期」至「目標日期」計算即時完成百分比（動態移動漸層）
-- **完整 CRUD**：新增、編輯、刪除、拖曳排序倒數項目
-- **時間修正**：自動以台灣時間（UTC+8）計算，確保跨時區使用正確
+### 資料流向
 
-### 2. 天氣動態 (WeatherWidget)
+```
+GitHub Actions (排程)
+    │
+    ├── scraper.py ───────────→ announcements.json
+    ├── honors_scraper.py ────→ honors.json
+    └── lunch.py ─────────────→ lunch.json
+                                       │
+                                       ▼
+                              public/data/*.json
+                                       │
+                          ┌────────────┼────────────┐
+                          ▼            ▼            ▼
+                      TanStack   元件直接     維護模式
+                      Query       fetch       檢查
+                     (快取+重試)
+```
 
-串接中央氣象署 (CWA) OpenData API，精確至臺南各行政區。
+## 核心功能
 
-- **即時資料**：顯示當前溫度、體感溫度、降雨機率、濕度、風速、紫外線指數、舒適度
-- **3 天預報**：點擊展開各日詳細氣象資料
-- **36 個行政區**：下拉選單選擇臺南市任一行政區
-- **自動更新**：每 30 分鐘自動重新拉取資料
+首頁 8 個組件皆可透過設定頁面啟用/停用、拖曳排序。
 
-### 3. 常用網站 (CommonSites)
+| 功能 | 說明 | 預設 |
+|------|------|------|
+| **倒數計時器** | 多組日程倒數 + 動態進度條，支援 CRUD、拖曳排序、伺服器同步 | ✅ |
+| **天氣動態** | 臺南 36 行政區即時天氣 + 3 天可折疊預報 | ✅ |
+| **常用網站** | 快速連結管理系統，支援 CRUD、Favicon、排序 | ✅ |
+| **教學工具** | 8 種互動式課堂工具 (獨立路由頁面) | ✅ |
+| **行政公告** | GitHub Actions 自動爬取，支援分類篩選、收藏、附件檢視 | ✅ |
+| **校園行事曆** | 校曆整合 + 個人自訂事件 CRUD | ✅ |
+| **營養午餐** | 當日菜單含分類色標、圖片放大檢視 | ✅ |
+| **榮譽榜** | 競賽獲獎資訊，支援分頁瀏覽與收藏 | ❌ 可設定 |
+| **站內公告** | 版本更新資訊推播，含類型標籤、置頂、NEW 標記 | ✅ |
 
-可自訂的快速連結管理系統。
+<details>
+<summary><strong>功能詳細說明</strong></summary>
 
-- **完整 CRUD**：透過管理對話框新增、編輯、刪除連結
-- **Favicon 顯示**：可選擇是否透過 Google Favicon Service 載入網站圖示（設定可關閉）
-- **緊湊排版**：響應式網格，手機 2 欄、桌面最多 6 欄
+### 倒數計時器
 
-### 4. 小工具套件 (Tools)
+追蹤段考、結業式、會考等校園重要日程。
 
-8 種互動教學工具，各自獨立頁面並支援工具間快速切換。
+- **多組管理**：左右切換瀏覽多個倒數目標，顯示目前進度 (1/N)
+- **動態進度條**：從起始日至目標日的即時完成百分比 (自動計算)
+- **完整 CRUD**：新增、編輯、刪除、拖曳排序 (Framer Motion)
+- **伺服器同步**：從 `default-countdowns.json` 載入預設值，合併本地自訂項目
+- **時區校正**：強制以台灣時間 (UTC+8) 計算
+- **目標達成動畫**：時間到時顯示慶祝畫面 🎉
 
-| 工具 | 功能 |
+### 天氣動態
+
+串接中央氣象署 CWA OpenData API (F-D0047-079)，精確至臺南各行政區。
+
+- **即時資訊**：溫度、體感溫度、降雨機率、濕度、風速、風向、紫外線指數、舒適度描述
+- **3 天預報**：可折疊詳細面板，展開後顯示逐日體感溫度、相對濕度、風速風向、紫外指數
+- **36 行政區**：支援全臺南市各區下拉切換
+- **天氣圖示**：依據 CWA 天氣代碼 (WeatherCode) 對應不同圖示，含備援關鍵字判斷
+- **自動更新**：每 30 分鐘自動重新拉取
+
+### 常用網站
+
+自訂快速連結管理，支援完整 CRUD。
+
+- **CRUD 管理**：透過對話框新增/編輯/刪除連結
+- **Favicon**：透過 Google Favicon Service 載入圖示（可於偏好設定關閉）
+- **排序**：上下移動調整順序
+- **響應式網格**：手機 2 欄、桌面最多 6 欄
+- **內建預設**：行事曆 PDF、成績查詢、因材網、布可星球等校園常用連結
+
+### 行政公告
+
+自動同步崇明國中官方網站公告（GitHub Actions 每 30 分鐘執行爬蟲）。
+
+- **分類篩選**：依處室/類別動態標籤列篩選
+- **摘要展開**：點擊公告展開內文、附件連結
+- **收藏系統**：收藏公告並在「我的收藏」頁面統一檢視
+- **分頁載入**：每頁 8 則，附導航按鈕與動畫過渡
+- **附件預覽**：附件以卡片形式顯示，支援文件圖示與 hover 效果
+- **資料來源**：單一檔案 `announcements.json`（含舊版多檔案相容）
+
+### 校園行事曆
+
+月曆網格顯示校園行事曆事件。
+
+- **事件整合**：校曆事件 + 個人自訂事件（合併顯示，藍點/紫點區分）
+- **自訂事件**：透過 `CalendarDialog` 新增/編輯/刪除個人事件
+- **月份切換**：下拉選單 + 前後按鈕，附動畫過渡
+- **日期 Popover**：點擊日期查看當日事件清單（含「學校」/「自訂」標籤）
+- **今日標記**：當天日期顯示「今」徽章
+- **響應式**：7 欄 grid + Popover 替代桌面 hover
+
+### 營養午餐
+
+從 `lunch.json` 讀取當日菜單。
+
+- **當日菜單**：顯示今日供應的菜色列表
+- **分類色標**：主食 / 主菜 / 副菜 / 蔬菜 / 湯品 / 附餐（各自對應主題色）
+- **菜色圖片**：從食農教育資料庫載入縮圖（點擊可放大檢視）
+- **更新時間**：顯示資料最後更新時間
+- **資料格式**：`{ "last_updated": "...", "items": [{ "category": "主食", "name": "五穀飯", "image": "..." }] }`
+
+### 榮譽榜
+
+競賽獲獎資訊展示頁面。
+
+- **分頁瀏覽**：每頁 10 筆，支援上下頁導航
+- **收藏功能**：可收藏榮譽榜項目至「我的收藏」
+- **外部連結**：點擊連結至原始公告頁面
+- **自動清理**：爬蟲更新時自動移除已失效的收藏項目
+
+### 站內公告 (Site Announcements)
+
+位於導航「公告」頁面，展示網站營運公告。
+
+- **類型標籤**：更新 (update)、重要 (alert)、資訊 (info)、維護 (maintenance)，各有對應圖示與顏色
+- **置頂功能**：`pinned: true` 的公告會固定顯示在最上方
+- **NEW 標記**：7 天內的新公告自動標記「NEW」閃爍徽章
+- **展開閱讀**：有內容的公告可點擊展開詳細內文
+
+</details>
+
+## 小工具套件
+
+8 種互動教學工具，各自獨立路由頁面 (lazy-loaded)，工具間可透過導覽快速切換。
+
+| 工具 | 技術亮點 | 檔案 |
+|------|---------|------|
+| **隨機抽籤輪盤** | SVG 動態生成轉盤，支援自由編輯名單、旋轉動畫、歷史紀錄 | `Wheel.tsx` |
+| **分組工具** | Fisher-Yates 洗牌演算法，支援彈性分組數、名單編輯 | `Grouping.tsx` |
+| **順序工具** | 名單隨機排列，一鍵複製結果至剪貼簿 | `Order.tsx` |
+| **數位時鐘** | Intl API 精確處理 17 個時區，全螢幕模式，時區卡片快速切換 | `Clock.tsx` |
+| **倒數計時/碼表** | 支援快選預設時間 (1m/3m/5m/10m)、自訂時間、暫停/繼續 | `Timer.tsx` |
+| **QR Code 產生器** | 即時將文字/網址轉為 QR Code，支援一鍵下載 | `QRCode.tsx` |
+| **電子白板** | Canvas 繪圖、顏色/粗細調整、橡皮擦、全螢幕、圖片匯出 | `Whiteboard.tsx` |
+| **課堂點名** | 學生名單管理、出席狀況切換 (出勤/曠課/請假)、批次全勤、一鍵複製 | `Attendance.tsx` |
+
+進入任一工具後，ToolLayout 會顯示全部 8 個工具的快速切換按鈕。
+
+## 導航系統
+
+### ResponsiveNav — 響應式三層導航
+
+桌面版和手機版各自採用最適配置：
+
+| 模式 | 桌面版 | 手機版 |
+|------|--------|--------|
+| **頂部** | 左側伸縮側邊欄 (64px → 240px hover 展開) | 固定頂部 header（校名 + 重新整理 + 漢堡選單） |
+| **底部** | — | 半透明浮動底部導航列 (毛玻璃效果) |
+| **功能** | 主頁 · 搜尋 · 公告 · 收藏 · 設定 | 同上 |
+
+- 收藏圖示顯示即時數量徽章 (紅色圓點)
+- 側邊欄含重新整理按鈕與快速導航選單
+
+### AppSidebar — 快速導航選單
+
+漢堡選單 (DropdownMenu) 包含：
+
+- 快捷跳轉 (倒數計時器、天氣、常用網站、工具、榮譽榜、公告、行事曆)
+- 開源 GitHub 專案連結
+- 學生登入 (Google Workspace @cmjh.tn.edu.tw)
+
+## 設定系統
+
+位於導航「設定」頁面，5 大分類設定區塊：
+
+### 1. 版面排序 (Layout)
+
+- 拖曳排序已啟用的首頁元件 (Framer Motion Reorder)
+- 勾選啟用/停用各元件
+- 全部顯示一鍵還原
+- 完工後需手動按「儲存排序」
+
+### 2. 主題外觀 (Theme)
+
+```
+主題模式：淺色 🌞 · 深色 🌙 · 跟隨系統 💻
+主題顏色：藍 · 紅 · 綠 · 橙 · 紫 · 霓虹 · 現代漸層 · 主題漸層
+```
+
+### 3. 自訂背景 (Background)
+
+| 選項 | 說明 |
 |------|------|
-| 隨機抽籤輪盤 | SVG 動態生成轉盤，即時修改名單並抽選 |
-| 分組工具 | Fisher-Yates 演算法分組，支援彈性分組模式 |
-| 順序工具 | 名單隨機排列，結果可複製 |
-| 時鐘 | 全螢幕數位時鐘，附帶多時區參考 |
-| 計時器 | 倒數計時 + 碼表功能，附預設快選 |
-| QR Code 產生器 | 即時將文字/網址轉為 QR Code |
-| 電子白板 | 支援繪圖、顏色選擇、粗細調整、圖片匯出 |
-| 課堂點名 | 出席狀況管理，支援批次點名操作 |
+| 預設 | 主題變數漸層 |
+| 背景一 | 深藍→紫→金漸層 + 預覽圖片 |
+| 背景二 | 深灰→灰→淺灰漸層 + 預覽圖片 |
+| 圖片 | 支援圖片網址輸入 或 本機上傳 (Data URL) |
 
-> **工具頁導覽列**：進入任一工具後，導覽列會顯示所有工具的快速切換按鈕（桌面橫列/手機摺疊選單）。
+- 套用網址後立即生效
+- 支援上傳清除與還原預設
 
-### 5. 行政公告 (Announcements)
+### 4. 偏好設定 (Preferences)
 
-- **自動更新**：GitHub Actions 排程執行 Python 爬蟲，自動更新公告 JSON
-- **全文搜尋**：支援即時關鍵字搜尋過濾
-- **收藏系統**：可收藏公告，並在「我的收藏」頁面統一檢視
-- **分頁顯示**：大量公告分頁載入
+| 選項 | 預設 | 說明 |
+|------|------|------|
+| 顯示更新提示 | ✅ | 有新版本時顯示更新提示視窗 |
+| 啟動顯示公告 | ✅ | 登入首頁後自動展開 7 天內最新快訊 |
+| 顯示網站圖示 | ❌ | 常用網站卡片顯示 Google Favicon |
 
-### 6. 行事曆 (CalendarView)
+### 5. 系統資料 (System)
 
-- **月曆網格**：完整月曆顯示，標記有事件的日期
-- **事件整合**：整合自訂校園行事曆資料與個人自訂事件
-- **響應式日程**：點擊日期查看詳情
+| 功能 | 說明 |
+|------|------|
+| **版本資訊** | 顯示目前版本與最新版本，支援一鍵更新 |
+| **匯出資料** | 下載所有個人設定與資料 (JSON) |
+| **匯入資料** | 還原已備份的設定檔 (自動重新整理) |
+| **重置設定** | 恢復所有設定至預設值 (需二次確認) |
 
-### 7. 營養午餐 (LunchMenu)
+## 維護與更新
 
-- **週菜單**：顯示當週週一至週五的午餐資訊，自動展開今日
-- **分類色標**：每道菜顯示「主食/主菜/副菜/蔬菜/湯品/附餐」的彩色分類標籤
-- **菜色縮圖**：從食農教育資料庫顯示菜色圖片
-- **資料格式**：`/public/data/lunch.json` 格式：`{ last_updated, week_data: { "YYYY-MM-DD": DishItem[] | "無資料" } }`
+### 維護模式 (MaintenanceModal)
 
-### 8. Markdown 快速便籤 (Scratchpad)
+透過 `public/data/maintenance.json` 控制：
 
-懸浮式快速筆記工具，位於頁面右下角。
+```json
+{
+  "isMaintenance": true,
+  "showTimer": true,
+  "maintenanceEndTime": "2026-02-22T12:00:00+08:00",
+  "title": "過年期間暫停服務",
+  "message": "2/14-2/22 期間網頁不開放"
+}
+```
 
-- **GFM 語法**：支援 GitHub Flavored Markdown 即時預覽
-- **本地持久化**：內容自動儲存至 LocalStorage，不會遺失
-- **編輯/預覽切換**：Tab 切換編輯模式與渲染預覽
+- 啟用時首頁顯示 Skeleton 載入骨架 + 全螢幕維護對話框
+- 支援倒數計時器（日/時/分/秒即時更新）
 
----
+### 版本更新系統 (UpdatePrompt)
 
-## 設定系統 (SettingsPage)
+- 啟動時自動比對本地版本與 `LATEST_VERSION`
+- 不一致時顯示精美更新對話框（版本號 + 更新亮點）
+- 更新過程中顯示圓形進度動畫 → 自動遷移資料 → 重新整理
+- 可於偏好設定中關閉更新提示
 
-位於首頁右側邊欄，提供完整個人化設定。
+### 最新公告彈窗 (LatestAnnouncementModal)
 
-### 組件管理
-- 啟用/停用各個首頁組件的顯示
-- 拖曳（Framer Motion）或上下按鈕調整組件順序
-
-### 外觀設定
-- **主題模式**：淺色、深色、跟隨系統
-- **顏色方案**：藍、紅、綠、橙、紫、霓虹、現代漸層、主題漸層
-
-### 其他選項
-- 顯示版本更新提醒
-- 進入網頁時顯示最新公告
-- 常用網站顯示網站圖標（Favicon）
-
-### 資料管理
-- **備份**：下載所有個人設定（JSON 格式）
-- **匯入**：還原已備份的設定檔
-- **更新**：顯示目前版本、手動觸發更新
-
----
+- 啟動時自動讀取 `site-announcements.json`
+- 過濾出 7 天內未讀公告，依序顯示
+- 支援「下一則」「略過」「不再顯示」互動
+- 已讀狀態記錄在 localStorage
 
 ## 技術棧
 
 | 類別 | 技術 |
 |------|------|
-| 框架 | React 18, TypeScript 5, Vite |
-| 樣式 | Tailwind CSS, Framer Motion |
-| 組件庫 | Radix UI, shadcn/ui |
-| 狀態管理 | TanStack Query, LocalStorage |
-| 路由 | React Router 6 |
-| 自動化 | Python 爬蟲 + GitHub Actions |
-| 部署 | Vercel |
+| **框架** | React 18 + TypeScript 5 |
+| **建置** | Vite 5 + SWC |
+| **樣式** | Tailwind CSS 3 + CSS Variables |
+| **組件庫** | shadcn/ui (50+ 元件) + Radix UI |
+| **動畫** | Framer Motion |
+| **路由** | React Router 6 (lazy loading, ErrorBoundary) |
+| **狀態管理** | TanStack Query + React Context (LocalStorage) |
+| **PWA** | vite-plugin-pwa (NetworkFirst, 1 天快取) |
+| **分析** | @vercel/analytics |
+| **爬蟲** | Python 3 + requests + BeautifulSoup 4 |
+| **排程** | GitHub Actions (cron) |
+| **部署** | Vercel (SPA rewrite rules) |
 
----
+## 自動化資料流
 
-## 使用指南
+### Python 爬蟲指令稿
 
-### 首次設定
+三個由 GitHub Actions 排程執行的爬蟲，負責自動更新 `public/data/` 靜態 JSON：
 
-首次開啟網頁時會進入設定精靈，依序完成：
-1. 選擇外觀主題（模式 + 顏色）
-2. 加入常用網站連結
-3. 確認組件顯示設定後進入主頁面
-
-> [!TIP]
-> 所有設定均保存在瀏覽器 LocalStorage，清除瀏覽器資料時會一併重置。建議定期使用「設定 → 資料管理 → 備份資料」匯出備份。
-
----
-
-### 倒數計時器操作
-
-1. 點擊計時器右上角的 **+** 按鈕新增倒數
-2. 填寫「標題」（必填）、「目標日期」（必填）
-3. 選填「開始日期」以啟用進度條（否則系統自動以 7 天前為起點）
-4. 選填「進度條標籤」自訂進度條下方說明文字
-5. 已新增的倒數可用左右箭頭切換、齒輪圖示進入管理介面進行排序或刪除
-
-> [!NOTE]
-> 倒數時間以台灣時間（UTC+8）計算，無論本地時區為何皆會正確顯示。
-
----
-
-### 常用網站管理
-
-1. 點擊「常用網站」右上角的**編輯圖示**開啟管理視窗
-2. 新增時填入「網站名稱」與「網址」（需包含 `https://`）
-3. 可拖曳調整網站排序
-
-> [!TIP]
-> 若網站圖標顯示不正確，可至「設定 → 常用網站顯示網站圖標」關閉 Favicon 功能以純文字顯示。
-
----
-
-### 小工具使用
-
-1. 在首頁點擊小工具區塊的任一工具卡片進入工具頁
-2. 工具頁導覽列左側為「返回首頁」按鈕
-3. 導覽列中段（桌面版）或右上角選單按鈕（手機版）可快速切換其他工具
-
-> [!IMPORTANT]
-> **輪盤 / 分組 / 順序工具**：名單請每行輸入一個名稱（換行分隔），空白行會自動忽略。
-
----
-
-### 天氣設定
-
-1. 點擊天氣卡片的地點選單選擇所需的臺南行政區
-2. 點擊重新整理圖示可手動刷新資料（自動每 30 分鐘更新一次）
-3. 點擊 3 天預報的任一天可展開體感溫度、濕度、風速等詳細資訊
-
-> [!NOTE]
-> 天氣功能需要設定 CWA API 金鑰（`.env` 檔案的 `VITE_CWA_API_KEY`）。若未設定將使用預設金鑰，可能有請求頻率限制。
-
----
-
-### 設定備份與還原
-
-**備份**
-1. 開啟設定側欄
-2. 前往「資料管理 → 下載已儲存的資料」
-3. 儲存下載的 `.json` 檔案
-
-**還原**
-1. 開啟設定側欄
-2. 前往「資料管理 → 匯入並套用設定」
-3. 選擇先前備份的 `.json` 檔案，頁面會自動重新整理套用
-
-> [!CAUTION]
-> 執行「系統更新」（清除資料更新）操作會清除所有本地設定，包含倒數計時器、常用網站、便籤等。**請務必先備份資料再更新。**
-
----
-
-## 開發者指南
-
-### 環境設定
+| 指令稿 | 輸出 | 排程 |
+|--------|------|------|
+| `lunch.py` | `public/data/lunch.json` | 每日 08:00 CST |
+| `scraper.py` | `public/data/announcements.json` | 每 30 分鐘 |
+| `honors_scraper.py` | `public/data/honors.json` | 每 30 分鐘 |
 
 ```bash
-# 複製環境變數範本
-cp .env.example .env
-
-# 填入 CWA API 金鑰（至 https://opendata.cwa.gov.tw 申請）
-VITE_CWA_API_KEY=CWA-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+# 本地手動執行爬蟲
+python scraper.py
+python honors_scraper.py
+python lunch.py
 ```
+
+### JSON 資料結構
+
+```text
+public/data/
+├── lunch.json              # 營養午餐當日菜單
+├── announcements.json      # 行政公告清單
+├── honors.json             # 榮譽榜資料
+├── calendar.json           # 校園行事曆
+├── site-announcements.json # 站內公告
+├── maintenance.json        # 維護模式設定
+└── default-countdowns.json # 預設倒數計時項目
+```
+
+#### 資料格式範例 (lunch.json)
+
+```json
+{
+  "last_updated": "2026-05-08 07:01:38",
+  "items": [
+    { "category": "主食", "name": "五穀飯", "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1767151539077921" },
+    { "category": "主菜", "name": "打拋豬", "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1413871940174074" },
+    { "category": "副菜", "name": "椒鹽毛豆莢", "image": "..." },
+    { "category": "蔬菜", "name": "彩椒青花菜", "image": "..." },
+    { "category": "湯品", "name": "關東煮湯", "image": "..." },
+    { "category": "附餐", "name": "葡萄", "image": "..." }
+  ]
+}
+```
+
+## 開發者指南
 
 ### 常用指令
 
 ```bash
-npm install       # 安裝相依套件
-npm run dev       # 啟動開發伺服器
-npm run build     # 生產環境打包
+npm install             # 安裝相依套件
+npm run dev             # 啟動開發伺服器 (port 8080)
+npm run build           # 生產環境建置
+npm run build:dev       # 開發模式建置
+npm run lint            # ESLint 檢查
+npm run preview         # 預覽生產建置 (port 8080)
+npx tsc --noEmit        # TypeScript 型別檢查
 ```
 
-### 資料檔案結構
+### 目錄結構
 
-```
-public/data/
-├── lunch.json           # 當週營養午餐（由 Python 爬蟲更新）
-├── announcements.json   # 行政公告清單
-├── honors.json          # 榮譽榜資料
-├── calendar.json        # 行事曆事件
-├── site-announcements.json  # 網站公告（更新日誌）
-└── maintenance.json     # 維護模式設定
+```text
+src/
+├── main.tsx             # 入口點
+├── App.tsx              # React Router + lazy loading + 維護模式
+├── index.css            # Tailwind 全域樣式
+├── components/          # 通用 UI 元件
+│   ├── ui/              # shadcn/ui 元件 (勿手動編輯)
+│   ├── CountdownTimer.tsx   # 倒數計時器
+│   ├── WeatherWidget.tsx    # 天氣動態
+│   ├── CommonSites.tsx      # 常用網站
+│   ├── LunchMenu.tsx        # 營養午餐
+│   ├── CalendarView.tsx     # 校園行事曆
+│   ├── Announcements.tsx    # 行政公告
+│   ├── HonorsBoard.tsx      # 榮譽榜
+│   ├── ToolsSection.tsx     # 小工具展示
+│   ├── ResponsiveNav.tsx    # 響應式導航
+│   ├── AppSidebar.tsx       # 快速導航選單
+│   ├── SettingsPage.tsx     # 設定頁面
+│   ├── FavoritesPage.tsx    # 我的收藏
+│   ├── SearchPage.tsx       # 全文搜尋
+│   ├── SiteAnnouncementsPage.tsx  # 站內公告
+│   ├── FirstTimeSetup.tsx   # 首次設定精靈
+│   ├── LatestAnnouncementModal.tsx # 最新公告彈窗
+│   ├── UpdatePrompt.tsx     # 版本更新提示
+│   ├── MaintenanceModal.tsx # 維護模式
+│   ├── ErrorBoundary.tsx    # 錯誤邊界
+│   ├── ToolLayout.tsx       # 工具頁面佈局
+│   └── ...
+├── hooks/               # 自訂 hook
+│   ├── SettingsContext.tsx
+│   ├── useCalendarEvents.ts
+│   ├── useCommonSites.ts
+│   ├── useFavorites.tsx
+│   ├── useNotes.ts
+│   ├── useScrollAnimation.tsx
+│   ├── useComponentSettings.ts
+│   └── use-mobile.tsx
+├── lib/                 # 工具函式
+│   ├── utils.ts
+│   ├── app-version.ts
+│   └── page-background.ts
+└── pages/               # 路由頁面
+    ├── Index.tsx        # 首頁
+    ├── NotFound.tsx     # 404
+    └── tools/           # 教學工具頁面 (lazy-loaded)
+        ├── Wheel.tsx
+        ├── Grouping.tsx
+        ├── Order.tsx
+        ├── Clock.tsx
+        ├── Timer.tsx
+        ├── QRCode.tsx
+        ├── Whiteboard.tsx
+        └── Attendance.tsx
 ```
 
-### 午餐資料格式
+### 加入新 shadcn/ui 元件
+
+```bash
+npx shadcn-ui@latest add <component>
+```
+
+shadcn/ui 元件放置在 `src/components/ui/` 中，請勿手動編輯。
+
+## 建置與部署
+
+### 生產建置
+
+```bash
+npm run build
+```
+
+輸出至 `dist/` 目錄。
+
+### Vercel 部署
+
+`vercel.json` 已內建 SPA Rewrite 規則，所有非檔案路由指向 `index.html`。
 
 ```json
 {
-  "last_updated": "YYYY-MM-DD HH:mm:ss",
-  "week_data": {
-    "YYYY-MM-DD": [
-      { "category": "主食", "name": "菜名", "image": "https://..." }
-    ],
-    "YYYY-MM-DD": "無資料"
-  }
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
 ```
 
+## 授權
+
+MIT © [nocfond](https://github.com/NOC0212)
+
 ---
 
-## 授權與宣告
+<div align="center">
 
-本專案為開源專案，旨在提升校園資訊化。
+**提升校園資訊化 · 社群驅動 · 完全開源**
 
-- **最新版本**：v1.5.0
-- **更新日期**：2026-03-07
-- **開發者**：[nocfond](https://github.com/NOC0212)
+[GitHub Repository](https://github.com/NOC0212/cmjh-v2) · [Report Bug](https://github.com/NOC0212/cmjh-v2/issues) · [Request Feature](https://github.com/NOC0212/cmjh-v2/issues)
+
+</div>

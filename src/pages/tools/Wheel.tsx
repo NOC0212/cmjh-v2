@@ -81,12 +81,13 @@ export default function Wheel() {
         setSpinning(true);
         setResult("");
 
-        const randomSpins = 5 + Math.random() * 3;
+        const randomSpins = 6 + Math.random() * 4;
         const randomAngle = Math.random() * 360;
         const totalRotation = rotation + randomSpins * 360 + randomAngle;
 
         setRotation(totalRotation);
 
+        const spinDuration = 4500;
         setTimeout(() => {
             const normalizedAngle = totalRotation % 360;
             const sectorAngle = 360 / currentOptions.length;
@@ -96,7 +97,6 @@ export default function Wheel() {
             setResult(selectedResult);
             setSpinning(false);
 
-            // 加入歷史紀錄
             const newItem: HistoryItem = {
                 id: Math.random().toString(36).substr(2, 9),
                 result: selectedResult,
@@ -104,7 +104,7 @@ export default function Wheel() {
             };
             setHistory(prev => [newItem, ...prev]);
 
-        }, 3000);
+        }, spinDuration);
     };
 
     const handleClear = () => {
@@ -122,8 +122,9 @@ export default function Wheel() {
     };
 
     const colors = [
-        "#3b82f6", "#ec4899", "#10b981", "#f59e0b",
-        "#8b5cf6", "#ef4444", "#06b6d4", "#84cc16"
+        "#7950f2", "#e64980", "#12b886", "#f76707",
+        "#845ef7", "#339af0", "#fa5252", "#40c057",
+        "#be4bdb", "#4c6ef5", "#fd7e14", "#15aabf",
     ];
 
     // 計算目前有效的選項內容 (用於轉盤顯示)
@@ -160,7 +161,7 @@ export default function Wheel() {
                                         className="drop-shadow-[0_20px_50px_rgba(0,0,0,0.2)] max-w-full h-auto"
                                         style={{
                                             transform: `rotate(${rotation}deg)`,
-                                            transition: spinning ? "transform 3s cubic-bezier(0.17, 0.67, 0.12, 0.99)" : "none",
+                                            transition: spinning ? "transform 4.5s cubic-bezier(0.12, 0.75, 0.1, 1)" : "none",
                                         }}
                                     >
                                         <circle cx="150" cy="150" r="150" fill="white" />

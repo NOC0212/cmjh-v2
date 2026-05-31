@@ -9,9 +9,9 @@
   },
   {
     "id": "default-2",
-    "targetDate": "2026-05-16T16:00:00.000Z",
-    "startDate": "2025-05-19T16:00:00.000Z",
-    "label": "會考倒數🕒",
+    "targetDate": "2027-05-15T16:00:00.000Z",
+    "startDate": "2026-05-18T16:00:00.000Z",
+    "label": "116 會考倒數🕒",
     "progressLabel": "上次至本次進度條",
     "isDefault": true
   },

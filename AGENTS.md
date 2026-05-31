@@ -1,132 +1,57 @@
 # AGENTS.md
 
-本檔給在這個專案內協作的代理、開發者與自動化工具使用。
+## Project Overview
 
-## 專案定位
+崇明國中 (CMJH) school info platform — React 18 SPA with PWA support.
 
-- 這是一個校園入口網站前端專案。
-- 技術棧是 `Vite + React 18 + TypeScript + Tailwind CSS + shadcn/ui`。
-- 目標是「簡單、穩定、可維護」，不要過度設計。
-
-## 啟動與驗證
-
-常用指令：
+## Commands
 
 ```bash
-npm install
-npm run dev
-npm run build
-npm run lint
+npm install        # install deps
+npm run dev        # dev server on port 8080
+npm run build      # production build
+npm run build:dev  # development-mode build
+npm run lint       # eslint
+npm run preview    # preview production build on port 8080
 ```
 
-修改完成後，至少做這些事：
+No test runner is configured. No `typecheck` script — use `npx tsc --noEmit` if needed.
 
-1. 能跑就先跑 `npm run build`
-2. 有明顯型別或語法風險時再補 `npm run lint`
-3. 不要為了小改動引入大型重構
+## Architecture
 
-## 目錄重點
+- **Entry**: `src/main.tsx` → `src/App.tsx` (React Router, lazy-loaded tool pages)
+- **Pages**: `src/pages/Index.tsx` (home), `src/pages/tools/*.tsx` (lazy-loaded)
+- **Components**: `src/components/` (app components), `src/components/ui/` (shadcn/ui — do not hand-edit these)
+- **Hooks**: `src/hooks/` (SettingsContext, custom hooks)
+- **Lib**: `src/lib/` (utils, page-background, app-version)
+- **Static data**: `public/data/*.json` (lunch, announcements, honors, calendar, site-announcements, maintenance)
+- **Path alias**: `@/` maps to `./src/` (configured in both tsconfig and vite.config.ts)
 
-```text
-src/
-  components/   畫面元件
-  hooks/        自訂 hooks 與 localStorage 邏輯
-  lib/          共用工具
-  pages/        頁面層
+## Python Scrapers
 
-public/data/    靜態 JSON 資料
-```
+Three root-level Python 3 scripts feed `public/data/` via GitHub Actions:
 
-## 實作原則
+| Script | Output | Schedule |
+|--------|--------|----------|
+| `lunch.py` | `public/data/lunch.json` | Daily 08:00 CST |
+| `scraper.py` | `public/data/announcements.json` | Every 30 min |
+| `honors_scraper.py` | `public/data/honors.json` | Every 30 min |
 
-- 優先延續現有結構，不要先重寫整個模組。
-- 新功能先找現有元件、hook、UI 元件能不能沿用。
-- 保持 KISS，避免抽象化過頭。
-- 沒有明確需求時，不要新增複雜防禦邏輯。
-- 小改動盡量局部修改，不要把 unrelated code 一起整理掉。
+Dependencies: `requests`, `beautifulsoup4` (see `requirements.txt`).
 
-## UI 修改原則
+## Key Conventions
 
-- 先維持目前站內風格，再做優化。
-- 手機版要優先確認，不要只看桌機。
-- 這個專案大量使用 Tailwind class，優先在原元件上直接調整。
-- 已有 `shadcn/ui` 與 `Radix UI` 元件時，優先重用，不要自己再造一套。
-- 動畫已使用 `framer-motion`，只在真的有幫助時使用。
+- **shadcn/ui**: Components in `src/components/ui/` are generated — use `npx shadcn-ui@latest add <component>` to add new ones, don't hand-write
+- **State management**: TanStack Query for server data, LocalStorage for user settings (via `SettingsContext`)
+- **Styling**: Tailwind CSS with CSS variables for theming; dark mode via `class` strategy
+- **ESLint**: `@typescript-eslint/no-unused-vars` is `off` (unused vars are allowed)
+- **tsconfig**: `strictNullChecks`, `noImplicitAny`, `noUnusedLocals`, `noUnusedParameters` are all `true`
+- **PWA**: vite-plugin-pwa with auto-update; service worker caches `cmjh.tn.edu.tw` requests (NetworkFirst, 1 day)
 
-## 資料來源規則
+## Environment
 
-### 1. 靜態資料
+Copy `.env.example` to `.env` and set `VITE_CWA_API_KEY` (Central Weather Administration API key from https://opendata.cwa.gov.tw). Weather feature works without it but may hit rate limits.
 
-以下內容主要來自 `public/data/*.json`：
+## Deploy
 
-- 行事曆
-- 午餐
-- 公告
-- 站點公告
-- 維護設定
-- 榮譽榜
-
-改這類功能時，先確認：
-
-1. 資料格式有沒有被元件直接依賴
-2. 是否會影響既有 JSON 結構
-3. 是否需要保留向下相容
-
-### 2. 本機儲存
-
-部分使用者資料來自 `localStorage`，例如：
-
-- 自訂行事曆事件
-- 常用網站
-- 使用者偏好設定
-- 便條或收藏類資料
-
-修改這類功能時：
-
-- 優先延續既有 key
-- 非必要不要改 key 名稱
-- 若一定要改，需處理舊資料相容
-
-## 行事曆特別注意
-
-- 行事曆資料分成「預設事件」與「自訂事件」。
-- 自訂事件來自 `useCalendarEvents`。
-- 月曆版面對手機非常敏感，改格子大小、標記位置、popover 時要一起看手機。
-- 日期格的視覺調整，優先避免撐壞 `7` 欄 grid。
-
-## 編碼與文字
-
-- 專案內部分檔案可能有文字編碼歷史問題。
-- 若看到亂碼，先不要整檔重排。
-- 修改時以局部修正為主，避免因編碼問題造成大範圍 diff。
-
-## 寫碼習慣
-
-- 優先寫清楚直接的程式，不要炫技。
-- 非必要不要新增文件。
-- 非必要不要新增依賴。
-- 註解只寫在真的能幫助理解的地方。
-- 不要順手改格式一整片，除非這次任務真的需要。
-
-## 變更前思考
-
-開始改之前，先回答這三件事：
-
-1. 這次是改 UI、改資料格式、還是改互動？
-2. 會不會影響手機版？
-3. 會不會影響 `public/data` 或 `localStorage` 相容？
-
-如果答案是會，就先縮小改動範圍再下手。
-
-## 預期協作方式
-
-- 先讀相關檔案，再動手。
-- 先改最小可行版本，再視需要微調。
-- 完成後回報：
-  - 改了什麼
-  - 有沒有跑 `build`
-  - 還有沒有已知風險
-
-## 一句話版本
-
-在這個專案裡，優先做小而準的修改，先顧手機版、資料相容與現有結構。
+Vercel with SPA rewrite rule (all non-file routes → `index.html`, see `vercel.json`).

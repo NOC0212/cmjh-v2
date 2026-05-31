@@ -43,10 +43,6 @@ const getTaiwanNow = () => {
   return new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + (8 * 60 * 60 * 1000));
 };
 
-const taiwanTime = (year: number, month: number, day: number, hour = 0, minute = 0, second = 0): Date => {
-  return new Date(Date.UTC(year, month - 1, day, hour - 8, minute, second));
-};
-
 // 輔助函數：處理 Emoji 與漸層文字衝突
 const renderLabelWithEmoji = (text: string) => {
   // 使用更全面的正則表達式匹配 Emoji
@@ -78,26 +74,6 @@ const renderLabelWithEmoji = (text: string) => {
     return <span key={index}>{part}</span>;
   });
 };
-
-// 預設倒數計時配置
-const getDefaultConfigs = (): CountdownConfig[] => [
-  {
-    id: "default-1",
-    targetDate: taiwanTime(2026, 5, 5, 0, 0, 0),
-    startDate: taiwanTime(2026, 3, 27, 0, 0, 0),
-    label: "📅第二次段考倒數 5/5 5/6",
-    progressLabel: "上次至本次段考進度條",
-    isDefault: true
-  },
-  {
-    id: "default-2",
-    targetDate: taiwanTime(2027, 1, 1, 0, 0, 0),
-    startDate: taiwanTime(2026, 1, 1, 0, 0, 0),
-    label: "2027年倒數",
-    progressLabel: "2026年進度條",
-    isDefault: true
-  }
-];
 
 const mergeCountdownConfigs = (
   localConfigs: CountdownConfig[],
@@ -195,7 +171,7 @@ export function CountdownTimer() {
       } catch (error) {
         console.warn("無法串接伺服器預設值，使用本地緩存或代碼預設:", error);
         // 失敗時：若有本地資料就用本地，若無則用代碼硬編碼的備份
-        finalConfigs = localConfigs.length > 0 ? localConfigs : getDefaultConfigs();
+        finalConfigs = localConfigs.length > 0 ? localConfigs : [];
       }
 
       setAllCountdowns(finalConfigs);
@@ -335,12 +311,7 @@ export function CountdownTimer() {
     setAddDialogOpen(false);
   };
 
-  const handleDelete = (id: string) => {
-    setAllCountdowns(prev => {
-      const filtered = prev.filter(c => c.id !== id);
-      if (filtered.length === 0) return getDefaultConfigs();
-      return filtered;
-    });
+  const handleDelete = (id: string) => {      setAllCountdowns(prev => prev.filter(c => c.id !== id));
 
     if (currentIndex >= allCountdowns.length - 1) {
       setCurrentIndex(Math.max(0, allCountdowns.length - 2));
@@ -371,12 +342,11 @@ export function CountdownTimer() {
   const handleReset = () => setResetDialogOpen(true);
 
   const confirmReset = () => {
-    const defaults = getDefaultConfigs();
-    setAllCountdowns(defaults);
+    setAllCountdowns([]);
     setCurrentIndex(0);
     setManageDialogOpen(false);
     setResetDialogOpen(false);
-    toast({ title: "重置成功", description: "已重置為預設倒計時" });
+    toast({ title: "重置成功", description: "已清除所有倒計時" });
   };
 
   const formatDate = (date: Date) => {

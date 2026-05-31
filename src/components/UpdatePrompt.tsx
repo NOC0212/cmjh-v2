@@ -7,7 +7,7 @@ import { useSettings } from "@/hooks/SettingsContext";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
-const RELEASE_HIGHLIGHTS = ["新增自訂背景🆕","移除markdown快速便籤", "新增頁面刷新按鈕", "修復行政公告附件"];
+const RELEASE_HIGHLIGHTS = ["修復編碼","時鐘功能更新", "隨機轉盤優化", "添加MIT授權"];
 
 export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
   const [show, setShow] = useState(false);
