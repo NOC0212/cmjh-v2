@@ -17,6 +17,7 @@ export interface AppSettings {
     disableUpdatePrompt: boolean;
     showLatestAnnouncementOnStartup: boolean;
     showSiteFavicons: boolean;
+    disableDefaultCountdowns: boolean;
 }
 
 interface SettingsContextType {
@@ -32,6 +33,7 @@ interface SettingsContextType {
     setDisableUpdatePrompt: (disabled: boolean) => void;
     setShowLatestAnnouncementOnStartup: (show: boolean) => void;
     setShowSiteFavicons: (show: boolean) => void;
+    setDisableDefaultCountdowns: (disabled: boolean) => void;
     resetToDefault: () => void;
     showAll: () => void;
     reorderComponents: (newComponents: ComponentSettings[]) => void;
@@ -57,6 +59,7 @@ const DEFAULT_SETTINGS: AppSettings = {
     disableUpdatePrompt: false,
     showLatestAnnouncementOnStartup: true,
     showSiteFavicons: false,
+    disableDefaultCountdowns: false,
 };
 
 const STORAGE_KEY = "cmjh-app-settings";
@@ -91,6 +94,7 @@ const migrateOldSettings = (): AppSettings | null => {
             pageBackground: "default",
             pageBackgroundImage: "",
             disableUpdatePrompt: false,
+            disableDefaultCountdowns: false,
             showLatestAnnouncementOnStartup: true,
             showSiteFavicons: false,
         };
@@ -200,6 +204,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
                     pageBackgroundImage: parsedSettings.pageBackgroundImage ?? "",
                     showLatestAnnouncementOnStartup: parsedSettings.showLatestAnnouncementOnStartup ?? true,
                     showSiteFavicons: parsedSettings.showSiteFavicons ?? true,
+                    disableDefaultCountdowns: parsedSettings.disableDefaultCountdowns ?? false,
                 };
             }
         } catch (error) {
@@ -299,6 +304,10 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setSettings((prev) => ({ ...prev, showSiteFavicons }));
     };
 
+    const setDisableDefaultCountdowns = (disableDefaultCountdowns: boolean) => {
+        setSettings((prev) => ({ ...prev, disableDefaultCountdowns }));
+    };
+
     const resetToDefault = () => {
         setSettings(DEFAULT_SETTINGS);
     };
@@ -339,6 +348,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setDisableUpdatePrompt,
         setShowLatestAnnouncementOnStartup,
         setShowSiteFavicons,
+        setDisableDefaultCountdowns,
         resetToDefault,
         showAll,
         reorderComponents

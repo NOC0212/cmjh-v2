@@ -66,6 +66,7 @@ export function SettingsPage() {
         setDisableUpdatePrompt,
         setShowLatestAnnouncementOnStartup,
         setShowSiteFavicons,
+        setDisableDefaultCountdowns,
         resetToDefault,
         showAll,
         reorderComponents,
@@ -445,6 +446,13 @@ export function SettingsPage() {
                                             desc="常用網站卡片顯示 favicon"
                                             checked={settings.showSiteFavicons}
                                             onChange={(value: boolean) => setShowSiteFavicons(!!value)}
+                                        />
+                                        <PrefOption
+                                            id="preference-default-countdowns"
+                                            label="停用預設倒數計時器"
+                                            desc="關閉後只顯示自訂的倒數計時，不載入學校預設倒數"
+                                            checked={settings.disableDefaultCountdowns}
+                                            onChange={(value: boolean) => setDisableDefaultCountdowns(!!value)}
                                         />
                                     </div>
                                 </div>

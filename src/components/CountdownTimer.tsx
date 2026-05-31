@@ -117,7 +117,7 @@ export function CountdownTimer() {
     progressLabel: ""
   });
 
-  // 載入倒計時 (含伺服器同步邏輯)
+  // 載入倒數計時 (含伺服器同步邏輯)
   useEffect(() => {
     const syncCountdowns = async () => {
       let finalConfigs: CountdownConfig[] = [];
@@ -136,6 +136,13 @@ export function CountdownTimer() {
         } catch (e) {
           console.error("Local storage parse error:", e);
         }
+      }
+
+      // 如果停用預設倒數計時，只載入自訂項目
+      if (settings.disableDefaultCountdowns) {
+        const customOnly = localConfigs.filter((c) => !c.isDefault);
+        setAllCountdowns(customOnly);
+        return;
       }
 
       // 2. 嘗試獲取伺服器預設值
@@ -160,7 +167,7 @@ export function CountdownTimer() {
             finalConfigs = mergeCountdownConfigs(localConfigs, parsedDefaults);
             
             // 檢查是否有排序變動或是新項目提示
-            console.log("倒計時器已與伺服器同步成功");
+            console.log("倒數計時器已與伺服器同步成功");
           } else {
             // 完全沒有本地資料，直接使用伺服器預設
             finalConfigs = parsedDefaults;
@@ -178,7 +185,7 @@ export function CountdownTimer() {
     };
 
     syncCountdowns();
-  }, []);
+  }, [settings.disableDefaultCountdowns]);
 
   // 自動持久化儲存
   useEffect(() => {
@@ -346,7 +353,7 @@ export function CountdownTimer() {
     setCurrentIndex(0);
     setManageDialogOpen(false);
     setResetDialogOpen(false);
-    toast({ title: "重置成功", description: "已清除所有倒計時" });
+    toast({ title: "重置成功", description: "已清除所有倒數計時" });
   };
 
   const formatDate = (date: Date) => {
@@ -358,7 +365,79 @@ export function CountdownTimer() {
   const isComplete = progress >= 100;
   const hasImageBackground = isImagePageBackground(settings.pageBackground, settings.pageBackgroundImage);
 
-  if (!currentConfig) return null;
+  if (!currentConfig) {
+    return (
+      <div
+        className={cn(
+          "image-bg-surface relative w-full max-w-[calc(100vw-2rem)] overflow-hidden rounded-3xl border border-primary/20 p-6 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-md md:p-10",
+          hasImageBackground && "shadow-2xl",
+        )}
+        style={{
+          background: hasImageBackground
+            ? 'linear-gradient(135deg, hsl(var(--card) / 0.9) 0%, hsl(var(--card) / 0.82) 100%)'
+            : 'linear-gradient(135deg, var(--primary-light) 0%, var(--accent-light) 100%)',
+          backdropFilter: hasImageBackground ? 'none' : 'blur(12px) saturate(180%)',
+          WebkitBackdropFilter: hasImageBackground ? 'none' : 'blur(12px) saturate(180%)',
+        }}
+      >
+        <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/5 blur-3xl transition-colors" />
+        <div className="absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-accent/5 blur-3xl transition-colors" />
+
+        <div className="relative z-10 flex flex-col items-center justify-center gap-6 py-16 md:py-20">
+          <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-primary/10 shadow-inner">
+            <Clock className="h-8 w-8 text-primary/60" />
+          </div>
+          <div className="text-center">
+            <h3 className="text-2xl font-black text-muted-foreground/60">尚無倒數計時</h3>
+            <p className="mt-2 text-sm text-muted-foreground/40">點擊下方按鈕新增一個倒數計時</p>
+          </div>
+          <Dialog open={addDialogOpen} onOpenChange={setAddDialogOpen}>
+            <DialogTrigger asChild>
+              <Button
+                className="rounded-xl bg-primary hover:bg-primary/90 px-8 py-6 text-base font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.05] active:scale-[0.95] gap-2"
+                onClick={() => {
+                  setEditingId(null);
+                  setFormData({ label: "", targetDate: "", startDate: "", progressLabel: "" });
+                }}
+              >
+                <Plus className="h-5 w-5" />
+                新增倒數計時
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="image-bg-dialog w-[95vw] max-w-md rounded-3xl border-primary/20 bg-background dark:bg-slate-900/95 backdrop-blur-2xl shadow-2xl">
+              <DialogHeader>
+                <DialogTitle className="text-2xl font-bold">{editingId ? "編輯倒數計時" : "新增倒數計時"}</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-5 py-6">
+                <div className="space-y-2">
+                  <Label htmlFor="label-empty" className="text-sm font-bold ml-1">標題</Label>
+                  <Input id="label-empty" className="rounded-xl border-primary/10 bg-muted/30" value={formData.label} onChange={(e) => setFormData({ ...formData, label: e.target.value })} placeholder="例如：寒假倒數" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="targetDate-empty" className="text-sm font-bold ml-1">目標日期時間</Label>
+                  <Input id="targetDate-empty" type="datetime-local" className="rounded-xl border-primary/10 bg-muted/30" value={formData.targetDate} onChange={(e) => setFormData({ ...formData, targetDate: e.target.value })} />
+                  <p className="text-[10px] text-muted-foreground/60 ml-1">必須晚於當前時間</p>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="startDate-empty" className="text-sm font-bold ml-1">開始日期時間（選填）</Label>
+                  <Input id="startDate-empty" type="datetime-local" className="rounded-xl border-primary/10 bg-muted/30" value={formData.startDate} onChange={(e) => setFormData({ ...formData, startDate: e.target.value })} />
+                  <p className="text-[10px] text-muted-foreground/60 ml-1">用於計算進度條，必須早於目標時間</p>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="progressLabel-empty" className="text-sm font-bold ml-1">進度條標籤（選填）</Label>
+                  <Input id="progressLabel-empty" className="rounded-xl border-primary/10 bg-muted/30" value={formData.progressLabel} onChange={(e) => setFormData({ ...formData, progressLabel: e.target.value })} placeholder="例如：學期進度" />
+                </div>
+              </div>
+              <DialogFooter className="gap-2 sm:gap-0">
+                <Button variant="ghost" className="rounded-xl" onClick={() => { setAddDialogOpen(false); setEditingId(null); }}>取消</Button>
+                <Button className="rounded-xl bg-primary hover:bg-primary/90 px-8 font-bold" onClick={editingId ? handleSaveEdit : handleAddNew}>儲存</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -407,7 +486,7 @@ export function CountdownTimer() {
               </DialogTrigger>
               <DialogContent className="image-bg-dialog w-[95vw] max-w-md rounded-3xl border-primary/20 bg-background dark:bg-slate-900/95 backdrop-blur-2xl shadow-2xl">
                 <DialogHeader>
-                  <DialogTitle className="text-2xl font-bold">{editingId ? "編輯倒計時" : "新增倒計時"}</DialogTitle>
+                  <DialogTitle className="text-2xl font-bold">{editingId ? "編輯倒數計時" : "新增倒數計時"}</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-5 py-6">
                   <div className="space-y-2">
@@ -444,7 +523,7 @@ export function CountdownTimer() {
               </DialogTrigger>
               <DialogContent className="image-bg-dialog max-h-[85vh] w-[95vw] max-w-lg overflow-hidden flex flex-col p-0 rounded-3xl border-primary/20 bg-background dark:bg-slate-900/95 backdrop-blur-2xl shadow-2xl">
                 <DialogHeader className="p-6 pb-0">
-                  <DialogTitle className="text-2xl font-bold">管理倒計時</DialogTitle>
+                  <DialogTitle className="text-2xl font-bold">管理倒數計時</DialogTitle>
                 </DialogHeader>
                 <div className="flex-1 overflow-y-auto p-6">
                   <Reorder.Group
@@ -525,7 +604,7 @@ export function CountdownTimer() {
                 <AlertDialogHeader>
                   <AlertDialogTitle className="text-xl font-bold">確認重置</AlertDialogTitle>
                   <AlertDialogDescription className="text-sm">
-                    確定要重置為預設倒計時嗎？這將刪除所有自定義倒計時。
+                    確定要重置為預設倒數計時嗎？這將刪除所有自定義倒數計時。
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter className="gap-2">
