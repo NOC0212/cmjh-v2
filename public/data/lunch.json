@@ -1,25 +1,30 @@
 {
-    "last_updated": "2026-06-03 07:46:34",
+    "last_updated": "2026-06-04 07:45:03",
     "items": [
         {
             "category": "主食",
-            "name": "沙茶花枝肉羹麵",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1779775702015086"
+            "name": "燕麥飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020150992"
         },
         {
             "category": "主菜",
-            "name": "茶葉蛋",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020151058"
+            "name": "蒲燒鱸魚",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1768891691006111"
         },
         {
             "category": "副菜",
-            "name": "評選麵包",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970624014895"
+            "name": "黑胡椒毛豆莢",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1728635212022235"
         },
         {
-            "category": "附餐",
-            "name": "國產豆奶",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1759469191048385"
+            "category": "蔬菜",
+            "name": "有機小松菜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074681018704"
+        },
+        {
+            "category": "湯品",
+            "name": "玉米濃湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409898734221886"
         }
     ]
 }
