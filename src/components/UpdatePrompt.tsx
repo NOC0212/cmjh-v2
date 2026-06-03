@@ -2,12 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import { RefreshCw, Check } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { getCurrentVersion, LATEST_VERSION, migrateData } from "@/lib/app-version";
+import { getCurrentVersion, migrateData } from "@/lib/app-version";
 import { useSettings } from "@/hooks/SettingsContext";
+import { useSiteConfig } from "@/hooks/useSiteConfig";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-
-const RELEASE_HIGHLIGHTS = ["修復編碼","時鐘功能更新", "隨機轉盤優化", "添加MIT授權"];
 
 export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
   const [show, setShow] = useState(false);
@@ -15,9 +14,15 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
   const [progress, setProgress] = useState(0);
   const currentVersion = getCurrentVersion();
   const { settings } = useSettings();
+  const { appVersion } = useSiteConfig();
+
+  const latestVersion = appVersion?.latestVersion || "v1.5.4";
+  const releaseHighlights = appVersion?.releaseHighlights || [
+    "修復編碼", "時鐘功能更新", "隨機轉盤優化", "添加MIT授權"
+  ];
 
   useEffect(() => {
-    if (currentVersion && currentVersion !== LATEST_VERSION && !settings.disableUpdatePrompt) {
+    if (currentVersion && currentVersion !== latestVersion && !settings.disableUpdatePrompt) {
       setShow(true);
     } else {
       setShow(false);
@@ -29,11 +34,11 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
 
     window.addEventListener("show-update-prompt", handleShowUpdate);
     return () => window.removeEventListener("show-update-prompt", handleShowUpdate);
-  }, [currentVersion, settings.disableUpdatePrompt]);
+  }, [currentVersion, settings.disableUpdatePrompt, latestVersion]);
 
   const versionSummary = useMemo(
-    () => ({ from: currentVersion || "舊版", to: LATEST_VERSION }),
-    [currentVersion]
+    () => ({ from: currentVersion || "舊版", to: latestVersion }),
+    [currentVersion, latestVersion]
   );
 
   if (!show || isHidden) return null;
@@ -169,7 +174,7 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
               </div>
               
               <ul className="space-y-4 text-base text-foreground/90">
-                {RELEASE_HIGHLIGHTS.map((item, index) => (
+                {releaseHighlights.map((item, index) => (
                   <li key={item} className="flex items-start gap-4">
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
                       {index + 1}

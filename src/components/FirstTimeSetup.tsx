@@ -3,6 +3,7 @@ import { Sparkles, ArrowRight, Star, Download, Megaphone, Utensils, Calendar, Gl
 import { motion, AnimatePresence, useMotionValue, useTransform, animate } from "framer-motion";
 import { useEffect, useState } from "react";
 import { updateVersionToLatest } from "@/lib/app-version";
+import { useVisitCounter } from "@/hooks/useVisitCounter";
 
 
 const SETUP_STORAGE_KEY = "cmjh-first-setup-completed";
@@ -30,6 +31,7 @@ const AnimatedNumber = ({ value }: { value: number }) => {
 };
 
 export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
+    const { total: visitTotal, today: visitToday, isConfigured } = useVisitCounter();
 
     const handleConfirm = () => {
         localStorage.setItem(SETUP_STORAGE_KEY, "true");
@@ -169,14 +171,35 @@ export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
                     {/* 統計卡片 (訪問次數) */}
                     <motion.div 
                         whileHover={{ y: -5 }}
-                        className="md:col-span-4 p-8 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-[0_20px_60px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] flex flex-col gap-4 transition-all duration-500"
+                        className="md:col-span-4 p-8 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-[0_20px_60px_rgba(0,0,0,0.04)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.3)] flex flex-col gap-6 transition-all duration-500"
                     >
                         <Download className="w-7 h-7 text-slate-400" />
-                        <div className="space-y-2">
-                            <p className="text-5xl font-black tracking-tighter text-slate-900 dark:text-white flex items-baseline">
-                                <AnimatedNumber value={1000} /><span className="text-3xl text-slate-300 ml-1">+</span>
-                            </p>
-                            <p className="text-base font-bold text-slate-400">累積訪問次數</p>
+                        <div className="space-y-4">
+                            {/* 今日訪問 */}
+                            <div className="space-y-1">
+                                <p className="text-4xl font-black tracking-tighter text-slate-900 dark:text-white">
+                                    {isConfigured ? (
+                                        <AnimatedNumber value={visitToday} />
+                                    ) : (
+                                        <AnimatedNumber value={0} />
+                                    )}
+                                </p>
+                                <p className="text-sm font-bold text-slate-400">今日訪問</p>
+                            </div>
+                            {/* 分隔線 */}
+                            <div className="border-t border-slate-100 dark:border-slate-800" />
+                            {/* 累積訪問 */}
+                            <div className="space-y-1">
+                                <p className="text-4xl font-black tracking-tighter text-slate-900 dark:text-white flex items-baseline">
+                                    {isConfigured ? (
+                                        <AnimatedNumber value={visitTotal} />
+                                    ) : (
+                                        <AnimatedNumber value={1000} />
+                                    )}
+                                    <span className="text-2xl text-slate-300 ml-1">+</span>
+                                </p>
+                                <p className="text-sm font-bold text-slate-400">累積訪問次數</p>
+                            </div>
                         </div>
                     </motion.div>
 

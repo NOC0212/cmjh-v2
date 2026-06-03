@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useSettings } from "@/hooks/SettingsContext";
 import { useToast } from "@/hooks/use-toast";
+import { useSiteCountdowns } from "@/hooks/useSiteCountdowns";
 import { Reorder, AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { isImagePageBackground } from "@/lib/page-background";
@@ -117,75 +118,54 @@ export function CountdownTimer() {
     progressLabel: ""
   });
 
+  const { countdowns: supabaseDefaults } = useSiteCountdowns();
+
   // 載入倒數計時 (含伺服器同步邏輯)
   useEffect(() => {
-    const syncCountdowns = async () => {
-      let finalConfigs: CountdownConfig[] = [];
-      const stored = localStorage.getItem(STORAGE_KEY);
-      let localConfigs: CountdownConfig[] = [];
+    let finalConfigs: CountdownConfig[] = [];
+    const stored = localStorage.getItem(STORAGE_KEY);
+    let localConfigs: CountdownConfig[] = [];
 
-      // 1. 讀取本地快取
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          localConfigs = parsed.map((c: any) => ({
-            ...c,
-            targetDate: new Date(c.targetDate),
-            startDate: c.startDate ? new Date(c.startDate) : undefined,
-          }));
-        } catch (e) {
-          console.error("Local storage parse error:", e);
-        }
-      }
-
-      // 如果停用預設倒數計時，只載入自訂項目
-      if (settings.disableDefaultCountdowns) {
-        const customOnly = localConfigs.filter((c) => !c.isDefault);
-        setAllCountdowns(customOnly);
-        return;
-      }
-
-      // 2. 嘗試獲取伺服器預設值
+    // 1. 讀取本地快取
+    if (stored) {
       try {
-        const response = await fetch("/data/default-countdowns.json");
-        if (response.ok) {
-          const serverDefaults: any[] = await response.json();
-          const parsedDefaults: CountdownConfig[] = serverDefaults.map(c => ({
-            ...c,
-            targetDate: new Date(c.targetDate),
-            startDate: c.startDate ? new Date(c.startDate) : undefined,
-            isDefault: true
-          }));
-
-          if (localConfigs.length > 0) {
-            // 合併邏輯：
-            // a. 保留使用者的自訂項目 (!isDefault)
-            // b. 使用伺服器的新預設項目取代本地的舊預設項目
-            
-            // 為了保持排序，我們可以在預設項目後加上自訂項目
-            // 或者更進階：如果本地原本就有這些 ID，按原位置替換
-            finalConfigs = mergeCountdownConfigs(localConfigs, parsedDefaults);
-            
-            // 檢查是否有排序變動或是新項目提示
-            console.log("倒數計時器已與伺服器同步成功");
-          } else {
-            // 完全沒有本地資料，直接使用伺服器預設
-            finalConfigs = parsedDefaults;
-          }
-        } else {
-          throw new Error("Server response not ok");
-        }
-      } catch (error) {
-        console.warn("無法串接伺服器預設值，使用本地緩存或代碼預設:", error);
-        // 失敗時：若有本地資料就用本地，若無則用代碼硬編碼的備份
-        finalConfigs = localConfigs.length > 0 ? localConfigs : [];
+        const parsed = JSON.parse(stored);
+        localConfigs = parsed.map((c: any) => ({
+          ...c,
+          targetDate: new Date(c.targetDate),
+          startDate: c.startDate ? new Date(c.startDate) : undefined,
+        }));
+      } catch (e) {
+        console.error("Local storage parse error:", e);
       }
+    }
 
-      setAllCountdowns(finalConfigs);
-    };
+    // 如果停用預設倒數計時，只載入自訂項目
+    if (settings.disableDefaultCountdowns) {
+      const customOnly = localConfigs.filter((c) => !c.isDefault);
+      setAllCountdowns(customOnly);
+      return;
+    }
 
-    syncCountdowns();
-  }, [settings.disableDefaultCountdowns]);
+    // 2. 從 Supabase/JSON 獲取伺服器預設值
+    const parsedDefaults: CountdownConfig[] = (supabaseDefaults || []).map(c => ({
+      id: c.id,
+      targetDate: new Date(c.target_date),
+      startDate: c.start_date ? new Date(c.start_date) : undefined,
+      label: c.label,
+      progressLabel: c.progress_label,
+      isDefault: true
+    }));
+
+    if (localConfigs.length > 0) {
+      finalConfigs = mergeCountdownConfigs(localConfigs, parsedDefaults);
+      console.log("倒數計時器已與伺服器同步成功");
+    } else {
+      finalConfigs = parsedDefaults;
+    }
+
+    setAllCountdowns(finalConfigs);
+  }, [settings.disableDefaultCountdowns, supabaseDefaults]);
 
   // 自動持久化儲存
   useEffect(() => {

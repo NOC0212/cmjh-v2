@@ -12,12 +12,15 @@ import { SearchPage } from "@/components/SearchPage";
 import { SiteAnnouncementsPage } from "@/components/SiteAnnouncementsPage";
 import { FavoritesPage } from "@/components/FavoritesPage";
 import { SettingsPage } from "@/components/SettingsPage";
+import { AdminPanel } from "@/components/AdminPanel";
+import { VisitCounter } from "@/components/VisitCounter";
 import { useSettings } from "@/hooks/SettingsContext";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { getPageBackgroundStyle } from "@/lib/page-background";
 import { Skeleton } from "@/components/ui/skeleton";
 import MaintenanceModal from "@/components/MaintenanceModal";
 import { LatestAnnouncementModal } from "@/components/LatestAnnouncementModal";
+import { isMaintenanceWhitelisted } from "@/lib/app-version";
 import { MaintenanceConfig } from "@/App";
 import React from "react";
 
@@ -42,7 +45,7 @@ const Index = ({ maintenanceConfig }: IndexProps) => {
 
     // 渲染首頁組件
     const renderHomePageComponent = (id: string) => {
-        if (maintenanceConfig?.isMaintenance) {
+        if (maintenanceConfig?.isMaintenance && !isMaintenanceWhitelisted()) {
             return (
                 <div className="space-y-4 w-full">
                     <Skeleton className="h-48 w-full rounded-2xl" />
@@ -78,6 +81,8 @@ const Index = ({ maintenanceConfig }: IndexProps) => {
                 return <FavoritesPage />;
             case "settings":
                 return <SettingsPage />;
+            case "admin":
+                return <AdminPanel />;
             case "home":
             default:
                 return (
@@ -87,6 +92,8 @@ const Index = ({ maintenanceConfig }: IndexProps) => {
                                 {renderHomePageComponent(component.id)}
                             </HomeSection>
                         ))}
+                        {/* 頁尾上方的訪問計數器 */}
+                        <VisitCounter />
                     </div>
                 );
         }
@@ -120,13 +127,16 @@ const Index = ({ maintenanceConfig }: IndexProps) => {
                     {/* 版權資訊 - 在手機版如果不是首頁則隱藏，避免重疊 */}
                     {currentPage === "home" && (
                         <footer className="mt-12 border-t border-primary/20 bg-gradient-to-r from-background to-primary/5 py-12 px-4 lg:px-6 rounded-t-3xl text-center text-sm text-muted-foreground">
-                            <p>© 2026 崇明國中 by cy.noc0531</p>
+                            <div className="flex flex-col items-center gap-1">
+                                <p>© 2026 崇明國中 by cy.noc0531</p>
+
+                            </div>
                         </footer>
                     )}
                 </main>
 
-                {/* 維護模式彈窗 */}
-                {maintenanceConfig?.isMaintenance && (
+                {/* 維護模式彈窗（白名單使用者跳過） */}
+                {maintenanceConfig?.isMaintenance && !isMaintenanceWhitelisted() && (
                     <MaintenanceModal
                         isOpen={true}
                         maintenanceEndTime={maintenanceConfig.maintenanceEndTime}

@@ -1,39 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { Megaphone, Pin, ChevronDown, Bell, Zap, Info, Wrench } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
-
-interface SiteAnnouncement {
-    id: string;
-    title: string;
-    date: string;
-    type?: "update" | "alert" | "info" | "maintenance" | string;
-    pinned?: boolean;
-    content?: string;
-}
+import { useSiteAnnouncements } from "@/hooks/useSiteAnnouncements";
 
 export function SiteAnnouncementsPage() {
-    const [announcements, setAnnouncements] = useState<SiteAnnouncement[]>([]);
-    const [loading, setLoading] = useState(true);
+    const { announcements: rawAnnouncements, isLoading } = useSiteAnnouncements();
     const [expandedId, setExpandedId] = useState<string | null>(null);
 
-    useEffect(() => {
-        fetch("/data/site-announcements.json")
-            .then((res) => res.json())
-            .then((data: SiteAnnouncement[]) => {
-                // 將置頂的公告移到最前面
-                const sortedData = [...data].sort((a, b) => {
-                    if (a.pinned && !b.pinned) return -1;
-                    if (!a.pinned && b.pinned) return 1;
-                    return new Date(b.date).getTime() - new Date(a.date).getTime();
-                });
-                setAnnouncements(sortedData);
-                setLoading(false);
-            })
-            .catch(() => {
-                setLoading(false);
-            });
-    }, []);
+    // 將置頂的公告移到最前面
+    const announcements = useMemo(() => {
+        const sortedData = [...rawAnnouncements].sort((a, b) => {
+            if (a.pinned && !b.pinned) return -1;
+            if (!a.pinned && b.pinned) return 1;
+            return new Date(b.date).getTime() - new Date(a.date).getTime();
+        });
+        return sortedData;
+    }, [rawAnnouncements]);
 
     // 判斷是否為 7 天內的新公告
     const isNew = (dateStr: string) => {
@@ -77,7 +60,7 @@ export function SiteAnnouncementsPage() {
             </div>
 
             <div className="space-y-3">
-                {loading ? (
+                {isLoading ? (
                     <div className="text-center text-muted-foreground py-8 animate-pulse">
                         載入公告中...
                     </div>

@@ -1,13 +1,14 @@
-import { Home, Search, Megaphone, Star, Settings, School, RefreshCw } from "lucide-react";
+import { Home, Search, Megaphone, Star, Settings, School, RefreshCw, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useFavorites } from "@/hooks/useFavorites";
 import { AppSidebar } from "@/components/AppSidebar";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { isAdminUnlocked } from "@/lib/app-version";
 
 // 頁面選單類型定義
-export type NavPage = "home" | "search" | "announcements" | "favorites" | "settings";
+export type NavPage = "home" | "search" | "announcements" | "favorites" | "settings" | "admin";
 
 const navItems: { id: NavPage; label: string; icon: typeof Home }[] = [
     { id: "home", label: "主頁", icon: Home },
@@ -16,6 +17,11 @@ const navItems: { id: NavPage; label: string; icon: typeof Home }[] = [
     { id: "favorites", label: "收藏", icon: Star },
     { id: "settings", label: "設定", icon: Settings },
 ];
+
+// 管理分頁：預設隱藏，需在設定 > 系統資料點版本箭頭 5 下解鎖
+const adminNavItem: { id: NavPage; label: string; icon: typeof Home } = {
+    id: "admin", label: "管理", icon: Shield,
+};
 
 interface ResponsiveNavProps {
     currentPage: NavPage;
@@ -31,6 +37,11 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
     const handleRefresh = () => {
         window.location.reload();
     };
+
+    // 決定目前顯示的導航項目（管理分頁需解鎖才顯示）
+    const visibleItems = isAdminUnlocked()
+        ? [...navItems, adminNavItem]
+        : navItems;
 
     // 渲染導航按鈕項目
     const renderNavItem = (item: typeof navItems[0]) => {
@@ -119,7 +130,7 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
                 <div className="fixed bottom-4 left-0 right-0 px-4 z-50 pointer-events-none flex justify-center">
                     <nav className="image-bg-surface bg-background/40 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg rounded-full overflow-hidden touch-none select-none pointer-events-auto max-w-md w-full">
                         <div className="flex items-center justify-around h-14 w-full px-1">
-                            {navItems.map((item) => renderNavItem(item))}
+                            {visibleItems.map((item) => renderNavItem(item))}
                         </div>
                     </nav>
                 </div>
@@ -174,7 +185,7 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
 
             {/* 功能項區域 */}
             <div className={`flex-1 flex flex-col justify-center gap-2 w-full ${isHovered ? 'items-start' : 'items-center'}`}>
-                {navItems.map((item) => renderNavItem(item))}
+                {visibleItems.map((item) => renderNavItem(item))}
             </div>
 
             {/* 側邊欄腳部選單 */}

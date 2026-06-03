@@ -10,6 +10,7 @@
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps"><img src="https://img.shields.io/badge/PWA-enabled-blueviolet.svg" alt="PWA"></a>
   <a href="https://vercel.com"><img src="https://img.shields.io/badge/Deployed_on-Vercel-000000?logo=vercel&logoColor=white" alt="Vercel"></a>
+  <a href="https://supabase.com"><img src="https://img.shields.io/badge/Supabase-3FCF8E?logo=supabase&logoColor=white" alt="Supabase"></a>
   <a href=".github/workflows/"><img src="https://img.shields.io/badge/CI-GitHub_Actions-2088FF?logo=githubactions&logoColor=white" alt="GitHub Actions"></a>
 </p>
 
@@ -22,7 +23,32 @@ npm install
 npm run dev        # 啟動開發伺服器 → http://localhost:8080
 ```
 
-天氣功能需設定 `VITE_CWA_API_KEY`（至 [中央氣象署 OpenData](https://opendata.cwa.gov.tw) 申請）。未設定金鑰時仍可使用內建備用金鑰，但可能遇到請求頻率限制。
+天氣功能需設定 `CWA_API_KEY`（至 [中央氣象署 OpenData](https://opendata.cwa.gov.tw) 申請）。
+開發階段 Vite 會自動代理 `/api/weather` 請求至 CWA，金鑰保留在伺服器端不暴露給前端。
+正式部署時需在 **Vercel Dashboard > Settings > Environment Variables** 加入 `CWA_API_KEY`（詳見[建置與部署](#建置與部署)）。
+
+## Supabase 快速部署
+
+> 未設定 Supabase 時，網站仍可正常運作，僅訪問計數與管理後台功能停用。
+
+部分功能（訪問計數、管理後台、維護模式、版本管理）需要 Supabase 資料庫，如需啟用請依以下步驟設定：
+
+### 一鍵設定
+
+1. 建立免費 Supabase 專案 → https://supabase.com
+2. 進入 **SQL Editor**，貼上執行 [`supabase-setup-complete.sql`](./supabase-setup-complete.sql)（一個檔案搞定全部）
+3. 複製 **Settings > API** 中的 Project URL 和 anon key
+4. 複製 `.env.example` 為 `.env`，填入憑證：
+
+```ini
+VITE_SUPABASE_URL=https://你的專案.supabase.co
+VITE_SUPABASE_ANON_KEY=你的匿名金鑰
+CWA_API_KEY=你的氣象署金鑰（選填）
+```
+
+已有 Supabase 專案的既有使用者，直接重新執行 `supabase-setup-complete.sql` 即可升級（腳本已使用 `CREATE OR REPLACE` 等冪等語法，可安全重複執行）。
+
+> 密碼遷移說明：既有 SHA-256 密碼會在下次成功登入時自動升級為 bcrypt。
 
 ## 目錄
 
@@ -79,21 +105,60 @@ npm run dev        # 啟動開發伺服器 → http://localhost:8080
 
 ### 資料流向
 
+資料來源分為三個管道：
+
+**① Supabase 資料庫**（管理後台、倒數計時、站內公告、訪問計數）
+
+```
+┌──────────────────────────┐
+│       Supabase DB        │
+│  site_config             │
+│  site_countdowns         │
+│  site_announcements      │
+│  site_visits             │
+└──────┬────────┬──────────┘
+       │        │
+       ▼        ▼
+  TanStack   Supabase RPC
+   Query    (寫入: AdminPanel
+  (讀取)     CRUD、密碼驗證)
+       │        ▲
+       │        │
+       │  ┌─────┴──────┐
+       │  │ AdminPanel │
+       │  │ (需密碼驗證) │
+       │  └────────────┘
+       ▼
+  前端元件
+```
+
+**② 靜態 JSON**（行政公告、榮譽榜、午餐、行事曆等 — GitHub Actions 自動爬取）
+
 ```
 GitHub Actions (排程)
     │
-    ├── scraper.py ───────────→ announcements.json
-    ├── honors_scraper.py ────→ honors.json
-    └── lunch.py ─────────────→ lunch.json
-                                       │
-                                       ▼
-                              public/data/*.json
-                                       │
-                          ┌────────────┼────────────┐
-                          ▼            ▼            ▼
-                      TanStack   元件直接     維護模式
-                      Query       fetch       檢查
-                     (快取+重試)
+    ├── scraper.py      ──→ announcements.json
+    ├── honors_scraper.py ──→ honors.json
+    └── lunch.py         ──→ lunch.json
+                                  │
+                                  ▼
+                         public/data/*.json
+                                  │
+                                  ▼
+                    TanStack Query / 直接 fetch
+                    (快取+重試, 30分自動更新)
+                                  │
+                                  ▼
+                             前端元件
+```
+
+**③ 天氣 API**（中央氣象署即時資料）
+
+```
+前端元件 ──→ /api/weather (Vercel Edge Function) ──→ CWA OpenData API
+                  │
+         process.env.CWA_API_KEY
+         (金鑰保留在伺服器端)
 ```
 
 ## 核心功能
@@ -330,10 +395,10 @@ GitHub Actions (排程)
 | **路由** | React Router 6 (lazy loading, ErrorBoundary) |
 | **狀態管理** | TanStack Query + React Context (LocalStorage) |
 | **PWA** | vite-plugin-pwa (NetworkFirst, 1 天快取) |
-| **分析** | @vercel/analytics |
+| **資料庫** | Supabase (PostgreSQL + pgcrypto bcrypt) |
 | **爬蟲** | Python 3 + requests + BeautifulSoup 4 |
 | **排程** | GitHub Actions (cron) |
-| **部署** | Vercel (SPA rewrite rules) |
+| **部署** | Vercel (SPA rewrite rules + Edge Function) |
 
 ## 自動化資料流
 
@@ -422,6 +487,8 @@ src/
 │   ├── SiteAnnouncementsPage.tsx  # 站內公告
 │   ├── FirstTimeSetup.tsx   # 首次設定精靈
 │   ├── LatestAnnouncementModal.tsx # 最新公告彈窗
+│   ├── AdminPanel.tsx       # 管理後台
+│   ├── VisitCounter.tsx     # 訪問計數器
 │   ├── UpdatePrompt.tsx     # 版本更新提示
 │   ├── MaintenanceModal.tsx # 維護模式
 │   ├── ErrorBoundary.tsx    # 錯誤邊界
@@ -435,11 +502,19 @@ src/
 │   ├── useNotes.ts
 │   ├── useScrollAnimation.tsx
 │   ├── useComponentSettings.ts
-│   └── use-mobile.tsx
+│   ├── use-mobile.tsx
+│   ├── useSiteConfig.ts        # 站台設定（維護、版本、管理密碼）
+│   ├── useSiteCountdowns.ts    # 預設倒數計時（Supabase）
+│   ├── useSiteAnnouncements.ts # 站內公告（Supabase）
+│   └── useVisitCounter.ts      # 訪問計數器（Supabase）
+├── api/                 # Vercel Edge Functions
+│   └── weather.ts       # 天氣 API 代理
 ├── lib/                 # 工具函式
 │   ├── utils.ts
 │   ├── app-version.ts
-│   └── page-background.ts
+│   ├── page-background.ts
+│   ├── crypto.ts        # SHA-256 密碼雜湊
+│   └── supabase.ts      # Supabase 客戶端初始化
 └── pages/               # 路由頁面
     ├── Index.tsx        # 首頁
     ├── NotFound.tsx     # 404
@@ -481,6 +556,25 @@ npm run build
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
 ```
+
+#### 環境變數設定
+
+部署後須在 **Vercel Dashboard > Settings > Environment Variables** 加入以下變數：
+
+| 變數 | 必要 | 說明 |
+|------|------|------|
+| `VITE_SUPABASE_URL` | 選填（部分功能需要） | Supabase Project URL（Settings > API） |
+| `VITE_SUPABASE_ANON_KEY` | 選填（部分功能需要） | Supabase 匿名金鑰 |
+| `CWA_API_KEY` | 否 | 中央氣象署 API 金鑰（⚠️ **不含 `VITE_` 前綴**，僅伺服器端使用） |
+
+#### API 代理（天氣功能）
+
+`api/weather.ts` 是 Vercel Edge Function，代理中央氣象署天氣 API 請求：
+
+- 前端呼叫 `/api/weather?district=東區`
+- 伺服器端讀取 `CWA_API_KEY` 附加 Authorization 參數再轉發至 CWA
+- CWA 金鑰**不會暴露到瀏覽器端**
+- 開發時 Vite dev server 會自動代理 `/api/weather`（金鑰同樣保留在伺服器端）
 
 ## 授權
 

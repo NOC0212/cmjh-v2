@@ -10,7 +10,34 @@ export const STORAGE_KEYS = {
     SETUP_COMPLETED: "cmjh-first-setup-completed",
     SCRATCHPAD: "cmjh_scratchpad_notes",
     READ_ANNOUNCEMENTS: "cmjh-read-announcements",
+    MAINTENANCE_WHITELIST: "cmjh-maintenance-whitelist",
 };
+
+// 維護白名單：設定後可在維護模式中正常使用
+const MAINTENANCE_WHITELIST_KEY = STORAGE_KEYS.MAINTENANCE_WHITELIST;
+
+export function isMaintenanceWhitelisted(): boolean {
+  return localStorage.getItem(MAINTENANCE_WHITELIST_KEY) === "true";
+}
+
+export function setMaintenanceWhitelist(enabled: boolean) {
+  if (enabled) {
+    localStorage.setItem(MAINTENANCE_WHITELIST_KEY, "true");
+  } else {
+    localStorage.removeItem(MAINTENANCE_WHITELIST_KEY);
+  }
+}
+
+// 管理後台解鎖狀態（設定 > 系統資料 > 版本箭頭點 5 下解鎖）
+const ADMIN_UNLOCK_KEY = "cmjh-admin-unlocked";
+
+export function isAdminUnlocked(): boolean {
+  return localStorage.getItem(ADMIN_UNLOCK_KEY) === "true";
+}
+
+export function unlockAdmin() {
+  localStorage.setItem(ADMIN_UNLOCK_KEY, "true");
+}
 
 export function getCurrentVersion(): string {
     return localStorage.getItem(VERSION_STORAGE_KEY) || "";

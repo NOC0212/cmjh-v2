@@ -10,8 +10,6 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
-// 從環境變數讀取 API 金鑰，如果沒有設置則使用預設值（僅用於開發）
-const API_KEY = import.meta.env.VITE_CWA_API_KEY || "CWA-35A44161-D173-480D-993E-93CDF144E198";
 
 const DISTRICTS = [
   { value: "中西區", label: "中西區" },
@@ -120,9 +118,7 @@ export const WeatherWidget = () => {
   const fetchWeather = useCallback(async (district: string) => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-079?Authorization=${API_KEY}&locationName=${encodeURIComponent(district)}`
-      );
+      const response = await fetch(`/api/weather?district=${encodeURIComponent(district)}`);
       const data = await response.json();
 
       if (data.success === "true") {

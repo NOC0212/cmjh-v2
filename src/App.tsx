@@ -8,8 +8,8 @@ import { FirstTimeSetup, checkFirstTimeSetup } from "@/components/FirstTimeSetup
 import { UpdatePrompt } from "@/components/UpdatePrompt";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Loading } from "@/components/Loading";
-import { Analytics } from "@vercel/analytics/react";
-import { ensureVersion } from "@/lib/app-version";
+import { ensureVersion, isMaintenanceWhitelisted } from "@/lib/app-version";
+import { useSiteConfig } from "@/hooks/useSiteConfig";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -38,186 +38,208 @@ import { SettingsProvider } from "./hooks/SettingsContext";
 
 const App = () => {
   const [setupCompleted, setSetupCompleted] = useState(() => checkFirstTimeSetup());
-  const [maintenanceConfig, setMaintenanceConfig] = useState<MaintenanceConfig | null>(null);
-  const [loadingMaintenance, setLoadingMaintenance] = useState(true);
-  const [showLoadingUi, setShowLoadingUi] = useState(false);
 
   useEffect(() => {
     ensureVersion();
-
-    // 只有當讀取超過 200ms 時才顯示載入畫面，避免閃爍
-    const loadingTimer = setTimeout(() => {
-      setShowLoadingUi(true);
-    }, 200);
-
-    const fetchMaintenance = async () => {
-      try {
-        const response = await fetch("/data/maintenance.json");
-        const data = await response.json();
-        setMaintenanceConfig(data);
-      } catch (error) {
-        console.error("Failed to fetch maintenance config:", error);
-      } finally {
-        setLoadingMaintenance(false);
-        clearTimeout(loadingTimer);
-      }
-    };
-    fetchMaintenance();
-
-    return () => clearTimeout(loadingTimer);
   }, []);
 
-  if (loadingMaintenance) {
-    return showLoadingUi ? <Loading fullScreen message="正在讀取設定..." /> : null;
+  // 首次設定流程：不需要 QueryClient / 維護設定
+  if (!setupCompleted) {
+    return (
+      <ErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+            <Routes>
+              <Route
+                path="/home"
+                element={
+                  <FirstTimeSetup
+                    onComplete={() => {
+                      setSetupCompleted(true);
+                      window.location.href = "/";
+                    }}
+                  />
+                }
+              />
+              <Route path="*" element={<Navigate to="/home" replace />} />
+            </Routes>
+          </BrowserRouter>
+        </QueryClientProvider>
+      </ErrorBoundary>
+    );
   }
 
-
-  // 已完成設定，顯示正常應用
   return (
     <ErrorBoundary>
-      <Analytics />
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <SettingsProvider>
-            {setupCompleted && <UpdatePrompt isHidden={maintenanceConfig?.isMaintenance} />}
-            <Toaster />
-            <Sonner />
-            <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-              <ErrorBoundary>
-                <Routes>
-                  {!setupCompleted ? (
-                    <>
-                      <Route 
-                        path="/home" 
-                        element={<FirstTimeSetup onComplete={() => {
-                          setSetupCompleted(true);
-                          window.location.href = '/';
-                        }} />} 
-                      />
-                      <Route path="*" element={<Navigate to="/home" replace />} />
-                    </>
-                  ) : maintenanceConfig?.isMaintenance ? (
-                    <Route 
-                      path="*" 
-                      element={
-                        <ErrorBoundary>
-                          <Index maintenanceConfig={maintenanceConfig} />
-                        </ErrorBoundary>
-                      } 
-                    />
-                  ) : (
-                    <>
-                      <Route
-                        path="/"
-                        element={
-                          <ErrorBoundary>
-                            <Index maintenanceConfig={maintenanceConfig} />
-                          </ErrorBoundary>
-                        }
-                      />
-                      <Route
-                        path="/home"
-                        element={
-                          <ErrorBoundary>
-                            <FirstTimeSetup onComplete={() => window.location.href = '/'} />
-                          </ErrorBoundary>
-                        }
-                      />
-
-                      {/* 工具頁面路由 - 使用代碼分割和錯誤邊界 */}
-                      <Route
-                        path="/tools/wheel"
-                        element={
-                          <ErrorBoundary>
-                            <Suspense fallback={<Loading fullScreen message="載入輪盤工具..." />}>
-                              <Wheel />
-                            </Suspense>
-                          </ErrorBoundary>
-                        }
-                      />
-                      <Route
-                        path="/tools/grouping"
-                        element={
-                          <ErrorBoundary>
-                            <Suspense fallback={<Loading fullScreen message="載入分組工具..." />}>
-                              <Grouping />
-                            </Suspense>
-                          </ErrorBoundary>
-                        }
-                      />
-                      <Route
-                        path="/tools/order"
-                        element={
-                          <ErrorBoundary>
-                            <Suspense fallback={<Loading fullScreen message="載入順序工具..." />}>
-                              <Order />
-                            </Suspense>
-                          </ErrorBoundary>
-                        }
-                      />
-                      <Route
-                        path="/tools/clock"
-                        element={
-                          <ErrorBoundary>
-                            <Suspense fallback={<Loading fullScreen message="載入時鐘..." />}>
-                              <Clock />
-                            </Suspense>
-                          </ErrorBoundary>
-                        }
-                      />
-                      <Route
-                        path="/tools/timer"
-                        element={
-                          <ErrorBoundary>
-                            <Suspense fallback={<Loading fullScreen message="載入計時器..." />}>
-                              <Timer />
-                            </Suspense>
-                          </ErrorBoundary>
-                        }
-                      />
-                      <Route
-                        path="/tools/qrcode"
-                        element={
-                          <ErrorBoundary>
-                            <Suspense fallback={<Loading fullScreen message="載入 QR Code 工具..." />}>
-                              <QRCode />
-                            </Suspense>
-                          </ErrorBoundary>
-                        }
-                      />
-                      <Route
-                        path="/tools/whiteboard"
-                        element={
-                          <ErrorBoundary>
-                            <Suspense fallback={<Loading fullScreen message="載入電子白板..." />}>
-                              <Whiteboard />
-                            </Suspense>
-                          </ErrorBoundary>
-                        }
-                      />
-                      <Route
-                        path="/tools/attendance"
-                        element={
-                          <ErrorBoundary>
-                            <Suspense fallback={<Loading fullScreen message="載入課堂點名..." />}>
-                              <Attendance />
-                            </Suspense>
-                          </ErrorBoundary>
-                        }
-                      />
-
-                      {/* 在 CATCH-ALL "*" 路由之前添加所有自定義路由 */}
-                      <Route path="*" element={<NotFound />} />
-                    </>
-                  )}
-                </Routes>
-              </ErrorBoundary>
-            </BrowserRouter>
+            <AppContent />
           </SettingsProvider>
         </TooltipProvider>
       </QueryClientProvider>
     </ErrorBoundary>
   );
 };
+
+/**
+ * 內部元件：在 QueryClientProvider + SettingsProvider 內部執行，
+ * 因此可以使用 useSiteConfig 等依賴 React Query 的 Hook。
+ */
+function AppContent() {
+  const { maintenance: maintenanceConfig, isLoading: loadingMaintenance } = useSiteConfig();
+  const [showLoadingUi, setShowLoadingUi] = useState(false);
+
+  useEffect(() => {
+    const loadingTimer = setTimeout(() => {
+      setShowLoadingUi(true);
+    }, 200);
+
+    if (!loadingMaintenance) {
+      clearTimeout(loadingTimer);
+      setShowLoadingUi(false);
+    }
+
+    return () => clearTimeout(loadingTimer);
+  }, [loadingMaintenance]);
+
+  // 維護設定載入中，顯示 loading 畫面
+  if (loadingMaintenance && !maintenanceConfig) {
+    return showLoadingUi ? <Loading fullScreen message="正在讀取設定..." /> : null;
+  }
+
+  // 檢查維護白名單：若使用者已設定白名單，則跳過維護模式封鎖
+  const bypassMaintenance = maintenanceConfig?.isMaintenance && isMaintenanceWhitelisted();
+  const effectiveMaintenance = !bypassMaintenance && maintenanceConfig?.isMaintenance;
+
+  return (
+    <>
+      <UpdatePrompt isHidden={maintenanceConfig?.isMaintenance} />
+      <Toaster />
+      <Sonner />
+      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <ErrorBoundary>
+          <Routes>
+            {effectiveMaintenance ? (
+              <Route
+                path="*"
+                element={
+                  <ErrorBoundary>
+                    <Index maintenanceConfig={maintenanceConfig} />
+                  </ErrorBoundary>
+                }
+              />
+            ) : (
+              <>
+                <Route
+                  path="/"
+                  element={
+                    <ErrorBoundary>
+                      <Index maintenanceConfig={maintenanceConfig} />
+                    </ErrorBoundary>
+                  }
+                />
+                <Route
+                  path="/home"
+                  element={
+                    <ErrorBoundary>
+                      <FirstTimeSetup onComplete={() => (window.location.href = "/")} />
+                    </ErrorBoundary>
+                  }
+                />
+
+                {/* 工具頁面路由 - 使用代碼分割和錯誤邊界 */}
+                <Route
+                  path="/tools/wheel"
+                  element={
+                    <ErrorBoundary>
+                      <Suspense fallback={<Loading fullScreen message="載入輪盤工具..." />}>
+                        <Wheel />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+                <Route
+                  path="/tools/grouping"
+                  element={
+                    <ErrorBoundary>
+                      <Suspense fallback={<Loading fullScreen message="載入分組工具..." />}>
+                        <Grouping />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+                <Route
+                  path="/tools/order"
+                  element={
+                    <ErrorBoundary>
+                      <Suspense fallback={<Loading fullScreen message="載入順序工具..." />}>
+                        <Order />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+                <Route
+                  path="/tools/clock"
+                  element={
+                    <ErrorBoundary>
+                      <Suspense fallback={<Loading fullScreen message="載入時鐘..." />}>
+                        <Clock />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+                <Route
+                  path="/tools/timer"
+                  element={
+                    <ErrorBoundary>
+                      <Suspense fallback={<Loading fullScreen message="載入計時器..." />}>
+                        <Timer />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+                <Route
+                  path="/tools/qrcode"
+                  element={
+                    <ErrorBoundary>
+                      <Suspense fallback={<Loading fullScreen message="載入 QR Code 工具..." />}>
+                        <QRCode />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+                <Route
+                  path="/tools/whiteboard"
+                  element={
+                    <ErrorBoundary>
+                      <Suspense fallback={<Loading fullScreen message="載入電子白板..." />}>
+                        <Whiteboard />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+                <Route
+                  path="/tools/attendance"
+                  element={
+                    <ErrorBoundary>
+                      <Suspense fallback={<Loading fullScreen message="載入課堂點名..." />}>
+                        <Attendance />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
+
+                <Route path="*" element={<NotFound />} />
+              </>
+            )}
+          </Routes>
+        </ErrorBoundary>
+      </BrowserRouter>
+    </>
+  );
+}
 
 export default App;

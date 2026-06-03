@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar, Megaphone, BellRing } from "lucide-react";
 import { useSettings } from "@/hooks/SettingsContext";
 import { getCurrentVersion, LATEST_VERSION, STORAGE_KEYS } from "@/lib/app-version";
+import { useSiteAnnouncements } from "@/hooks/useSiteAnnouncements";
 
 interface SiteAnnouncement {
   id: string;
@@ -21,6 +22,7 @@ let isUpdateDismissedInSession = false;
 
 export function LatestAnnouncementModal() {
   const { settings, setShowLatestAnnouncementOnStartup } = useSettings();
+  const { announcements: allAnnouncements } = useSiteAnnouncements();
   const [isOpen, setIsOpen] = useState(false);
   const [unreadAnns, setUnreadAnns] = useState<SiteAnnouncement[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -33,7 +35,7 @@ export function LatestAnnouncementModal() {
   useEffect(() => {
     if (!settings.showLatestAnnouncementOnStartup) return;
 
-    const checkLatestAnnouncement = async (isManualTrigger = false) => {
+    const checkLatestAnnouncement = (isManualTrigger = false) => {
       if (!isManualTrigger && hasCheckedInSession) return;
 
       const currentVersion = getCurrentVersion();
@@ -47,36 +49,30 @@ export function LatestAnnouncementModal() {
         return;
       }
 
-      try {
-        const res = await fetch("/data/site-announcements.json");
-        const data: SiteAnnouncement[] = await res.json();
-        if (!data?.length) return;
+      if (!allAnnouncements?.length) return;
 
-        const sortedData = [...data].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-        const now = new Date();
-        const readStr = localStorage.getItem(READ_ANNOUNCEMENTS_KEY);
-        const readList: string[] = readStr ? JSON.parse(readStr) : [];
+      const sortedData = [...allAnnouncements].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      const now = new Date();
+      const readStr = localStorage.getItem(READ_ANNOUNCEMENTS_KEY);
+      const readList: string[] = readStr ? JSON.parse(readStr) : [];
 
-        const recentUnread = sortedData.filter((ann) => {
-          const annDate = new Date(ann.date);
-          const diffTime = Math.abs(now.getTime() - annDate.getTime());
-          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-          return diffDays <= 7 && !readList.includes(ann.id);
-        });
+      const recentUnread = sortedData.filter((ann) => {
+        const annDate = new Date(ann.date);
+        const diffTime = Math.abs(now.getTime() - annDate.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays <= 7 && !readList.includes(ann.id);
+      });
 
-        if (!recentUnread.length) return;
+      if (!recentUnread.length) return;
 
-        setUnreadAnns(recentUnread);
-        setCurrentIndex(0);
-        hasCheckedInSession = true;
+      setUnreadAnns(recentUnread);
+      setCurrentIndex(0);
+      hasCheckedInSession = true;
 
-        if (isManualTrigger) {
-          setIsOpen(true);
-        } else {
-          setTimeout(() => setIsOpen(true), 800);
-        }
-      } catch (error) {
-        console.error("Failed to fetch latest announcement:", error);
+      if (isManualTrigger) {
+        setIsOpen(true);
+      } else {
+        setTimeout(() => setIsOpen(true), 800);
       }
     };
 
@@ -89,7 +85,7 @@ export function LatestAnnouncementModal() {
 
     window.addEventListener("update-prompt-closed", handleUpdateClosed);
     return () => window.removeEventListener("update-prompt-closed", handleUpdateClosed);
-  }, [settings.showLatestAnnouncementOnStartup]);
+  }, [settings.showLatestAnnouncementOnStartup, allAnnouncements]);
 
   const handleNextOrClose = () => {
     if (currentIndex < unreadAnns.length - 1) {

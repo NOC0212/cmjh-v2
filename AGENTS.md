@@ -50,8 +50,34 @@ Dependencies: `requests`, `beautifulsoup4` (see `requirements.txt`).
 
 ## Environment
 
-Copy `.env.example` to `.env` and set `VITE_CWA_API_KEY` (Central Weather Administration API key from https://opendata.cwa.gov.tw). Weather feature works without it but may hit rate limits.
+Copy `.env.example` to `.env` and fill in the required environment variables:
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `VITE_SUPABASE_URL` | Yes (visit counter, admin) | Supabase project URL (Settings > API) |
+| `VITE_SUPABASE_ANON_KEY` | Yes (visit counter, admin) | Supabase anon/public key (Settings > API) |
+| `CWA_API_KEY` | No | Central Weather Administration API key (server-side only, no `VITE_` prefix). Set in Vercel Dashboard or local `.env` for dev proxy. |
+
+### Supabase Setup
+
+1. Create a free project at https://supabase.com
+2. Go to **SQL Editor** and run `supabase-setup-complete.sql` (in the project root)
+3. Copy your project URL and anon key from **Settings > API** into `.env`
+4. If upgrading from an older version, run `supabase-migration-bcrypt.sql` instead to add bcrypt support
+
+The visit counter increments once per page load via a secure PostgreSQL function (`SECURITY DEFINER`). Row Level Security ensures the anon role can only read and call the increment function — no direct writes.
+
+Admin passwords are hashed with bcrypt (via `pgcrypto` extension) on the database side for storage, and SHA-256 on the client side for transport — raw passwords never leave the browser.
+
+## API Routes
+
+- `api/weather.ts` — Vercel Edge Function that proxies Central Weather Administration API requests. Requires `CWA_API_KEY` environment variable on the server.
 
 ## Deploy
 
 Vercel with SPA rewrite rule (all non-file routes → `index.html`, see `vercel.json`).
+
+Set the following environment variables in Vercel Dashboard > Settings > Environment Variables:
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+- `CWA_API_KEY` (optional, for weather widget — no `VITE_` prefix)

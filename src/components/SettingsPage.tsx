@@ -26,7 +26,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useSettings } from "@/hooks/SettingsContext";
 import { useToast } from "@/hooks/use-toast";
-import { getCurrentVersion, LATEST_VERSION, exportUserData, importUserData } from "@/lib/app-version";
+import { getCurrentVersion, LATEST_VERSION, exportUserData, importUserData, isAdminUnlocked, unlockAdmin } from "@/lib/app-version";
 import { cn } from "@/lib/utils";
 
 const MODES = [
@@ -471,9 +471,7 @@ export function SettingsPage() {
                                                         <p className="mb-1 text-[10px] font-bold uppercase text-muted-foreground">目前版本</p>
                                                         <p className="font-mono text-lg font-black">{currentVersion || "v1.0.0"}</p>
                                                     </div>
-                                                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
-                                                        <RefreshCw className={cn("h-4 w-4 text-primary", canUpdate && "animate-spin-slow")} />
-                                                    </div>
+                                                    <AdminUnlockButton />
                                                     <div className="flex-1 rounded-2xl border border-primary/20 bg-primary/5 p-4">
                                                         <p className="mb-1 text-[10px] font-bold uppercase text-primary">最新版本</p>
                                                         <p className="font-mono text-lg font-black">{LATEST_VERSION}</p>
@@ -668,6 +666,47 @@ function LayoutSection({
             )}
         </div>
     );
+}
+
+/** 版本資訊區的隱藏解鎖按鈕：點 5 下解鎖管理後台 */
+function AdminUnlockButton() {
+  const { toast } = useToast();
+  const [clickCount, setClickCount] = useState(0);
+  const alreadyUnlocked = isAdminUnlocked();
+
+  const handleClick = () => {
+    if (alreadyUnlocked) {
+      toast({ title: "管理後台已解鎖 🎉", description: "請返回主頁即可看到管理分頁" });
+      return;
+    }
+
+    const next = clickCount + 1;
+    setClickCount(next);
+
+    if (next >= 5) {
+      unlockAdmin();
+      toast({
+        title: "🔓 管理後台已解鎖",
+        description: "請返回主頁即可看到管理分頁",
+      });
+      setClickCount(0);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 transition-all hover:bg-primary/20 hover:scale-110 active:scale-90"
+      title={alreadyUnlocked ? "管理後台已解鎖" : `點擊解鎖管理後台 (${clickCount}/5)`}
+    >
+      <RefreshCw
+        className={cn(
+          "h-4 w-4 text-primary transition-all",
+          alreadyUnlocked && "text-green-500",
+        )}
+      />
+    </button>
+  );
 }
 
 function SortableItem({
