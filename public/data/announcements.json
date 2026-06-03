@@ -40,6 +40,32 @@
         "date": "2026-06-03",
         "category": "研習",
         "source": "教務處",
+        "title": "「美感智能閱讀計畫-安妮新聞」115-1新進種子教師招募計畫，歡迎本校教師踴躍報名參加",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=317&type=news&from_op=all_news",
+        "content": "說明：\n一、依據教育部115年5月29日臺教師(一)字第1150051533號函辦理。\n二、種子教師招募資訊：\n(一)招募對象：有意願於115-1學期使用美感智能閱讀刊物《安妮新聞》報紙於課堂中的國小、國中及高中職教師均可報名參與，不限學科及課程實施時數。\n(二)報名時間：115年6月1日（星期一）起至115年7月8日（星期三）止。\n(三)報名方式：線上填寫報名表單。\n(四)報名連結：\n《安妮新聞》種子教師報名表單連結\n。\n三、另辦理線上招募說明會：\n(一)活動時間：115年6月24日（星期三）下午1時30分至3時30分。\n(二)活動方式：活動前一週以e-mail提供Webex線上活動連結，會後提供影片檔。\n(三)報名方式：線上填寫種子教師報名表單，即日起至115年6月22日（星期一）止。\n四、本案相關事宜請洽聯絡人：國立成功大學計畫助理巫小姐，電話：06-2757575#50670，電子信箱critade@ncku.edu.tw。\n五、附上種子教師招募計畫書、申請辦法簡報及成果報告書各1份，請逕行下載參閱。",
+        "attachments": [
+            {
+                "name": "成果報告書(閱讀推廣版).pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=成果報告書(閱讀推廣版).pdf&files_sn=223"
+            },
+            {
+                "name": "成果報告書(原創設計與教案參考版).pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=成果報告書(原創設計與教案參考版).pdf&files_sn=224"
+            },
+            {
+                "name": "種子教師招募計畫書.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=種子教師招募計畫書.pdf&files_sn=225"
+            },
+            {
+                "name": "申請辦法簡報.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=申請辦法簡報.pdf&files_sn=226"
+            }
+        ]
+    },
+    {
+        "date": "2026-06-03",
+        "category": "研習",
+        "source": "教務處",
         "title": "台南市115年度科學教育「校園生物多樣性暨蝴蝶養殖親子手作營」研習，請本校師生踴躍報名參加",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=316&type=news&from_op=all_news",
         "content": "說明：\n一、依據「臺南市115年度科學教育總體計畫」辦理。\n二、本活動重要資訊摘述如下：\n(一)時間及地點：115年8月22日 (六)09:00-14:30\n(二)參加對象：\n本市國中小自然領域教師(含代理代課教師)或對生物多樣性及蝴蝶養殖有興趣的親子。\n本計畫為親子探索營，計15組(親子 2 人 1組)共30人，額滿為止(因材料份數固定，已報名者請勿缺席)。不接受現場報名。\n(三)報名方式：自公告日起，請至\n科學教育總體計畫活動Google報名表單\n報名，依完成報名之先後順序錄取，額滿立即公告於\n新營國小學校網站\n，請上網確認是否報名成功，不接受現場報名。\n(四)檢附實施計畫詳如附件。\n(五)本案聯絡人：新營國小教務處陳意佳主任，06-6322136#111。",
@@ -322,14 +348,5 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=招生簡章.pdf&files_sn=190"
             }
         ]
-    },
-    {
-        "date": "2026-06-01",
-        "category": "活動",
-        "source": "教務處",
-        "title": "英語歌唱直播網址",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=260&type=news&from_op=all_news",
-        "content": "英語歌唱直播網址",
-        "attachments": []
     }
 ]
