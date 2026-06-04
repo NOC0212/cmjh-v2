@@ -40,15 +40,20 @@ export default async function handler(
 
     console.log(`[Weather Proxy] Fetching: ${targetUrl.replace(apiKey, "***")}`);
 
-    // 加上 Accept header 確保 CWA 回傳 JSON 而非 HTML
+    // 加上瀏覽器風格的 headers 繞過 CWA WAF 封鎖
+    // 同時在 URL query 和 header 傳送 Authorization（部分 WAF 對 URL 參數較敏感）
     const res = await fetch(targetUrl, {
       headers: {
         "Accept": "application/json",
+        "Accept-Language": "zh-TW,zh;q=0.9,en;q=0.8",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+        "Referer": "https://opendata.cwa.gov.tw/",
+        "Authorization": apiKey,
       },
     });
 
     // 先檢查 CWA 回傳的 HTTP 狀態碼
-    const contentType = res.headers.get("content-type") || "";
+    const contentType = (res.headers.get("content-type") || "").toLowerCase();
     if (!res.ok || !contentType.includes("json")) {
       let body = "";
       try {
@@ -95,6 +100,4 @@ export default async function handler(
   }
 }
 
-export const config = {
-  runtime: "edge",
-};
+// 使用 Vercel 預設的 Node.js Serverless Function（避免 CWA WAF 封鎖 Edge 網路 IP）
