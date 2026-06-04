@@ -46,10 +46,6 @@ VITE_SUPABASE_ANON_KEY=你的匿名金鑰
 CWA_API_KEY=你的氣象署金鑰（選填）
 ```
 
-已有 Supabase 專案的既有使用者，直接重新執行 `supabase-setup-complete.sql` 即可升級（腳本已使用 `CREATE OR REPLACE` 等冪等語法，可安全重複執行）。
-
-> 密碼遷移說明：既有 SHA-256 密碼會在下次成功登入時自動升級為 bcrypt。
-
 ## 目錄
 
 - [架構總覽](#架構總覽)
@@ -187,7 +183,7 @@ GitHub Actions (排程)
 - **多組管理**：左右切換瀏覽多個倒數目標，顯示目前進度 (1/N)
 - **動態進度條**：從起始日至目標日的即時完成百分比 (自動計算)
 - **完整 CRUD**：新增、編輯、刪除、拖曳排序 (Framer Motion)
-- **伺服器同步**：從 `default-countdowns.json` 載入預設值，合併本地自訂項目
+- **伺服器同步**：從 Supabase `site_countdowns` 表載入預設值，合併本地自訂項目
 - **時區校正**：強制以台灣時間 (UTC+8) 計算
 - **目標達成動畫**：時間到時顯示慶祝畫面 🎉
 
@@ -354,7 +350,7 @@ GitHub Actions (排程)
 
 ### 維護模式 (MaintenanceModal)
 
-透過 `public/data/maintenance.json` 控制：
+透過管理後台設定，資料儲存在 Supabase `site_config` 表中的 `maintenance` JSONB 欄位：
 
 ```json
 {
@@ -378,7 +374,7 @@ GitHub Actions (排程)
 
 ### 最新公告彈窗 (LatestAnnouncementModal)
 
-- 啟動時自動讀取 `site-announcements.json`
+- 啟動時自動從 Supabase `site_announcements` 表載入
 - 過濾出 7 天內未讀公告，依序顯示
 - 支援「下一則」「略過」「不再顯示」互動
 - 已讀狀態記錄在 localStorage
@@ -426,10 +422,7 @@ public/data/
 ├── lunch.json              # 營養午餐當日菜單
 ├── announcements.json      # 行政公告清單
 ├── honors.json             # 榮譽榜資料
-├── calendar.json           # 校園行事曆
-├── site-announcements.json # 站內公告
-├── maintenance.json        # 維護模式設定
-└── default-countdowns.json # 預設倒數計時項目
+├── calendar.json           # 校園行事曆 (由 GitHub Actions 自動更新)
 ```
 
 #### 資料格式範例 (lunch.json)

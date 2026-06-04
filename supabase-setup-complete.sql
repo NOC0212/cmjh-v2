@@ -5,7 +5,7 @@
 -- ============================================
 
 -- ============================================
--- 第一部：訪問計數器（site_visits）
+-- 第一部：訪問計數器（site_visits + visit_daily）
 -- ============================================
 
 -- 1. 建立訪問計數表
@@ -21,7 +21,29 @@ CREATE TABLE IF NOT EXISTS site_visits (
 INSERT INTO site_visits (id, count) VALUES (1, 0)
 ON CONFLICT (id) DO NOTHING;
 
--- 3. 建立遞增函數（跨日自動重置今日計數）
+-- 3. 建立每日訪問統計表（1 天只存 1 列，節省空間）
+CREATE TABLE IF NOT EXISTS visit_daily (
+  date DATE PRIMARY KEY,
+  count INTEGER NOT NULL DEFAULT 0
+);
+
+ALTER TABLE visit_daily ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Anyone can read visit_daily" ON visit_daily;
+CREATE POLICY "Anyone can read visit_daily" ON visit_daily
+  FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Anyone can insert visit_daily" ON visit_daily;
+CREATE POLICY "Anyone can insert visit_daily" ON visit_daily
+  FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Anyone can update visit_daily" ON visit_daily;
+CREATE POLICY "Anyone can update visit_daily" ON visit_daily
+  FOR UPDATE USING (true);
+
+GRANT SELECT, INSERT, UPDATE ON visit_daily TO anon;
+
+-- 4. 建立遞增函數（跨日自動重置今日計數 + 寫入每日統計）
 DROP FUNCTION IF EXISTS increment_visit_count() CASCADE;
 
 CREATE FUNCTION increment_visit_count()
@@ -38,16 +60,21 @@ BEGIN
     UPDATE site_visits SET today_count = 0, today_date = CURRENT_DATE WHERE id = 1;
   END IF;
 
+  -- 遞增計數器
   UPDATE site_visits
   SET count = count + 1, today_count = today_count + 1, updated_at = NOW()
   WHERE id = 1
   RETURNING json_build_object('total', count, 'today', today_count) INTO v_result;
 
+  -- 寫入每日統計（當天已有就 +1，沒有就新增）
+  INSERT INTO visit_daily (date, count) VALUES (CURRENT_DATE, 1)
+  ON CONFLICT (date) DO UPDATE SET count = visit_daily.count + 1;
+
   RETURN v_result;
 END;
 $$;
 
--- 4. 唯讀函數（純讀取不遞增）
+-- 5. 唯讀函數——純讀取總數與今日（不遞增）
 CREATE OR REPLACE FUNCTION get_visit_stats()
 RETURNS JSON
 LANGUAGE sql
@@ -60,6 +87,51 @@ AS $$
   WHERE id = 1;
 $$;
 
+-- 6. 取得分時段訪問統計（從每日統計表計算）
+CREATE OR REPLACE FUNCTION get_visit_stats_by_period()
+RETURNS JSON
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path = 'public'
+STABLE
+AS $$
+  SELECT json_build_object(
+    'today',
+    COALESCE((SELECT count FROM visit_daily WHERE date = CURRENT_DATE), 0)::int,
+    'this_week',
+    COALESCE((SELECT SUM(count)::int FROM visit_daily WHERE date >= date_trunc('week', CURRENT_DATE)::date), 0),
+    'this_month',
+    COALESCE((SELECT SUM(count)::int FROM visit_daily WHERE date_trunc('month', date) = date_trunc('month', CURRENT_DATE)::date), 0),
+    'this_year',
+    COALESCE((SELECT SUM(count)::int FROM visit_daily WHERE date_trunc('year', date) = date_trunc('year', CURRENT_DATE)::date), 0),
+    'total',
+    COALESCE((SELECT count FROM site_visits WHERE id = 1), 0)::int
+  );
+$$;
+
+-- 7. 取得每日訪問趨勢（供圖表使用，回傳最近 N 天）
+CREATE OR REPLACE FUNCTION get_daily_visits(days INTEGER DEFAULT 30)
+RETURNS JSON
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path = 'public'
+STABLE
+AS $$
+  SELECT COALESCE(
+    (SELECT json_agg(
+      json_build_object(
+        'date', d.date::text,
+        'count', d.count
+      )
+      ORDER BY d.date ASC
+    )::text::json
+    FROM visit_daily d
+    WHERE d.date >= (CURRENT_DATE - (days - 1)::integer)
+      AND d.date <= CURRENT_DATE),
+    '[]'::json
+  );
+$$;
+
 ALTER TABLE site_visits ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Anyone can read visit count" ON site_visits;
@@ -68,13 +140,15 @@ CREATE POLICY "Anyone can read visit count" ON site_visits
 
 GRANT EXECUTE ON FUNCTION increment_visit_count() TO anon;
 GRANT EXECUTE ON FUNCTION get_visit_stats() TO anon;
+GRANT EXECUTE ON FUNCTION get_visit_stats_by_period() TO anon;
+GRANT EXECUTE ON FUNCTION get_daily_visits(INTEGER) TO anon;
 
 
 -- ============================================
 -- 第二部：站台設定與管理後台
 -- ============================================
 
--- 5. 站台設定表（單行，id 固定為 1）
+-- 8. 站台設定表（單行，id 固定為 1）
 CREATE TABLE IF NOT EXISTS site_config (
   id INTEGER PRIMARY KEY DEFAULT 1 CHECK (id = 1),
   password_hash TEXT NOT NULL DEFAULT '',
@@ -101,7 +175,7 @@ VALUES (
 )
 ON CONFLICT (id) DO NOTHING;
 
--- 6. 預設倒數計時表
+-- 9. 預設倒數計時表
 CREATE TABLE IF NOT EXISTS site_countdowns (
   id TEXT PRIMARY KEY,
   target_date TIMESTAMPTZ NOT NULL,
@@ -120,7 +194,7 @@ INSERT INTO site_countdowns (id, target_date, start_date, label, progress_label,
   ('default-3', '2026-12-31T16:00:00Z', '2025-12-31T16:00:00Z', '2027年倒數', '2026年進度條', 2)
 ON CONFLICT (id) DO NOTHING;
 
--- 7. 站台公告表
+-- 10. 站台公告表
 CREATE TABLE IF NOT EXISTS site_announcements (
   id TEXT PRIMARY KEY,
   title TEXT NOT NULL,
@@ -138,7 +212,7 @@ INSERT INTO site_announcements (id, title, date, type, pinned, content, sort_ord
   ('sticky-top', '歡迎使用 CMJH 資訊平台 🎉', CURRENT_DATE, 'alert', true, '感謝使用崇明國中資訊平台！您可以透過設定頁面自訂首頁佈局，或在管理後台調整網站設定。', 0)
 ON CONFLICT (id) DO NOTHING;
 
--- 8. Row Level Security
+-- 11. Row Level Security
 ALTER TABLE site_config ENABLE ROW LEVEL SECURITY;
 ALTER TABLE site_countdowns ENABLE ROW LEVEL SECURITY;
 ALTER TABLE site_announcements ENABLE ROW LEVEL SECURITY;
@@ -172,7 +246,7 @@ GRANT SELECT ON site_announcements TO anon;
 --   新密碼 → SHA-256 → 傳送 64 字元十六進位字串 → 資料庫直接儲存
 -- ============================================
 
--- 9. 管理密碼驗證函數
+-- 12. 管理密碼驗證函數
 CREATE OR REPLACE FUNCTION verify_admin_password(input_password_hash TEXT)
 RETURNS BOOLEAN
 LANGUAGE plpgsql
@@ -199,7 +273,7 @@ BEGIN
 END;
 $$;
 
--- 10. 更新 site_config 的管理函數
+-- 13. 更新 site_config 的管理函數
 CREATE OR REPLACE FUNCTION update_site_config(
   input_password_hash TEXT,
   new_maintenance JSONB,
@@ -254,7 +328,7 @@ BEGIN
 END;
 $$;
 
--- 11. 更新 countdowns 的管理函數
+-- 14. 更新 countdowns 的管理函數
 CREATE OR REPLACE FUNCTION update_site_countdowns(
   input_password_hash TEXT,
   countdowns JSONB
@@ -300,7 +374,7 @@ BEGIN
 END;
 $$;
 
--- 12. 更新 announcements 的管理函數
+-- 15. 更新 announcements 的管理函數
 CREATE OR REPLACE FUNCTION update_site_announcements(
   input_password_hash TEXT,
   announcements JSONB
@@ -347,7 +421,7 @@ BEGIN
 END;
 $$;
 
--- 13. 授予函數執行權限
+-- 16. 授予函數執行權限
 GRANT EXECUTE ON FUNCTION verify_admin_password(TEXT) TO anon;
 GRANT EXECUTE ON FUNCTION update_site_config(TEXT, JSONB, JSONB, TEXT) TO anon;
 GRANT EXECUTE ON FUNCTION update_site_countdowns(TEXT, JSONB) TO anon;

@@ -114,12 +114,21 @@ export const WeatherWidget = () => {
   const [loading, setLoading] = useState(true);
   const [isExpanded, setIsExpanded] = useState(true);
   const [expandedDay, setExpandedDay] = useState<number | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const fetchWeather = useCallback(async (district: string) => {
     setLoading(true);
+    setErrorMsg(null);
     try {
       const response = await fetch(`/api/weather?district=${encodeURIComponent(district)}`);
       const data = await response.json();
+
+      // 如果 API proxy 回傳了錯誤（例如金鑰問題、CWA 連線失敗）
+      if (!response.ok) {
+        setErrorMsg(data?.detail || data?.error || "天氣服務暫時無法使用");
+        console.error("Weather API error:", data);
+        return;
+      }
 
       if (data.success === "true") {
         const records = data.records || data.Records;
@@ -210,6 +219,7 @@ export const WeatherWidget = () => {
       }
     } catch (error) {
       console.error("Failed to fetch weather:", error);
+      setErrorMsg("無法連線至天氣伺服器");
     } finally {
       setLoading(false);
     }
@@ -530,6 +540,17 @@ export const WeatherWidget = () => {
                 </div>
               </div>
             </>
+          ) : errorMsg ? (
+            <div className="rounded-2xl border border-destructive/20 bg-destructive/5 p-4 text-center">
+              <p className="text-xs font-bold text-destructive mb-1">天氣資料載入失敗</p>
+              <p className="text-[11px] text-muted-foreground">{errorMsg}</p>
+              <button
+                onClick={() => fetchWeather(selectedDistrict)}
+                className="mt-3 rounded-xl bg-primary/10 px-4 py-1.5 text-xs font-bold text-primary hover:bg-primary/20 transition-colors"
+              >
+                重新整理
+              </button>
+            </div>
           ) : (
             <p className="text-center text-muted-foreground">無法取得天氣資訊</p>
           )}

@@ -14,6 +14,9 @@ import {
   ChevronLeft,
   Eye,
   EyeOff,
+  TrendingUp,
+  Users,
+  CalendarDays,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -48,19 +51,26 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { useSiteCountdowns, SiteCountdown } from "@/hooks/useSiteCountdowns";
-import { useSiteAnnouncements, SiteAnnouncement } from "@/hooks/useSiteAnnouncements";
+import { useSiteAnnouncements, SiteAnnouncement } from "@/hooks/useSiteAnnouncements";import { useSiteConfig, isAdminAuthenticated, verifyAdminPassword, hasAdminPassword, setStoredPassword, } from "@/hooks/useSiteConfig";
+import { useVisitStats, DailyVisit } from "@/hooks/useVisitStats";
 import {
-  useSiteConfig,
-  isAdminAuthenticated,
-  verifyAdminPassword,
-  hasAdminPassword,
-  setStoredPassword,
-} from "@/hooks/useSiteConfig";
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  ResponsiveContainer,
+} from "recharts";
 import { SUPABASE_ENABLED } from "@/lib/supabase";
 import { hashPassword } from "@/lib/crypto";
 import { isMaintenanceWhitelisted, setMaintenanceWhitelist } from "@/lib/app-version";
 
-type AdminSection = "countdowns" | "announcements" | "maintenance" | "appversion" | "password" | null;
+type AdminSection = "countdowns" | "announcements" | "maintenance" | "appversion" | "password" | "visitstats" | null;
 
 interface EditingCountdown {
   id?: string;
@@ -84,6 +94,8 @@ export function AdminPanel() {
   const { countdowns, isConfigured: cdConfigured, updateCountdowns, isUpdating: cdUpdating } = useSiteCountdowns();
   const { announcements, isConfigured: annConfigured, updateAnnouncements, isUpdating: annUpdating } = useSiteAnnouncements();
   const { maintenance, appVersion, isConfigured: cfgConfigured, updateConfig, isUpdatingConfig } = useSiteConfig();
+  const [selectedRange, setSelectedRange] = useState<number>(30);
+  const { stats: visitStats, dailyVisits, isLoading: statsLoading } = useVisitStats(selectedRange);
 
   const [authenticated, setAuthenticated] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -417,7 +429,7 @@ export function AdminPanel() {
         {!SUPABASE_ENABLED ? (
           <p className="mt-2 text-sm text-muted-foreground/60 max-w-sm">
             請先在 .env 檔案中設定 VITE_SUPABASE_URL 及 VITE_SUPABASE_ANON_KEY，
-            並在 Supabase SQL Editor 執行 supabase-migration-admin.sql 腳本。
+            並在 Supabase SQL Editor 執行 supabase-setup-complete.sql 腳本。
           </p>
         ) : (
           <p className="mt-2 text-sm text-muted-foreground/60">正在檢查設定...</p>
@@ -540,6 +552,7 @@ export function AdminPanel() {
     announcements: "本站公告",
     maintenance: "維護設定",
     appversion: "版本管理",
+    visitstats: "訪問統計",
     password: "變更密碼",
   }[activeSection ?? "countdowns"];
 
@@ -602,6 +615,14 @@ export function AdminPanel() {
               color="green"
               badge={localVersion}
               onClick={() => setActiveSection("appversion")}
+            />
+            <AdminMenuCard
+              icon={Eye}
+              title="訪問統計"
+              description="查看本日、本週、本月等訪問數據"
+              color="blue"
+              badge={`${visitStats.today.toLocaleString()} 今日`}
+              onClick={() => setActiveSection("visitstats")}
             />
             <AdminMenuCard
               icon={Lock}
@@ -988,6 +1009,173 @@ export function AdminPanel() {
                   <Save className="mr-2 h-5 w-5" />
                   {isUpdatingConfig ? "儲存中..." : "儲存版本資訊"}
                 </Button>
+              </div>
+            )}
+
+            {/* Visit Stats Section */}
+            {activeSection === "visitstats" && (
+              <div className="space-y-6 p-6">
+                {statsLoading ? (
+                  <div className="flex items-center justify-center py-16">
+                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary/20 border-t-primary" />
+                  </div>
+                ) : (
+                  <>
+                    {/* 時間範圍選擇器 */}
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <h3 className="text-lg font-black tracking-tight">訪問趨勢</h3>
+                        <p className="text-xs text-muted-foreground">每 2 分鐘自動更新</p>
+                      </div>
+                      <div className="inline-flex items-center gap-1 rounded-2xl border border-border/30 bg-muted/30 p-1">
+                        {[7, 30, 90].map((range) => (
+                          <button
+                            key={range}
+                            onClick={() => setSelectedRange(range)}
+                            className={cn(
+                              "rounded-xl px-5 py-2 text-sm font-bold transition-all",
+                              selectedRange === range
+                                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                                : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                            )}
+                          >
+                            {range} 天
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* 圖表 */}
+                    <div className="rounded-3xl border border-border/20 bg-card p-4 md:p-6">
+                      {dailyVisits.length > 0 ? (
+                        <ChartContainer
+                          config={{
+                            visits: {
+                              label: "訪問次數",
+                              color: "hsl(var(--primary))",
+                            },
+                          }}
+                          className="aspect-[2] md:aspect-[3.5] w-full"
+                        >
+                          <AreaChart data={dailyVisits} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
+                            <defs>
+                              <linearGradient id="visitGradient" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
+                                <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0.02} />
+                              </linearGradient>
+                            </defs>
+                            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" strokeOpacity={0.4} />
+                            <XAxis
+                              dataKey="date"
+                              tickFormatter={(val: string) => {
+                                const d = new Date(val + "T00:00:00");
+                                return `${d.getMonth() + 1}/${d.getDate()}`;
+                              }}
+                              tick={{ fontSize: 11 }}
+                              tickLine={false}
+                              axisLine={false}
+                              interval="preserveStartEnd"
+                            />
+                            <YAxis
+                              tick={{ fontSize: 11 }}
+                              tickLine={false}
+                              axisLine={false}
+                              allowDecimals={false}
+                            />
+                            <ChartTooltip
+                              content={
+                                <ChartTooltipContent
+                                  labelFormatter={(label: string) => {
+                                    const d = new Date(label + "T00:00:00");
+                                    return d.toLocaleDateString("zh-TW", {
+                                      year: "numeric",
+                                      month: "2-digit",
+                                      day: "2-digit",
+                                      weekday: "short",
+                                    });
+                                  }}
+                                  indicator="line"
+                                />
+                              }
+                            />
+                            <Area
+                              type="monotone"
+                              dataKey="count"
+                              name="visits"
+                              stroke="hsl(var(--primary))"
+                              strokeWidth={2.5}
+                              fill="url(#visitGradient)"
+                              dot={false}
+                              activeDot={{ r: 5, strokeWidth: 2, stroke: "hsl(var(--background))", fill: "hsl(var(--primary))" }}
+                            />
+                          </AreaChart>
+                        </ChartContainer>
+                      ) : (
+                        <div className="flex items-center justify-center py-16 text-muted-foreground text-sm">
+                          尚無每日數據，SQL migration 執行後開始累計
+                        </div>
+                      )}
+                    </div>
+
+                    {/* 統計摘要卡片 */}
+                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+                      {/* 今日 */}
+                      <div className="relative overflow-hidden rounded-2xl border border-blue-500/15 bg-gradient-to-br from-blue-500/[0.08] to-transparent p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Eye className="h-4 w-4 text-blue-500" />
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-blue-500/70">本日</span>
+                        </div>
+                        <p className="text-2xl font-black tracking-tight text-blue-600 dark:text-blue-400">
+                          {visitStats.today.toLocaleString()}
+                        </p>
+                      </div>
+
+                      {/* 本週 */}
+                      <div className="relative overflow-hidden rounded-2xl border border-emerald-500/15 bg-gradient-to-br from-emerald-500/[0.08] to-transparent p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <TrendingUp className="h-4 w-4 text-emerald-500" />
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-500/70">本週</span>
+                        </div>
+                        <p className="text-2xl font-black tracking-tight text-emerald-600 dark:text-emerald-400">
+                          {visitStats.this_week.toLocaleString()}
+                        </p>
+                      </div>
+
+                      {/* 本月 */}
+                      <div className="relative overflow-hidden rounded-2xl border border-violet-500/15 bg-gradient-to-br from-violet-500/[0.08] to-transparent p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <CalendarDays className="h-4 w-4 text-violet-500" />
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-violet-500/70">本月</span>
+                        </div>
+                        <p className="text-2xl font-black tracking-tight text-violet-600 dark:text-violet-400">
+                          {visitStats.this_month.toLocaleString()}
+                        </p>
+                      </div>
+
+                      {/* 本年 */}
+                      <div className="relative overflow-hidden rounded-2xl border border-amber-500/15 bg-gradient-to-br from-amber-500/[0.08] to-transparent p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <CalendarDays className="h-4 w-4 text-amber-500" />
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-amber-500/70">本年</span>
+                        </div>
+                        <p className="text-2xl font-black tracking-tight text-amber-600 dark:text-amber-400">
+                          {visitStats.this_year.toLocaleString()}
+                        </p>
+                      </div>
+
+                      {/* 總計 */}
+                      <div className="relative overflow-hidden rounded-2xl border border-rose-500/15 bg-gradient-to-br from-rose-500/[0.08] to-transparent p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Users className="h-4 w-4 text-rose-500" />
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-rose-500/70">總計</span>
+                        </div>
+                        <p className="text-2xl font-black tracking-tight text-rose-600 dark:text-rose-400">
+                          {visitStats.total.toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             )}
 

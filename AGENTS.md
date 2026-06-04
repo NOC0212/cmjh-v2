@@ -24,7 +24,7 @@ No test runner is configured. No `typecheck` script — use `npx tsc --noEmit` i
 - **Components**: `src/components/` (app components), `src/components/ui/` (shadcn/ui — do not hand-edit these)
 - **Hooks**: `src/hooks/` (SettingsContext, custom hooks)
 - **Lib**: `src/lib/` (utils, page-background, app-version)
-- **Static data**: `public/data/*.json` (lunch, announcements, honors, calendar, site-announcements, maintenance)
+- **Static data**: `public/data/*.json` (lunch, announcements, honors, calendar — scraper-generated)
 - **Path alias**: `@/` maps to `./src/` (configured in both tsconfig and vite.config.ts)
 
 ## Python Scrapers
@@ -61,9 +61,8 @@ Copy `.env.example` to `.env` and fill in the required environment variables:
 ### Supabase Setup
 
 1. Create a free project at https://supabase.com
-2. Go to **SQL Editor** and run `supabase-setup-complete.sql` (in the project root)
+2. Go to **SQL Editor** and run `supabase-setup-complete.sql` (in the project root) — 一個檔案搞定全部
 3. Copy your project URL and anon key from **Settings > API** into `.env`
-4. If upgrading from an older version, run `supabase-migration-bcrypt.sql` instead to add bcrypt support
 
 The visit counter increments once per page load via a secure PostgreSQL function (`SECURITY DEFINER`). Row Level Security ensures the anon role can only read and call the increment function — no direct writes.
 
