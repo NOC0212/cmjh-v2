@@ -56,7 +56,7 @@ Copy `.env.example` to `.env` and fill in the required environment variables:
 |----------|----------|-------------|
 | `VITE_SUPABASE_URL` | Yes (visit counter, admin) | Supabase project URL (Settings > API) |
 | `VITE_SUPABASE_ANON_KEY` | Yes (visit counter, admin) | Supabase anon/public key (Settings > API) |
-| `CWA_API_KEY` | No | Central Weather Administration API key (server-side only, no `VITE_` prefix). Set in Vercel Dashboard or local `.env` for dev proxy. |
+| `VITE_CWA_API_KEY` | No | Central Weather Administration API key (browser-side, for weather widget). Get from https://opendata.cwa.gov.tw |
 
 ### Supabase Setup
 
@@ -70,7 +70,7 @@ Admin passwords are hashed with bcrypt (via `pgcrypto` extension) on the databas
 
 ## API Routes
 
-- `api/weather.ts` — Vercel Edge Function that proxies Central Weather Administration API requests. Requires `CWA_API_KEY` environment variable on the server.
+- `api/weather.ts` — *(已移除)* Weather data is fetched directly in the browser via `VITE_CWA_API_KEY`. CWA WAF blocks Vercel's IP range, so server-side proxy was removed.
 
 ## Deploy
 
@@ -79,4 +79,4 @@ Vercel with SPA rewrite rule (all non-file routes → `index.html`, see `vercel.
 Set the following environment variables in Vercel Dashboard > Settings > Environment Variables:
 - `VITE_SUPABASE_URL`
 - `VITE_SUPABASE_ANON_KEY`
-- `CWA_API_KEY` (optional, for weather widget — no `VITE_` prefix)
+- `VITE_CWA_API_KEY` (optional, for weather widget)

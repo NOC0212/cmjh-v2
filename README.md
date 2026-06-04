@@ -23,9 +23,8 @@ npm install
 npm run dev        # 啟動開發伺服器 → http://localhost:8080
 ```
 
-天氣功能需設定 `CWA_API_KEY`（至 [中央氣象署 OpenData](https://opendata.cwa.gov.tw) 申請）。
-開發階段 Vite 會自動代理 `/api/weather` 請求至 CWA，金鑰保留在伺服器端不暴露給前端。
-正式部署時需在 **Vercel Dashboard > Settings > Environment Variables** 加入 `CWA_API_KEY`（詳見[建置與部署](#建置與部署)）。
+天氣功能需設定 `VITE_CWA_API_KEY`（至 [中央氣象署 OpenData](https://opendata.cwa.gov.tw) 申請）。
+請在 `.env` 檔案或 **Vercel Dashboard > Settings > Environment Variables** 中加入此變數。
 
 ## Supabase 快速部署
 
@@ -43,7 +42,7 @@ npm run dev        # 啟動開發伺服器 → http://localhost:8080
 ```ini
 VITE_SUPABASE_URL=https://你的專案.supabase.co
 VITE_SUPABASE_ANON_KEY=你的匿名金鑰
-CWA_API_KEY=你的氣象署金鑰（選填）
+VITE_CWA_API_KEY=你的氣象署金鑰（選填）
 ```
 
 ## 目錄
@@ -151,11 +150,12 @@ GitHub Actions (排程)
 **③ 天氣 API**（中央氣象署即時資料）
 
 ```
-前端元件 ──→ /api/weather (Vercel Edge Function) ──→ CWA OpenData API
+前端元件 ──→ CWA OpenData API (瀏覽器直連)
                   │
-         process.env.CWA_API_KEY
-         (金鑰保留在伺服器端)
+         VITE_CWA_API_KEY (環境變數，暴露於前端)
 ```
+
+> 因 CWA WAF 封鎖 Vercel IP 範圍，無法使用 server-side proxy，改由瀏覽器端直接呼叫。
 
 ## 核心功能
 
@@ -394,7 +394,7 @@ GitHub Actions (排程)
 | **資料庫** | Supabase (PostgreSQL + pgcrypto bcrypt) |
 | **爬蟲** | Python 3 + requests + BeautifulSoup 4 |
 | **排程** | GitHub Actions (cron) |
-| **部署** | Vercel (SPA rewrite rules + Edge Function) |
+| **部署** | Vercel (SPA rewrite rules) |
 
 ## 自動化資料流
 
@@ -500,8 +500,6 @@ src/
 │   ├── useSiteCountdowns.ts    # 預設倒數計時（Supabase）
 │   ├── useSiteAnnouncements.ts # 站內公告（Supabase）
 │   └── useVisitCounter.ts      # 訪問計數器（Supabase）
-├── api/                 # Vercel Edge Functions
-│   └── weather.ts       # 天氣 API 代理
 ├── lib/                 # 工具函式
 │   ├── utils.ts
 │   ├── app-version.ts
@@ -558,16 +556,15 @@ npm run build
 |------|------|------|
 | `VITE_SUPABASE_URL` | 選填（部分功能需要） | Supabase Project URL（Settings > API） |
 | `VITE_SUPABASE_ANON_KEY` | 選填（部分功能需要） | Supabase 匿名金鑰 |
-| `CWA_API_KEY` | 否 | 中央氣象署 API 金鑰（⚠️ **不含 `VITE_` 前綴**，僅伺服器端使用） |
+| `VITE_CWA_API_KEY` | 否 | 中央氣象署 API 金鑰（暴露於前端），用於天氣 Widget |
 
-#### API 代理（天氣功能）
+#### 天氣功能
 
-`api/weather.ts` 是 Vercel Edge Function，代理中央氣象署天氣 API 請求：
+天氣資料由瀏覽器端透過 `VITE_CWA_API_KEY` 直接呼叫 CWA OpenData API：
 
-- 前端呼叫 `/api/weather?district=東區`
-- 伺服器端讀取 `CWA_API_KEY` 附加 Authorization 參數再轉發至 CWA
-- CWA 金鑰**不會暴露到瀏覽器端**
-- 開發時 Vite dev server 會自動代理 `/api/weather`（金鑰同樣保留在伺服器端）
+- 前端直接向 `https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-079` 請求
+- API 金鑰以環境變數 `VITE_CWA_API_KEY` 傳入（會暴露在前端 bundle 中）
+- CWA WAF 封鎖 Vercel IP 範圍，故無法使用 server-side proxy
 
 ## 授權
 

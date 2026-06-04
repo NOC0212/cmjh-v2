@@ -1,38 +1,14 @@
-import { defineConfig, loadEnv } from "vite";
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
-  // 手動載入所有環境變數（包含非 VITE_ 前綴的 CWA_API_KEY）
-  const env = loadEnv(mode, process.cwd(), "");
-
+export default defineConfig(() => {
   return {
     server: {
       host: "::",
       port: 8080,
-      proxy: {
-        // 代理天氣 API：在開發模式下也將金鑰保留在伺服器端
-        "/api/weather": {
-          target: "https://opendata.cwa.gov.tw",
-          changeOrigin: true,
-          rewrite: (path) =>
-            path.replace(
-              /^\/api\/weather/,
-              "/api/v1/rest/datastore/F-D0047-079",
-            ),
-          configure: (proxy) => {
-            proxy.on("proxyReq", (proxyReq, _req) => {
-              const apiKey = env.CWA_API_KEY;
-              if (apiKey) {
-                const delim = proxyReq.path.includes("?") ? "&" : "?";
-                proxyReq.path += `${delim}Authorization=${encodeURIComponent(apiKey)}`;
-              }
-            });
-          },
-        },
-      },
     },
   preview: {
     port: 8080,
