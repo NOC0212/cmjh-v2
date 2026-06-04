@@ -40,25 +40,34 @@ export default async function handler(
 
     console.log(`[Weather Proxy] Fetching: ${targetUrl.replace(apiKey, "***")}`);
 
-    const res = await fetch(targetUrl);
+    // 加上 Accept header 確保 CWA 回傳 JSON 而非 HTML
+    const res = await fetch(targetUrl, {
+      headers: {
+        "Accept": "application/json",
+      },
+    });
 
     // 先檢查 CWA 回傳的 HTTP 狀態碼
-    if (!res.ok) {
-      let errorBody = "";
+    const contentType = res.headers.get("content-type") || "";
+    if (!res.ok || !contentType.includes("json")) {
+      let body = "";
       try {
-        errorBody = await res.text();
+        body = await res.text();
       } catch {
-        errorBody = "(無法讀取回應內容)";
+        body = "(無法讀取回應內容)";
       }
-      console.error(`[Weather Proxy] CWA API responded with status ${res.status}: ${errorBody.slice(0, 500)}`);
+      console.error(`[Weather Proxy] CWA responded ${res.status} (${contentType}): ${body.slice(0, 500)}`);
 
       return new Response(
         JSON.stringify({
           error: `CWA API 回應錯誤 (${res.status})`,
-          detail: errorBody.slice(0, 500),
-          hint: res.status === 403
+          contentType,
+          detail: body.slice(0, 500),
+          hint: body.includes("授權")
             ? "API 金鑰可能無效或已過期，請至 https://opendata.cwa.gov.tw 重新申請"
-            : "請檢查 API 金鑰是否有效",
+            : res.status === 404
+              ? "CWA API 端點可能已變更，請檢查 F-D0047-079 是否仍有效"
+              : "請檢查 API 金鑰是否有效，或 CWA 服務是否正常",
         }),
         { status: 502, headers: { "content-type": "application/json" } },
       );
