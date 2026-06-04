@@ -37,6 +37,24 @@
         ]
     },
     {
+        "date": "2026-06-04",
+        "category": "活動",
+        "source": "學務處",
+        "title": "國二升國三社團選社由此入",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=319&type=news&from_op=all_news",
+        "content": "請二年級同學於6/10(三)晚上6點前完成社團選填\n(1)社團一年一選(中途不可更換)\n(2)部分社團有收費或訓練要求請與家長確認同意參加再選填\n(3)同學可利用下課或班會時間於班上完成選填後找副班長簽名\n(4)相關問題請洽學生活動組\n選填網址如下：\n二年級社團選填表單",
+        "attachments": []
+    },
+    {
+        "date": "2026-06-04",
+        "category": "活動",
+        "source": "學務處",
+        "title": "國一升國二社團選社由此入",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=318&type=news&from_op=all_news",
+        "content": "請一年級同學於6/10(三)下午6點前完成線上選社\n(1)社團一年一選（中途不可更換）\n(2)部分社團有收費或是訓練需求，請與家長確認可以接受再選\n(3)6/10下午6:00系統截止\n(4)同學可以利用下課時間或班會時間，完成線上選填作業後找副班長簽名！\n(5)有相關問題請洽學生活動組\n選填網址：\n一年級線上選社表單",
+        "attachments": []
+    },
+    {
         "date": "2026-06-03",
         "category": "研習",
         "source": "教務處",
@@ -310,42 +328,6 @@
             {
                 "name": "臺南市114學年度多元文化優良教案徵稿實施計畫(核定版).odt",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市114學年度多元文化優良教案徵稿實施計畫(核定版).odt&files_sn=193"
-            }
-        ]
-    },
-    {
-        "date": "2026-06-01",
-        "category": "簡章",
-        "source": "教務處",
-        "title": "國立中興大學辦理115學年度中等類科「學士後教育學分班」",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=262&type=news&from_op=all_news",
-        "content": "一、依據國立中興大學115年5月28日興師字第1151400080號函辦理。\n二、檢附旨揭學分班招生簡章。",
-        "attachments": [
-            {
-                "name": "中興大學函 (1).pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=中興大學函 (1).pdf&files_sn=191"
-            },
-            {
-                "name": "招生簡章 (1).pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=招生簡章 (1).pdf&files_sn=192"
-            }
-        ]
-    },
-    {
-        "date": "2026-06-01",
-        "category": "簡章",
-        "source": "教務處",
-        "title": "國立中興大學辦理「115學年度偏遠地區學士後教育學分班-中等學校教育班」",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=261&type=news&from_op=all_news",
-        "content": "一、依據國立中興大學115年5月27日興師字第115400079號函辦理。\n二、檢附旨揭學分班招生簡章。",
-        "attachments": [
-            {
-                "name": "中興大學函.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=中興大學函.pdf&files_sn=189"
-            },
-            {
-                "name": "招生簡章.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=招生簡章.pdf&files_sn=190"
             }
         ]
     }
