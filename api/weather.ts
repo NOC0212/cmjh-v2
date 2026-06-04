@@ -36,12 +36,12 @@ export default async function handler(
   }
 
   try {
-    const targetUrl = `https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-079?Authorization=${encodeURIComponent(apiKey)}&locationName=${encodeURIComponent(district)}`;
+    // 移除 URL 中的 Authorization 參數（部分 WAF 對 URL 中的授權資訊敏感），
+    // 只透過 Header 傳送 Authorization
+    const targetUrl = `https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-079?locationName=${encodeURIComponent(district)}`;
 
-    console.log(`[Weather Proxy] Fetching: ${targetUrl.replace(apiKey, "***")}`);
+    console.log(`[Weather Proxy] Fetching: ${targetUrl}`);
 
-    // 加上瀏覽器風格的 headers 繞過 CWA WAF 封鎖
-    // 同時在 URL query 和 header 傳送 Authorization（部分 WAF 對 URL 參數較敏感）
     const res = await fetch(targetUrl, {
       headers: {
         "Accept": "application/json",

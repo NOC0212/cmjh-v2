@@ -10,6 +10,9 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
+// 從環境變數取得 CWA API 金鑰（供瀏覽器直接呼叫的備援方案）
+const CWA_API_KEY = import.meta.env.VITE_CWA_API_KEY as string | undefined;
+
 
 const DISTRICTS = [
   { value: "中西區", label: "中西區" },
@@ -116,20 +119,61 @@ export const WeatherWidget = () => {
   const [expandedDay, setExpandedDay] = useState<number | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const fetchWeather = useCallback(async (district: string) => {
+  const fetchWeather = useCallback(async (district: string, direct = false) => {
     setLoading(true);
     setErrorMsg(null);
     try {
-      const response = await fetch(`/api/weather?district=${encodeURIComponent(district)}`);
-      const data = await response.json();
-
-      // 如果 API proxy 回傳了錯誤（例如金鑰問題、CWA 連線失敗）
-      if (!response.ok) {
-        setErrorMsg(data?.detail || data?.error || "天氣服務暫時無法使用");
-        console.error("Weather API error:", data);
+      // 備援方案：瀏覽器直接呼叫 CWA API（繞過被封鎖的 Vercel proxy）
+      if (direct) {
+        if (!CWA_API_KEY) {
+          setErrorMsg("VITE_CWA_API_KEY 未設定，無法使用備援天氣服務");
+          return;
+        }
+        const cwaUrl = `https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-079?Authorization=${encodeURIComponent(CWA_API_KEY)}&locationName=${encodeURIComponent(district)}`;
+        const response = await fetch(cwaUrl);
+        const data = await response.json();
+        if (handleCwaResponse(data, district)) return;
+        setErrorMsg("CWA API 備援請求失敗");
         return;
       }
 
+      // 正常路線：透過 Vercel proxy
+      const response = await fetch(`/api/weather?district=${encodeURIComponent(district)}`);
+      const data = await response.json();
+
+      // 如果 API proxy 回傳了錯誤（例如 WAF 封鎖），自動嘗試備援方案
+      if (!response.ok) {
+        console.error("Weather proxy error, trying direct fallback:", data);
+        // 如果有 VITE_CWA_API_KEY，自動重試直接呼叫 CWA
+        if (CWA_API_KEY) {
+          console.log("Falling back to direct CWA fetch...");
+          await fetchWeather(district, true);
+          return;
+        }
+        setErrorMsg(data?.detail || data?.error || "天氣服務暫時無法使用");
+        return;
+      }
+
+      if (!handleCwaResponse(data, district)) {
+        console.error("Invalid API response structure");
+      }
+    } catch (error) {
+      console.error("Failed to fetch weather:", error);
+      // 網路錯誤時也嘗試備援
+      if (!direct && CWA_API_KEY) {
+        console.log("Network error, trying direct CWA fallback...");
+        await fetchWeather(district, true);
+        return;
+      }
+      setErrorMsg("無法連線至天氣伺服器");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  // 處理 CWA 回應的共用邏輯，回傳 true 表示成功解析
+  const handleCwaResponse = useCallback((data: any, district: string): boolean => {
+    try {
       if (data.success === "true") {
         const records = data.records || data.Records;
         const locationsList =
@@ -208,20 +252,14 @@ export const WeatherWidget = () => {
             };
 
             setWeatherData(normalize(rawLoc));
-          } else {
-            console.error("District not found in response");
+            return true;
           }
-        } else {
-          console.error("Invalid API response structure");
         }
-      } else {
-        console.error("API success flag is false");
       }
+      return false;
     } catch (error) {
-      console.error("Failed to fetch weather:", error);
-      setErrorMsg("無法連線至天氣伺服器");
-    } finally {
-      setLoading(false);
+      console.error("Failed to parse weather data:", error);
+      return false;
     }
   }, []);
 
