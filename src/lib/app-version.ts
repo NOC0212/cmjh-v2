@@ -1,4 +1,6 @@
-export const LATEST_VERSION = "v1.5.4";
+// 離線備用版本號 — 僅在 Supabase 未設定或尚未載入時使用
+// 正式版本號請在管理後台 > 版本管理中設定
+export const FALLBACK_VERSION = "v1.5.4";
 const VERSION_STORAGE_KEY = "cmjh-app-version";
 
 export const STORAGE_KEYS = {
@@ -43,29 +45,30 @@ export function getCurrentVersion(): string {
     return localStorage.getItem(VERSION_STORAGE_KEY) || "";
 }
 
-export function ensureVersion() {
+export function ensureVersion(targetVersion?: string) {
     const current = getCurrentVersion();
     if (!current) {
-        localStorage.setItem(VERSION_STORAGE_KEY, "v1.2.3");
+        localStorage.setItem(VERSION_STORAGE_KEY, targetVersion || FALLBACK_VERSION);
     }
 }
 
-export function updateVersionToLatest() {
-    localStorage.setItem(VERSION_STORAGE_KEY, LATEST_VERSION);
+export function updateVersionToLatest(targetVersion?: string) {
+    localStorage.setItem(VERSION_STORAGE_KEY, targetVersion || FALLBACK_VERSION);
 }
 
-export function migrateData() {
+export function migrateData(targetVersion?: string) {
+    const target = targetVersion || FALLBACK_VERSION;
     const current = getCurrentVersion();
     
     // 如果沒有版本號，代表是極舊版本或新安裝，先確保基礎版本
     if (!current) {
-        localStorage.setItem(VERSION_STORAGE_KEY, "v1.2.3");
+        localStorage.setItem(VERSION_STORAGE_KEY, target);
         return;
     }
 
-    if (current === LATEST_VERSION) return;
+    if (current === target) return;
 
-    console.log(`正在從 ${current} 遷移至 ${LATEST_VERSION}...`);
+    console.log(`正在從 ${current} 遷移至 ${target}...`);
 
     // 在此加入特定版本的遷移邏輯（範例）
     // if (current < "v1.5.0") { ... }
@@ -94,7 +97,7 @@ export function migrateData() {
         }
     });
 
-    updateVersionToLatest();
+    updateVersionToLatest(target);
 }
 
 export function exportUserData() {

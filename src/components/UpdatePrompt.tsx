@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { RefreshCw, Check } from "lucide-react";
+import { RefreshCw, Check, Download, FileCode } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { getCurrentVersion, migrateData } from "@/lib/app-version";
+import { getCurrentVersion, FALLBACK_VERSION, migrateData } from "@/lib/app-version";
 import { useSettings } from "@/hooks/SettingsContext";
 import { useSiteConfig } from "@/hooks/useSiteConfig";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
@@ -12,11 +12,12 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
   const [show, setShow] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [phase, setPhase] = useState<"downloading" | "applying" | "complete">("downloading");
   const currentVersion = getCurrentVersion();
   const { settings } = useSettings();
   const { appVersion } = useSiteConfig();
 
-  const latestVersion = appVersion?.latestVersion || "v1.5.4";
+  const latestVersion = appVersion?.latestVersion || FALLBACK_VERSION;
   const releaseHighlights = appVersion?.releaseHighlights || [
     "修復編碼", "時鐘功能更新", "隨機轉盤優化", "添加MIT授權"
   ];
@@ -50,21 +51,33 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
 
   const handleUpdate = () => {
     setIsUpdating(true);
+    setPhase("downloading");
+    const startTime = Date.now();
+    const totalDuration = 8500; // 8.5 秒
+    const phase1End = 5500;     // 階段一：下載（5.5 秒）
+    const phase1Max = 65;       // 階段一進度：0 → 65%
+
     const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          setTimeout(() => {
-            migrateData();
-            window.location.reload();
-          }, 500);
-          return 100;
-        }
-        let increment = 0.8;
-        if (prev >= 80 && prev < 85) increment = 0.05;
-        if (prev >= 85) increment = 1.5;
-        return Math.min(prev + increment, 100);
-      });
+      const elapsed = Date.now() - startTime;
+
+      if (elapsed < phase1End) {
+        // Phase 1: 正在下載更新
+        setProgress((elapsed / phase1End) * phase1Max);
+      } else if (elapsed < totalDuration) {
+        // Phase 2: 正在套用更新
+        setPhase("applying");
+        const phase2Elapsed = elapsed - phase1End;
+        const phase2Duration = totalDuration - phase1End;
+        setProgress(phase1Max + (phase2Elapsed / phase2Duration) * (100 - phase1Max));
+      } else {
+        clearInterval(timer);
+        setProgress(100);
+        setPhase("complete");
+        setTimeout(() => {
+          migrateData(latestVersion);
+          window.location.reload();
+        }, 500);
+      }
     }, 30);
   };
 
@@ -91,8 +104,7 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
       >
         <DialogTitle className="sr-only">版本更新</DialogTitle>
 
-        {isUpdating ? (
-          <div className="flex flex-col items-center justify-center gap-10 p-12 text-center">
+        {isUpdating ? (            <div className="flex flex-col items-center justify-center gap-10 p-12 text-center">
             <div className="relative h-32 w-32">
               {/* Circular Background */}
               <svg className="h-full w-full -rotate-90 transform">
@@ -118,28 +130,42 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
                   animate={{ strokeDashoffset: 364.4 - (364.4 * progress) / 100 }}
                   transition={{ type: "spring", bounce: 0, duration: 0.1 }}
                   strokeLinecap="round"
-                  className="text-primary"
+                  className={cn(
+                    "transition-colors duration-500",
+                    phase === "downloading" && "text-primary",
+                    phase === "applying" && "text-amber-500",
+                    phase === "complete" && "text-green-500"
+                  )}
                 />
               </svg>
 
               {/* Icon in Center */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="relative">
-                  <img
-                    src="/favicon.png"
-                    alt="App Icon"
-                    className={cn(
-                      "h-16 w-16 rounded-2xl shadow-lg transition-transform duration-500",
-                      progress < 100 ? "scale-100" : "scale-110"
-                    )}
-                  />
-                  {progress >= 100 && (
+                  {phase === "complete" ? (
                     <motion.div
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      className="absolute -right-2 -top-2 flex h-8 w-8 items-center justify-center rounded-full bg-green-500 text-white shadow-lg border-2 border-card"
+                      transition={{ type: "spring", bounce: 0.5, duration: 0.5 }}
+                      className="flex h-20 w-20 items-center justify-center rounded-full bg-green-500 text-white shadow-lg"
                     >
-                      <Check className="h-5 w-5" />
+                      <Check className="h-10 w-10" />
+                    </motion.div>
+                  ) : phase === "applying" ? (
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+                      className="flex h-20 w-20 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-500 shadow-lg"
+                    >
+                      <FileCode className="h-10 w-10" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+                      className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10 text-primary shadow-lg"
+                    >
+                      <Download className="h-10 w-10" />
                     </motion.div>
                   )}
                 </div>
@@ -148,11 +174,30 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
 
             <div className="space-y-3">
               <h2 className="text-2xl font-black tracking-tight text-foreground">
-                {progress < 100 ? "正在更新..." : "更新完成"}
+                {phase === "downloading" && "正在下載更新..."}
+                {phase === "applying" && "正在套用更新..."}
+                {phase === "complete" && "更新完成"}
               </h2>
-              <p className="text-lg font-mono font-medium text-primary">
-                {Math.round(progress)}%
-              </p>
+              {phase !== "complete" && (
+                <p className="text-lg font-mono font-medium text-primary">
+                  {Math.round(progress)}%
+                </p>
+              )}
+              {phase === "downloading" && (
+                <p className="text-xs text-muted-foreground">
+                  正在下載最新版本的更新檔案
+                </p>
+              )}
+              {phase === "applying" && (
+                <p className="text-xs text-muted-foreground animate-pulse">
+                  正在將更新套用至您的裝置，請勿關閉此頁面
+                </p>
+              )}
+              {phase === "complete" && (
+                <p className="text-xs text-green-500 font-medium">
+                  更新已成功套用，即將重新整理頁面
+                </p>
+              )}
             </div>
           </div>
         ) : (

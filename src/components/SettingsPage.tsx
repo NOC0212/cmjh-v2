@@ -26,7 +26,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useSettings } from "@/hooks/SettingsContext";
 import { useToast } from "@/hooks/use-toast";
-import { getCurrentVersion, LATEST_VERSION, exportUserData, importUserData, isAdminUnlocked, unlockAdmin } from "@/lib/app-version";
+import { useSiteConfig } from "@/hooks/useSiteConfig";
+import { getCurrentVersion, FALLBACK_VERSION, exportUserData, importUserData, isAdminUnlocked, unlockAdmin } from "@/lib/app-version";
 import { cn } from "@/lib/utils";
 
 const MODES = [
@@ -80,8 +81,10 @@ export function SettingsPage() {
     const [isResetConfirming, setIsResetConfirming] = useState(false);
     const [backgroundUrlInput, setBackgroundUrlInput] = useState(settings.pageBackgroundImage || "");
 
+    const { appVersion } = useSiteConfig();
+    const latestVersionFromServer = appVersion?.latestVersion || FALLBACK_VERSION;
     const currentVersion = getCurrentVersion();
-    const canUpdate = currentVersion !== LATEST_VERSION;
+    const canUpdate = currentVersion !== latestVersionFromServer;
     const disabledComponents = settings.components.filter((component) => !component.enabled);
 
     useEffect(() => {
@@ -474,7 +477,7 @@ export function SettingsPage() {
                                                     <AdminUnlockButton />
                                                     <div className="flex-1 rounded-2xl border border-primary/20 bg-primary/5 p-4">
                                                         <p className="mb-1 text-[10px] font-bold uppercase text-primary">最新版本</p>
-                                                        <p className="font-mono text-lg font-black">{LATEST_VERSION}</p>
+                                                        <p className="font-mono text-lg font-black">{latestVersionFromServer}</p>
                                                     </div>
                                                 </div>
                                             </div>

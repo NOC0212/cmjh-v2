@@ -3,8 +3,9 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Calendar, Megaphone, BellRing } from "lucide-react";
 import { useSettings } from "@/hooks/SettingsContext";
-import { getCurrentVersion, LATEST_VERSION, STORAGE_KEYS } from "@/lib/app-version";
+import { getCurrentVersion, STORAGE_KEYS } from "@/lib/app-version";
 import { useSiteAnnouncements } from "@/hooks/useSiteAnnouncements";
+import { useSiteConfig } from "@/hooks/useSiteConfig";
 
 interface SiteAnnouncement {
   id: string;
@@ -23,6 +24,7 @@ let isUpdateDismissedInSession = false;
 export function LatestAnnouncementModal() {
   const { settings, setShowLatestAnnouncementOnStartup } = useSettings();
   const { announcements: allAnnouncements } = useSiteAnnouncements();
+  const { appVersion } = useSiteConfig();
   const [isOpen, setIsOpen] = useState(false);
   const [unreadAnns, setUnreadAnns] = useState<SiteAnnouncement[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -39,9 +41,11 @@ export function LatestAnnouncementModal() {
       if (!isManualTrigger && hasCheckedInSession) return;
 
       const currentVersion = getCurrentVersion();
+      const latestVersionFromServer = appVersion?.latestVersion;
       if (
         currentVersion &&
-        currentVersion !== LATEST_VERSION &&
+        latestVersionFromServer &&
+        currentVersion !== latestVersionFromServer &&
         !disableUpdatePromptRef.current &&
         !isUpdateDismissedInSession &&
         !isManualTrigger
