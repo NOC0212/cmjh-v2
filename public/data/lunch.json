@@ -1,35 +1,4 @@
 {
-    "last_updated": "2026-06-05 07:09:56",
-    "items": [
-        {
-            "category": "主食",
-            "name": "胚芽飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1509074610361893"
-        },
-        {
-            "category": "主菜",
-            "name": "沙茶翠玉肉片",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853267086686"
-        },
-        {
-            "category": "副菜",
-            "name": "醬燒養生菇豆腐",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1779775706081819"
-        },
-        {
-            "category": "蔬菜",
-            "name": "蝦米爆高麗",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1761709647073514"
-        },
-        {
-            "category": "湯品",
-            "name": "香菇雞湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1413871776173372"
-        },
-        {
-            "category": "附餐",
-            "name": "西瓜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1433809456208903"
-        }
-    ]
+    "last_updated": "2026-06-07 07:05:29",
+    "items": []
 }
