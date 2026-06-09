@@ -53,6 +53,29 @@
     {
         "date": "2026-06-09",
         "category": "研習",
+        "source": "教務處",
+        "title": "梁芳瑜老師主講「教師的自我照顧與師生連結」講座",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=337&type=news&from_op=all_news",
+        "content": "一、透過講師自身的經歷與反思，讓老師們有機會重新理解自己的處境，轉換心境，找到與教育現場共處的方式，讓教師珍貴的價值仍能透過不同形式被看見，甚至在艱難的現場中得以延續。\n本校訂於115年6月12日（星期五）下午辦理「教師的自我照顧與師生連結」講座，敬邀貴校老師踴躍參加。\n二、活動資訊如下：\n(一) 時間：115年6月12日（星期五）14:00～16:00\n(二) 地點：中山國中中山館研習中心\n(三) 講師：《當我告別教職：一位離職教師的沉痛告白與深情祝福》作者梁芳瑜老師。\n三、研習代碼：319002，請至「學習護照」系統報名參加。\n四、敬備茶水，請自備環保杯。\n五、如蒙貴校惠允教師以公假參與，不勝感荷。",
+        "attachments": []
+    },
+    {
+        "date": "2026-06-09",
+        "category": "簡章",
+        "source": "教務處",
+        "title": "銘傳大學辦理「115年度中小學雙語教學在職教師增能學分班」",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=336&type=news&from_op=all_news",
+        "content": "一、依據銘傳大學115年6月4日銘校師課字第1150110541號函辦理。\n二、檢附旨揭學分班招生簡章。",
+        "attachments": [
+            {
+                "name": "銘傳大學115年度中小學雙語教學在職教師增能學分班招生簡章.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=銘傳大學115年度中小學雙語教學在職教師增能學分班招生簡章.pdf&files_sn=244"
+            }
+        ]
+    },
+    {
+        "date": "2026-06-09",
+        "category": "研習",
         "source": "輔導室",
         "title": "崑山高中「多媒材創意飾品設計」教師研習",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=335&type=news&from_op=all_news",
@@ -244,23 +267,5 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=活動文宣.pdf&files_sn=227"
             }
         ]
-    },
-    {
-        "date": "2026-06-04",
-        "category": "活動",
-        "source": "學務處",
-        "title": "國一升國二社團選社由此入",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=318&type=news&from_op=all_news",
-        "content": "請一年級同學於6/10(三)下午6點前完成線上選社\n(1)社團一年一選（中途不可更換）\n(2)部分社團有收費或是訓練需求，請與家長確認可以接受再選\n(3)6/10下午6:00系統截止\n(4)同學可以利用下課時間或班會時間，完成線上選填作業後找副班長簽名！\n(5)有相關問題請洽學生活動組\n選填網址：\n一年級線上選社表單",
-        "attachments": []
-    },
-    {
-        "date": "2026-06-04",
-        "category": "活動",
-        "source": "學務處",
-        "title": "國二升國三社團選社由此入",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=319&type=news&from_op=all_news",
-        "content": "請二年級同學於6/10(三)晚上6點前完成社團選填\n(1)社團一年一選(中途不可更換)\n(2)部分社團有收費或訓練要求請與家長確認同意參加再選填\n(3)同學可利用下課或班會時間於班上完成選填後找副班長簽名\n(4)相關問題請洽學生活動組\n選填網址如下：\n二年級社團選填表單",
-        "attachments": []
     }
 ]
