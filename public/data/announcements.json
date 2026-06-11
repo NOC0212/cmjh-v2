@@ -51,6 +51,38 @@
         ]
     },
     {
+        "date": "2026-06-11",
+        "category": "升學",
+        "source": "教務處",
+        "title": "本校五專優免榜單，請錄取同學於6/15前往該校報到",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=345&type=news&from_op=all_news",
+        "content": "本校五專優先免試錄取名單如附件。\n請依照各五專通知\n6/15(一)\n報到日之時間、地點\n前往報到\n。如有錄取五專完免同學，請自行斟酌是否放棄完免後報到優免。\n已錄取之畢業生，要進行退費(高中職免試、五專聯免)請於\n6/18(四)\n連假前填寫\n放棄報名聲明書\n至教務處辦理退費。",
+        "attachments": [
+            {
+                "name": "115五專優免錄取及未錄取名單.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115五專優免錄取及未錄取名單.pdf&files_sn=252"
+            },
+            {
+                "name": "[放棄報名及退費] 聲明書.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=[放棄報名及退費] 聲明書.pdf&files_sn=253"
+            }
+        ]
+    },
+    {
+        "date": "2026-06-11",
+        "category": "簡章",
+        "source": "教務處",
+        "title": "本市修正後之115學年度原住民族語教學支援老師聯合甄選簡章",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=344&type=news&from_op=all_news",
+        "content": "一、依據本局115年6月5日公告編號283938號(諒達)辦理。\n二、修正處如下：\n（一）修正簡章附件3積分審查表之積分項目「族語認證能力」，新增「103年1月1日以後取得原住民族語能力認證測驗中高級證書(聽、說、讀、寫四項成績皆須達合格標準)」，給分標準10分之文字。\n（二）修正第2次公告各校原住民族語開班需求數為7月3日。",
+        "attachments": [
+            {
+                "name": "臺南市115學年度原住民族語老師聯合甄選簡章1150610修正.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市115學年度原住民族語老師聯合甄選簡章1150610修正.pdf&files_sn=251"
+            }
+        ]
+    },
+    {
         "date": "2026-06-10",
         "category": "研習",
         "source": "教務處",
@@ -232,34 +264,6 @@
             {
                 "name": "公文-中國文化大學辦理115年國民中學教師在職進修第二專長學分班綜合活動領域－台北輔導自費班.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=公文-中國文化大學辦理115年國民中學教師在職進修第二專長學分班綜合活動領域－台北輔導自費班.pdf&files_sn=237"
-            }
-        ]
-    },
-    {
-        "date": "2026-06-09",
-        "category": "一般",
-        "source": "教務處",
-        "title": "中國文化大學辦理115年度偏遠地區學校學士後學分班藝術領域-表演藝術班",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=329&type=news&from_op=all_news",
-        "content": "一、依據中國文化學115年6月1日校廣字第1150052740號函辦理。\n二、報名日期：115年6月16日至115年12月9日，請有意願參加進修教師協助於報名期間內線上報名，報名對象詳如招生簡章，可至\n中國文化大學招生簡章網站\n查詢。\n三、預計開班時間為116年上半年至119年下半年，開班地點在臺北。",
-        "attachments": [
-            {
-                "name": "公文-中國文化大學辦理115年度偏遠地區學校學士後學分班藝術領域-表演藝術班.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=公文-中國文化大學辦理115年度偏遠地區學校學士後學分班藝術領域-表演藝術班.pdf&files_sn=236"
-            }
-        ]
-    },
-    {
-        "date": "2026-06-09",
-        "category": "一般",
-        "source": "教務處",
-        "title": "中國文化大學辦理115年度偏遠地區學校學士後學分班綜合活動領域-家政班",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=328&type=news&from_op=all_news",
-        "content": "一、依據中國文化大學115年6月1日校廣字第1150052739號函辦理。\n二、報名日期：115年6月16日至115年7月8日，請有意願參加進修教師協助於報名期間內線上報名，報名對象詳如招生簡章，可至\n中國文化大學招生簡章網站\n查詢。\n三、預計開班時間為115年下半年至118年下半年，開班地點在臺北。",
-        "attachments": [
-            {
-                "name": "公文-中國文化大學辦理115年度偏遠地區學校學士後學分班綜合活動領域-家政班.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=公文-中國文化大學辦理115年度偏遠地區學校學士後學分班綜合活動領域-家政班.pdf&files_sn=235"
             }
         ]
     }
