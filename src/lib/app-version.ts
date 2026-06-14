@@ -10,7 +10,6 @@ export const STORAGE_KEYS = {
     COUNTDOWNS: "cmjh-custom-countdowns",
     FAVORITES: "favorites",
     SETUP_COMPLETED: "cmjh-first-setup-completed",
-    SCRATCHPAD: "cmjh_scratchpad_notes",
     READ_ANNOUNCEMENTS: "cmjh-read-announcements",
     MAINTENANCE_WHITELIST: "cmjh-maintenance-whitelist",
 };

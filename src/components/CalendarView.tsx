@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { CalendarDialog } from "@/components/CalendarDialog";
+import { CalendarAddDialog } from "@/components/CalendarAddDialog";
 import {
   Popover,
   PopoverContent,
@@ -297,7 +298,10 @@ export function CalendarView() {
             <div className="space-y-1">
               <div className="flex items-center gap-3">
                 <h2 className="text-2xl font-bold text-foreground md:text-3xl">行事曆</h2>
-                <CalendarDialog />
+                <div className="flex items-center gap-2">
+                  <CalendarAddDialog />
+                  <CalendarDialog />
+                </div>
               </div>
               <p className="text-sm text-muted-foreground">
                 {selectedMonth ? formatMonthLabel(selectedMonth) : "選擇月份查看行程"}

@@ -104,6 +104,12 @@ const Index = ({ maintenanceConfig }: IndexProps) => {
             className={`h-[100dvh] w-screen max-w-full flex overflow-hidden ${isMobile ? 'flex-col' : 'flex-row'}`}
             style={getPageBackgroundStyle(settings.pageBackground, settings.pageBackgroundImage)}
         >
+            {/* 背景裝飾光圈 */}
+            <div className="fixed -right-48 -top-48 w-[600px] h-[600px] md:w-[800px] md:h-[800px] rounded-full pointer-events-none z-0"
+                style={{ background: 'radial-gradient(circle, hsl(210 100% 70% / 0.05), transparent 70%)' }} />
+            <div className="fixed -left-8 -bottom-8 w-[350px] h-[350px] md:w-[450px] md:h-[450px] rounded-full pointer-events-none z-0"
+                style={{ background: 'radial-gradient(circle, hsl(190 60% 65% / 0.04), transparent 70%)' }} />
+
             {/* 桌面版側邊導航 (使用固定定位，所以這裡加一個占位區) */}
             {!isMobile && (
                 <>

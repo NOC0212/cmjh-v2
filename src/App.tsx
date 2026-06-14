@@ -8,7 +8,7 @@ import { FirstTimeSetup, checkFirstTimeSetup } from "@/components/FirstTimeSetup
 import { UpdatePrompt } from "@/components/UpdatePrompt";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Loading } from "@/components/Loading";
-import { ensureVersion, isMaintenanceWhitelisted } from "@/lib/app-version";
+import { ensureVersion, isMaintenanceWhitelisted, getCurrentVersion, FALLBACK_VERSION, updateVersionToLatest } from "@/lib/app-version";
 import { useSiteConfig } from "@/hooks/useSiteConfig";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -89,25 +89,21 @@ const App = () => {
  * 因此可以使用 useSiteConfig 等依賴 React Query 的 Hook。
  */
 function AppContent() {
-  const { maintenance: maintenanceConfig, isLoading: loadingMaintenance } = useSiteConfig();
-  const [showLoadingUi, setShowLoadingUi] = useState(false);
+  const { maintenance: maintenanceConfig, isLoading: loadingMaintenance, appVersion } = useSiteConfig();
 
+  // 伺服器版本載入後，確保儲存的版本號是最新的
   useEffect(() => {
-    const loadingTimer = setTimeout(() => {
-      setShowLoadingUi(true);
-    }, 200);
-
-    if (!loadingMaintenance) {
-      clearTimeout(loadingTimer);
-      setShowLoadingUi(false);
+    if (appVersion?.latestVersion) {
+      const current = getCurrentVersion();
+      if (!current || current === FALLBACK_VERSION) {
+        updateVersionToLatest(appVersion.latestVersion);
+      }
     }
+  }, [appVersion]);
 
-    return () => clearTimeout(loadingTimer);
-  }, [loadingMaintenance]);
-
-  // 維護設定載入中，顯示 loading 畫面
+  // 維護設定載入中，立即顯示 loading 畫面
   if (loadingMaintenance && !maintenanceConfig) {
-    return showLoadingUi ? <Loading fullScreen message="正在讀取設定..." /> : null;
+    return <Loading fullScreen message="正在讀取設定..." />;
   }
 
   // 檢查維護白名單：若使用者已設定白名單，則跳過維護模式封鎖

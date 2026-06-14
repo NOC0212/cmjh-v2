@@ -1,4 +1,4 @@
-import { Home, Search, Megaphone, Star, Settings, School, RefreshCw, Shield } from "lucide-react";
+import { Home, Search, Megaphone, Star, Settings, RefreshCw, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useFavorites } from "@/hooks/useFavorites";
@@ -71,7 +71,7 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
                 <div className={`relative z-10 flex items-center ${isMobile ? 'flex-col gap-1' : ''}`}>
                     <div className={`shrink-0 flex items-center justify-center ${isMobile ? '' : 'w-8'}`}>
                         <div className="relative">
-                            <Icon className={`h-5 w-5 ${isActive ? 'stroke-[2.5px]' : ''}`} />
+                            <Icon className={`h-5 w-5 ${isActive ? 'stroke-[2.5px]' : ''}`} fill={isActive ? 'currentColor' : 'none'} />
                             {item.id === "favorites" && favorites.length > 0 && (
                                 <span className="absolute -top-1 -right-2 bg-red-500 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center">
                                     {favorites.length > 9 ? "9+" : favorites.length}
@@ -102,7 +102,7 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
                     <div className="pt-[env(safe-area-inset-top)]">
                         <div className="flex items-center justify-between h-14 px-4">
                             <div className="flex items-center gap-2 animate-slide-in-left">
-                                <School className="h-5 w-5 text-primary" />
+                                <img src="/favicon.png" alt="崇明國中" className="h-6 w-6" />
                                 <h1 className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                                     崇明國中
                                 </h1>
@@ -154,8 +154,8 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
             <div className={`mb-8 flex flex-col gap-4 w-full ${isHovered ? 'items-start' : 'items-center'}`}>
                 <div className="flex items-center w-full overflow-hidden">
                     <div className="w-8 flex items-center justify-center shrink-0">
-                        <div className="p-1 bg-primary/10 rounded-xl">
-                            <School className="h-5 w-5 text-primary" />
+                        <div className="p-1 bg-primary/10 rounded-xl flex items-center justify-center">
+                            <img src="/favicon.png" alt="崇明國中" className="h-5 w-5" />
                         </div>
                     </div>
                     {isHovered && (

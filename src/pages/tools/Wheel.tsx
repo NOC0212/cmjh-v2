@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useSettings } from "@/hooks/SettingsContext";
 import { ToolLayout } from "@/components/ToolLayout";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -121,11 +122,29 @@ export default function Wheel() {
         });
     };
 
-    const colors = [
-        "#7950f2", "#e64980", "#12b886", "#f76707",
-        "#845ef7", "#339af0", "#fa5252", "#40c057",
-        "#be4bdb", "#4c6ef5", "#fd7e14", "#15aabf",
-    ];
+    const { settings } = useSettings();
+
+    // 從當前主題 CSS 變數中產生轉盤配色
+    const colors = useMemo(() => {
+        const getCSSVar = (name: string): string =>
+            getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+        const primaryHsl = getCSSVar('--primary');
+        const parts = primaryHsl.split(' ').filter(Boolean);
+        const baseHue = parts.length >= 1 ? parseInt(parts[0], 10) : 210;
+        const baseSat = parts.length >= 2 ? parseInt(parts[1], 10) : 75;
+
+        // 判斷是否深色模式
+        const isDark = document.documentElement.classList.contains('dark');
+        const lightness = isDark ? 55 : 48;
+
+        return Array.from({ length: 12 }, (_, i) => {
+            const hue = (baseHue + i * 30) % 360;
+            const sat = Math.max(55, Math.min(90, baseSat - (i % 3) * 8));
+            const light = lightness + (i % 2 === 0 ? 8 : -5);
+            return `hsl(${hue}, ${sat}%, ${light}%)`;
+        });
+    }, [settings.themeColor, settings.themeMode]);
 
     // 計算目前有效的選項內容 (用於轉盤顯示)
     const effectiveOptions = excludeDrawn

@@ -17,6 +17,8 @@ npm run preview    # preview production build on port 8080
 
 No test runner is configured. No `typecheck` script — use `npx tsc --noEmit` if needed.
 
+> ⚠️ **Do NOT run `build`, `build:dev`, or `preview` commands** — these are slow, resource-intensive, and unnecessary for code review. Only run `lint` or `tsc --noEmit` for validation.
+
 ## Architecture
 
 - **Entry**: `src/main.tsx` → `src/App.tsx` (React Router, lazy-loaded tool pages)

@@ -333,16 +333,7 @@
   --tw-ring-color: hsl(var(--primary));
 }
 
-/* 漸層配色 */
-.theme-gradient .bg-card,
-[data-theme="gradient"] .bg-card {
-  background: linear-gradient(135deg, hsl(210 75% 48% / 0.12) 0%, hsl(271 81% 56% / 0.12) 50%, hsl(45 93% 58% / 0.12) 100%), hsl(var(--card));
-}
 
-.theme-modern .bg-card,
-[data-theme="modern"] .bg-card {
-  background: linear-gradient(135deg, hsl(48 100% 50% / 0.12) 0%, hsl(38 100% 50% / 0.12) 50%, hsl(25 100% 50% / 0.12) 100%), hsl(var(--card));
-}
 
 .theme-gradient .bg-primary,
 [data-theme="gradient"] .bg-primary {
@@ -364,21 +355,7 @@
   border-color: hsl(43 100% 52% / 0.5);
 }
 
-.theme-gradient [role="dialog"],
-.theme-gradient [role="menu"],
-[data-theme="gradient"] [role="dialog"],
-[data-theme="gradient"] [role="menu"] {
-  background: linear-gradient(135deg, hsl(210 75% 48% / 0.08) 0%, hsl(271 81% 56% / 0.08) 50%, hsl(45 93% 58% / 0.08) 100%), hsl(var(--popover));
-  box-shadow: 0 8px 32px hsl(210 75% 48% / 0.15), 0 4px 16px hsl(271 81% 56% / 0.1), 0 2px 8px hsl(45 93% 58% / 0.08);
-}
 
-.theme-modern [role="dialog"],
-.theme-modern [role="menu"],
-[data-theme="modern"] [role="dialog"],
-[data-theme="modern"] [role="menu"] {
-  background: linear-gradient(135deg, hsl(48 100% 50% / 0.08) 0%, hsl(38 100% 50% / 0.08) 50%, hsl(25 100% 50% / 0.08) 100%), hsl(var(--popover));
-  box-shadow: 0 8px 32px hsl(48 100% 50% / 0.15), 0 4px 16px hsl(38 100% 50% / 0.1), 0 2px 8px hsl(25 100% 50% / 0.08);
-}
 
 /* 按鈕 */
 .theme-gradient button:hover,
@@ -404,6 +381,13 @@
 .animate-gradient-shift {
   background-size: 200% 100%;
   animation: gradient-shift 3s ease-in-out infinite;
+}
+
+/* SVG 邊框繞圈動畫 */
+@keyframes dash {
+  to {
+    stroke-dashoffset: -235;
+  }
 }
 
 /* 首次設定淡入動畫 */

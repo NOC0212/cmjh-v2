@@ -178,7 +178,7 @@ export function Announcements() {
   return (
     <section id="announcements" className="mb-12 scroll-mt-20">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-        <h2 className="flex items-center gap-3 bg-gradient-to-r from-primary to-sky-500 bg-clip-text text-3xl font-bold text-transparent">
+        <h2 className="flex items-center gap-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-3xl font-bold text-transparent">
           <Megaphone className="h-8 w-8 text-primary" />
           行政公告
         </h2>

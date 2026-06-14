@@ -116,16 +116,10 @@ export function CalendarDialog() {
 
     if (editingId) {
       updateEvent(editingId, formData.date.trim(), formData.title.trim());
-      toast({
-        title: "更新成功",
-        description: "事件已更新",
-      });
+      toast({ title: "更新成功", description: "事件已更新" });
     } else {
       addEvent(formData.date.trim(), formData.title.trim());
-      toast({
-        title: "新增成功",
-        description: "事件已新增",
-      });
+      toast({ title: "新增成功", description: "事件已新增" });
     }
 
     setFormData({ date: "", title: "" });
@@ -141,20 +135,14 @@ export function CalendarDialog() {
   const confirmDelete = () => {
     if (deleteId) {
       deleteEvent(deleteId);
-      toast({
-        title: "刪除成功",
-        description: "事件已刪除",
-      });
+      toast({ title: "刪除成功", description: "事件已刪除" });
       setDeleteId(null);
     }
   };
 
   const handleReset = () => {
     resetToDefault();
-    toast({
-      title: "重置成功",
-      description: "已清除所有自訂事件",
-    });
+    toast({ title: "重置成功", description: "已清除所有自訂事件" });
   };
 
   // 按日期排序
@@ -175,9 +163,8 @@ export function CalendarDialog() {
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline" size="sm" className="gap-2">
+          <Button variant="outline" size="icon" className="h-9 w-9 rounded-xl border-primary/20 hover:bg-primary/10">
             <Settings className="h-4 w-4" />
-            <span className="hidden sm:inline">管理</span>
           </Button>
         </DialogTrigger>
         <DialogContent className="w-[95vw] max-w-md h-[85vh] md:h-auto md:max-h-[85vh] flex flex-col overflow-hidden rounded-[32px] bg-card border-none shadow-2xl p-0">
@@ -186,16 +173,14 @@ export function CalendarDialog() {
           </DialogHeader>
 
           <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6 custom-scrollbar">
-            {/* 新增/編輯表單 */}
-            <div className="space-y-4 p-5 bg-primary/5 rounded-[24px] border border-primary/10 shadow-sm relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none transition-transform group-hover:rotate-12 text-primary">
-                <Settings className="h-12 w-12" />
-              </div>
-              <div className="flex items-center justify-between relative z-10">
-                <h3 className="text-sm font-black text-primary">
-                  {editingId ? "編輯事件內容" : "新增自訂事件"}
-                </h3>
-                {editingId && (
+            {/* 編輯表單（僅在編輯時顯示） */}
+            {editingId && (
+              <div className="space-y-4 p-5 bg-primary/5 rounded-[24px] border border-primary/10 shadow-sm relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none transition-transform group-hover:rotate-12 text-primary">
+                  <Settings className="h-12 w-12" />
+                </div>
+                <div className="flex items-center justify-between relative z-10">
+                  <h3 className="text-sm font-black text-primary">編輯事件內容</h3>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -209,84 +194,79 @@ export function CalendarDialog() {
                   >
                     取消編輯
                   </Button>
-                )}
-              </div>
-
-              {/* 日期選擇 */}
-              <div className="space-y-3 relative z-10">
-                <Label className="text-xs font-bold text-muted-foreground ml-1 text-foreground">事件日期</Label>
-                <div className="grid grid-cols-2 gap-3">
-                  <Select
-                    value={selectedMonth}
-                    onValueChange={(value) => {
-                      setSelectedMonth(value);
-                      setSelectedDay("");
-                    }}
-                  >
-                    <SelectTrigger className="h-10 rounded-xl bg-background/50 border-border/40">
-                      <SelectValue placeholder="月份" />
-                    </SelectTrigger>
-                    <SelectContent className="rounded-2xl border-border/40">
-                      {Object.keys(groupedMonths).sort().map((year) => (
-                        <div key={year}>
-                          <div className="px-2 py-1.5 text-[10px] font-black uppercase text-muted-foreground/60 bg-muted/30">
-                            {year}年
-                          </div>
-                          {groupedMonths[year].map((m) => {
-                            const month = parseInt(m.split("-")[1]);
-                            return (
-                              <SelectItem key={m} value={m} className="text-sm rounded-lg">
-                                {month}月
-                              </SelectItem>
-                            );
-                          })}
-                        </div>
-                      ))}
-                    </SelectContent>
-                  </Select>
-
-                  <Select
-                    value={selectedDay}
-                    onValueChange={setSelectedDay}
-                    disabled={!selectedMonth}
-                  >
-                    <SelectTrigger className="h-10 rounded-xl bg-background/50 border-border/40">
-                      <SelectValue placeholder={selectedMonth ? "日期" : "先選月"} />
-                    </SelectTrigger>
-                    <SelectContent className="rounded-2xl border-border/40">
-                      {daysInMonth.map((day) => (
-                        <SelectItem key={day} value={String(day)} className="text-sm rounded-lg">
-                          {day}日
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
                 </div>
-              </div>
 
-              <div className="space-y-1.5 relative z-10">
-                <Label htmlFor="event-title" className="text-xs font-bold text-muted-foreground ml-1 text-foreground">事件標題</Label>
-                <Input
-                  id="event-title"
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  placeholder="例如：段考、活動名稱"
-                  className="h-10 rounded-xl bg-background/50 border-border/40 focus:border-primary/50"
-                />
+                <div className="space-y-3 relative z-10">
+                  <Label className="text-xs font-bold text-muted-foreground ml-1">事件日期</Label>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Select
+                      value={selectedMonth}
+                      onValueChange={(value) => {
+                        setSelectedMonth(value);
+                        setSelectedDay("");
+                      }}
+                    >
+                      <SelectTrigger className="h-10 rounded-xl bg-background/50 border-border/40">
+                        <SelectValue placeholder="月份" />
+                      </SelectTrigger>
+                      <SelectContent className="rounded-2xl border-border/40">
+                        {Object.keys(groupedMonths).sort().map((year) => (
+                          <div key={year}>
+                            <div className="px-2 py-1.5 text-[10px] font-black uppercase text-muted-foreground/60 bg-muted/30">
+                              {year}年
+                            </div>
+                            {groupedMonths[year].map((m) => {
+                              const month = parseInt(m.split("-")[1]);
+                              return (
+                                <SelectItem key={m} value={m} className="text-sm rounded-lg">
+                                  {month}月
+                                </SelectItem>
+                              );
+                            })}
+                          </div>
+                        ))}
+                      </SelectContent>
+                    </Select>
+
+                    <Select
+                      value={selectedDay}
+                      onValueChange={setSelectedDay}
+                      disabled={!selectedMonth}
+                    >
+                      <SelectTrigger className="h-10 rounded-xl bg-background/50 border-border/40">
+                        <SelectValue placeholder={selectedMonth ? "日期" : "先選月"} />
+                      </SelectTrigger>
+                      <SelectContent className="rounded-2xl border-border/40">
+                        {daysInMonth.map((day) => (
+                          <SelectItem key={day} value={String(day)} className="text-sm rounded-lg">
+                            {day}日
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="space-y-1.5 relative z-10">
+                  <Label htmlFor="edit-event-title" className="text-xs font-bold text-muted-foreground ml-1">事件標題</Label>
+                  <Input
+                    id="edit-event-title"
+                    value={formData.title}
+                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    placeholder="例如：段考、活動名稱"
+                    className="h-10 rounded-xl bg-background/50 border-border/40 focus:border-primary/50"
+                  />
+                </div>
+                <Button onClick={handleSave} className="w-full h-11 rounded-xl font-bold shadow-lg shadow-primary/20 relative z-10">
+                  更新變更
+                </Button>
               </div>
-              <Button onClick={handleSave} className="w-full h-11 rounded-xl font-bold shadow-lg shadow-primary/20 relative z-10">
-                {editingId ? "更新變更" : "儲存事件"}
-              </Button>
-            </div>
+            )}
 
             {/* 事件列表 */}
             <div className="space-y-4">
               <div className="flex items-center justify-between px-2">
                 <h3 className="text-xs font-black tracking-widest uppercase text-muted-foreground">已安排的事件</h3>
-                <Button variant="ghost" size="sm" onClick={handleReset} className="h-7 text-[10px] font-bold text-muted-foreground hover:text-destructive gap-1">
-                  <RotateCcw className="h-3.3 w-3" />
-                  全部清除
-                </Button>
               </div>
               <div className="flex flex-col gap-2.5">
                 {sortedEvents.length > 0 ? (
@@ -329,7 +309,13 @@ export function CalendarDialog() {
           </div>
 
           <DialogFooter className="p-6 bg-muted/5 border-t border-border/10 shrink-0">
-            <Button onClick={() => setOpen(false)} className="w-full h-11 rounded-xl font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]">完成管理</Button>
+            <div className="flex items-center justify-between w-full gap-3">
+              <Button variant="ghost" size="sm" onClick={handleReset} className="h-11 text-[10px] font-bold text-muted-foreground hover:text-destructive gap-1.5 px-3 rounded-xl">
+                <RotateCcw className="h-3.5 w-3.5" />
+                全部清除
+              </Button>
+              <Button onClick={() => setOpen(false)} className="h-11 rounded-xl font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98] px-8">完成管理</Button>
+            </div>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -354,5 +340,3 @@ export function CalendarDialog() {
     </>
   );
 }
-
-

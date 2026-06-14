@@ -445,7 +445,7 @@ export function AdminPanel() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-3xl border border-border/50 bg-card p-8 shadow-lg"
+          className="rounded-3xl border border-border/50 bg-card p-8 shadow-lg text-foreground"
         >
           <div className="mb-8 text-center">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">

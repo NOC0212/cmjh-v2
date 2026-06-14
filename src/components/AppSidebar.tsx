@@ -1,4 +1,4 @@
-import { Home, Bell, Calendar, Github, ExternalLink, Menu, Clock, Cloud, Wrench, Trophy } from "lucide-react";
+import { Home, Bell, Calendar, Github, ExternalLink, Menu, Clock, Cloud, Wrench, Trophy, Utensils } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,17 +9,37 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const navItems = [
-  { title: "倒數計時器", path: "#countdown", icon: Clock },
-  { title: "天氣資訊", path: "#weather", icon: Cloud },
-  { title: "常用網站", path: "#common-sites", icon: Home },
-  { title: "小工具", path: "#tools", icon: Wrench },
-  { title: "榮譽榜", path: "#honors", icon: Trophy },
-  { title: "行政公告", path: "#announcements", icon: Bell },
-  { title: "行事曆", path: "#calendar", icon: Calendar },
-];
+import { useSettings } from "@/hooks/SettingsContext";
+
+const ICON_MAP: Record<string, typeof Clock> = {
+  countdown: Clock,
+  weather: Cloud,
+  commonSites: Home,
+  tools: Wrench,
+  honors: Trophy,
+  announcements: Bell,
+  calendar: Calendar,
+  lunch: Utensils,
+};
+
+const SECTION_ID_MAP: Record<string, string> = {
+  commonSites: "common-sites",
+};
 
 export function AppSidebar({ expanded = false }: { expanded?: boolean }) {
+  const { settings } = useSettings();
+
+  const enabledComponents = settings.components
+    .filter((c) => c.enabled)
+    .sort((a, b) => a.order - b.order);
+
+  const navItems = enabledComponents
+    .filter((c) => ICON_MAP[c.id])
+    .map((c) => ({
+      title: c.label,
+      path: `#${SECTION_ID_MAP[c.id] || c.id}`,
+      icon: ICON_MAP[c.id],
+    }));
 
   const scrollToSection = (path: string) => {
     const id = path.replace("#", "");

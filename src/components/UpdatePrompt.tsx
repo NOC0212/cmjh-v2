@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
-import { RefreshCw, Check, Download, FileCode } from "lucide-react";
-import { motion } from "framer-motion";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { RefreshCw, Download } from "lucide-react";
+import { motion, useSpring } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { getCurrentVersion, FALLBACK_VERSION, migrateData } from "@/lib/app-version";
 import { useSettings } from "@/hooks/SettingsContext";
@@ -12,7 +12,7 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
   const [show, setShow] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [phase, setPhase] = useState<"downloading" | "applying" | "complete">("downloading");
+  const [phase, setPhase] = useState<"downloading" | "installing">("downloading");
   const currentVersion = getCurrentVersion();
   const { settings } = useSettings();
   const { appVersion } = useSiteConfig();
@@ -42,6 +42,18 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
     [currentVersion, latestVersion]
   );
 
+  // Smooth spring animation for organic-feeling percentage display
+  const displayProgress = useSpring(0, { stiffness: 55, damping: 15 });
+  const progressRef = useRef(0);
+  const [displayedPct, setDisplayedPct] = useState(0);
+
+  useEffect(() => {
+    const unsubscribe = displayProgress.on("change", (v) => {
+      setDisplayedPct(Math.round(v));
+    });
+    return unsubscribe;
+  }, [displayProgress]);
+
   if (!show || isHidden) return null;
 
   const closePrompt = () => {
@@ -52,34 +64,55 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
   const handleUpdate = () => {
     setIsUpdating(true);
     setPhase("downloading");
+    setProgress(0);
+    displayProgress.set(0);
+    progressRef.current = 0;
+
     const startTime = Date.now();
-    const totalDuration = 8500; // 8.5 秒
-    const phase1End = 5500;     // 階段一：下載（5.5 秒）
-    const phase1Max = 65;       // 階段一進度：0 → 65%
+    const downloadDuration = 6000;
+
+    // Cubic ease-in-out: starts slow, speeds up mid-way, slows at end
+    const easeInOutCubic = (t: number) => {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
 
     const timer = setInterval(() => {
       const elapsed = Date.now() - startTime;
+      const rawT = Math.min(elapsed / downloadDuration, 1);
 
-      if (elapsed < phase1End) {
-        // Phase 1: 正在下載更新
-        setProgress((elapsed / phase1End) * phase1Max);
-      } else if (elapsed < totalDuration) {
-        // Phase 2: 正在套用更新
-        setPhase("applying");
-        const phase2Elapsed = elapsed - phase1End;
-        const phase2Duration = totalDuration - phase1End;
-        setProgress(phase1Max + (phase2Elapsed / phase2Duration) * (100 - phase1Max));
+      if (elapsed < downloadDuration) {
+        // Base progress with smooth acceleration & deceleration
+        const baseProgress = easeInOutCubic(rawT) * 100;
+
+        // Organic speed variation using sine waves to simulate network fluctuation
+        const variation =
+          Math.sin(elapsed / 700) * 1.8 +
+          Math.sin(elapsed / 1600) * 1.2;
+
+        let finalProgress = baseProgress + variation;
+        // Prevent visible backward jumps
+        finalProgress = Math.max(finalProgress, progressRef.current - 0.3);
+        finalProgress = Math.min(finalProgress, 99.5);
+
+        progressRef.current = finalProgress;
+        setProgress(finalProgress);
+        displayProgress.set(finalProgress);
       } else {
         clearInterval(timer);
+        displayProgress.set(100);
         setProgress(100);
-        setPhase("complete");
+        setPhase("installing");
         setTimeout(() => {
           migrateData(latestVersion);
           window.location.reload();
-        }, 500);
+        }, 3000);
       }
-    }, 30);
+    }, 50);
   };
+
+  // Square progress ring perimeter: rect x=2 y=2 w=76 h=76 rx=16
+  // perimeter = 2*(76+76) - 8*16 + 2*PI*16 ≈ 277
+  const svgPerimeter = 277;
 
   return (
     <Dialog
@@ -104,139 +137,150 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
       >
         <DialogTitle className="sr-only">版本更新</DialogTitle>
 
-        {isUpdating ? (            <div className="flex flex-col items-center justify-center gap-10 p-12 text-center">
-            <div className="relative h-32 w-32">
-              {/* Circular Background */}
-              <svg className="h-full w-full -rotate-90 transform">
-                <circle
-                  cx="64"
-                  cy="64"
-                  r="58"
-                  fill="transparent"
-                  stroke="currentColor"
-                  strokeWidth="8"
-                  className="text-primary/10"
-                />
-                {/* Progress Circle */}
-                <motion.circle
-                  cx="64"
-                  cy="64"
-                  r="58"
-                  fill="transparent"
-                  stroke="currentColor"
-                  strokeWidth="8"
-                  strokeDasharray={364.4}
-                  initial={{ strokeDashoffset: 364.4 }}
-                  animate={{ strokeDashoffset: 364.4 - (364.4 * progress) / 100 }}
-                  transition={{ type: "spring", bounce: 0, duration: 0.1 }}
-                  strokeLinecap="round"
-                  className={cn(
-                    "transition-colors duration-500",
-                    phase === "downloading" && "text-primary",
-                    phase === "applying" && "text-amber-500",
-                    phase === "complete" && "text-green-500"
-                  )}
-                />
-              </svg>
-
-              {/* Icon in Center */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative">
-                  {phase === "complete" ? (
-                    <motion.div
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ type: "spring", bounce: 0.5, duration: 0.5 }}
-                      className="flex h-20 w-20 items-center justify-center rounded-full bg-green-500 text-white shadow-lg"
-                    >
-                      <Check className="h-10 w-10" />
-                    </motion.div>
-                  ) : phase === "applying" ? (
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-                      className="flex h-20 w-20 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-500 shadow-lg"
-                    >
-                      <FileCode className="h-10 w-10" />
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
-                      className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10 text-primary shadow-lg"
-                    >
-                      <Download className="h-10 w-10" />
-                    </motion.div>
-                  )}
+        {isUpdating ? (
+          <div className="p-8 sm:p-10">
+            {/* 頂部：icon（含方形進度條）+ 名稱與版本 */}
+            <div className="flex items-start gap-5 mb-8">
+              <div className="shrink-0 relative">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center shadow-sm overflow-hidden">
+                  <img src="/favicon.png" alt="App Icon" className="w-14 h-14" />
+                </div>
+                {/* 方形進度條 SVG 疊加 */}
+                {phase === "downloading" && (
+                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 80 80">
+                    {/* 背景軌道 */}
+                    <rect
+                      x="2" y="2" width="76" height="76" rx="16"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      className="text-primary/10"
+                    />
+                    {/* 進度指示 */}
+                    <motion.rect
+                      x="2" y="2" width="76" height="76" rx="16"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeDasharray={svgPerimeter}
+                      animate={{ strokeDashoffset: svgPerimeter - (svgPerimeter * progress) / 100 }}
+                      transition={{ type: "spring", bounce: 0, duration: 0.1 }}
+                      className="text-primary"
+                    />
+                  </svg>
+                )}
+                {phase === "installing" && (
+                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 80 80">
+                    {/* 滿格綠色邊框 */}
+                    <rect
+                      x="2" y="2" width="76" height="76" rx="16"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeDasharray={svgPerimeter}
+                      strokeDashoffset={0}
+                      className="text-green-500"
+                    />
+                  </svg>
+                )}
+              </div>
+              <div className="min-w-0 flex-1 pt-1.5">
+                <h2 className="text-2xl font-bold tracking-tight text-foreground truncate">崇明國中 V2</h2>
+                <div className="flex items-center gap-2.5 mt-2">
+                  <span className="inline-flex items-center gap-1.5 text-base text-muted-foreground">
+                    {versionSummary.from}
+                  </span>
+                  <span className="text-xs text-primary font-semibold">→</span>
+                  <span className="text-sm font-semibold text-primary">{versionSummary.to}</span>
                 </div>
               </div>
             </div>
 
-            <div className="space-y-3">
-              <h2 className="text-2xl font-black tracking-tight text-foreground">
-                {phase === "downloading" && "正在下載更新..."}
-                {phase === "applying" && "正在套用更新..."}
-                {phase === "complete" && "更新完成"}
-              </h2>
-              {phase !== "complete" && (
-                <p className="text-lg font-mono font-medium text-primary">
-                  {Math.round(progress)}%
-                </p>
-              )}
-              {phase === "downloading" && (
-                <p className="text-xs text-muted-foreground">
-                  正在下載最新版本的更新檔案
-                </p>
-              )}
-              {phase === "applying" && (
-                <p className="text-xs text-muted-foreground animate-pulse">
-                  正在將更新套用至您的裝置，請勿關閉此頁面
-                </p>
-              )}
-              {phase === "complete" && (
-                <p className="text-xs text-green-500 font-medium">
-                  更新已成功套用，即將重新整理頁面
-                </p>
-              )}
-            </div>
-          </div>
-        ) : (
-          <>
-            <div className="relative h-48 w-full overflow-hidden bg-muted sm:h-56">
-              <img 
-                src="/update.png" 
-                alt="Update Header" 
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background to-transparent pointer-events-none" />
-            </div>
-
-            <div className="p-6 sm:px-8">
-              <div className="mb-6 flex items-center justify-center gap-3 text-sm font-medium">
-                <span className="rounded-md bg-muted px-3 py-1.5 text-muted-foreground">{versionSummary.from}</span>
-                <span className="text-primary">→</span>
-                <span className="rounded-md bg-primary/10 px-3 py-1.5 text-primary">{versionSummary.to}</span>
-              </div>
-              
-              <ul className="space-y-4 text-base text-foreground/90">
-                {releaseHighlights.map((item, index) => (
-                  <li key={item} className="flex items-start gap-4">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
-                      {index + 1}
-                    </span>
-                    <span className="pt-0.5">{item}</span>
+            {/* 更新資訊 */}
+            <div className="mb-8">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-5">最新功能</h3>
+              <ul className="space-y-4">
+                {releaseHighlights.map((item) => (
+                  <li key={item} className="flex items-start gap-3.5 text-base text-foreground/85">
+                    <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-primary/60" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="p-6 pt-2 pb-8 sm:px-8">
-              <Button className="h-12 w-full gap-2 text-lg font-bold shadow-lg shadow-primary/25 transition-transform hover:scale-[1.02] active:scale-[0.98]" onClick={handleUpdate}>
-                <RefreshCw className="h-5 w-5" />
-                立即更新
-              </Button>
+            {/* 更新按鈕 — 顯示進度 */}
+            <Button disabled className="h-14 w-full gap-2.5 text-lg font-bold rounded-xl opacity-80 cursor-not-allowed">
+              {phase === "installing" ? (
+                <>
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+                    className="shrink-0"
+                  >
+                    <RefreshCw className="h-5 w-5" />
+                  </motion.div>
+                  安裝中...
+                </>
+              ) : (
+                <>
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+                    className="shrink-0"
+                  >
+                    <Download className="h-5 w-5" />
+                  </motion.div>
+                  更新中 {displayedPct}%
+                </>
+              )}
+            </Button>
+          </div>
+        ) : (
+          <div className="p-8 sm:p-10">
+            {/* 頂部：icon + 名稱與版本 */}
+            <div className="flex items-start gap-5 mb-8">
+              <div className="shrink-0">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center shadow-sm overflow-hidden">
+                  <img src="/favicon.png" alt="App Icon" className="w-14 h-14" />
+                </div>
+              </div>
+              <div className="min-w-0 flex-1 pt-1.5">
+                <h2 className="text-2xl font-bold tracking-tight text-foreground truncate">崇明國中 V2</h2>
+                <div className="flex items-center gap-2.5 mt-2">
+                  <span className="inline-flex items-center gap-1.5 text-base text-muted-foreground">
+                    {versionSummary.from}
+                    <span className="text-[10px] font-medium text-muted-foreground/60 border border-border rounded-md px-1.5 py-0.5">已安裝</span>
+                  </span>
+                  <span className="text-xs text-primary font-semibold">→</span>
+                  <span className="text-sm font-semibold text-primary">{versionSummary.to}</span>
+                </div>
+              </div>
             </div>
-          </>
+
+            {/* 更新資訊（移到按鈕上方） */}
+            <div className="mb-8">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-5">最新功能</h3>
+              <ul className="space-y-4">
+                {releaseHighlights.map((item) => (
+                  <li key={item} className="flex items-start gap-3.5 text-base text-foreground/85">
+                    <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-primary/60" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* 更新按鈕（移到更新資訊下方） */}
+            <Button
+              className="h-14 w-full gap-2.5 text-lg font-bold rounded-xl shadow-lg shadow-primary/20 transition-transform hover:scale-[1.01] active:scale-[0.98]"
+              onClick={handleUpdate}
+            >
+              <RefreshCw className="h-5 w-5" />
+              更新
+            </Button>
+          </div>
         )}
       </DialogContent>
     </Dialog>

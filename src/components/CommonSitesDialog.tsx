@@ -66,16 +66,10 @@ export function CommonSitesDialog() {
 
     if (editingId) {
       updateSite(editingId, formData.name.trim(), formData.url.trim());
-      toast({
-        title: "更新成功",
-        description: "網站已更新",
-      });
+      toast({ title: "更新成功", description: "網站已更新" });
     } else {
       addSite(formData.name.trim(), formData.url.trim());
-      toast({
-        title: "新增成功",
-        description: "網站已新增",
-      });
+      toast({ title: "新增成功", description: "網站已新增" });
     }
 
     setFormData({ name: "", url: "" });
@@ -89,20 +83,14 @@ export function CommonSitesDialog() {
   const confirmDelete = () => {
     if (deleteId) {
       deleteSite(deleteId);
-      toast({
-        title: "刪除成功",
-        description: "網站已刪除",
-      });
+      toast({ title: "刪除成功", description: "網站已刪除" });
       setDeleteId(null);
     }
   };
 
   const handleReset = () => {
     resetToDefault();
-    toast({
-      title: "重置成功",
-      description: "已重置為預設網站",
-    });
+    toast({ title: "重置成功", description: "已重置為預設網站" });
   };
 
   const handleReorder = (newSites: CommonSite[]) => {
@@ -118,9 +106,8 @@ export function CommonSitesDialog() {
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline" size="sm" className="gap-2">
+          <Button variant="outline" size="icon" className="h-9 w-9 rounded-xl border-primary/20 hover:bg-primary/10">
             <Settings className="h-4 w-4" />
-            <span className="hidden sm:inline">管理</span>
           </Button>
         </DialogTrigger>
         <DialogContent className="w-[95vw] max-w-md h-[85vh] md:h-auto md:max-h-[85vh] flex flex-col overflow-hidden rounded-[32px] bg-card border-none shadow-2xl p-0">
@@ -129,16 +116,14 @@ export function CommonSitesDialog() {
           </DialogHeader>
 
           <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6 custom-scrollbar">
-            {/* 新增/編輯表單 */}
-            <div className="space-y-4 p-5 bg-primary/5 rounded-[24px] border border-primary/10 shadow-sm relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none transition-transform group-hover:rotate-12 text-primary">
-                <Settings className="h-12 w-12" />
-              </div>
-              <div className="flex items-center justify-between relative z-10">
-                <h3 className="text-sm font-black text-primary">
-                  {editingId ? "編輯項目內容" : "新增網站連結"}
-                </h3>
-                {editingId && (
+            {/* 編輯表單（僅在編輯時顯示） */}
+            {editingId && (
+              <div className="space-y-4 p-5 bg-primary/5 rounded-[24px] border border-primary/10 shadow-sm relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none transition-transform group-hover:rotate-12 text-primary">
+                  <Settings className="h-12 w-12" />
+                </div>
+                <div className="flex items-center justify-between relative z-10">
+                  <h3 className="text-sm font-black text-primary">編輯項目內容</h3>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -150,43 +135,39 @@ export function CommonSitesDialog() {
                   >
                     取消編輯
                   </Button>
-                )}
-              </div>
-              <div className="grid grid-cols-1 gap-4 relative z-10">
-                <div className="space-y-1.5">
-                  <Label htmlFor="site-name" className="text-xs font-bold text-muted-foreground ml-1">顯示名稱</Label>
-                  <Input
-                    id="site-name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="例如：學校官網"
-                    className="h-10 rounded-xl bg-background/50 border-border/40 focus:border-primary/50"
-                  />
                 </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="site-url" className="text-xs font-bold text-muted-foreground ml-1">連結網址</Label>
-                  <Input
-                    id="site-url"
-                    value={formData.url}
-                    onChange={(e) => setFormData({ ...formData, url: e.target.value })}
-                    placeholder="https://..."
-                    className="h-10 rounded-xl bg-background/50 border-border/40 focus:border-primary/50"
-                  />
+                <div className="grid grid-cols-1 gap-4 relative z-10">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="edit-site-name" className="text-xs font-bold text-muted-foreground ml-1">顯示名稱</Label>
+                    <Input
+                      id="edit-site-name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      placeholder="例如：學校官網"
+                      className="h-10 rounded-xl bg-background/50 border-border/40 focus:border-primary/50"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="edit-site-url" className="text-xs font-bold text-muted-foreground ml-1">連結網址</Label>
+                    <Input
+                      id="edit-site-url"
+                      value={formData.url}
+                      onChange={(e) => setFormData({ ...formData, url: e.target.value })}
+                      placeholder="https://..."
+                      className="h-10 rounded-xl bg-background/50 border-border/40 focus:border-primary/50"
+                    />
+                  </div>
                 </div>
+                <Button onClick={handleSave} className="w-full h-11 rounded-xl font-bold shadow-lg shadow-primary/20 relative z-10">
+                  更新變更
+                </Button>
               </div>
-              <Button onClick={handleSave} className="w-full h-11 rounded-xl font-bold shadow-lg shadow-primary/20 relative z-10">
-                {editingId ? "更新變更" : "新增網站"}
-              </Button>
-            </div>
+            )}
 
             {/* 網站列表 */}
             <div className="space-y-4">
               <div className="flex items-center justify-between px-2">
                 <h3 className="text-xs font-black tracking-widest uppercase text-muted-foreground">現有網站列表</h3>
-                <Button variant="ghost" size="sm" onClick={handleReset} className="h-7 text-[10px] font-bold text-muted-foreground hover:text-primary gap-1">
-                  <RotateCcw className="h-3 w-3" />
-                  重置預設
-                </Button>
               </div>
               <Reorder.Group
                 axis="y"
@@ -213,7 +194,13 @@ export function CommonSitesDialog() {
           </div>
 
           <DialogFooter className="p-6 bg-muted/5 border-t border-border/10 shrink-0">
-            <Button onClick={() => setOpen(false)} className="w-full h-11 rounded-xl font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]">完成管理</Button>
+            <div className="flex items-center justify-between w-full gap-3">
+              <Button variant="ghost" size="sm" onClick={handleReset} className="h-11 text-[10px] font-bold text-muted-foreground hover:text-primary gap-1.5 px-3 rounded-xl">
+                <RotateCcw className="h-3.5 w-3.5" />
+                重置預設
+              </Button>
+              <Button onClick={() => setOpen(false)} className="h-11 rounded-xl font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98] px-8">完成管理</Button>
+            </div>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -286,4 +273,3 @@ function SortableSiteItem({ site, onEdit, onDelete }: { site: CommonSite, onEdit
     </Reorder.Item>
   );
 }
-

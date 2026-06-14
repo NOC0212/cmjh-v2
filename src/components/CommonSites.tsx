@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useCommonSites } from "@/hooks/useCommonSites";
 import { CommonSitesDialog } from "@/components/CommonSitesDialog";
+import { CommonSitesAddDialog } from "@/components/CommonSitesAddDialog";
 import { useSettings } from "@/hooks/SettingsContext";
 
 function getFaviconUrl(url: string) {
@@ -27,6 +28,7 @@ export function CommonSites() {
                     常用網站
                 </h2>
                 <div className="flex items-center gap-2">
+                    <CommonSitesAddDialog />
                     <CommonSitesDialog />
                     <Button
                         variant="ghost"
