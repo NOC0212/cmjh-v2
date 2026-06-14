@@ -15,27 +15,31 @@ export function UpdatePrompt({ isHidden = false }: { isHidden?: boolean }) {
   const [phase, setPhase] = useState<"downloading" | "installing">("downloading");
   const currentVersion = getCurrentVersion();
   const { settings } = useSettings();
-  const { appVersion } = useSiteConfig();
+  const { appVersion, isLoading } = useSiteConfig();
 
-  const latestVersion = appVersion?.latestVersion || FALLBACK_VERSION;
+  // 只有在成功從伺服器取得版本資料時才顯示更新提示
+  // 離線時 appVersion 為 null，不會誤用 FALLBACK_VERSION 顯示降級更新
+  const serverVersion = appVersion?.latestVersion;
+  const latestVersion = serverVersion || "";
+  const hasServerData = appVersion !== null && !isLoading;
   const releaseHighlights = appVersion?.releaseHighlights || [
     "修復編碼", "時鐘功能更新", "隨機轉盤優化", "添加MIT授權"
   ];
 
   useEffect(() => {
-    if (currentVersion && currentVersion !== latestVersion && !settings.disableUpdatePrompt) {
+    if (currentVersion && latestVersion && currentVersion !== latestVersion && !settings.disableUpdatePrompt && hasServerData) {
       setShow(true);
     } else {
       setShow(false);
     }
 
     const handleShowUpdate = () => {
-      if (!settings.disableUpdatePrompt) setShow(true);
+      if (!settings.disableUpdatePrompt && hasServerData) setShow(true);
     };
 
     window.addEventListener("show-update-prompt", handleShowUpdate);
     return () => window.removeEventListener("show-update-prompt", handleShowUpdate);
-  }, [currentVersion, settings.disableUpdatePrompt, latestVersion]);
+  }, [currentVersion, settings.disableUpdatePrompt, latestVersion, hasServerData]);
 
   const versionSummary = useMemo(
     () => ({ from: currentVersion || "舊版", to: latestVersion }),
