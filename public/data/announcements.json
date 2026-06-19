@@ -23,20 +23,6 @@
         "attachments": []
     },
     {
-        "date": "2026-06-03",
-        "category": "一般",
-        "source": "教務處",
-        "title": "115學年度新生雙語適性社團錄取及備取名單",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=315&type=news&from_op=all_news",
-        "content": "一、115學年度新生雙語適性社團錄取及備取名單如附件，請自行下載查閱。\n二、有關學生個人成績單，後續將個別通知，特此說明。",
-        "attachments": [
-            {
-                "name": "115新生雙語適性社錄取及備取名單_核章版(1).pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115新生雙語適性社錄取及備取名單_核章版(1).pdf&files_sn=221"
-            }
-        ]
-    },
-    {
         "date": "2026-05-26",
         "category": "一般",
         "source": "教務處",
@@ -157,7 +143,7 @@
     },
     {
         "date": "2026-06-17",
-        "category": "活動",
+        "category": "簡章",
         "source": "學務處",
         "title": "115學年度全國學生舞蹈比賽實施要點",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=374&type=news&from_op=all_news",
@@ -260,6 +246,20 @@
             {
                 "name": "公務人員保障暨培訓委員會 函.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=公務人員保障暨培訓委員會 函.pdf&files_sn=282"
+            }
+        ]
+    },
+    {
+        "date": "2026-06-16",
+        "category": "活動",
+        "source": "學務處",
+        "title": "115年度臺南市國中小動物保護教育宣導繪畫比賽",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=366&type=news&from_op=all_news",
+        "content": "主旨：\n「115年度臺南市國中小動物保護教育宣導繪畫比賽」簡章及活動DM，請貴校惠予轉知並鼓勵學生踴躍參與\n說明：\n一、為讓動物保護觀念與尊重生命價值扎根校園，本處將舉辦旨揭繪畫比賽，期望透過學生純真的視角與豐富的想像力，藉由畫筆描繪日常對動物的關愛，在創作過程中培養同理心，理解每一個生命都應被尊重與善待，並進一步認識飼主應盡之責任，包括寵物登記、節育、疫苗施打及妥善照顧等。透過教育向下扎根，使動物保護觀念由校園延伸至家庭與社會，共同營造人與動物和諧共處的友善城市環境。\n二、收件日期：即日起至115年7月31日（以作品送達時間為準）。\n三、有關參賽學生之指導老師敘獎事宜，將另行公布。",
+        "attachments": [
+            {
+                "name": "臺南市國中小動物保護教育宣導繪畫比賽簡章.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市國中小動物保護教育宣導繪畫比賽簡章.pdf&files_sn=279"
             }
         ]
     }
