@@ -1,4 +1,30 @@
 {
-    "last_updated": "2026-06-24 07:09:00",
-    "items": []
+    "last_updated": "2026-06-25 07:04:36",
+    "items": [
+        {
+            "category": "主食",
+            "name": "燕麥飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020150992"
+        },
+        {
+            "category": "主菜",
+            "name": "清蒸破朴子冬瓜水鯊魚丁",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853266000316"
+        },
+        {
+            "category": "副菜",
+            "name": "四季田園",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1779775806082502"
+        },
+        {
+            "category": "蔬菜",
+            "name": "有機油菜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074706020035"
+        },
+        {
+            "category": "湯品",
+            "name": "味噌湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1413871775173227"
+        }
+    ]
 }
