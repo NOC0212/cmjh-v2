@@ -1,30 +1,35 @@
 {
-    "last_updated": "2026-06-25 07:04:36",
+    "last_updated": "2026-06-26 07:19:16",
     "items": [
         {
             "category": "主食",
-            "name": "燕麥飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020150992"
+            "name": "胚芽飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1509074610361893"
         },
         {
             "category": "主菜",
-            "name": "清蒸破朴子冬瓜水鯊魚丁",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853266000316"
+            "name": "複方茶香家常滷腱肉鵪鶉蛋",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853244000268"
         },
         {
             "category": "副菜",
-            "name": "四季田園",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1779775806082502"
+            "name": "滷三角油豆腐",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853320096720"
         },
         {
             "category": "蔬菜",
-            "name": "有機油菜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074706020035"
+            "name": "雙色白花椰",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1779775807013203"
         },
         {
             "category": "湯品",
-            "name": "味噌湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1413871775173227"
+            "name": "小白菜魚丸芹珠湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853320096722"
+        },
+        {
+            "category": "附餐",
+            "name": "荔枝",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1432778976172489"
         }
     ]
 }
