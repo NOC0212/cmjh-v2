@@ -184,14 +184,15 @@ CREATE TABLE IF NOT EXISTS site_countdowns (
   progress_label TEXT NOT NULL DEFAULT '進度',
   sort_order INTEGER NOT NULL DEFAULT 0,
   active BOOLEAN NOT NULL DEFAULT true,
+  grade TEXT DEFAULT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-INSERT INTO site_countdowns (id, target_date, start_date, label, progress_label, sort_order) VALUES
-  ('default-1', '2026-06-25T16:00:00Z', '2026-05-07T16:00:00Z', '📄第三次段考倒數 6/25 6/26', '上次至本次進度條', 0),
-  ('default-2', '2027-05-15T16:00:00Z', '2026-05-18T16:00:00Z', '116 會考倒數🕒', '上次至本次進度條', 1),
-  ('default-3', '2026-12-31T16:00:00Z', '2025-12-31T16:00:00Z', '2027年倒數', '2026年進度條', 2)
+INSERT INTO site_countdowns (id, target_date, start_date, label, progress_label, sort_order, grade) VALUES
+  ('default-1', '2026-06-25T16:00:00Z', '2026-05-07T16:00:00Z', '📄第三次段考倒數 6/25 6/26', '上次至本次進度條', 0, NULL),
+  ('default-2', '2027-05-15T16:00:00Z', '2026-05-18T16:00:00Z', '116 會考倒數🕒', '上次至本次進度條', 1, '9'),
+  ('default-3', '2026-12-31T16:00:00Z', '2025-12-31T16:00:00Z', '2027年倒數', '2026年進度條', 2, NULL)
 ON CONFLICT (id) DO NOTHING;
 
 -- 10. 站台公告表
@@ -202,6 +203,7 @@ CREATE TABLE IF NOT EXISTS site_announcements (
   type TEXT NOT NULL DEFAULT 'info',
   pinned BOOLEAN NOT NULL DEFAULT false,
   content TEXT NOT NULL DEFAULT '',
+  image_url TEXT,
   sort_order INTEGER NOT NULL DEFAULT 0,
   active BOOLEAN NOT NULL DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -355,10 +357,10 @@ BEGIN
 
   FOR v_countdown IN SELECT * FROM jsonb_to_recordset(countdowns) AS x(
     id TEXT, target_date TEXT, start_date TEXT,
-    label TEXT, progress_label TEXT, sort_order INT, active BOOLEAN
+    label TEXT, progress_label TEXT, sort_order INT, active BOOLEAN, grade TEXT
   )
   LOOP
-    INSERT INTO site_countdowns (id, target_date, start_date, label, progress_label, sort_order, active)
+    INSERT INTO site_countdowns (id, target_date, start_date, label, progress_label, sort_order, active, grade)
     VALUES (
       v_countdown.id,
       v_countdown.target_date::timestamptz,
@@ -366,7 +368,8 @@ BEGIN
       v_countdown.label,
       COALESCE(v_countdown.progress_label, '進度'),
       COALESCE(v_countdown.sort_order, 0),
-      COALESCE(v_countdown.active, true)
+      COALESCE(v_countdown.active, true),
+      NULLIF(v_countdown.grade, '')
     );
   END LOOP;
 
@@ -401,10 +404,11 @@ BEGIN
 
   FOR v_ann IN SELECT * FROM jsonb_to_recordset(announcements) AS x(
     id TEXT, title TEXT, date TEXT, type TEXT,
-    pinned BOOLEAN, content TEXT, sort_order INT, active BOOLEAN
+    pinned BOOLEAN, content TEXT, image_url TEXT,
+    sort_order INT, active BOOLEAN
   )
   LOOP
-    INSERT INTO site_announcements (id, title, date, type, pinned, content, sort_order, active)
+    INSERT INTO site_announcements (id, title, date, type, pinned, content, image_url, sort_order, active)
     VALUES (
       COALESCE(v_ann.id, 'ann-' || gen_random_uuid()::text),
       v_ann.title,
@@ -412,6 +416,7 @@ BEGIN
       COALESCE(v_ann.type, 'info'),
       COALESCE(v_ann.pinned, false),
       COALESCE(v_ann.content, ''),
+      NULLIF(v_ann.image_url, ''),
       COALESCE(v_ann.sort_order, 0),
       COALESCE(v_ann.active, true)
     );
@@ -426,3 +431,32 @@ GRANT EXECUTE ON FUNCTION verify_admin_password(TEXT) TO anon;
 GRANT EXECUTE ON FUNCTION update_site_config(TEXT, JSONB, JSONB, TEXT) TO anon;
 GRANT EXECUTE ON FUNCTION update_site_countdowns(TEXT, JSONB) TO anon;
 GRANT EXECUTE ON FUNCTION update_site_announcements(TEXT, JSONB) TO anon;
+
+-- ============================================
+-- 第四部：公告圖片儲存空間 (Supabase Storage)
+-- ============================================
+
+-- 17. 建立公告圖片的儲存桶（上限 5MB，僅允許圖片格式）
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES (
+  'announcement-images',
+  'announcement-images',
+  true,
+  5242880,
+  '{"image/png","image/jpeg","image/gif","image/webp"}'
+)
+ON CONFLICT (id) DO NOTHING;
+
+-- 18. 允許任何人讀取公告圖片
+DROP POLICY IF EXISTS "Public read access for announcement-images" ON storage.objects;
+CREATE POLICY "Public read access for announcement-images"
+ON storage.objects FOR SELECT
+TO anon
+USING (bucket_id = 'announcement-images');
+
+-- 19. 允許任何人上傳公告圖片（用於管理後台）
+DROP POLICY IF EXISTS "Anon upload access for announcement-images" ON storage.objects;
+CREATE POLICY "Anon upload access for announcement-images"
+ON storage.objects FOR INSERT
+TO anon
+WITH CHECK (bucket_id = 'announcement-images');

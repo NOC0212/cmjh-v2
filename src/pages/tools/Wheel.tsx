@@ -134,8 +134,8 @@ export default function Wheel() {
         const baseHue = parts.length >= 1 ? parseInt(parts[0], 10) : 210;
         const baseSat = parts.length >= 2 ? parseInt(parts[1], 10) : 75;
 
-        // 判斷是否深色模式
-        const isDark = document.documentElement.classList.contains('dark');
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const isDark = settings.themeMode === "dark" || (settings.themeMode === "system" && prefersDark);
         const lightness = isDark ? 55 : 48;
 
         return Array.from({ length: 12 }, (_, i) => {
@@ -144,6 +144,7 @@ export default function Wheel() {
             const light = lightness + (i % 2 === 0 ? 8 : -5);
             return `hsl(${hue}, ${sat}%, ${light}%)`;
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [settings.themeColor, settings.themeMode]);
 
     // 計算目前有效的選項內容 (用於轉盤顯示)

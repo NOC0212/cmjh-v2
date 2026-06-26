@@ -11,6 +11,7 @@ import { Loading } from "@/components/Loading";
 import { ensureVersion, isMaintenanceWhitelisted, getCurrentVersion, FALLBACK_VERSION, updateVersionToLatest } from "@/lib/app-version";
 import { useSiteConfig } from "@/hooks/useSiteConfig";
 import Index from "./pages/Index";
+import { SettingsProvider } from "./hooks/SettingsContext";
 import NotFound from "./pages/NotFound";
 
 // 代碼分割：工具頁面使用 lazy loading
@@ -33,8 +34,6 @@ export interface MaintenanceConfig {
   title: string;
   message: string;
 }
-
-import { SettingsProvider } from "./hooks/SettingsContext";
 
 const App = () => {
   const [setupCompleted, setSetupCompleted] = useState(() => checkFirstTimeSetup());

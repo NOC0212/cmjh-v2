@@ -7,7 +7,9 @@ export const STORAGE_KEYS = {
     SETTINGS: "cmjh-app-settings",
     COMMON_SITES: "cmjh-common-sites",
     CALENDAR_EVENTS: "cmjh-custom-calendar-events",
-    COUNTDOWNS: "cmjh-custom-countdowns",
+    COUNTDOWNS_7: "cmjh-custom-countdowns-7",
+    COUNTDOWNS_8: "cmjh-custom-countdowns-8",
+    COUNTDOWNS_9: "cmjh-custom-countdowns-9",
     FAVORITES: "favorites",
     SETUP_COMPLETED: "cmjh-first-setup-completed",
     READ_ANNOUNCEMENTS: "cmjh-read-announcements",
@@ -84,7 +86,7 @@ export function migrateData(targetVersion?: string) {
                 const parsed = JSON.parse(val);
                 
                 // 針對特定組件的資料補齊 (例如 Countdown 計時器如果少了某個欄位)
-                if (storageKey === STORAGE_KEYS.COUNTDOWNS && Array.isArray(parsed)) {
+                if ((storageKey === STORAGE_KEYS.COUNTDOWNS_7 || storageKey === STORAGE_KEYS.COUNTDOWNS_8 || storageKey === STORAGE_KEYS.COUNTDOWNS_9) && Array.isArray(parsed)) {
                     // 確保每個計時器都有必要的欄位，防止舊資料導致新版組件出錯
                     // parsed.forEach(item => { if (!item.color) item.color = 'primary'; });
                     // localStorage.setItem(storageKey, JSON.stringify(parsed));
@@ -100,7 +102,7 @@ export function migrateData(targetVersion?: string) {
 }
 
 export function exportUserData() {
-    const data: Record<string, any> = {};
+    const data: Record<string, unknown> = {};
     Object.entries(STORAGE_KEYS).forEach(([key, storageKey]) => {
         const value = localStorage.getItem(storageKey);
         if (value) {
@@ -123,7 +125,7 @@ export function exportUserData() {
     URL.revokeObjectURL(url);
 }
 
-export function importUserData(jsonData: any) {
+export function importUserData(jsonData: Record<string, unknown>) {
     Object.entries(STORAGE_KEYS).forEach(([key, storageKey]) => {
         if (jsonData[key]) {
             const value = typeof jsonData[key] === "string" ? jsonData[key] : JSON.stringify(jsonData[key]);

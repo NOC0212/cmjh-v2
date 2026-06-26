@@ -14,6 +14,7 @@ interface SiteAnnouncement {
   type?: string;
   pinned?: boolean;
   content?: string;
+  image_url?: string;
 }
 
 const READ_ANNOUNCEMENTS_KEY = STORAGE_KEYS.READ_ANNOUNCEMENTS;
@@ -89,7 +90,7 @@ export function LatestAnnouncementModal() {
 
     window.addEventListener("update-prompt-closed", handleUpdateClosed);
     return () => window.removeEventListener("update-prompt-closed", handleUpdateClosed);
-  }, [settings.showLatestAnnouncementOnStartup, allAnnouncements]);
+  }, [settings.showLatestAnnouncementOnStartup, allAnnouncements, appVersion?.latestVersion]);
 
   const handleNextOrClose = () => {
     if (currentIndex < unreadAnns.length - 1) {
@@ -143,9 +144,16 @@ export function LatestAnnouncementModal() {
         {/* 16:9 Header Image */}
         <div className="relative aspect-video w-full overflow-hidden">
           <img 
-            src="/announcement.png" 
+            src={currentAnn.image_url || "/announcement.png"} 
             alt="Announcement Header" 
             className="h-full w-full object-cover"
+            referrerPolicy="no-referrer"
+            onError={(e) => {
+              if (!e.currentTarget.dataset.fallback) {
+                e.currentTarget.dataset.fallback = "true";
+                e.currentTarget.src = "/announcement.png";
+              }
+            }}
           />
         </div>
 

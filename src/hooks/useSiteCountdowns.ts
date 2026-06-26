@@ -10,6 +10,7 @@ export interface SiteCountdown {
   progress_label: string;
   sort_order: number;
   active: boolean;
+  grade: string | null;
 }
 
 async function fetchCountdownsFromSupabase(): Promise<SiteCountdown[]> {

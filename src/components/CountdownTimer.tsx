@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Clock, ChevronLeft, ChevronRight, Plus, Trash2, Settings, Edit, RotateCcw, GripVertical, ChevronUp, ChevronDown } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Clock, ChevronLeft, ChevronRight, Plus, Trash2, Settings, Edit, RotateCcw, GripVertical, ChevronUp, ChevronDown, Eye, EyeOff } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,6 +29,14 @@ import { Reorder, AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { isImagePageBackground } from "@/lib/page-background";
 
+const GRADES = [
+  { id: "7", label: "七年級", color: "from-blue-500 to-blue-600", bgColor: "from-blue-500/20 to-blue-600/10" },
+  { id: "8", label: "八年級", color: "from-emerald-500 to-emerald-600", bgColor: "from-emerald-500/20 to-emerald-600/10" },
+  { id: "9", label: "九年級", color: "from-violet-500 to-violet-600", bgColor: "from-violet-500/20 to-violet-600/10" },
+] as const;
+
+type GradeId = (typeof GRADES)[number]["id"];
+
 interface CountdownConfig {
   id: string;
   targetDate: Date;
@@ -42,6 +50,11 @@ interface CountdownConfig {
 const getTaiwanNow = () => {
   const now = new Date();
   return new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + (8 * 60 * 60 * 1000));
+};
+
+// 將 datetime-local input 字串（視為台灣時間）轉為 Date
+const parseTaiwanInput = (inputStr: string): Date => {
+  return new Date(inputStr + "+08:00");
 };
 
 // 輔助函數：處理 Emoji 與漸層文字衝突
@@ -77,22 +90,39 @@ const renderLabelWithEmoji = (text: string) => {
 };
 
 const mergeCountdownConfigs = (
-  localConfigs: CountdownConfig[],
-  parsedDefaults: CountdownConfig[]
+  savedConfigs: CountdownConfig[],
+  freshDefaults: CountdownConfig[]
 ): CountdownConfig[] => {
-  const defaultMap = new Map(parsedDefaults.map(item => [item.id, item]));
+  const defaultMap = new Map(freshDefaults.map(item => [item.id, item]));
 
-  const mergedConfigs = localConfigs.map(item => {
+  const mergedConfigs = savedConfigs.map(item => {
     if (!item.isDefault) return item;
-    return defaultMap.get(item.id) ?? item;
-  });
+    return defaultMap.get(item.id);
+  }).filter(Boolean) as CountdownConfig[];
 
   const existingIds = new Set(mergedConfigs.map(item => item.id));
-  const missingDefaults = parsedDefaults.filter(item => !existingIds.has(item.id));
+  const missingDefaults = freshDefaults.filter(item => !existingIds.has(item.id));
   return [...mergedConfigs, ...missingDefaults];
 };
 
-const STORAGE_KEY = "cmjh-custom-countdowns";
+const CUSTOM_STORAGE_PREFIX = "cmjh-custom-countdowns";
+const GRADE_STORAGE_KEY = "cmjh-countdown-grade";
+const DISABLED_STORAGE_KEY = "cmjh-disabled-defaults";
+
+const getStorageKey = (grade: GradeId) => `${CUSTOM_STORAGE_PREFIX}-${grade}`;
+
+const loadDisabledDefaultIds = (): Set<string> => {
+  try {
+    const stored = localStorage.getItem(DISABLED_STORAGE_KEY);
+    return new Set<string>(stored ? JSON.parse(stored) : []);
+  } catch {
+    return new Set<string>();
+  }
+};
+
+const saveDisabledDefaultIds = (ids: Set<string>) => {
+  localStorage.setItem(DISABLED_STORAGE_KEY, JSON.stringify([...ids]));
+};
 
 export function CountdownTimer() {
   const { toast } = useToast();
@@ -118,19 +148,94 @@ export function CountdownTimer() {
     progressLabel: ""
   });
 
-  const { countdowns: supabaseDefaults } = useSiteCountdowns();
+  const [selectedGrade, setSelectedGrade] = useState<GradeId | null>(() => {
+    return localStorage.getItem(GRADE_STORAGE_KEY) as GradeId | null;
+  });
 
-  // 載入倒數計時 (含伺服器同步邏輯)
+  const [disabledDefaultIds, setDisabledDefaultIds] = useState<Set<string>>(loadDisabledDefaultIds);
+
+  const toggleDefaultDisabled = (id: string) => {
+    setDisabledDefaultIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      saveDisabledDefaultIds(next);
+      return next;
+    });
+  };
+
+  const storageKey = selectedGrade ? getStorageKey(selectedGrade) : null;
+
+  const handleGradeChange = (grade: GradeId) => {
+    // 1. 讀取目標年級的現有資料
+    const targetKey = getStorageKey(grade);
+    let targetData: CountdownConfig[] = [];
+    const targetStored = localStorage.getItem(targetKey);
+    if (targetStored) {
+      try {
+        targetData = JSON.parse(targetStored).map((c: Record<string, unknown>) => ({
+          ...c,
+          targetDate: new Date(c.targetDate),
+          startDate: c.startDate ? new Date(c.startDate) : undefined,
+        }));
+      } catch { /* ignore */ }
+    }
+
+    // 2. 從當前年級取出自訂項目，附加到目標年級
+    const currentCustoms = allCountdowns.filter(c => !c.isDefault);
+    if (currentCustoms.length > 0) {
+      targetData.push(...currentCustoms);
+    }
+
+    // 3. 儲存至目標年級
+    if (targetKey) {
+      persistToStorage(targetData, targetKey);
+    }
+
+    // 4. 清空當前年級的自訂項目（只留預設）
+    if (storageKey) {
+      const currentDefaults = mergedConfigsRef.current.filter(c => c.isDefault);
+      persistToStorage(currentDefaults, storageKey);
+      mergedConfigsRef.current = currentDefaults;
+    }
+
+    // 5. 切換年級
+    localStorage.setItem(GRADE_STORAGE_KEY, grade);
+    setSelectedGrade(grade);
+    setCurrentIndex(0);
+    setFormData({ label: "", targetDate: "", startDate: "", progressLabel: "" });
+  };
+
+  const { countdowns: supabaseDefaults, isLoading: supabaseLoading } = useSiteCountdowns();
+
+  // 保留合併後的完整列表（含停用預設），供年級切換時持久化
+  const mergedConfigsRef = useRef<CountdownConfig[]>([]);
+
+  const gradeDefaults = useMemo<CountdownConfig[]>(
+    () => (supabaseDefaults || [])
+      .filter(c => !c.grade || c.grade === selectedGrade)
+      .map(c => ({
+        id: c.id,
+        targetDate: new Date(c.target_date),
+        startDate: c.start_date ? new Date(c.start_date) : undefined,
+        label: c.label,
+        progressLabel: c.progress_label,
+        isDefault: true,
+      })),
+    [supabaseDefaults, selectedGrade]
+  );
+
+  // 載入倒數計時 (合併 localStorage 順序 + Supabase 最新資料)
   useEffect(() => {
-    let finalConfigs: CountdownConfig[] = [];
-    const stored = localStorage.getItem(STORAGE_KEY);
-    let localConfigs: CountdownConfig[] = [];
+    if (!storageKey) return;
+    const stored = localStorage.getItem(storageKey);
+    let savedConfigs: CountdownConfig[] = [];
 
-    // 1. 讀取本地快取
+    // 1. 讀取 localStorage（保留使用者排序）
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
-        localConfigs = parsed.map((c: any) => ({
+        savedConfigs = parsed.map((c: Record<string, unknown>) => ({
           ...c,
           targetDate: new Date(c.targetDate),
           startDate: c.startDate ? new Date(c.startDate) : undefined,
@@ -142,41 +247,42 @@ export function CountdownTimer() {
 
     // 如果停用預設倒數計時，只載入自訂項目
     if (settings.disableDefaultCountdowns) {
-      const customOnly = localConfigs.filter((c) => !c.isDefault);
+      const customOnly = savedConfigs.filter((c) => !c.isDefault);
+      persistToStorage(customOnly, storageKey);
       setAllCountdowns(customOnly);
       return;
     }
 
-    // 2. 從 Supabase/JSON 獲取伺服器預設值
-    const parsedDefaults: CountdownConfig[] = (supabaseDefaults || []).map(c => ({
-      id: c.id,
-      targetDate: new Date(c.target_date),
-      startDate: c.start_date ? new Date(c.start_date) : undefined,
-      label: c.label,
-      progressLabel: c.progress_label,
-      isDefault: true
-    }));
-
-    if (localConfigs.length > 0) {
-      finalConfigs = mergeCountdownConfigs(localConfigs, parsedDefaults);
-      console.log("倒數計時器已與伺服器同步成功");
-    } else {
-      finalConfigs = parsedDefaults;
+    // 2. 如果 Supabase 資料還沒載入，不要合併或持久化（避免清掉 localStorage 中的預設順序）
+    if (supabaseLoading) {
+      setAllCountdowns(savedConfigs);
+      return;
     }
 
-    setAllCountdowns(finalConfigs);
-  }, [settings.disableDefaultCountdowns, supabaseDefaults]);
+    // 3. 合併：保留 localStorage 排序，用 Supabase 最新資料取代預設
+    //    被刪除的預設自動移除，新增的預設自動補在最後
+    const mergedConfigs = mergeCountdownConfigs(savedConfigs, gradeDefaults);
 
-  // 自動持久化儲存
-  useEffect(() => {
-    if (allCountdowns.length > 0) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(allCountdowns.map(c => ({
+    // 4. 過濾停用的預設（停用狀態存在 separate key，維持順序以便重新啟用）
+    const finalConfigs = mergedConfigs.filter(c => !c.isDefault || !disabledDefaultIds.has(c.id));
+
+    // 5. 持久化合併後的完整列表（含停用預設，以保留順序）
+    mergedConfigsRef.current = mergedConfigs;
+    persistToStorage(mergedConfigs, storageKey);
+    setAllCountdowns(finalConfigs);
+  }, [settings.disableDefaultCountdowns, supabaseDefaults, storageKey, selectedGrade, disabledDefaultIds, gradeDefaults, supabaseLoading]);
+
+  const persistToStorage = (countdowns: CountdownConfig[], key: string) => {
+    if (countdowns.length > 0) {
+      localStorage.setItem(key, JSON.stringify(countdowns.map(c => ({
         ...c,
         targetDate: c.targetDate.toISOString(),
         startDate: c.startDate?.toISOString()
       }))));
+    } else {
+      localStorage.removeItem(key);
     }
-  }, [allCountdowns]);
+  };
 
   const currentConfig = allCountdowns[currentIndex];
   const { targetDate, startDate, label, progressLabel } = currentConfig || {};
@@ -235,13 +341,13 @@ export function CountdownTimer() {
       return false;
     }
 
-    const targetDateTime = new Date(formData.targetDate);
-    if (targetDateTime <= new Date()) {
+    const targetDateTime = parseTaiwanInput(formData.targetDate);
+    if (targetDateTime <= getTaiwanNow()) {
       toast({ title: "驗證失敗", description: "目標時間必須晚於當前時間", variant: "destructive" });
       return false;
     }
 
-    if (formData.startDate && new Date(formData.startDate) >= targetDateTime) {
+    if (formData.startDate && parseTaiwanInput(formData.startDate) >= targetDateTime) {
       toast({ title: "驗證失敗", description: "開始時間必須早於目標時間", variant: "destructive" });
       return false;
     }
@@ -255,13 +361,15 @@ export function CountdownTimer() {
     const newConfig: CountdownConfig = {
       id: `custom-${Date.now()}`,
       label: formData.label,
-      targetDate: new Date(formData.targetDate),
-      startDate: formData.startDate ? new Date(formData.startDate) : undefined,
+      targetDate: parseTaiwanInput(formData.targetDate),
+      startDate: formData.startDate ? parseTaiwanInput(formData.startDate) : undefined,
       progressLabel: formData.progressLabel || "進度",
       isDefault: false
     };
 
-    setAllCountdowns(prev => [...prev, newConfig]);
+    const updated = [...allCountdowns, newConfig];
+    setAllCountdowns(updated);
+    if (storageKey) persistToStorage(updated, storageKey);
     setFormData({ label: "", targetDate: "", startDate: "", progressLabel: "" });
     setAddDialogOpen(false);
   };
@@ -269,6 +377,23 @@ export function CountdownTimer() {
   const formatDateForInput = (date: Date): string => {
     const d = new Date(date.getTime() + (8 * 60 * 60 * 1000)); // 轉換回 UTC+8 顯示在 input
     return d.toISOString().slice(0, 16);
+  };
+
+  const persistMergedList = (activeItems: CountdownConfig[]) => {
+    if (!storageKey) return;
+    const newMerged: CountdownConfig[] = [];
+    const activeCopy = [...activeItems];
+    for (const item of mergedConfigsRef.current) {
+      if (item.isDefault && disabledDefaultIds.has(item.id)) {
+        newMerged.push(item);
+      } else {
+        const next = activeCopy.shift();
+        if (next) newMerged.push(next);
+      }
+    }
+    newMerged.push(...activeCopy);
+    mergedConfigsRef.current = newMerged;
+    persistToStorage(newMerged, storageKey);
   };
 
   const handleEdit = (countdown: CountdownConfig) => {
@@ -285,20 +410,25 @@ export function CountdownTimer() {
   const handleSaveEdit = () => {
     if (!validateForm()) return;
 
-    setAllCountdowns(prev => prev.map(c => c.id === editingId ? {
+    const updated = allCountdowns.map(c => c.id === editingId ? {
       ...c,
       label: formData.label,
-      targetDate: new Date(formData.targetDate),
-      startDate: formData.startDate ? new Date(formData.startDate) : undefined,
+      targetDate: parseTaiwanInput(formData.targetDate),
+      startDate: formData.startDate ? parseTaiwanInput(formData.startDate) : undefined,
       progressLabel: formData.progressLabel || "進度"
-    } : c));
+    } : c);
 
+    setAllCountdowns(updated);
+    persistMergedList(updated);
     setFormData({ label: "", targetDate: "", startDate: "", progressLabel: "" });
     setEditingId(null);
     setAddDialogOpen(false);
   };
 
-  const handleDelete = (id: string) => {      setAllCountdowns(prev => prev.filter(c => c.id !== id));
+  const handleDelete = (id: string) => {
+    const filtered = allCountdowns.filter(c => c.id !== id);
+    setAllCountdowns(filtered);
+    persistMergedList(filtered);
 
     if (currentIndex >= allCountdowns.length - 1) {
       setCurrentIndex(Math.max(0, allCountdowns.length - 2));
@@ -309,6 +439,7 @@ export function CountdownTimer() {
     const currentId = allCountdowns[currentIndex]?.id;
     const newIndex = newCountdowns.findIndex(c => c.id === currentId);
     setAllCountdowns(newCountdowns);
+    persistMergedList(newCountdowns);
     if (newIndex !== -1) setCurrentIndex(newIndex);
   };
 
@@ -331,6 +462,8 @@ export function CountdownTimer() {
   const confirmReset = () => {
     setAllCountdowns([]);
     setCurrentIndex(0);
+    mergedConfigsRef.current = [];
+    if (storageKey) localStorage.removeItem(storageKey);
     setManageDialogOpen(false);
     setResetDialogOpen(false);
     toast({ title: "重置成功", description: "已清除所有倒數計時" });
@@ -344,6 +477,53 @@ export function CountdownTimer() {
 
   const isComplete = progress >= 100;
   const hasImageBackground = isImagePageBackground(settings.pageBackground, settings.pageBackgroundImage);
+
+  if (!selectedGrade) {
+    return (
+      <div
+        className={cn(
+          "image-bg-surface relative w-full max-w-[calc(100vw-2rem)] overflow-hidden rounded-3xl border border-primary/20 p-6 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-md md:p-10",
+          hasImageBackground && "shadow-2xl",
+        )}
+        style={{
+          background: hasImageBackground
+            ? 'linear-gradient(135deg, hsl(var(--card) / 0.9) 0%, hsl(var(--card) / 0.82) 100%)'
+            : 'linear-gradient(135deg, var(--primary-light) 0%, var(--accent-light) 100%)',
+          backdropFilter: hasImageBackground ? 'none' : 'blur(12px) saturate(180%)',
+          WebkitBackdropFilter: hasImageBackground ? 'none' : 'blur(12px) saturate(180%)',
+        }}
+      >
+        <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/5 blur-3xl transition-colors" />
+        <div className="absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-accent/5 blur-3xl transition-colors" />
+
+        <div className="relative z-10 flex flex-col items-center justify-center gap-8 py-16 md:py-20">
+          <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-primary/10 shadow-inner">
+            <Clock className="h-8 w-8 text-primary/60" />
+          </div>
+          <div className="text-center">
+            <h3 className="text-2xl font-black text-muted-foreground/60">選擇年級</h3>
+            <p className="mt-2 text-sm text-muted-foreground/40">請選擇你的班級年級以開始使用倒數計時器</p>
+          </div>
+          <div className="flex flex-col gap-4 w-full max-w-sm">
+            {GRADES.map((grade) => (
+              <button
+                key={grade.id}
+                onClick={() => handleGradeChange(grade.id)}
+                className={cn(
+                  "group relative overflow-hidden rounded-2xl border p-5 text-center transition-all hover:scale-[1.02] hover:shadow-lg cursor-pointer",
+                  `bg-gradient-to-br ${grade.bgColor} border-primary/20 hover:border-primary/40`
+                )}
+              >
+                <div className={cn("bg-gradient-to-r bg-clip-text text-transparent text-xl font-black", grade.color)}>
+                  {grade.label}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!currentConfig) {
     return (
@@ -505,6 +685,27 @@ export function CountdownTimer() {
                 <DialogHeader className="p-6 pb-0">
                   <DialogTitle className="text-2xl font-bold">管理倒數計時</DialogTitle>
                 </DialogHeader>
+                <div className="px-6 py-3 border-b border-primary/5">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-muted-foreground/60">選擇年級：</span>
+                    <div className="flex gap-1">
+                      {GRADES.map(g => (
+                        <button
+                          key={g.id}
+                          onClick={() => handleGradeChange(g.id)}
+                          className={cn(
+                            "rounded-lg px-3 py-1.5 text-xs font-bold transition-all cursor-pointer",
+                            selectedGrade === g.id
+                              ? "bg-primary/15 text-primary shadow-sm"
+                              : "text-muted-foreground/40 hover:text-muted-foreground/70 hover:bg-muted/30"
+                          )}
+                        >
+                          {g.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
                 <div className="flex-1 overflow-y-auto p-6">
                   <Reorder.Group
                     axis="y"
@@ -531,14 +732,26 @@ export function CountdownTimer() {
                           </div>
                         </div>
                         <div className="flex items-center gap-1 shrink-0">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 rounded-lg hover:bg-primary/10"
-                            onClick={() => handleEdit(countdown)}
-                          >
-                            <Edit className="h-4 w-4 text-muted-foreground/70" />
-                          </Button>
+                          {countdown.isDefault ? (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 rounded-lg hover:bg-primary/10"
+                              onClick={() => toggleDefaultDisabled(countdown.id)}
+                              title="停用此預設倒數計時"
+                            >
+                              <EyeOff className="h-4 w-4 text-muted-foreground/70" />
+                            </Button>
+                          ) : (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 rounded-lg hover:bg-primary/10"
+                              onClick={() => handleEdit(countdown)}
+                            >
+                              <Edit className="h-4 w-4 text-muted-foreground/70" />
+                            </Button>
+                          )}
                           <Button
                             variant="ghost"
                             size="icon"
@@ -557,18 +770,56 @@ export function CountdownTimer() {
                           >
                             <ChevronDown className="h-4 w-4 text-muted-foreground/70" />
                           </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 rounded-lg hover:bg-destructive/10 text-destructive/70 hover:text-destructive"
-                            onClick={() => handleDelete(countdown.id)}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
+                          {!countdown.isDefault && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 rounded-lg hover:bg-destructive/10 text-destructive/70 hover:text-destructive"
+                              onClick={() => handleDelete(countdown.id)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          )}
                         </div>
                       </Reorder.Item>
                     ))}
                   </Reorder.Group>
+
+                  {/* 已停用的預設倒數計時 */}
+                  {(() => {
+                    const disabledDefaults = gradeDefaults.filter(c => disabledDefaultIds.has(c.id));
+                    if (disabledDefaults.length === 0) return null;
+                    return (
+                      <div className="mt-6 space-y-2">
+                        <p className="text-[10px] text-muted-foreground/40 font-bold uppercase tracking-wider px-1">已停用預設</p>
+                        {disabledDefaults.map((countdown) => (
+                          <div
+                            key={countdown.id}
+                            className="flex items-center gap-3 rounded-2xl border border-dashed border-muted-foreground/20 bg-muted/20 p-4 opacity-60"
+                          >
+                            <div className="flex-1 min-w-0">
+                              <div className="mb-0.5 flex flex-wrap items-center gap-2 text-sm font-bold text-muted-foreground/60 line-through">
+                                <span className="truncate">{countdown.label}</span>
+                                <span className="shrink-0 rounded-full bg-muted-foreground/10 px-2.5 py-0.5 text-[10px] text-muted-foreground/50 font-black uppercase tracking-tighter">預設</span>
+                              </div>
+                              <div className="text-[10px] text-muted-foreground/40 font-mono">
+                                {formatDate(countdown.targetDate)}
+                              </div>
+                            </div>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 rounded-lg hover:bg-primary/10"
+                              onClick={() => toggleDefaultDisabled(countdown.id)}
+                              title="啟用此預設倒數計時"
+                            >
+                              <Eye className="h-4 w-4 text-muted-foreground/50" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })()}
                 </div>
                 <div className="p-6 pt-2 bg-muted/10 border-t border-primary/5">
                   <DialogFooter className="flex-row items-center justify-between gap-4">

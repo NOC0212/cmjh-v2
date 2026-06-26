@@ -4,7 +4,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useFavorites } from "@/hooks/useFavorites";
 import { AppSidebar } from "@/components/AppSidebar";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { isAdminUnlocked } from "@/lib/app-version";
 
 // 頁面選單類型定義
@@ -33,6 +33,25 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
     const isMobile = useIsMobile();
     const { favorites } = useFavorites();
     const [isHovered, setIsHovered] = useState(false);
+    const [headerHidden, setHeaderHidden] = useState(false);
+    const lastScrollY = useRef(0);
+
+    useEffect(() => {
+      if (!isMobile) return;
+      const container = document.querySelector("main");
+      if (!container) return;
+      const handleScroll = () => {
+        const currentY = container.scrollTop;
+        if (currentY > lastScrollY.current && currentY > 80) {
+          setHeaderHidden(true);
+        } else {
+          setHeaderHidden(false);
+        }
+        lastScrollY.current = currentY;
+      };
+      container.addEventListener("scroll", handleScroll, { passive: true });
+      return () => container.removeEventListener("scroll", handleScroll);
+    }, [isMobile]);
 
     const handleRefresh = () => {
         window.location.reload();
@@ -52,26 +71,20 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
             <Button
                 key={item.id}
                 variant="ghost"
-                className={`relative flex items-center transition-all duration-300 rounded-xl overflow-hidden ${isActive
-                    ? 'text-primary font-bold'
-                    : 'hover:bg-primary/5 hover:text-primary text-muted-foreground'
-                    } ${isMobile
-                        ? 'flex-col justify-center h-12 px-0 flex-1 min-w-0 rounded-2xl'
-                        : `h-12 justify-start p-0 px-2 ${isHovered ? 'w-full' : 'w-12'}`
-                    }`}
+                className={`relative flex items-center transition-all duration-300 rounded-xl overflow-hidden ${
+                    isActive
+                        ? 'text-primary font-bold bg-transparent hover:bg-transparent active:bg-transparent focus:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0'
+                        : 'hover:bg-primary/5 hover:text-primary text-muted-foreground'
+                } ${isMobile
+                    ? 'flex-col justify-center h-12 px-0 flex-1 min-w-0 rounded-2xl [&_svg]:size-6'
+                    : `h-12 justify-start p-0 px-2 ${isHovered ? 'w-full' : 'w-12'}`
+                }`}
                 onClick={() => onPageChange(item.id)}
             >
-                {isActive && (
-                    <motion.div
-                        layoutId="nav-active-bg"
-                        className={`absolute inset-0 bg-primary/15 ${isMobile ? 'rounded-2xl' : 'rounded-xl'} z-0`}
-                        transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                    />
-                )}
                 <div className={`relative z-10 flex items-center ${isMobile ? 'flex-col gap-1' : ''}`}>
                     <div className={`shrink-0 flex items-center justify-center ${isMobile ? '' : 'w-8'}`}>
                         <div className="relative">
-                            <Icon className={`h-5 w-5 ${isActive ? 'stroke-[2.5px]' : ''}`} fill={isActive ? 'currentColor' : 'none'} />
+                            <Icon className={`h-6 w-6 ${isActive ? 'stroke-[2.5px]' : ''}`} fill={isActive && item.id !== "search" && item.id !== "settings" ? 'currentColor' : 'none'} />
                             {item.id === "favorites" && favorites.length > 0 && (
                                 <span className="absolute -top-1 -right-2 bg-red-500 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center">
                                     {favorites.length > 9 ? "9+" : favorites.length}
@@ -98,7 +111,7 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
     if (isMobile) {
         if (mode === "header") {
             return (
-                <header className="image-bg-surface bg-background/90 backdrop-blur-md border-b border-border/50 shrink-0 z-50">
+                <header className={`image-bg-surface bg-background/90 backdrop-blur-md border-b border-border/50 z-50 fixed top-0 left-0 right-0 transition-transform duration-300 ${headerHidden ? '-translate-y-full' : 'translate-y-0'}`}>
                     <div className="pt-[env(safe-area-inset-top)]">
                         <div className="flex items-center justify-between h-14 px-4">
                             <div className="flex items-center gap-2 animate-slide-in-left">
@@ -127,9 +140,9 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
 
         if (mode === "footer") {
             return (
-                <div className="fixed bottom-4 left-0 right-0 px-4 z-50 pointer-events-none flex justify-center">
-                    <nav className="image-bg-surface bg-background/40 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg rounded-full overflow-hidden touch-none select-none pointer-events-auto max-w-md w-full">
-                        <div className="flex items-center justify-around h-14 w-full px-1">
+                <div className="fixed bottom-0 left-0 right-0 z-50">
+                    <nav className="image-bg-surface bg-background/80 backdrop-blur-xl border-t border-white/20 dark:border-white/10 shadow-lg touch-none select-none w-full">
+                        <div className="flex items-center justify-around h-14 w-full">
                             {visibleItems.map((item) => renderNavItem(item))}
                         </div>
                     </nav>
@@ -184,9 +197,9 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
             </div>
 
             {/* 功能項區域 */}
-            <div className={`flex-1 flex flex-col justify-center gap-2 w-full ${isHovered ? 'items-start' : 'items-center'}`}>
-                {visibleItems.map((item) => renderNavItem(item))}
-            </div>
+                <div className={`flex-1 flex flex-col justify-center gap-2 w-full ${isHovered ? 'items-start' : 'items-center'}`}>
+                    {visibleItems.map((item) => renderNavItem(item))}
+                </div>
 
             {/* 側邊欄腳部選單 */}
             <div className={`mt-auto w-full flex flex-col ${isHovered ? 'items-start' : 'items-center'}`}>

@@ -1,8 +1,58 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { Megaphone, Pin, ChevronDown, Bell, Zap, Info, Wrench } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { useSiteAnnouncements } from "@/hooks/useSiteAnnouncements";
+
+function AnnouncementImage({ src }: { src: string }) {
+    const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
+    const timerRef = useRef<ReturnType<typeof setTimeout>>();
+    const mountedRef = useRef(true);
+
+    useEffect(() => {
+        return () => {
+            mountedRef.current = false;
+            if (timerRef.current) clearTimeout(timerRef.current);
+        };
+    }, []);
+
+    // 10 秒 timeout
+    useEffect(() => {
+        timerRef.current = setTimeout(() => {
+            if (mountedRef.current) setState("error");
+        }, 10000);
+        return () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+        };
+    }, [src]);
+
+    if (state === "error") {
+        return (
+            <img
+                src="/announcement.png"
+                alt=""
+                className="h-full w-full object-cover"
+            />
+        );
+    }
+
+    return (
+        <img
+            src={src}
+            alt=""
+            className="h-full w-full object-cover"
+            referrerPolicy="no-referrer"
+            onLoad={() => {
+                if (timerRef.current) clearTimeout(timerRef.current);
+                if (mountedRef.current) setState("loaded");
+            }}
+            onError={() => {
+                if (timerRef.current) clearTimeout(timerRef.current);
+                if (mountedRef.current) setState("error");
+            }}
+        />
+    );
+}
 
 export function SiteAnnouncementsPage() {
     const { announcements: rawAnnouncements, isLoading } = useSiteAnnouncements();
@@ -78,6 +128,8 @@ export function SiteAnnouncementsPage() {
                         {announcements.map((item) => {
                             const isExpanded = expandedId === item.id;
                             const hasContent = !!item.content;
+                            const hasImage = !!item.image_url;
+                            const hasExpandable = hasContent || hasImage;
                             const typeConfig = getTypeConfig(item.type);
                             const newItem = isNew(item.date);
 
@@ -92,8 +144,8 @@ export function SiteAnnouncementsPage() {
                                     }`}
                                 >
                                     <div 
-                                        className={`flex flex-col sm:flex-row sm:items-center p-4 gap-4 ${hasContent ? 'cursor-pointer' : ''}`}
-                                        onClick={() => hasContent && setExpandedId(isExpanded ? null : item.id)}
+                                        className={`flex flex-col sm:flex-row sm:items-center p-4 gap-4 ${hasExpandable ? 'cursor-pointer' : ''}`}
+                                        onClick={() => hasExpandable && setExpandedId(isExpanded ? null : item.id)}
                                     >
                                         <div className="flex items-start gap-3 flex-1 min-w-0">
                                             {item.pinned ? (
@@ -134,14 +186,14 @@ export function SiteAnnouncementsPage() {
                                             </div>
                                         </div>
 
-                                        {hasContent && (
+                                        {hasExpandable && (
                                             <div className="hidden sm:flex shrink-0 items-center justify-center w-8 h-8 rounded-full hover:bg-muted transition-colors text-muted-foreground">
                                                 <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
                                             </div>
                                         )}
                                         
                                         {/* Mobile expand indicator */}
-                                        {hasContent && (
+                                        {hasExpandable && (
                                             <div className="sm:hidden flex items-center gap-1 text-xs text-muted-foreground mt-2 font-medium">
                                                 {isExpanded ? '收起內容' : '展開閱讀'}
                                                 <ChevronDown className={`h-3 w-3 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
@@ -150,7 +202,7 @@ export function SiteAnnouncementsPage() {
                                     </div>
 
                                     <AnimatePresence initial={false}>
-                                        {isExpanded && hasContent && (
+                                        {isExpanded && hasExpandable && (
                                             <motion.div
                                                 initial={{ height: 0, opacity: 0 }}
                                                 animate={{ height: "auto", opacity: 1 }}
@@ -159,9 +211,16 @@ export function SiteAnnouncementsPage() {
                                             >
                                                 <div className="px-5 pb-5 pt-1 sm:px-14 sm:pt-0">
                                                     <div className="h-px w-full bg-border/50 mb-4 sm:hidden" />
+                                                    {hasImage && (
+                                                        <div className="mb-4 overflow-hidden rounded-xl border border-border/50 aspect-video bg-muted/30 flex items-center justify-center">
+                                                            <AnnouncementImage src={item.image_url!} />
+                                                        </div>
+                                                    )}
+                                                    {hasContent && (
                                                     <div className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap bg-muted/30 p-4 rounded-lg border border-border/50">
                                                         {item.content}
                                                     </div>
+                                                    )}
                                                 </div>
                                             </motion.div>
                                         )}

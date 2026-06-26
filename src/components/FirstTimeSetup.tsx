@@ -76,7 +76,7 @@ export const FirstTimeSetup = ({ onComplete }: FirstTimeSetupProps) => {
                 settings.themeMode = next ? "dark" : "light";
                 localStorage.setItem("cmjh-app-settings", JSON.stringify(settings));
             }
-        } catch {}
+        } catch { /* 忽略舊版 localStorage 解析失敗 */ }
     };
 
     return (

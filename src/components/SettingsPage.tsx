@@ -24,7 +24,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useSettings } from "@/hooks/SettingsContext";
+import { useSettings, AppSettings, ComponentSettings } from "@/hooks/SettingsContext";
 import { useToast } from "@/hooks/use-toast";
 import { useSiteConfig } from "@/hooks/useSiteConfig";
 import { getCurrentVersion, FALLBACK_VERSION, exportUserData, importUserData, isAdminUnlocked, unlockAdmin } from "@/lib/app-version";
@@ -41,8 +41,8 @@ const COLORS = [
     { name: "紅色", value: "red", color: "#ef4444" },
     { name: "綠色", value: "green", color: "#10b981" },
     { name: "橘色", value: "orange", color: "#f59e0b" },
-    { name: "紫色", value: "purple", color: "#8b5cf6" },
     { name: "霓虹", value: "neon", color: "#00f3ff" },
+    { name: "極簡", value: "minimal", color: "linear-gradient(135deg, #000000 50%, #ffffff 50%)" },
     { name: "現代", value: "modern", color: "linear-gradient(135deg, #fbbf24, #f97316)" },
     { name: "漸層", value: "gradient", color: "linear-gradient(135deg, #3b82f6, #8b5cf6, #ef4444)" },
 ];
@@ -191,7 +191,7 @@ export function SettingsPage() {
                         <div className="grid grid-cols-1 gap-4">
                             <MenuCard icon={GripVertical} title="版面排序" description="調整首頁元件顯示順序與啟用狀態" color="blue" onClick={() => setActiveSection("layout")} />
                             <MenuCard icon={Palette} title="主題外觀" description="切換亮暗模式與主題色" color="purple" onClick={() => setActiveSection("theme")} />
-                            <MenuCard icon={Image} title="自訂背景" description="設定頁面背景樣式與套用效果" color="blue" onClick={() => setActiveSection("background")} />
+                            <MenuCard icon={Image} title="自訂背景" description="設定頁面背景樣式與套用效果" color="red" onClick={() => setActiveSection("background")} />
                             <MenuCard icon={Zap} title="偏好設定" description="調整公告、更新提示與網站圖示行為" color="orange" onClick={() => setActiveSection("preference")} />
                             <MenuCard icon={HardDrive} title="系統資料" description="更新版本與匯入匯出資料" color="green" onClick={() => setActiveSection("system")} />
                         </div>
@@ -537,12 +537,13 @@ function MenuCard({
     icon: typeof Settings;
     title: string;
     description: string;
-    color: "blue" | "purple" | "orange" | "green";
+    color: "blue" | "purple" | "red" | "orange" | "green";
     onClick: () => void;
 }) {
     const colorMap = {
         blue: "bg-blue-500/10 text-blue-500",
         purple: "bg-purple-500/10 text-purple-500",
+        red: "bg-red-500/10 text-red-500",
         orange: "bg-orange-500/10 text-orange-500",
         green: "bg-green-500/10 text-green-500",
     };
@@ -602,17 +603,17 @@ function LayoutSection({
     onSave,
     onComplete,
 }: {
-    settings: any;
-    disabledComponents: any[];
+    settings: AppSettings;
+    disabledComponents: ComponentSettings[];
     onToggle: (id: string) => void;
     onShowAll: () => void;
-    onSave: (components: any[]) => void;
+    onSave: (components: ComponentSettings[]) => void;
     onComplete: () => void;
 }) {
-    const [tmpComponents, setTmpComponents] = useState<any[]>([]);
+    const [tmpComponents, setTmpComponents] = useState<ComponentSettings[]>([]);
 
     useEffect(() => {
-        const enabled = settings.components.filter((component: any) => component.enabled).sort((a: any, b: any) => a.order - b.order);
+        const enabled = settings.components.filter((c: ComponentSettings) => c.enabled).sort((a: ComponentSettings, b: ComponentSettings) => a.order - b.order);
         setTmpComponents(enabled);
     }, [settings.components]);
 
@@ -716,7 +717,7 @@ function SortableItem({
     component,
     onToggle,
 }: {
-    component: any;
+    component: ComponentSettings;
     onToggle: (id: string) => void;
 }) {
     const controls = useDragControls();

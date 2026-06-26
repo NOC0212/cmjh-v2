@@ -125,7 +125,7 @@ const Index = ({ maintenanceConfig }: IndexProps) => {
 
             {/* 主內容區塊 */}
             <div className="flex-1 flex flex-col min-h-0 w-full overflow-x-hidden relative">
-                <main className={`flex-1 overflow-y-auto px-4 lg:p-8 max-w-5xl w-full mx-auto overflow-x-hidden ${isMobile ? 'pb-20' : ''}`}>
+                <main className={`flex-1 overflow-y-auto px-4 lg:p-8 max-w-5xl w-full mx-auto overflow-x-hidden ${isMobile ? 'pt-14 pb-14' : ''}`}>
                     <div className="py-4">
                         {renderPageContent()}
                     </div>

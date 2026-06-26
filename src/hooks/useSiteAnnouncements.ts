@@ -9,6 +9,7 @@ export interface SiteAnnouncement {
   type: "update" | "alert" | "info" | "maintenance" | string;
   pinned: boolean;
   content: string;
+  image_url?: string;
   sort_order: number;
   active: boolean;
 }

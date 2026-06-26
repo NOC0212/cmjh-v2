@@ -32,7 +32,7 @@
     --gradient-progress-to: hsl(var(--accent));
     --gradient-progress: linear-gradient(90deg, var(--gradient-progress-from), var(--gradient-progress-to));
     --gradient-card: linear-gradient(135deg, hsl(210 20% 99%), hsl(210 40% 97%));
-    --gradient-calendar: linear-gradient(to bottom right, hsl(210 75% 48% / 0.05), hsl(271 81% 56% / 0.05));
+    --gradient-calendar: linear-gradient(to bottom right, hsl(var(--primary) / 0.05), hsl(var(--accent) / 0.05));
     --gradient-timer: linear-gradient(135deg, hsl(210 75% 48% / 0.15), hsl(271 81% 56% / 0.1));
     --gradient-site: linear-gradient(to bottom right, hsl(210 75% 48% / 0.03), hsl(45 93% 58% / 0.03));
     --shadow-card: 0 2px 8px hsl(210 75% 48% / 0.08);
@@ -70,7 +70,7 @@
     --sidebar-border: 0 0% 20%;
     --sidebar-ring: 210 75% 55%;
     --gradient-card: linear-gradient(135deg, hsl(0 0% 14%), hsl(0 0% 12%));
-    --gradient-calendar: linear-gradient(to bottom right, hsl(210 75% 55% / 0.1), hsl(271 81% 56% / 0.1));
+    --gradient-calendar: linear-gradient(to bottom right, hsl(var(--primary) / 0.1), hsl(var(--accent) / 0.1));
     --gradient-timer: linear-gradient(135deg, hsl(210 75% 55% / 0.2), hsl(271 81% 56% / 0.15));
     --gradient-site: linear-gradient(to bottom right, hsl(210 75% 55% / 0.08), hsl(45 93% 58% / 0.08));
     --shadow-card: 0 2px 8px hsl(0 0% 0% / 0.2);
@@ -192,12 +192,60 @@
   --gradient-primary: linear-gradient(135deg, hsl(0 84% 60%), hsl(0 84% 70%));
 }
 
-.theme-purple,
-[data-theme="purple"] {
-  --primary: 271 81% 56%;
-  --accent: 271 81% 66%;
-  --ring: 271 81% 56%;
-  --gradient-primary: linear-gradient(135deg, hsl(271 81% 56%), hsl(271 81% 66%));
+/* 極簡 */
+.theme-minimal,
+[data-theme="minimal"] {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  --primary: 0 0% 0%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 90%;
+  --secondary-foreground: 0 0% 0%;
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 45%;
+  --accent: 0 0% 30%;
+  --accent-foreground: 0 0% 100%;
+  --border: 0 0% 88%;
+  --ring: 0 0% 0%;
+  --gradient-primary: linear-gradient(135deg, hsl(0 0% 0%), hsl(0 0% 30%));
+  --gradient-accent: linear-gradient(135deg, hsl(0 0% 30%), hsl(0 0% 50%));
+  --shadow-card: 0 1px 3px hsl(0 0% 0% / 0.06);
+  --shadow-card-hover: 0 4px 12px hsl(0 0% 0% / 0.1);
+}
+
+.dark.theme-minimal,
+.dark[data-theme="minimal"] {
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --card: 0 0% 5%;
+  --card-foreground: 0 0% 100%;
+  --popover: 0 0% 5%;
+  --popover-foreground: 0 0% 100%;
+  --primary: 0 0% 100%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 0 0% 20%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 0 0% 10%;
+  --muted-foreground: 0 0% 60%;
+  --accent: 0 0% 80%;
+  --accent-foreground: 0 0% 0%;
+  --border: 0 0% 15%;
+  --input: 0 0% 15%;
+  --ring: 0 0% 100%;
+  --sidebar-background: 0 0% 5%;
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-primary: 0 0% 100%;
+  --sidebar-primary-foreground: 0 0% 0%;
+  --sidebar-accent: 0 0% 10%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 0 0% 15%;
+  --sidebar-ring: 0 0% 100%;
+  --gradient-primary: linear-gradient(135deg, hsl(0 0% 100%), hsl(0 0% 70%));
+  --gradient-accent: linear-gradient(135deg, hsl(0 0% 80%), hsl(0 0% 60%));
+  --gradient-card: linear-gradient(135deg, hsl(0 0% 7%), hsl(0 0% 5%));
+  --shadow-card: 0 1px 3px hsl(0 0% 0% / 0.4);
+  --shadow-card-hover: 0 4px 12px hsl(0 0% 0% / 0.6);
+  --shadow-glow: 0 0 10px hsl(0 0% 100% / 0.08);
 }
 
 /* 霓虹 - 未適配淺色模式 深色較佳 */
@@ -233,7 +281,7 @@
   --accent-foreground: 0 0% 98%;
   --destructive: 0 100% 50%;
   --destructive-foreground: 0 0% 98%;
-  --border: 190 100% 50% / 0.4;
+  --border: 190 100% 50%;
   --input: 240 10% 12%;
   --ring: 190 100% 50%;
   --gradient-primary: linear-gradient(135deg, hsl(190 100% 50%), hsl(327 100% 54%));

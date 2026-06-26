@@ -17,6 +17,8 @@ import {
   TrendingUp,
   Users,
   CalendarDays,
+  Upload,
+  X,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -51,7 +53,9 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { useSiteCountdowns, SiteCountdown } from "@/hooks/useSiteCountdowns";
-import { useSiteAnnouncements, SiteAnnouncement } from "@/hooks/useSiteAnnouncements";import { useSiteConfig, isAdminAuthenticated, verifyAdminPassword, hasAdminPassword, setStoredPassword, } from "@/hooks/useSiteConfig";
+import { useSiteAnnouncements, SiteAnnouncement } from "@/hooks/useSiteAnnouncements";
+import { useSiteConfig, isAdminAuthenticated, verifyAdminPassword, hasAdminPassword, setStoredPassword } from "@/hooks/useSiteConfig";
+import { supabase, SUPABASE_ENABLED } from "@/lib/supabase";
 import { useVisitStats, DailyVisit } from "@/hooks/useVisitStats";
 import {
   ChartContainer,
@@ -66,7 +70,6 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
-import { SUPABASE_ENABLED } from "@/lib/supabase";
 import { hashPassword } from "@/lib/crypto";
 import { isMaintenanceWhitelisted, setMaintenanceWhitelist } from "@/lib/app-version";
 
@@ -78,7 +81,15 @@ interface EditingCountdown {
   target_date: string;
   start_date: string;
   progress_label: string;
+  grade: string;
 }
+
+const COUNTDOWN_GRADES = [
+  { value: "all", label: "全部年級" },
+  { value: "7", label: "七年級" },
+  { value: "8", label: "八年級" },
+  { value: "9", label: "九年級" },
+];
 
 interface EditingAnnouncement {
   id?: string;
@@ -87,7 +98,24 @@ interface EditingAnnouncement {
   type: string;
   pinned: boolean;
   content: string;
+  image_url: string;
 }
+
+const TZ_TAIPEI = "Asia/Taipei";
+
+// 將 UTC ISO 字串轉為 datetime-local input 需要的 Taiwan 時間字串 (YYYY-MM-DDTHH:mm)
+const utcToTaiwanInputStr = (isoStr: string): string => {
+  if (!isoStr) return "";
+  const d = new Date(isoStr);
+  return new Date(d.getTime() + 8 * 60 * 60 * 1000).toISOString().slice(0, 16);
+};
+
+// 將 datetime-local input 的字串（視為台灣時間）轉為 UTC ISO 字串
+const taiwanInputToUtc = (inputStr: string): string => {
+  if (!inputStr) return "";
+  const d = new Date(inputStr + "+08:00");
+  return d.toISOString();
+};
 
 export function AdminPanel() {
   const { toast } = useToast();
@@ -114,6 +142,7 @@ export function AdminPanel() {
   const [cdDialogOpen, setCdDialogOpen] = useState(false);
   const [editingCd, setEditingCd] = useState<EditingCountdown | null>(null);
   const [cdDeleteConfirm, setCdDeleteConfirm] = useState<string | null>(null);
+  const [cdGradeFilter, setCdGradeFilter] = useState<string>("all");
 
   // Editing state for announcements
   const [localAnnouncements, setLocalAnnouncements] = useState<SiteAnnouncement[]>([]);
@@ -225,22 +254,18 @@ export function AdminPanel() {
 
   // *** Countdown Operations ***
   const handleAddCountdown = () => {
-    setEditingCd({ id: undefined, label: "", target_date: "", start_date: "", progress_label: "進度" });
+    setEditingCd({ id: undefined, label: "", target_date: "", start_date: "", progress_label: "進度", grade: "all" });
     setCdDialogOpen(true);
   };
 
   const handleEditCountdown = (cd: SiteCountdown) => {
-    const formatForInput = (isoStr: string) => {
-      if (!isoStr) return "";
-      const d = new Date(isoStr);
-      return d.toISOString().slice(0, 16);
-    };
     setEditingCd({
       id: cd.id,
       label: cd.label,
-      target_date: formatForInput(cd.target_date),
-      start_date: cd.start_date ? formatForInput(cd.start_date) : "",
+      target_date: utcToTaiwanInputStr(cd.target_date),
+      start_date: cd.start_date ? utcToTaiwanInputStr(cd.start_date) : "",
       progress_label: cd.progress_label,
+      grade: cd.grade || "all",
     });
     setCdDialogOpen(true);
   };
@@ -254,13 +279,14 @@ export function AdminPanel() {
     const newCountdown: SiteCountdown = {
       id: editingCd.id || `admin-cd-${Date.now()}`,
       label: editingCd.label,
-      target_date: new Date(editingCd.target_date).toISOString(),
-      start_date: editingCd.start_date ? new Date(editingCd.start_date).toISOString() : null,
+      target_date: taiwanInputToUtc(editingCd.target_date),
+      start_date: editingCd.start_date ? taiwanInputToUtc(editingCd.start_date) : null,
       progress_label: editingCd.progress_label || "進度",
       sort_order: editingCd.id
         ? localCountdowns.find((c) => c.id === editingCd.id)?.sort_order ?? localCountdowns.length
         : localCountdowns.length,
       active: true,
+      grade: editingCd.grade === "all" ? null : editingCd.grade,
     };
 
     if (editingCd.id && localCountdowns.some((c) => c.id === editingCd.id)) {
@@ -304,6 +330,7 @@ export function AdminPanel() {
       type: "info",
       pinned: false,
       content: "",
+      image_url: "",
     });
     setAnnDialogOpen(true);
   };
@@ -316,8 +343,52 @@ export function AdminPanel() {
       type: ann.type,
       pinned: ann.pinned,
       content: ann.content,
+      image_url: ann.image_url || "",
     });
     setAnnDialogOpen(true);
+  };
+
+  const handleUploadImage = async (file: File) => {
+    if (!SUPABASE_ENABLED) {
+      toast({ title: "上傳失敗", description: "請先設定 Supabase 環境變數", variant: "destructive" });
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast({ title: "圖片過大", description: "請選擇 5MB 以下的圖片", variant: "destructive" });
+      return;
+    }
+    if (!["image/png", "image/jpeg", "image/gif", "image/webp"].includes(file.type)) {
+      toast({ title: "格式不支援", description: "僅支援 PNG、JPEG、GIF、WebP", variant: "destructive" });
+      return;
+    }
+    try {
+      // 刪除舊圖片（如果是從 Supabase Storage 上傳的）
+      const oldUrl = editingAnn?.image_url;
+      if (oldUrl) {
+        const BUCKET_PATH = "/announcement-images/";
+        const idx = oldUrl.lastIndexOf(BUCKET_PATH);
+        if (idx !== -1) {
+          const oldFileName = oldUrl.slice(idx + BUCKET_PATH.length);
+          if (oldFileName) {
+            await supabase.storage.from("announcement-images").remove([oldFileName]);
+          }
+        }
+      }
+
+      const ext = file.name.split(".").pop() || "png";
+      const fileName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+      const { error: uploadError } = await supabase.storage
+        .from("announcement-images")
+        .upload(fileName, file, { cacheControl: "31536000" });
+      if (uploadError) throw uploadError;
+      const { data: urlData } = supabase.storage
+        .from("announcement-images")
+        .getPublicUrl(fileName);
+      setEditingAnn((prev) => (prev ? { ...prev, image_url: urlData.publicUrl } : null));
+      toast({ title: "上傳成功" });
+    } catch (err) {
+      toast({ title: "上傳失敗", description: String(err), variant: "destructive" });
+    }
   };
 
   const handleSaveAnnouncement = () => {
@@ -333,6 +404,7 @@ export function AdminPanel() {
       type: editingAnn.type,
       pinned: editingAnn.pinned,
       content: editingAnn.content || "",
+      image_url: editingAnn.image_url || undefined,
       sort_order: editingAnn.id
         ? localAnnouncements.find((a) => a.id === editingAnn.id)?.sort_order ?? localAnnouncements.length
         : localAnnouncements.length,
@@ -690,6 +762,34 @@ export function AdminPanel() {
                   </div>
                 </div>
 
+                {/* Grade filter tabs */}
+                <div className="flex gap-2 flex-wrap pb-2">
+                  <button
+                    onClick={() => setCdGradeFilter("all")}
+                    className={cn(
+                      "rounded-lg px-3 py-1.5 text-xs font-bold transition-all",
+                      cdGradeFilter === "all"
+                        ? "bg-primary/15 text-primary"
+                        : "text-muted-foreground/50 hover:text-muted-foreground/80 hover:bg-muted/30"
+                    )}
+                  >
+                    全部
+                  </button>
+                  {(["7", "8", "9"] as const).map((g) => (
+                    <button
+                      key={g}
+                      onClick={() => setCdGradeFilter(g)}
+                      className={cn(
+                        "rounded-lg px-3 py-1.5 text-xs font-bold transition-all",
+                        cdGradeFilter === g
+                          ? "bg-primary/15 text-primary"
+                          : "text-muted-foreground/50 hover:text-muted-foreground/80 hover:bg-muted/30"
+                      )}
+                    >
+                      {g} 年級
+                    </button>
+                  ))}
+                </div>
                 <div className="space-y-2">
                   {localCountdowns.length === 0 ? (
                     <div className="py-12 text-center text-muted-foreground">
@@ -697,53 +797,64 @@ export function AdminPanel() {
                       <p className="text-sm">尚無倒數計時</p>
                     </div>
                   ) : (
-                    localCountdowns.map((cd, index) => (
-                      <div
-                        key={cd.id}
-                        className="flex items-center gap-3 rounded-2xl border border-border/40 bg-card p-4"
-                      >
-                        <div className="flex flex-col gap-0.5">
-                          <button
-                            onClick={() => handleMoveCd(index, "up")}
-                            disabled={index === 0}
-                            className="text-muted-foreground/40 hover:text-primary disabled:opacity-20"
-                          >
-                            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 15l7-7 7 7" /></svg>
-                          </button>
-                          <button
-                            onClick={() => handleMoveCd(index, "down")}
-                            disabled={index === localCountdowns.length - 1}
-                            className="text-muted-foreground/40 hover:text-primary disabled:opacity-20"
-                          >
-                            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
-                          </button>
+                    localCountdowns
+                      .filter(cd => cdGradeFilter === "all" || cd.grade === cdGradeFilter)
+                      .map((cd, index) => {
+                        const gradeLabel = COUNTDOWN_GRADES.find(g => g.value === cd.grade)?.label || "全部年級";
+                        return (
+                        <div
+                          key={cd.id}
+                          className="flex items-center gap-3 rounded-2xl border border-border/40 bg-card p-4"
+                        >
+                          <div className="flex flex-col gap-0.5">
+                            <button
+                              onClick={() => handleMoveCd(index, "up")}
+                              disabled={index === 0}
+                              className="text-muted-foreground/40 hover:text-primary disabled:opacity-20"
+                            >
+                              <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 15l7-7 7 7" /></svg>
+                            </button>
+                            <button
+                              onClick={() => handleMoveCd(index, "down")}
+                              disabled={index === localCountdowns.length - 1}
+                              className="text-muted-foreground/40 hover:text-primary disabled:opacity-20"
+                            >
+                              <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
+                            </button>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <p className="text-sm font-bold truncate">{cd.label}</p>
+                              {cd.grade && (
+                                <span className="shrink-0 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">
+                                  {gradeLabel}
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-[10px] text-muted-foreground font-mono">
+                              {new Date(cd.target_date).toLocaleString("zh-TW", { timeZone: TZ_TAIPEI })}
+                            </p>
+                          </div>
+                          <div className="flex gap-1 shrink-0">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 rounded-lg hover:bg-primary/10"
+                              onClick={() => handleEditCountdown(cd)}
+                            >
+                              <Edit className="h-4 w-4 text-muted-foreground/70" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 rounded-lg hover:bg-destructive/10 text-destructive/70"
+                              onClick={() => setCdDeleteConfirm(cd.id)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-bold truncate">{cd.label}</p>
-                          <p className="text-[10px] text-muted-foreground font-mono">
-                            {new Date(cd.target_date).toLocaleString("zh-TW")}
-                          </p>
-                        </div>
-                        <div className="flex gap-1 shrink-0">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 rounded-lg hover:bg-primary/10"
-                            onClick={() => handleEditCountdown(cd)}
-                          >
-                            <Edit className="h-4 w-4 text-muted-foreground/70" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 rounded-lg hover:bg-destructive/10 text-destructive/70"
-                            onClick={() => setCdDeleteConfirm(cd.id)}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    ))
+                      );})
                   )}
                 </div>
               </div>
@@ -1277,6 +1388,24 @@ export function AdminPanel() {
                 placeholder="例如：學期進度"
               />
             </div>
+            <div className="space-y-2">
+              <Label className="text-sm font-bold ml-1">適用年級</Label>
+              <Select
+                value={editingCd?.grade ?? "all"}
+                onValueChange={(value) =>
+                  setEditingCd((prev) => (prev ? { ...prev, grade: value } : null))
+                }
+              >
+                <SelectTrigger className="rounded-xl border-primary/10 bg-muted/30">
+                  <SelectValue placeholder="全部年級" />
+                </SelectTrigger>
+                <SelectContent>
+                  {COUNTDOWN_GRADES.map((g) => (
+                    <SelectItem key={g.value} value={g.value}>{g.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           <DialogFooter className="gap-2 sm:gap-0">
             <Button
@@ -1361,6 +1490,62 @@ export function AdminPanel() {
               <div>
                 <p className="text-sm font-bold">置頂公告</p>
                 <p className="text-[10px] text-muted-foreground">置頂公告將顯示在列表最上方</p>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <Label className="text-sm font-bold ml-1">自訂圖片（選填）</Label>
+              {editingAnn?.image_url && (
+                <div className="relative rounded-xl overflow-hidden border border-border/50 aspect-video bg-muted/30">
+                  <img src={editingAnn.image_url} alt="" className="h-full w-full object-cover" referrerPolicy="no-referrer" />
+                  <button
+                    type="button"
+                    className="absolute top-2 right-2 h-7 w-7 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/70 transition-colors"
+                    onClick={() => setEditingAnn((prev) => (prev ? { ...prev, image_url: "" } : null))}
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="rounded-xl flex-1"
+                  onClick={() => document.getElementById("ann-image-upload")?.click()}
+                >
+                  <Upload className="mr-2 h-4 w-4" />
+                  {SUPABASE_ENABLED ? "上傳圖片" : "選擇圖片"}
+                </Button>
+                <input
+                  id="ann-image-upload"
+                  type="file"
+                  accept="image/png,image/jpeg,image/gif,image/webp"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) handleUploadImage(file);
+                    e.target.value = "";
+                  }}
+                />
+              </div>
+              <div className="relative">
+                <Input
+                  className="rounded-xl border-primary/10 bg-muted/30 pr-9"
+                  value={editingAnn?.image_url || ""}
+                  onChange={(e) =>
+                    setEditingAnn((prev) => (prev ? { ...prev, image_url: e.target.value } : null))
+                  }
+                  placeholder="或貼上圖片網址..."
+                />
+                {editingAnn?.image_url && (
+                  <button
+                    type="button"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                    onClick={() => setEditingAnn((prev) => (prev ? { ...prev, image_url: "" } : null))}
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
               </div>
             </div>
             <div className="space-y-2">

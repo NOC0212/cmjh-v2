@@ -226,9 +226,12 @@ export function Announcements() {
               key={announcement.id}
               className="image-bg-panel overflow-hidden rounded-2xl border border-border bg-gradient-to-r from-card to-card/90 shadow-sm transition-all hover:border-primary/30 hover:shadow-md"
             >
-              <button
-                className={cn("w-full px-4 py-4 text-left transition-colors", isExpanded ? "bg-primary/5" : "hover:bg-primary/5")}
+              <div
+                role="button"
+                tabIndex={0}
+                className={cn("w-full px-4 py-4 text-left transition-colors cursor-pointer", isExpanded ? "bg-primary/5" : "hover:bg-primary/5")}
                 onClick={() => setExpandedId(isExpanded ? null : announcement.id)}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setExpandedId(isExpanded ? null : announcement.id); } }}
               >
                 <div className="flex items-start gap-3">
                   <div className="rounded-lg border border-primary/20 bg-primary/10 px-2 py-1 text-xs font-semibold text-primary">
@@ -275,7 +278,7 @@ export function Announcements() {
                     <ChevronDown className={cn("h-4 w-4 text-muted-foreground transition-transform", isExpanded && "rotate-180")} />
                   </div>
                 </div>
-              </button>
+              </div>
 
               {isExpanded && (
                 <div className="border-t border-border/60 px-4 pb-4 pt-3">

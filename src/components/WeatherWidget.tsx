@@ -70,6 +70,21 @@ interface WeatherElement {
 interface WeatherData {
   locationName: string;
   weatherElement: WeatherElement[];
+  weatherCode?: string;
+}
+
+interface CwaResponse {
+  success: string;
+  records?: {
+    locations?: Array<{
+      location?: RawLocation[];
+    }>;
+  };
+  Records?: {
+    Locations?: Array<{
+      Location?: RawLocation[];
+    }>;
+  };
 }
 
 // 未標準化的 API 回應類型
@@ -100,6 +115,7 @@ interface DailyForecast {
   date: string;
   dayOfWeek: string;
   weather: string;
+  weatherCode?: string;
   maxTemp: string;
   minTemp: string;
   pop: string;
@@ -142,7 +158,7 @@ export const WeatherWidget = () => {
   }, []);
 
   // 處理 CWA 回應的共用邏輯，回傳 true 表示成功解析
-  const handleCwaResponse = useCallback((data: any, district: string): boolean => {
+  const handleCwaResponse = useCallback((data: CwaResponse, district: string): boolean => {
     try {
       if (data.success === "true") {
         const records = data.records || data.Records;
@@ -343,32 +359,34 @@ export const WeatherWidget = () => {
   return (
     <Card className="overflow-hidden border-primary/20 bg-gradient-to-br from-card via-card to-primary/5 hover:shadow-lg transition-shadow duration-300 rounded-2xl">
       <CardHeader className="pb-3">
-        <div className="flex flex-col gap-1">
-          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
-            天氣動態
-          </CardTitle>
-          <p className="text-xs text-muted-foreground flex items-center gap-1">
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-            台南市即時天氣
-          </p>
-        </div>
-        <div className="flex items-center gap-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 rounded-full hover:bg-primary/10 transition-colors"
-            onClick={() => fetchWeather(selectedDistrict)}
-          >
-            <Navigation className="h-4 w-4 text-primary" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 rounded-full hover:bg-primary/10 transition-colors"
-            onClick={() => setIsExpanded(!isExpanded)}
-          >
-            {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
-          </Button>
+        <div className="flex items-start justify-between">
+          <div className="flex flex-col gap-1">
+            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+              天氣動態
+            </CardTitle>
+            <p className="text-xs text-muted-foreground flex items-center gap-1">
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              台南市即時天氣
+            </p>
+          </div>
+          <div className="flex items-center gap-1 shrink-0">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 rounded-full hover:bg-primary/10 transition-colors"
+              onClick={() => fetchWeather(selectedDistrict)}
+            >
+              <Navigation className="h-4 w-4 text-primary" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 rounded-full hover:bg-primary/10 transition-colors"
+              onClick={() => setIsExpanded(!isExpanded)}
+            >
+              {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+            </Button>
+          </div>
         </div>
 
         <div className="mt-4">
@@ -408,7 +426,7 @@ export const WeatherWidget = () => {
               {/* 當前天氣 */}
               <div className="relative group overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 p-5 transition-shadow duration-300 hover:shadow-inner">
                 <div className="absolute -right-4 -top-4 opacity-10 group-hover:scale-110 transition-transform duration-700">
-                  {getWeatherIcon(current.weather, (current as any).weatherCode)}
+                  {getWeatherIcon(current.weather, current.weatherCode)}
                 </div>
 
                 <div className="flex items-center justify-between mb-6 relative z-10">
@@ -424,7 +442,7 @@ export const WeatherWidget = () => {
                     </div>
                   </div>
                   <div className="flex flex-col items-center p-3 rounded-2xl bg-primary/10 border border-primary/10 backdrop-blur-sm shadow-sm scale-110">
-                    {getWeatherIcon(current.weather, (current as any).weatherCode)}
+                    {getWeatherIcon(current.weather, current.weatherCode)}
                   </div>
                 </div>
 
@@ -497,7 +515,7 @@ export const WeatherWidget = () => {
                             </div>
 
                             <div className="flex-shrink-0 p-2 rounded-full bg-primary/5 group-hover:scale-110 transition-transform duration-300">
-                              {getWeatherIcon(day.weather, (day as any).weatherCode)}
+                              {getWeatherIcon(day.weather, day.weatherCode)}
                             </div>
 
                             <div className="flex-1 text-left overflow-hidden">

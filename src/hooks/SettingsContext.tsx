@@ -89,7 +89,7 @@ const migrateOldSettings = (): AppSettings | null => {
 
         const newSettings: AppSettings = {
             components,
-            themeMode: (oldTheme === "dark" ? "dark" : "light") as any,
+            themeMode: oldTheme === "dark" ? "dark" : "light",
             themeColor: (oldTheme && oldTheme !== "dark" && oldTheme !== "light" ? oldTheme : "blue"),
             pageBackground: "default",
             pageBackgroundImage: "",
