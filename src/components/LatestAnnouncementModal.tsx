@@ -119,7 +119,6 @@ export function LatestAnnouncementModal() {
 
   const handleDontShowAgain = () => {
     markAsRead();
-    setShowLatestAnnouncementOnStartup(false);
     setIsOpen(false);
   };
 
@@ -197,7 +196,7 @@ export function LatestAnnouncementModal() {
               className="h-12 flex-[2] rounded-2xl text-lg font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]" 
               onClick={hasMore ? handleNextOrClose : handleDontShowAgain}
             >
-              {hasMore ? "下一則公告" : "不再顯示"}
+              {hasMore ? "下一則公告" : "關閉"}
             </Button>
             {hasMore ? (
               <Button 
