@@ -1,35 +1,4 @@
 {
-    "last_updated": "2026-06-29 07:03:00",
-    "items": [
-        {
-            "category": "主食",
-            "name": "五穀飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1767151539077921"
-        },
-        {
-            "category": "主菜",
-            "name": "糖醋排骨",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1575272027245983"
-        },
-        {
-            "category": "副菜",
-            "name": "紅白花椰",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853266000317"
-        },
-        {
-            "category": "蔬菜",
-            "name": "高麗菜炒紅蘿蔔",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853320096721"
-        },
-        {
-            "category": "湯品",
-            "name": "海芽蛋花湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1458889021135534"
-        },
-        {
-            "category": "附餐",
-            "name": "鳳梨",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1429487606301321"
-        }
-    ]
+    "last_updated": "2026-07-01 07:14:38",
+    "items": []
 }
