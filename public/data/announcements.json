@@ -1,5 +1,14 @@
 [
     {
+        "date": "2026-07-03",
+        "category": "行政",
+        "source": "教務處",
+        "title": "臺南市立崇明國中115學年度代理教師甄選第4次甄選結果",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=438&type=news&from_op=all_news",
+        "content": "臺南市立崇明國中115學年度代理教師甄選第4次甄選結果\n理化科：楊○富 正取1\n請以上正取老師於115年7月6日(星期一)上午8:30至人事室報到。",
+        "attachments": []
+    },
+    {
         "date": "2026-06-26",
         "category": "簡章",
         "source": "教務處",
@@ -221,7 +230,7 @@
     },
     {
         "date": "2026-06-30",
-        "category": "宣導",
+        "category": "行政",
         "source": "教務處",
         "title": "因應學年度轉換，辦理轉學、成績單申請、畢業證明申請...等業務請避開以下時段",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=412&type=news&from_op=all_news",
@@ -241,14 +250,5 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115暑假行事曆6.29通過.pdf&files_sn=327"
             }
         ]
-    },
-    {
-        "date": "2026-06-29",
-        "category": "一般",
-        "source": "人事室",
-        "title": "轉行政院人事行政總處辦理之全國公教員工旅遊平安卡優惠方案，115年至118年經公開徵選由富邦產物保險股份有限公司承作。",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=6&zone_id=0&page_id=48&content_id=410&type=news&from_op=all_news",
-        "content": "說明：\n一、依據行政院人事行政總處115年6月25日總處給字第1154001207號函辦理，並檢附原函影本。\n二、優惠方案內容已公告於\n本府人事處網頁\n權益e點靈「其他」區、\n行政院人事行政總處全球資訊網\n最新消息區、公務福利e化平台、給與福利處「福利文康」區及\n富邦產險公教員工旅遊平安卡網站\n，歡迎前往參閱。",
-        "attachments": []
     }
 ]
