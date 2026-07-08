@@ -1,5 +1,14 @@
 [
     {
+        "date": "2026-07-08",
+        "category": "一般",
+        "source": "總務處",
+        "title": "本校電話主機更換施工，話機暫停使用公告！",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=4&zone_id=0&page_id=30&content_id=440&type=news&from_op=all_news",
+        "content": "因本校辦理電話總機設備更換作業，校內電話將於115年7月9日起暫停使用。\n一、行政辦公室電話預計於115年7月10日恢復使用。\n二、各教室電話預計於115年7月17日恢復使用。\n電話停用期間，如有需與本校各處室聯繫或洽公事項，請親自至各處室辦理。造成不便，敬請見諒，感謝您的配合。",
+        "attachments": []
+    },
+    {
         "date": "2026-06-25",
         "category": "行政",
         "source": "教務處",
@@ -36,7 +45,7 @@
     },
     {
         "date": "2026-06-23",
-        "category": "行政",
+        "category": "宣導",
         "source": "教務處",
         "title": "新生入學報到手冊請參考附件或至警衛室索取",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=390&type=news&from_op=all_news",
@@ -47,6 +56,15 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=崇明-新生報到手冊115.pdf&files_sn=305"
             }
         ]
+    },
+    {
+        "date": "2026-07-08",
+        "category": "一般",
+        "source": "學務處",
+        "title": "因應颱風來襲,原定7/10(五)的班級返校打掃延期",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=439&type=news&from_op=all_news",
+        "content": "因應颱風來襲,原定7/10(五),119.120的班級返校打掃延期如下:\n119班返校日期改為7/15(三) 8:30-10:30\n120班返校日期改為7/16(四) 8:30-10:30\n若有造成不便敬請見諒~",
+        "attachments": []
     },
     {
         "date": "2026-07-03",
@@ -216,34 +234,11 @@
     },
     {
         "date": "2026-06-30",
-        "category": "宣導",
+        "category": "行政",
         "source": "教務處",
         "title": "因應學年度轉換，辦理轉學、成績單申請、畢業證明申請...等業務請避開以下時段",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=412&type=news&from_op=all_news",
         "content": "一、停止學生轉出、轉入作業：\n(一) 115年7月23日(星期四)下午4時後：停止辦理學生轉出作業；\n(二) 115年7月28日(星期二)下午4時後，停止辦理學生轉入作業。\n二、學期變更：\n(一) 115年7月29日(星期三)至8月3日(星期一)市府進行審核轉出入、中輟復學、重大資料變更、調班、特殊生折抵，學校暫停學籍系統所有作業，請勿至學校辦理申請成績單、就學證明、畢業證明….等相關業務。\n(二) 115年8月3日(星期一)下午4時完成「學期變更」作業後始可辦理轉出、轉入及相關學籍異動。",
-        "attachments": []
-    },
-    {
-        "date": "2026-06-30",
-        "category": "行政",
-        "source": "教務處",
-        "title": "115年暑期行事曆",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=411&type=news&from_op=all_news",
-        "content": "本校於115年6月29日114學年度期末校務會議通過115年暑期行事曆，\n相關活動與暑期課程期程請各位同學務必留意！！！\n提供電子檔供同學與家長參考。",
-        "attachments": [
-            {
-                "name": "115暑假行事曆6.29通過.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115暑假行事曆6.29通過.pdf&files_sn=327"
-            }
-        ]
-    },
-    {
-        "date": "2026-06-29",
-        "category": "一般",
-        "source": "人事室",
-        "title": "轉行政院人事行政總處辦理之全國公教員工旅遊平安卡優惠方案，115年至118年經公開徵選由富邦產物保險股份有限公司承作。",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=6&zone_id=0&page_id=48&content_id=410&type=news&from_op=all_news",
-        "content": "說明：\n一、依據行政院人事行政總處115年6月25日總處給字第1154001207號函辦理，並檢附原函影本。\n二、優惠方案內容已公告於\n本府人事處網頁\n權益e點靈「其他」區、\n行政院人事行政總處全球資訊網\n最新消息區、公務福利e化平台、給與福利處「福利文康」區及\n富邦產險公教員工旅遊平安卡網站\n，歡迎前往參閱。",
         "attachments": []
     }
 ]
