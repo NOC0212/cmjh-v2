@@ -45,7 +45,7 @@
     },
     {
         "date": "2026-06-23",
-        "category": "宣導",
+        "category": "行政",
         "source": "教務處",
         "title": "新生入學報到手冊請參考附件或至警衛室索取",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=390&type=news&from_op=all_news",
@@ -56,6 +56,15 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=崇明-新生報到手冊115.pdf&files_sn=305"
             }
         ]
+    },
+    {
+        "date": "2026-07-08",
+        "category": "競賽",
+        "source": "教務處",
+        "title": "「全民英檢」中高級測驗現正報名中",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=441&type=news&from_op=all_news",
+        "content": "一、、「全民英檢」適合大考暖身練習。成績可上傳高中職「學習歷程檔案」，展現個人多元表現或作為英文能力證明等。\n二、報名資訊如下：\n（一）級別項目：\n中高級聽讀／一日考（CEFR B2）\n（二）測驗日期：\n115年10月31日（星期六）\n（三）報名網址：\n全民英檢中高級測驗報名網頁\n三、考生報名可享加價購\n「全民英檢 i學網」（GEPT iPrep）學習點數 85 折優惠\n，更多練習資源請參閱\n全民英檢官方網站\n。",
+        "attachments": []
     },
     {
         "date": "2026-07-08",
@@ -230,15 +239,6 @@
         "title": "114學年度結業式直播網址",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=425&type=news&from_op=all_news",
         "content": "",
-        "attachments": []
-    },
-    {
-        "date": "2026-06-30",
-        "category": "行政",
-        "source": "教務處",
-        "title": "因應學年度轉換，辦理轉學、成績單申請、畢業證明申請...等業務請避開以下時段",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=412&type=news&from_op=all_news",
-        "content": "一、停止學生轉出、轉入作業：\n(一) 115年7月23日(星期四)下午4時後：停止辦理學生轉出作業；\n(二) 115年7月28日(星期二)下午4時後，停止辦理學生轉入作業。\n二、學期變更：\n(一) 115年7月29日(星期三)至8月3日(星期一)市府進行審核轉出入、中輟復學、重大資料變更、調班、特殊生折抵，學校暫停學籍系統所有作業，請勿至學校辦理申請成績單、就學證明、畢業證明….等相關業務。\n(二) 115年8月3日(星期一)下午4時完成「學期變更」作業後始可辦理轉出、轉入及相關學籍異動。",
         "attachments": []
     }
 ]
