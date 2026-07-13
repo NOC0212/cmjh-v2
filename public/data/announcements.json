@@ -59,6 +59,29 @@
     },
     {
         "date": "2026-07-13",
+        "category": "活動",
+        "source": "教務處",
+        "title": "115年度科學教育「FUN熱力學與-196℃的分子急凍秀」親子研習營，歡迎踴躍報名參加",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=449&type=news&from_op=all_news",
+        "content": "說明：\n一、依據「臺南市115年度科學教育總體計畫」辦理。\n二、本活動重要資訊摘述如下：\n(一)時間及地點：115年8月11日(二)08:30-15:50，安順國中科學樓3F理化實驗室。\n(二)參加對象：臺南市新學年國小5~6年級、國中學生與家長合計36位名額。\n(三)報名方式：7月15日(三)上午9點開放Google表單報名，請至\n活動線上報名表單\n填寫，依完成報名之先後順序錄取，額滿立即公告於\n安順國中全球資訊網\n。\n(四)檢附實施計畫詳如附件。\n(五)本案聯絡人：安順國中教務處電話：06-3559652#122，傳真：06-3556802。",
+        "attachments": [
+            {
+                "name": "「FUN熱力學與-196℃的分子急凍秀」親子研習營實施計畫.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=「FUN熱力學與-196℃的分子急凍秀」親子研習營實施計畫.pdf&files_sn=342"
+            }
+        ]
+    },
+    {
+        "date": "2026-07-13",
+        "category": "行政",
+        "source": "教務處",
+        "title": "布可星球訂於115年8月1日至8月12日暫停服務",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=448&type=news&from_op=all_news",
+        "content": "一、因應學期轉換作業，本市布可星球今年例行維護時間，訂於115年8月1日(星期六)至8月12日(星期三)，期間暫停服務。\n二、請參閱布可星球網站首頁之即時訊息，若提前完成不另行通知。",
+        "attachments": []
+    },
+    {
+        "date": "2026-07-13",
         "category": "競賽",
         "source": "學務處",
         "title": "臺南市115學年度學生舞蹈比賽實施計畫",
@@ -227,23 +250,5 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115年臺南市體育獎助金申請注意事項.pdf&files_sn=332"
             }
         ]
-    },
-    {
-        "date": "2026-07-02",
-        "category": "研習",
-        "source": "輔導室",
-        "title": "「e 學補給站」性平教育入班宣導種子教師培訓課程上架通知",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=431&type=news&from_op=all_news",
-        "content": "一、依據教育局公告281603續辦。\n二、115年6月24日辦理之「114學年度第2學期性平種子教師培訓」課程，已上架於臺南市政府公務人力發展中心「e 學補給站」數位學習平台，請至該平台選讀，並查詢課程名稱關鍵字「性別平等基礎課程」。可至\ne 學補給站課程頁面\n查看詳細資訊。",
-        "attachments": []
-    },
-    {
-        "date": "2026-07-01",
-        "category": "宣導",
-        "source": "輔導室",
-        "title": "115年度「嚴重情緒行為者精神醫療就醫障礙改善及精神病早期介入計畫」醫療機構服務窗口及特別門診資訊",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=430&type=news&from_op=all_news",
-        "content": "一、依據教育部國民及學前教育署115年6月26日臺教國署學字第1150055215A號函辦理。\n二、旨揭資料已公告於\n衛生福利部網站\n「本部各單位及附屬機關／心理健康司／精神疾病防治／獎勵補助相關業務」項下，請自行下載，並協助轉知參考運用。",
-        "attachments": []
     }
 ]
