@@ -23,15 +23,6 @@
         "attachments": []
     },
     {
-        "date": "2026-07-08",
-        "category": "一般",
-        "source": "總務處",
-        "title": "本校電話主機更換施工，話機暫停使用公告！",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=4&zone_id=0&page_id=30&content_id=440&type=news&from_op=all_news",
-        "content": "因本校辦理電話總機設備更換作業，校內電話將於115年7月9日起暫停使用。\n一、行政辦公室電話預計於115年7月10日恢復使用。\n二、各教室電話預計於115年7月17日恢復使用。\n電話停用期間，如有需與本校各處室聯繫或洽公事項，請親自至各處室辦理。造成不便，敬請見諒，感謝您的配合。",
-        "attachments": []
-    },
-    {
         "date": "2026-06-23",
         "category": "行政",
         "source": "教務處",
@@ -44,6 +35,29 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=崇明-新生報到手冊115.pdf&files_sn=305"
             }
         ]
+    },
+    {
+        "date": "2026-07-17",
+        "category": "簡章",
+        "source": "教務處",
+        "title": "轉知國立高雄師範大學辦理「115學年度中等學校科技領域生活科技專長學士後教育學分班」相關事宜。",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=467&type=news&from_op=all_news",
+        "content": "一、依據國立高雄師範大學115年7月8日高師大進字第1151005939號函辦理。\n二、檢附旨揭學分班招生簡章。",
+        "attachments": [
+            {
+                "name": "115高師大生活科技專長學士後學分班簡章.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115高師大生活科技專長學士後學分班簡章.pdf&files_sn=354"
+            }
+        ]
+    },
+    {
+        "date": "2026-07-17",
+        "category": "研習",
+        "source": "輔導室",
+        "title": "「看見孩子的求救訊號：新世代行為危機與正向教養策略」線上研習",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=466&type=news&from_op=all_news",
+        "content": "一、依家庭教育法第13條規定，高級中等以下學校每學年應實施4小時家庭教育相關課程，為提升學校教師具備家庭教育相關議題之專業知能，特辦理本案。\n二、參加對象：依教育部113年9月19日臺教社(二)字第1132403085號函略以，有關高級中等以下學校推展家庭教育工作人員之範圍，包括所有教師及行政人員（含校長及長期代理教師），不含鐘點教師、留職停薪教師及單純執行庶務行政之工作人員，如：主（會）計、人事、幹事、工友及廚工等人員。\n三、報名方式：請於報名期限至本市教師研習護照報名，以利核發研習時數。\n四、辦辦理方式：Google Meet線上研習（會議代碼為 irm-howw-jgz，請點選連結加入\nGoogle Meet 線上研習視訊會議室\n）。\n五、課程相關資訊說明如下：\n護照代碼：319695\n研習日期：8月13日(四) 下午1:30-4:30\n報名時間：即日起至7月27日(一)止\n課程名稱：看見孩子的求救訊號：新世代行為危機與正向教養策略\n講師：葉品希 臨床心理師\n六、請核予參加人員公(差)假登記，於校內進行線上研習，本次課程以滿意度調查表代替簽到，問卷連結將於課程結束後公告於會議室對話框訊息欄內。\n七、本案如有疑義，逕洽承辦人張先生6591068轉22，網路電話：64022。",
+        "attachments": []
     },
     {
         "date": "2026-07-16",
@@ -231,20 +245,6 @@
             {
                 "name": "亞太資通訊科技 聯盟大賽代表隊選拔須知.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=亞太資通訊科技 聯盟大賽代表隊選拔須知.pdf&files_sn=340"
-            }
-        ]
-    },
-    {
-        "date": "2026-07-10",
-        "category": "研習",
-        "source": "教務處",
-        "title": "AI × Map Fusion創作實驗室：活用AI玩轉國家底圖教學研習會",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=445&type=news&from_op=all_news",
-        "content": "一、為推動國家底圖於教育場域之創新應用，並強化教學推廣效益，本中心辦理旨揭研習會，期以利用AI工具與國家底圖融合應用為主軸，協助第一線教師認識國家底圖12大類圖資及相關空間資訊服務資源，透過實作課程帶領教師運用數位工具進行教材製作、教學設計及地圖探究活動規劃，發展兼具互動性與探究性的教學內容。\n二、為鼓勵教師活用國家底圖與AI工具輔助教學，本研習課程設置AI學習支持福袋（詳活動簡章見－活動資訊十一），作為學習支持與參與回饋。\n三、檢送本研習會活動簡章，敬請轉知並派員教師參加。研習會重要資訊如下：\n(一)採線上報名，免費參加，報名網址為\n國家底圖於教育場域之創新應用研習會報名網站\n，報名期限至115年8月3日止，名額有限，額滿為止。\n(二)請各校惠予參與教師公（差）假及課務排代，相關費用由原服務學校支應，研習完成後將由教育部地理學科中心登載研習時數（認列時數為4小時），本中心並提供經建版地形圖紙圖作為教學使用。\n(三)活動聯繫及相關問題請洽易圖科技股份有限公司，黃小姐：04─24519816分機7070、amanda@gis.tw；江先生：04─24519816分機7330、willy@gis.tw。",
-        "attachments": [
-            {
-                "name": "AI × Map Fusion 創作實驗室.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=AI × Map Fusion 創作實驗室.pdf&files_sn=339"
             }
         ]
     }
