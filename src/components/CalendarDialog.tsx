@@ -31,19 +31,20 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-export function CalendarDialog() {
+export function CalendarDialog({ availableMonths: initialMonths }: { availableMonths?: string[] }) {
   const [open, setOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedDay, setSelectedDay] = useState("");
   const [formData, setFormData] = useState({ date: "", title: "" });
-  const [availableMonths, setAvailableMonths] = useState<string[]>([]);
+  const [availableMonths, setAvailableMonths] = useState<string[]>(initialMonths || []);
   const { customEvents, addEvent, updateEvent, deleteEvent, resetToDefault } = useCalendarEvents();
   const { toast } = useToast();
 
-  // 載入可用月份
+  // 載入可用月份（若 props 沒給則獨立 fetch）
   useEffect(() => {
+    if (initialMonths && initialMonths.length > 0) return;
     fetch("/data/calendar.json")
       .then((res) => res.json())
       .then((data: Record<string, unknown[]>) => {
@@ -53,7 +54,7 @@ export function CalendarDialog() {
       .catch((error) => {
         console.error("Failed to load calendar months:", error);
       });
-  }, []);
+  }, [initialMonths]);
 
   // 計算選中月份的天數
   const daysInMonth = useMemo(() => {

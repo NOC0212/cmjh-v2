@@ -26,6 +26,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
+import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import {
   Dialog,
@@ -56,7 +57,7 @@ import { useSiteCountdowns, SiteCountdown } from "@/hooks/useSiteCountdowns";
 import { useSiteAnnouncements, SiteAnnouncement } from "@/hooks/useSiteAnnouncements";
 import { useSiteConfig, isAdminAuthenticated, verifyAdminPassword, hasAdminPassword, setStoredPassword } from "@/hooks/useSiteConfig";
 import { supabase, SUPABASE_ENABLED } from "@/lib/supabase";
-import { useVisitStats, DailyVisit } from "@/hooks/useVisitStats";
+import { useVisitStats } from "@/hooks/useVisitStats";
 import {
   ChartContainer,
   ChartTooltip,
@@ -68,7 +69,6 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  ResponsiveContainer,
 } from "recharts";
 import { hashPassword } from "@/lib/crypto";
 import { isMaintenanceWhitelisted, setMaintenanceWhitelist } from "@/lib/app-version";
@@ -103,25 +103,25 @@ interface EditingAnnouncement {
 
 const TZ_TAIPEI = "Asia/Taipei";
 
-// 將 UTC ISO 字串轉為 datetime-local input 需要的 Taiwan 時間字串 (YYYY-MM-DDTHH:mm)
 const utcToTaiwanInputStr = (isoStr: string): string => {
   if (!isoStr) return "";
   const d = new Date(isoStr);
   return new Date(d.getTime() + 8 * 60 * 60 * 1000).toISOString().slice(0, 16);
 };
 
-// 將 datetime-local input 的字串（視為台灣時間）轉為 UTC ISO 字串
 const taiwanInputToUtc = (inputStr: string): string => {
   if (!inputStr) return "";
   const d = new Date(inputStr + "+08:00");
   return d.toISOString();
 };
 
+const fastTransition = { duration: 0.12, ease: "easeOut" as const };
+
 export function AdminPanel() {
   const { toast } = useToast();
-  const { countdowns, isConfigured: cdConfigured, updateCountdowns, isUpdating: cdUpdating } = useSiteCountdowns();
-  const { announcements, isConfigured: annConfigured, updateAnnouncements, isUpdating: annUpdating } = useSiteAnnouncements();
-  const { maintenance, appVersion, isConfigured: cfgConfigured, updateConfig, isUpdatingConfig } = useSiteConfig();
+  const { countdowns, updateCountdowns, isUpdating: cdUpdating } = useSiteCountdowns();
+  const { announcements, updateAnnouncements, isUpdating: annUpdating } = useSiteAnnouncements();
+  const { maintenance, appVersion, updateConfig, isUpdatingConfig } = useSiteConfig();
   const [selectedRange, setSelectedRange] = useState<number>(30);
   const { stats: visitStats, dailyVisits, isLoading: statsLoading } = useVisitStats(selectedRange);
 
@@ -133,24 +133,20 @@ export function AdminPanel() {
   const [activeSection, setActiveSection] = useState<AdminSection>(null);
   const [passwordMode, setPasswordMode] = useState<"login" | "setup">("login");
 
-  // Password setup
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // Editing state for countdowns
   const [localCountdowns, setLocalCountdowns] = useState<SiteCountdown[]>([]);
   const [cdDialogOpen, setCdDialogOpen] = useState(false);
   const [editingCd, setEditingCd] = useState<EditingCountdown | null>(null);
   const [cdDeleteConfirm, setCdDeleteConfirm] = useState<string | null>(null);
   const [cdGradeFilter, setCdGradeFilter] = useState<string>("all");
 
-  // Editing state for announcements
   const [localAnnouncements, setLocalAnnouncements] = useState<SiteAnnouncement[]>([]);
   const [annDialogOpen, setAnnDialogOpen] = useState(false);
   const [editingAnn, setEditingAnn] = useState<EditingAnnouncement | null>(null);
   const [annDeleteConfirm, setAnnDeleteConfirm] = useState<string | null>(null);
 
-  // Maintenance editing
   const [localMaintenance, setLocalMaintenance] = useState({
     isMaintenance: false,
     showTimer: true,
@@ -160,11 +156,9 @@ export function AdminPanel() {
   });
   const [whitelistEnabled, setWhitelistEnabled] = useState(() => isMaintenanceWhitelisted());
 
-  // App version editing
   const [localVersion, setLocalVersion] = useState("");
   const [localHighlights, setLocalHighlights] = useState<string[]>([]);
 
-  // Initialize local state from data
   useEffect(() => {
     if (countdowns.length > 0) {
       setLocalCountdowns([...countdowns]);
@@ -196,12 +190,10 @@ export function AdminPanel() {
     }
   }, [appVersion]);
 
-  // Check authentication on mount
   useEffect(() => {
     if (isAdminAuthenticated()) {
       setAuthenticated(true);
     }
-    // Check if password is set
     hasAdminPassword().then((has) => {
       setIsPasswordSet(has);
       if (!has) {
@@ -220,7 +212,6 @@ export function AdminPanel() {
     setIsVerifying(false);
 
     if (valid) {
-      // 儲存 SHA-256 雜湊，不儲存原始密碼
       setStoredPassword(await hashPassword(passwordInput));
       setAuthenticated(true);
       toast({ title: "驗證成功", description: "歡迎進入管理後台" });
@@ -242,7 +233,6 @@ export function AdminPanel() {
     setIsVerifying(true);
     try {
       await updateConfig({ newPassword: newPassword });
-      // updateConfig 內部已儲存雜湊，無需再呼叫 setStoredPassword
       setAuthenticated(true);
       setIsPasswordSet(true);
       toast({ title: "密碼設定成功", description: "請妥善保管您的密碼" });
@@ -252,7 +242,6 @@ export function AdminPanel() {
     setIsVerifying(false);
   };
 
-  // *** Countdown Operations ***
   const handleAddCountdown = () => {
     setEditingCd({ id: undefined, label: "", target_date: "", start_date: "", progress_label: "進度", grade: "all" });
     setCdDialogOpen(true);
@@ -321,7 +310,6 @@ export function AdminPanel() {
     }
   };
 
-  // *** Announcement Operations ***
   const handleAddAnnouncement = () => {
     setEditingAnn({
       id: undefined,
@@ -362,7 +350,6 @@ export function AdminPanel() {
       return;
     }
     try {
-      // 刪除舊圖片（如果是從 Supabase Storage 上傳的）
       const oldUrl = editingAnn?.image_url;
       if (oldUrl) {
         const BUCKET_PATH = "/announcement-images/";
@@ -443,7 +430,6 @@ export function AdminPanel() {
     }
   };
 
-  // *** Maintenance Operations ***
   const handleSaveMaintenance = async () => {
     try {
       await updateConfig({ maintenance: localMaintenance });
@@ -453,7 +439,6 @@ export function AdminPanel() {
     }
   };
 
-  // *** App Version Operations ***
   const handleSaveAppVersion = async () => {
     try {
       await updateConfig({
@@ -465,7 +450,6 @@ export function AdminPanel() {
     }
   };
 
-  // *** Password Change ***
   const handleChangePassword = async () => {
     if (!newPassword || newPassword.length < 4) {
       toast({ title: "密碼至少需要4個字元", variant: "destructive" });
@@ -477,7 +461,6 @@ export function AdminPanel() {
     }
     try {
       await updateConfig({ newPassword: newPassword });
-      // updateConfig 內部已儲存雜湊
       setNewPassword("");
       setConfirmPassword("");
       setPasswordMode("login");
@@ -487,17 +470,15 @@ export function AdminPanel() {
     }
   };
 
-  // 確認目前的維護設定來源（供除錯用）
   const maintenanceSource = maintenance ? (SUPABASE_ENABLED ? "Supabase" : "JSON 備份") : "無資料";
 
-  // Check if Supabase is configured
   if (!SUPABASE_ENABLED || isPasswordSet === null) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
-        <div className="mb-6 rounded-3xl bg-muted p-6">
-          <Shield className="h-12 w-12 text-muted-foreground/40" />
+        <div className="mb-6 rounded-2xl bg-muted p-5">
+          <Shield className="h-10 w-10 text-muted-foreground/40" />
         </div>
-        <h3 className="text-xl font-bold text-muted-foreground">管理後台暫不可用</h3>
+        <h3 className="text-lg font-bold text-muted-foreground">管理後台暫不可用</h3>
         {!SUPABASE_ENABLED ? (
           <p className="mt-2 text-sm text-muted-foreground/60 max-w-sm">
             請先在 .env 檔案中設定 VITE_SUPABASE_URL 及 VITE_SUPABASE_ANON_KEY，
@@ -510,27 +491,27 @@ export function AdminPanel() {
     );
   }
 
-  // Password gate
   if (!authenticated) {
     return (
       <div className="mx-auto max-w-md py-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-3xl border border-border/50 bg-card p-8 shadow-lg text-foreground"
+          transition={fastTransition}
+          className="rounded-xl border border-border/50 bg-card p-8 shadow-sm"
         >
           <div className="mb-8 text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10">
               {passwordMode === "setup" ? (
-                <Lock className="h-8 w-8 text-primary" />
+                <Lock className="h-7 w-7 text-primary" />
               ) : (
-                <Shield className="h-8 w-8 text-primary" />
+                <Shield className="h-7 w-7 text-primary" />
               )}
             </div>
-            <h2 className="text-2xl font-black tracking-tight">
+            <h2 className="text-xl font-bold tracking-tight">
               {passwordMode === "setup" ? "設定管理密碼" : "管理員驗證"}
             </h2>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-xs text-muted-foreground">
               {passwordMode === "setup"
                 ? "這是您第一次使用管理後台，請設定一組管理密碼"
                 : "請輸入管理密碼以進入後台"}
@@ -538,16 +519,16 @@ export function AdminPanel() {
           </div>
 
           {passwordMode === "setup" ? (
-            <div className="space-y-5">
+            <div className="space-y-4">
               <div className="space-y-2">
-                <Label>新密碼</Label>
+                <Label className="text-xs font-semibold">新密碼</Label>
                 <div className="relative">
                   <Input
                     type={showPassword ? "text" : "password"}
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     placeholder="至少4個字元"
-                    className="rounded-xl pr-10"
+                    className="pr-10"
                     onKeyDown={(e) => e.key === "Enter" && handleSetupPassword()}
                   />
                   <button
@@ -559,18 +540,17 @@ export function AdminPanel() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label>確認密碼</Label>
+                <Label className="text-xs font-semibold">確認密碼</Label>
                 <Input
                   type={showPassword ? "text" : "password"}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="再次輸入密碼"
-                  className="rounded-xl"
                   onKeyDown={(e) => e.key === "Enter" && handleSetupPassword()}
                 />
               </div>
               <Button
-                className="h-12 w-full rounded-xl text-base font-bold shadow-lg"
+                className="h-11 w-full text-sm font-semibold shadow-sm"
                 onClick={handleSetupPassword}
                 disabled={isVerifying}
               >
@@ -578,16 +558,16 @@ export function AdminPanel() {
               </Button>
             </div>
           ) : (
-            <div className="space-y-5">
+            <div className="space-y-4">
               <div className="space-y-2">
-                <Label>管理密碼</Label>
+                <Label className="text-xs font-semibold">管理密碼</Label>
                 <div className="relative">
                   <Input
                     type={showPassword ? "text" : "password"}
                     value={passwordInput}
                     onChange={(e) => setPasswordInput(e.target.value)}
                     placeholder="請輸入密碼"
-                    className="rounded-xl pr-10"
+                    className="pr-10"
                     onKeyDown={(e) => e.key === "Enter" && handleLogin()}
                   />
                   <button
@@ -599,7 +579,7 @@ export function AdminPanel() {
                 </div>
               </div>
               <Button
-                className="h-12 w-full rounded-xl text-base font-bold shadow-lg"
+                className="h-11 w-full text-sm font-semibold shadow-sm"
                 onClick={handleLogin}
                 disabled={isVerifying}
               >
@@ -607,7 +587,7 @@ export function AdminPanel() {
                   "驗證中..."
                 ) : (
                   <>
-                    <LogIn className="mr-2 h-5 w-5" />
+                    <LogIn className="mr-2 h-4 w-4" />
                     進入後台
                   </>
                 )}
@@ -634,28 +614,29 @@ export function AdminPanel() {
   return (
     <div className="min-h-[500px] pb-8 text-foreground">
       {!activeSection ? (
-        /* Main Menu */
         <motion.div
           key="menu"
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={fastTransition}
           className="space-y-6"
         >
           <div className="mb-8 flex items-center gap-3">
-            <div className="rounded-xl bg-primary/10 p-2">
-              <Shield className="h-6 w-6 text-primary" />
+            <div className="relative rounded-xl bg-primary/10 p-2.5 shadow-sm">
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/20 to-transparent opacity-50" />
+              <Shield className="relative h-6 w-6 text-primary" />
             </div>
             <div>
               <h2 className="text-2xl font-bold tracking-tight">網站管理後台</h2>
               <p className="text-xs text-muted-foreground">管理預設倒數計時、公告、維護模式與版本資訊</p>
-            <p className="text-[10px] text-muted-foreground/50 font-mono mt-1">
-              維護設定來源：{maintenanceSource}
-            </p>
+              <p className="mt-1 font-mono text-[10px] text-muted-foreground/40">
+                維護設定來源：{maintenanceSource}
+              </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 gap-3">
             <AdminMenuCard
               icon={Clock}
               title="預設倒數計時"
@@ -709,61 +690,50 @@ export function AdminPanel() {
           </div>
         </motion.div>
       ) : (
-        /* Section Content */
         <motion.div
           key={activeSection}
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0, x: 16 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
+          exit={{ opacity: 0, x: -16 }}
+          transition={fastTransition}
           className="space-y-6"
         >
-          <div className="mb-8 flex items-center gap-4">
+          <div className="mb-8 flex items-center gap-3">
             <Button
-              variant="outline"
+              variant="ghost"
               size="icon"
               onClick={() => setActiveSection(null)}
-              className="h-10 w-10 rounded-2xl border-border/40 hover:bg-muted"
+              className="h-9 w-9 rounded-xl"
             >
               <ChevronLeft className="h-5 w-5" />
             </Button>
+            <Separator orientation="vertical" className="h-6" />
             <div>
-              <h3 className="text-xl font-bold tracking-tight">{sectionTitle}</h3>
-              <p className="text-xs text-muted-foreground">修改後需按儲存才會寫入資料庫</p>
+              <h3 className="text-lg font-bold tracking-tight">{sectionTitle}</h3>
+              <p className="text-[11px] text-muted-foreground">修改後需按儲存才會寫入資料庫</p>
             </div>
           </div>
 
-          <div className="rounded-[32px] border border-border/20 bg-muted/10 p-2 backdrop-blur-sm">
-            {/* Countdowns Section */}
+          <div className="rounded-xl border border-border/40 bg-card/50 backdrop-blur-sm">
             {activeSection === "countdowns" && (
-              <div className="space-y-4 p-4">
+              <div className="space-y-4 p-5">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-bold text-muted-foreground">
+                  <p className="text-xs font-semibold text-muted-foreground">
                     共 {localCountdowns.length} 個倒數計時
                   </p>
                   <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="rounded-xl"
-                      onClick={handleAddCountdown}
-                    >
+                    <Button size="sm" variant="outline" onClick={handleAddCountdown}>
                       <Plus className="mr-1 h-4 w-4" />
                       新增
                     </Button>
-                    <Button
-                      size="sm"
-                      className="rounded-xl shadow-lg"
-                      onClick={handleSaveCountdowns}
-                      disabled={!countdownsChanged || cdUpdating}
-                    >
+                    <Button size="sm" onClick={handleSaveCountdowns} disabled={!countdownsChanged || cdUpdating}>
                       <Save className="mr-1 h-4 w-4" />
                       {cdUpdating ? "儲存中..." : "儲存變更"}
                     </Button>
                   </div>
                 </div>
 
-                {/* Grade filter tabs */}
-                <div className="flex gap-2 flex-wrap pb-2">
+                <div className="flex gap-2 flex-wrap pb-1">
                   <button
                     onClick={() => setCdGradeFilter("all")}
                     className={cn(
@@ -790,6 +760,7 @@ export function AdminPanel() {
                     </button>
                   ))}
                 </div>
+
                 <div className="space-y-2">
                   {localCountdowns.length === 0 ? (
                     <div className="py-12 text-center text-muted-foreground">
@@ -799,24 +770,24 @@ export function AdminPanel() {
                   ) : (
                     localCountdowns
                       .filter(cd => cdGradeFilter === "all" || cd.grade === cdGradeFilter)
-                      .map((cd, index) => {
+                      .map((cd) => {
                         const gradeLabel = COUNTDOWN_GRADES.find(g => g.value === cd.grade)?.label || "全部年級";
                         return (
                         <div
                           key={cd.id}
-                          className="flex items-center gap-3 rounded-2xl border border-border/40 bg-card p-4"
+                          className="flex items-center gap-3 rounded-xl border border-border/40 bg-card p-3.5"
                         >
                           <div className="flex flex-col gap-0.5">
                             <button
-                              onClick={() => handleMoveCd(index, "up")}
-                              disabled={index === 0}
+                              onClick={() => handleMoveCd(localCountdowns.indexOf(cd), "up")}
+                              disabled={localCountdowns.indexOf(cd) === 0}
                               className="text-muted-foreground/40 hover:text-primary disabled:opacity-20"
                             >
                               <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 15l7-7 7 7" /></svg>
                             </button>
                             <button
-                              onClick={() => handleMoveCd(index, "down")}
-                              disabled={index === localCountdowns.length - 1}
+                              onClick={() => handleMoveCd(localCountdowns.indexOf(cd), "down")}
+                              disabled={localCountdowns.indexOf(cd) === localCountdowns.length - 1}
                               className="text-muted-foreground/40 hover:text-primary disabled:opacity-20"
                             >
                               <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
@@ -860,29 +831,18 @@ export function AdminPanel() {
               </div>
             )}
 
-            {/* Announcements Section */}
             {activeSection === "announcements" && (
-              <div className="space-y-4 p-4">
+              <div className="space-y-4 p-5">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-bold text-muted-foreground">
+                  <p className="text-xs font-semibold text-muted-foreground">
                     共 {localAnnouncements.length} 則公告
                   </p>
                   <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="rounded-xl"
-                      onClick={handleAddAnnouncement}
-                    >
+                    <Button size="sm" variant="outline" onClick={handleAddAnnouncement}>
                       <Plus className="mr-1 h-4 w-4" />
                       新增
                     </Button>
-                    <Button
-                      size="sm"
-                      className="rounded-xl shadow-lg"
-                      onClick={handleSaveAnnouncements}
-                      disabled={!announcementsChanged || annUpdating}
-                    >
+                    <Button size="sm" onClick={handleSaveAnnouncements} disabled={!announcementsChanged || annUpdating}>
                       <Save className="mr-1 h-4 w-4" />
                       {annUpdating ? "儲存中..." : "儲存變更"}
                     </Button>
@@ -900,7 +860,7 @@ export function AdminPanel() {
                       <div
                         key={ann.id}
                         className={cn(
-                          "flex items-center gap-3 rounded-2xl border p-4",
+                          "flex items-center gap-3 rounded-xl border p-3.5",
                           ann.pinned
                             ? "border-primary/30 bg-primary/5"
                             : "border-border/40 bg-card"
@@ -959,12 +919,11 @@ export function AdminPanel() {
               </div>
             )}
 
-            {/* Maintenance Section */}
             {activeSection === "maintenance" && (
-              <div className="space-y-6 p-6">
-                <div className="flex items-center justify-between rounded-2xl border border-border/40 bg-card p-5">
+              <div className="space-y-6 p-5">
+                <div className="flex items-center justify-between rounded-xl border border-border/40 bg-card p-4">
                   <div>
-                    <p className="text-sm font-bold">維護模式</p>
+                    <p className="text-sm font-semibold">維護模式</p>
                     <p className="text-[10px] text-muted-foreground">啟用後所有頁面將顯示維護公告</p>
                   </div>
                   <Switch
@@ -975,9 +934,9 @@ export function AdminPanel() {
                   />
                 </div>
 
-                <div className="flex items-center justify-between rounded-2xl border border-border/40 bg-card p-5">
+                <div className="flex items-center justify-between rounded-xl border border-border/40 bg-card p-4">
                   <div>
-                    <p className="text-sm font-bold">顯示倒數計時</p>
+                    <p className="text-sm font-semibold">顯示倒數計時</p>
                     <p className="text-[10px] text-muted-foreground">在維護公告中顯示剩餘時間</p>
                   </div>
                   <Switch
@@ -988,10 +947,9 @@ export function AdminPanel() {
                   />
                 </div>
 
-                {/* 維護白名單（本機 localStorage，不寫入資料庫） */}
-                <div className="flex items-center justify-between rounded-2xl border border-border/40 bg-card p-5">
+                <div className="flex items-center justify-between rounded-xl border border-border/40 bg-card p-4">
                   <div>
-                    <p className="text-sm font-bold">維護白名單</p>
+                    <p className="text-sm font-semibold">維護白名單</p>
                     <p className="text-[10px] text-muted-foreground">啟用後此瀏覽器可跳過維護模式正常使用網站</p>
                   </div>
                   <Switch
@@ -1003,32 +961,33 @@ export function AdminPanel() {
                   />
                 </div>
 
+                <Separator />
+
                 <div className="space-y-2">
-                  <Label>維護標題</Label>
+                  <Label className="text-xs font-semibold">維護標題</Label>
                   <Input
                     value={localMaintenance.title}
                     onChange={(e) =>
                       setLocalMaintenance((prev) => ({ ...prev, title: e.target.value }))
                     }
-                    className="rounded-xl"
                     placeholder="例如：系統維護中"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label>維護訊息</Label>
+                  <Label className="text-xs font-semibold">維護訊息</Label>
                   <Textarea
                     value={localMaintenance.message}
                     onChange={(e) =>
                       setLocalMaintenance((prev) => ({ ...prev, message: e.target.value }))
                     }
-                    className="rounded-xl min-h-[80px]"
+                    className="min-h-[80px]"
                     placeholder="請輸入維護說明..."
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label>預計完成時間</Label>
+                  <Label className="text-xs font-semibold">預計完成時間</Label>
                   <Input
                     type="datetime-local"
                     value={localMaintenance.maintenanceEndTime
@@ -1043,41 +1002,38 @@ export function AdminPanel() {
                         }));
                       }
                     }}
-                    className="rounded-xl"
                   />
                 </div>
 
                 <Button
-                  className="h-12 w-full rounded-xl text-base font-bold shadow-lg"
+                  className="h-11 w-full text-sm font-semibold shadow-sm"
                   onClick={handleSaveMaintenance}
                   disabled={isUpdatingConfig}
                 >
-                  <Save className="mr-2 h-5 w-5" />
+                  <Save className="mr-2 h-4 w-4" />
                   {isUpdatingConfig ? "儲存中..." : "儲存維護設定"}
                 </Button>
               </div>
             )}
 
-            {/* App Version Section */}
             {activeSection === "appversion" && (
-              <div className="space-y-6 p-6">
+              <div className="space-y-6 p-5">
                 <div className="space-y-2">
-                  <Label>最新版本號</Label>
+                  <Label className="text-xs font-semibold">最新版本號</Label>
                   <Input
                     value={localVersion}
                     onChange={(e) => setLocalVersion(e.target.value)}
-                    className="rounded-xl font-mono"
+                    className="font-mono"
                     placeholder="例如：v1.5.4"
                   />
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <Label>更新亮點</Label>
+                    <Label className="text-xs font-semibold">更新亮點</Label>
                     <Button
                       variant="outline"
                       size="sm"
-                      className="rounded-xl"
                       onClick={() => setLocalHighlights((prev) => [...prev, ""])}
                     >
                       <Plus className="mr-1 h-3 w-3" />
@@ -1094,13 +1050,13 @@ export function AdminPanel() {
                             newList[idx] = e.target.value;
                             setLocalHighlights(newList);
                           }}
-                          className="rounded-xl flex-1"
+                          className="flex-1"
                           placeholder="輸入更新亮點..."
                         />
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-10 w-10 rounded-xl hover:bg-destructive/10 text-destructive/70 shrink-0"
+                          className="h-9 w-9 shrink-0 rounded-lg hover:bg-destructive/10 text-destructive/70"
                           onClick={() =>
                             setLocalHighlights((prev) => prev.filter((_, i) => i !== idx))
                           }
@@ -1113,40 +1069,38 @@ export function AdminPanel() {
                 </div>
 
                 <Button
-                  className="h-12 w-full rounded-xl text-base font-bold shadow-lg"
+                  className="h-11 w-full text-sm font-semibold shadow-sm"
                   onClick={handleSaveAppVersion}
                   disabled={isUpdatingConfig}
                 >
-                  <Save className="mr-2 h-5 w-5" />
+                  <Save className="mr-2 h-4 w-4" />
                   {isUpdatingConfig ? "儲存中..." : "儲存版本資訊"}
                 </Button>
               </div>
             )}
 
-            {/* Visit Stats Section */}
             {activeSection === "visitstats" && (
-              <div className="space-y-6 p-6">
+              <div className="space-y-6 p-5">
                 {statsLoading ? (
                   <div className="flex items-center justify-center py-16">
-                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary/20 border-t-primary" />
+                    <div className="h-7 w-7 animate-spin rounded-full border-3 border-primary/20 border-t-primary" />
                   </div>
                 ) : (
                   <>
-                    {/* 時間範圍選擇器 */}
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                       <div>
-                        <h3 className="text-lg font-black tracking-tight">訪問趨勢</h3>
+                        <h3 className="text-lg font-bold tracking-tight">訪問趨勢</h3>
                         <p className="text-xs text-muted-foreground">每 2 分鐘自動更新</p>
                       </div>
-                      <div className="inline-flex items-center gap-1 rounded-2xl border border-border/30 bg-muted/30 p-1">
+                      <div className="inline-flex items-center gap-1 rounded-xl border border-border/30 bg-muted/30 p-1">
                         {[7, 30, 90].map((range) => (
                           <button
                             key={range}
                             onClick={() => setSelectedRange(range)}
                             className={cn(
-                              "rounded-xl px-5 py-2 text-sm font-bold transition-all",
+                              "rounded-lg px-4 py-1.5 text-xs font-bold transition-all",
                               selectedRange === range
-                                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                                ? "bg-primary text-primary-foreground shadow-sm"
                                 : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                             )}
                           >
@@ -1156,8 +1110,7 @@ export function AdminPanel() {
                       </div>
                     </div>
 
-                    {/* 圖表 */}
-                    <div className="rounded-3xl border border-border/20 bg-card p-4 md:p-6">
+                    <div className="rounded-xl border border-border/20 bg-card p-4">
                       {dailyVisits.length > 0 ? (
                         <ChartContainer
                           config={{
@@ -1228,59 +1181,53 @@ export function AdminPanel() {
                       )}
                     </div>
 
-                    {/* 統計摘要卡片 */}
                     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-                      {/* 今日 */}
-                      <div className="relative overflow-hidden rounded-2xl border border-blue-500/15 bg-gradient-to-br from-blue-500/[0.08] to-transparent p-4">
+                      <div className="rounded-xl border border-blue-500/15 bg-gradient-to-br from-blue-500/[0.08] to-transparent p-4">
                         <div className="flex items-center gap-2 mb-2">
                           <Eye className="h-4 w-4 text-blue-500" />
                           <span className="text-[10px] font-bold uppercase tracking-wider text-blue-500/70">本日</span>
                         </div>
-                        <p className="text-2xl font-black tracking-tight text-blue-600 dark:text-blue-400">
+                        <p className="text-2xl font-bold tracking-tight text-blue-600 dark:text-blue-400">
                           {visitStats.today.toLocaleString()}
                         </p>
                       </div>
 
-                      {/* 本週 */}
-                      <div className="relative overflow-hidden rounded-2xl border border-emerald-500/15 bg-gradient-to-br from-emerald-500/[0.08] to-transparent p-4">
+                      <div className="rounded-xl border border-emerald-500/15 bg-gradient-to-br from-emerald-500/[0.08] to-transparent p-4">
                         <div className="flex items-center gap-2 mb-2">
                           <TrendingUp className="h-4 w-4 text-emerald-500" />
                           <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-500/70">本週</span>
                         </div>
-                        <p className="text-2xl font-black tracking-tight text-emerald-600 dark:text-emerald-400">
+                        <p className="text-2xl font-bold tracking-tight text-emerald-600 dark:text-emerald-400">
                           {visitStats.this_week.toLocaleString()}
                         </p>
                       </div>
 
-                      {/* 本月 */}
-                      <div className="relative overflow-hidden rounded-2xl border border-violet-500/15 bg-gradient-to-br from-violet-500/[0.08] to-transparent p-4">
+                      <div className="rounded-xl border border-violet-500/15 bg-gradient-to-br from-violet-500/[0.08] to-transparent p-4">
                         <div className="flex items-center gap-2 mb-2">
                           <CalendarDays className="h-4 w-4 text-violet-500" />
                           <span className="text-[10px] font-bold uppercase tracking-wider text-violet-500/70">本月</span>
                         </div>
-                        <p className="text-2xl font-black tracking-tight text-violet-600 dark:text-violet-400">
+                        <p className="text-2xl font-bold tracking-tight text-violet-600 dark:text-violet-400">
                           {visitStats.this_month.toLocaleString()}
                         </p>
                       </div>
 
-                      {/* 本年 */}
-                      <div className="relative overflow-hidden rounded-2xl border border-amber-500/15 bg-gradient-to-br from-amber-500/[0.08] to-transparent p-4">
+                      <div className="rounded-xl border border-amber-500/15 bg-gradient-to-br from-amber-500/[0.08] to-transparent p-4">
                         <div className="flex items-center gap-2 mb-2">
                           <CalendarDays className="h-4 w-4 text-amber-500" />
                           <span className="text-[10px] font-bold uppercase tracking-wider text-amber-500/70">本年</span>
                         </div>
-                        <p className="text-2xl font-black tracking-tight text-amber-600 dark:text-amber-400">
+                        <p className="text-2xl font-bold tracking-tight text-amber-600 dark:text-amber-400">
                           {visitStats.this_year.toLocaleString()}
                         </p>
                       </div>
 
-                      {/* 總計 */}
-                      <div className="relative overflow-hidden rounded-2xl border border-rose-500/15 bg-gradient-to-br from-rose-500/[0.08] to-transparent p-4">
+                      <div className="rounded-xl border border-rose-500/15 bg-gradient-to-br from-rose-500/[0.08] to-transparent p-4">
                         <div className="flex items-center gap-2 mb-2">
                           <Users className="h-4 w-4 text-rose-500" />
                           <span className="text-[10px] font-bold uppercase tracking-wider text-rose-500/70">總計</span>
                         </div>
-                        <p className="text-2xl font-black tracking-tight text-rose-600 dark:text-rose-400">
+                        <p className="text-2xl font-bold tracking-tight text-rose-600 dark:text-rose-400">
                           {visitStats.total.toLocaleString()}
                         </p>
                       </div>
@@ -1290,18 +1237,17 @@ export function AdminPanel() {
               </div>
             )}
 
-            {/* Password Change Section */}
             {activeSection === "password" && (
-              <div className="space-y-6 p-6">
+              <div className="space-y-6 p-5">
                 <div className="space-y-2">
-                  <Label>新密碼</Label>
+                  <Label className="text-xs font-semibold">新密碼</Label>
                   <div className="relative">
                     <Input
                       type={showPassword ? "text" : "password"}
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                       placeholder="至少4個字元"
-                      className="rounded-xl pr-10"
+                      className="pr-10"
                     />
                     <button
                       onClick={() => setShowPassword(!showPassword)}
@@ -1312,21 +1258,20 @@ export function AdminPanel() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label>確認新密碼</Label>
+                  <Label className="text-xs font-semibold">確認新密碼</Label>
                   <Input
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="再次輸入新密碼"
-                    className="rounded-xl"
                   />
                 </div>
                 <Button
-                  className="h-12 w-full rounded-xl text-base font-bold shadow-lg"
+                  className="h-11 w-full text-sm font-semibold shadow-sm"
                   onClick={handleChangePassword}
                   disabled={isUpdatingConfig}
                 >
-                  <Save className="mr-2 h-5 w-5" />
+                  <Save className="mr-2 h-4 w-4" />
                   {isUpdatingConfig ? "儲存中..." : "變更密碼"}
                 </Button>
               </div>
@@ -1335,19 +1280,17 @@ export function AdminPanel() {
         </motion.div>
       )}
 
-      {/* Countdown Edit Dialog */}
       <Dialog open={cdDialogOpen} onOpenChange={setCdDialogOpen}>
-        <DialogContent className="w-[95vw] max-w-md rounded-3xl border-primary/20 bg-background dark:bg-slate-900/95 backdrop-blur-2xl shadow-2xl">
+        <DialogContent>
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold">
+            <DialogTitle className="text-lg font-bold">
               {editingCd?.id ? "編輯倒數計時" : "新增倒數計時"}
             </DialogTitle>
           </DialogHeader>
-          <div className="space-y-5 py-6">
+          <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label className="text-sm font-bold ml-1">標題</Label>
+              <Label className="text-xs font-semibold">標題</Label>
               <Input
-                className="rounded-xl border-primary/10 bg-muted/30"
                 value={editingCd?.label || ""}
                 onChange={(e) =>
                   setEditingCd((prev) => (prev ? { ...prev, label: e.target.value } : null))
@@ -1356,10 +1299,9 @@ export function AdminPanel() {
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-sm font-bold ml-1">目標日期時間</Label>
+              <Label className="text-xs font-semibold">目標日期時間</Label>
               <Input
                 type="datetime-local"
-                className="rounded-xl border-primary/10 bg-muted/30"
                 value={editingCd?.target_date || ""}
                 onChange={(e) =>
                   setEditingCd((prev) => (prev ? { ...prev, target_date: e.target.value } : null))
@@ -1367,10 +1309,9 @@ export function AdminPanel() {
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-sm font-bold ml-1">開始日期時間（選填）</Label>
+              <Label className="text-xs font-semibold">開始日期時間（選填）</Label>
               <Input
                 type="datetime-local"
-                className="rounded-xl border-primary/10 bg-muted/30"
                 value={editingCd?.start_date || ""}
                 onChange={(e) =>
                   setEditingCd((prev) => (prev ? { ...prev, start_date: e.target.value } : null))
@@ -1378,9 +1319,8 @@ export function AdminPanel() {
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-sm font-bold ml-1">進度條標籤（選填）</Label>
+              <Label className="text-xs font-semibold">進度條標籤（選填）</Label>
               <Input
-                className="rounded-xl border-primary/10 bg-muted/30"
                 value={editingCd?.progress_label || ""}
                 onChange={(e) =>
                   setEditingCd((prev) => (prev ? { ...prev, progress_label: e.target.value } : null))
@@ -1389,14 +1329,14 @@ export function AdminPanel() {
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-sm font-bold ml-1">適用年級</Label>
+              <Label className="text-xs font-semibold">適用年級</Label>
               <Select
                 value={editingCd?.grade ?? "all"}
                 onValueChange={(value) =>
                   setEditingCd((prev) => (prev ? { ...prev, grade: value } : null))
                 }
               >
-                <SelectTrigger className="rounded-xl border-primary/10 bg-muted/30">
+                <SelectTrigger>
                   <SelectValue placeholder="全部年級" />
                 </SelectTrigger>
                 <SelectContent>
@@ -1407,10 +1347,9 @@ export function AdminPanel() {
               </Select>
             </div>
           </div>
-          <DialogFooter className="gap-2 sm:gap-0">
+          <DialogFooter className="gap-2">
             <Button
               variant="ghost"
-              className="rounded-xl"
               onClick={() => {
                 setCdDialogOpen(false);
                 setEditingCd(null);
@@ -1418,29 +1357,24 @@ export function AdminPanel() {
             >
               取消
             </Button>
-            <Button
-              className="rounded-xl bg-primary hover:bg-primary/90 px-8 font-bold"
-              onClick={handleSaveCountdown}
-            >
+            <Button onClick={handleSaveCountdown}>
               儲存
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
-      {/* Announcement Edit Dialog */}
       <Dialog open={annDialogOpen} onOpenChange={setAnnDialogOpen}>
-        <DialogContent className="w-[95vw] max-w-lg rounded-3xl border-primary/20 bg-background dark:bg-slate-900/95 backdrop-blur-2xl shadow-2xl">
+        <DialogContent className="max-w-lg">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold">
+            <DialogTitle className="text-lg font-bold">
               {editingAnn?.id ? "編輯公告" : "新增公告"}
             </DialogTitle>
           </DialogHeader>
-          <div className="space-y-5 py-6 max-h-[60vh] overflow-y-auto">
+          <div className="space-y-4 py-4 max-h-[60vh] overflow-y-auto">
             <div className="space-y-2">
-              <Label className="text-sm font-bold ml-1">標題</Label>
+              <Label className="text-xs font-semibold">標題</Label>
               <Input
-                className="rounded-xl border-primary/10 bg-muted/30"
                 value={editingAnn?.title || ""}
                 onChange={(e) =>
                   setEditingAnn((prev) => (prev ? { ...prev, title: e.target.value } : null))
@@ -1450,10 +1384,9 @@ export function AdminPanel() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-sm font-bold ml-1">日期</Label>
+                <Label className="text-xs font-semibold">日期</Label>
                 <Input
                   type="date"
-                  className="rounded-xl border-primary/10 bg-muted/30"
                   value={editingAnn?.date || ""}
                   onChange={(e) =>
                     setEditingAnn((prev) => (prev ? { ...prev, date: e.target.value } : null))
@@ -1461,14 +1394,14 @@ export function AdminPanel() {
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-sm font-bold ml-1">類型</Label>
+                <Label className="text-xs font-semibold">類型</Label>
                 <Select
                   value={editingAnn?.type || "info"}
                   onValueChange={(value) =>
                     setEditingAnn((prev) => (prev ? { ...prev, type: value } : null))
                   }
                 >
-                  <SelectTrigger className="rounded-xl border-primary/10 bg-muted/30">
+                  <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -1480,7 +1413,7 @@ export function AdminPanel() {
                 </Select>
               </div>
             </div>
-            <div className="flex items-center gap-3 rounded-2xl border border-border/40 bg-card p-4">
+            <div className="flex items-center gap-3 rounded-xl border border-border/40 bg-card p-4">
               <Switch
                 checked={editingAnn?.pinned || false}
                 onCheckedChange={(checked) =>
@@ -1488,12 +1421,12 @@ export function AdminPanel() {
                 }
               />
               <div>
-                <p className="text-sm font-bold">置頂公告</p>
+                <p className="text-sm font-semibold">置頂公告</p>
                 <p className="text-[10px] text-muted-foreground">置頂公告將顯示在列表最上方</p>
               </div>
             </div>
             <div className="space-y-3">
-              <Label className="text-sm font-bold ml-1">自訂圖片（選填）</Label>
+              <Label className="text-xs font-semibold">自訂圖片（選填）</Label>
               {editingAnn?.image_url && (
                 <div className="relative rounded-xl overflow-hidden border border-border/50 aspect-video bg-muted/30">
                   <img src={editingAnn.image_url} alt="" className="h-full w-full object-cover" referrerPolicy="no-referrer" />
@@ -1510,7 +1443,7 @@ export function AdminPanel() {
                 <Button
                   type="button"
                   variant="outline"
-                  className="rounded-xl flex-1"
+                  className="flex-1"
                   onClick={() => document.getElementById("ann-image-upload")?.click()}
                 >
                   <Upload className="mr-2 h-4 w-4" />
@@ -1530,7 +1463,7 @@ export function AdminPanel() {
               </div>
               <div className="relative">
                 <Input
-                  className="rounded-xl border-primary/10 bg-muted/30 pr-9"
+                  className="pr-9"
                   value={editingAnn?.image_url || ""}
                   onChange={(e) =>
                     setEditingAnn((prev) => (prev ? { ...prev, image_url: e.target.value } : null))
@@ -1549,9 +1482,9 @@ export function AdminPanel() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-sm font-bold ml-1">內容（選填）</Label>
+              <Label className="text-xs font-semibold">內容（選填）</Label>
               <Textarea
-                className="rounded-xl border-primary/10 bg-muted/30 min-h-[120px]"
+                className="min-h-[120px]"
                 value={editingAnn?.content || ""}
                 onChange={(e) =>
                   setEditingAnn((prev) => (prev ? { ...prev, content: e.target.value } : null))
@@ -1560,10 +1493,9 @@ export function AdminPanel() {
               />
             </div>
           </div>
-          <DialogFooter className="gap-2 sm:gap-0">
+          <DialogFooter className="gap-2">
             <Button
               variant="ghost"
-              className="rounded-xl"
               onClick={() => {
                 setAnnDialogOpen(false);
                 setEditingAnn(null);
@@ -1571,33 +1503,29 @@ export function AdminPanel() {
             >
               取消
             </Button>
-            <Button
-              className="rounded-xl bg-primary hover:bg-primary/90 px-8 font-bold"
-              onClick={handleSaveAnnouncement}
-            >
+            <Button onClick={handleSaveAnnouncement}>
               儲存
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
-      {/* Delete Confirm Dialogs */}
       <AlertDialog
         open={!!cdDeleteConfirm}
         onOpenChange={(open) => !open && setCdDeleteConfirm(null)}
       >
-        <AlertDialogContent className="rounded-3xl border-primary/20">
+        <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-xl font-bold">確認刪除</AlertDialogTitle>
+            <AlertDialogTitle className="text-lg font-bold">確認刪除</AlertDialogTitle>
             <AlertDialogDescription className="text-sm">
               確定要刪除此倒數計時嗎？此操作無法復原。
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="gap-2">
-            <AlertDialogCancel className="rounded-xl border-primary/10">取消</AlertDialogCancel>
+            <AlertDialogCancel>取消</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => cdDeleteConfirm && handleDeleteCountdown(cdDeleteConfirm)}
-              className="rounded-xl bg-destructive hover:bg-destructive/90"
+              className="bg-destructive hover:bg-destructive/90"
             >
               確認刪除
             </AlertDialogAction>
@@ -1609,18 +1537,18 @@ export function AdminPanel() {
         open={!!annDeleteConfirm}
         onOpenChange={(open) => !open && setAnnDeleteConfirm(null)}
       >
-        <AlertDialogContent className="rounded-3xl border-primary/20">
+        <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-xl font-bold">確認刪除</AlertDialogTitle>
+            <AlertDialogTitle className="text-lg font-bold">確認刪除</AlertDialogTitle>
             <AlertDialogDescription className="text-sm">
               確定要刪除此公告嗎？此操作無法復原。
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="gap-2">
-            <AlertDialogCancel className="rounded-xl border-primary/10">取消</AlertDialogCancel>
+            <AlertDialogCancel>取消</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => annDeleteConfirm && handleDeleteAnnouncement(annDeleteConfirm)}
-              className="rounded-xl bg-destructive hover:bg-destructive/90"
+              className="bg-destructive hover:bg-destructive/90"
             >
               確認刪除
             </AlertDialogAction>
@@ -1647,35 +1575,48 @@ function AdminMenuCard({
   onClick: () => void;
 }) {
   const colorMap = {
-    blue: "bg-blue-500/10 text-blue-500",
-    purple: "bg-purple-500/10 text-purple-500",
-    orange: "bg-orange-500/10 text-orange-500",
-    green: "bg-green-500/10 text-green-500",
-    red: "bg-red-500/10 text-red-500",
+    blue: "bg-blue-500/10 text-blue-500 group-hover:bg-blue-500/15",
+    purple: "bg-purple-500/10 text-purple-500 group-hover:bg-purple-500/15",
+    orange: "bg-orange-500/10 text-orange-500 group-hover:bg-orange-500/15",
+    green: "bg-green-500/10 text-green-500 group-hover:bg-green-500/15",
+    red: "bg-red-500/10 text-red-500 group-hover:bg-red-500/15",
+  };
+  const borderColorMap = {
+    blue: "group-hover:border-blue-500/30",
+    purple: "group-hover:border-purple-500/30",
+    orange: "group-hover:border-orange-500/30",
+    green: "group-hover:border-green-500/30",
+    red: "group-hover:border-red-500/30",
   };
 
   return (
-    <button
+    <motion.button
       onClick={onClick}
-      className="group relative flex w-full items-center gap-5 overflow-hidden rounded-[24px] border border-border/50 bg-card p-5 text-left transition-all hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5"
+      whileHover={{ scale: 1.01 }}
+      whileTap={{ scale: 0.99 }}
+      transition={fastTransition}
+      className={cn(
+        "group relative flex w-full items-center gap-4 overflow-hidden rounded-xl border border-border/50 bg-card p-4 text-left transition-all hover:shadow-md",
+        borderColorMap[color]
+      )}
     >
       <div
         className={cn(
-          "rounded-2xl p-4 transition-transform group-hover:scale-110",
+          "rounded-xl p-3 transition-all duration-200",
           colorMap[color]
         )}
       >
-        <Icon className="h-7 w-7" />
+        <Icon className="h-5 w-5" />
       </div>
       <div className="min-w-0 flex-1">
-        <p className="text-lg font-black tracking-tight text-foreground">{title}</p>
-        <p className="mt-0.5 line-clamp-1 text-sm text-muted-foreground">{description}</p>
+        <p className="text-sm font-bold tracking-tight text-foreground">{title}</p>
+        <p className="mt-0.5 line-clamp-1 text-xs text-muted-foreground">{description}</p>
       </div>
       {badge !== undefined && (
-        <span className="shrink-0 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
+        <span className="shrink-0 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-bold text-primary">
           {badge}
         </span>
       )}
-    </button>
+    </motion.button>
   );
 }

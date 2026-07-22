@@ -1,62 +1,17 @@
-import { useState, useMemo, useRef, useEffect } from "react";
-import { Megaphone, Pin, ChevronDown, Bell, Zap, Info, Wrench } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useMemo } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
+import { Megaphone, Pin, Bell, Zap, Info, Wrench, ExternalLink, Calendar } from "lucide-react";
+import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { useSiteAnnouncements } from "@/hooks/useSiteAnnouncements";
-
-function AnnouncementImage({ src }: { src: string }) {
-    const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
-    const timerRef = useRef<ReturnType<typeof setTimeout>>();
-    const mountedRef = useRef(true);
-
-    useEffect(() => {
-        return () => {
-            mountedRef.current = false;
-            if (timerRef.current) clearTimeout(timerRef.current);
-        };
-    }, []);
-
-    // 10 秒 timeout
-    useEffect(() => {
-        timerRef.current = setTimeout(() => {
-            if (mountedRef.current) setState("error");
-        }, 10000);
-        return () => {
-            if (timerRef.current) clearTimeout(timerRef.current);
-        };
-    }, [src]);
-
-    if (state === "error") {
-        return (
-            <img
-                src="/announcement.png"
-                alt=""
-                className="h-full w-full object-cover"
-            />
-        );
-    }
-
-    return (
-        <img
-            src={src}
-            alt=""
-            className="h-full w-full object-cover"
-            referrerPolicy="no-referrer"
-            onLoad={() => {
-                if (timerRef.current) clearTimeout(timerRef.current);
-                if (mountedRef.current) setState("loaded");
-            }}
-            onError={() => {
-                if (timerRef.current) clearTimeout(timerRef.current);
-                if (mountedRef.current) setState("error");
-            }}
-        />
-    );
-}
 
 export function SiteAnnouncementsPage() {
     const { announcements: rawAnnouncements, isLoading } = useSiteAnnouncements();
-    const [expandedId, setExpandedId] = useState<string | null>(null);
+    const [selectedItem, setSelectedItem] = useState<typeof rawAnnouncements[number] | null>(null);
 
     // 將置頂的公告移到最前面
     const announcements = useMemo(() => {
@@ -126,10 +81,7 @@ export function SiteAnnouncementsPage() {
                         className="space-y-3"
                     >
                         {announcements.map((item) => {
-                            const isExpanded = expandedId === item.id;
                             const hasContent = !!item.content;
-                            const hasImage = !!item.image_url;
-                            const hasExpandable = hasContent || hasImage;
                             const typeConfig = getTypeConfig(item.type);
                             const newItem = isNew(item.date);
 
@@ -144,93 +96,122 @@ export function SiteAnnouncementsPage() {
                                     }`}
                                 >
                                     <div 
-                                        className={`flex flex-col sm:flex-row sm:items-center p-4 gap-4 ${hasExpandable ? 'cursor-pointer' : ''}`}
-                                        onClick={() => hasExpandable && setExpandedId(isExpanded ? null : item.id)}
+                                        className="flex items-start gap-3 p-4 cursor-pointer"
+                                        onClick={() => hasContent && setSelectedItem(item)}
                                     >
-                                        <div className="flex items-start gap-3 flex-1 min-w-0">
-                                            {item.pinned ? (
-                                                <div className="mt-0.5 p-1.5 bg-primary/20 rounded-md text-primary shrink-0">
-                                                    <Pin className="h-4 w-4" />
-                                                </div>
-                                            ) : (
-                                                <div className="mt-0.5 p-1.5 bg-muted rounded-md text-muted-foreground shrink-0 group-hover:bg-primary/10 group-hover:text-primary transition-colors">
-                                                    <Megaphone className="h-4 w-4" />
-                                                </div>
-                                            )}
-                                            
-                                            <div className="flex-1 min-w-0">
-                                                <div className="flex items-center gap-2 flex-wrap mb-1.5">
-                                                    {item.pinned && (
-                                                        <Badge variant="secondary" className="bg-primary/20 hover:bg-primary/30 text-primary border-0 rounded-sm px-1.5 py-0 text-[10px] font-semibold">
-                                                            置頂
-                                                        </Badge>
-                                                    )}
-                                                    {newItem && (
-                                                        <Badge variant="destructive" className="rounded-sm px-1.5 py-0 text-[10px] font-semibold animate-pulse">
-                                                            NEW
-                                                        </Badge>
-                                                    )}
-                                                    {item.type && (
-                                                        <Badge variant="outline" className={`rounded-sm px-1.5 py-0 text-[10px] font-medium border ${typeConfig.color} flex items-center`}>
-                                                            {typeConfig.icon}
-                                                            {typeConfig.label}
-                                                        </Badge>
-                                                    )}
-                                                    <span className="text-xs text-muted-foreground ml-auto sm:ml-2">
-                                                        {item.date}
-                                                    </span>
-                                                </div>
-                                                <div className={`text-sm sm:text-base font-medium leading-snug ${item.pinned ? 'text-primary' : 'group-hover:text-primary transition-colors'}`}>
-                                                    {item.title}
-                                                </div>
+                                        {item.pinned ? (
+                                            <div className="mt-0.5 p-1.5 bg-primary/20 rounded-md text-primary shrink-0">
+                                                <Pin className="h-4 w-4" />
                                             </div>
-                                        </div>
-
-                                        {hasExpandable && (
-                                            <div className="hidden sm:flex shrink-0 items-center justify-center w-8 h-8 rounded-full hover:bg-muted transition-colors text-muted-foreground">
-                                                <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
+                                        ) : (
+                                            <div className="mt-0.5 p-1.5 bg-muted rounded-md text-muted-foreground shrink-0 group-hover:bg-primary/10 group-hover:text-primary transition-colors">
+                                                <Megaphone className="h-4 w-4" />
                                             </div>
                                         )}
                                         
-                                        {/* Mobile expand indicator */}
-                                        {hasExpandable && (
-                                            <div className="sm:hidden flex items-center gap-1 text-xs text-muted-foreground mt-2 font-medium">
-                                                {isExpanded ? '收起內容' : '展開閱讀'}
-                                                <ChevronDown className={`h-3 w-3 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex items-center gap-2 flex-wrap mb-1.5">
+                                                {item.pinned && (
+                                                    <Badge variant="secondary" className="bg-primary/20 hover:bg-primary/30 text-primary border-0 rounded-sm px-1.5 py-0 text-[10px] font-semibold">
+                                                        置頂
+                                                    </Badge>
+                                                )}
+                                                {newItem && (
+                                                    <Badge variant="destructive" className="rounded-sm px-1.5 py-0 text-[10px] font-semibold animate-pulse">
+                                                        NEW
+                                                    </Badge>
+                                                )}
+                                                {item.type && (
+                                                    <Badge variant="outline" className={`rounded-sm px-1.5 py-0 text-[10px] font-medium border ${typeConfig.color} flex items-center`}>
+                                                        {typeConfig.icon}
+                                                        {typeConfig.label}
+                                                    </Badge>
+                                                )}
+                                                <span className="text-xs text-muted-foreground ml-auto">
+                                                    {item.date}
+                                                </span>
                                             </div>
-                                        )}
-                                    </div>
-
-                                    <AnimatePresence initial={false}>
-                                        {isExpanded && hasExpandable && (
-                                            <motion.div
-                                                initial={{ height: 0, opacity: 0 }}
-                                                animate={{ height: "auto", opacity: 1 }}
-                                                exit={{ height: 0, opacity: 0 }}
-                                                transition={{ duration: 0.3, ease: "easeInOut" }}
-                                            >
-                                                <div className="px-5 pb-5 pt-1 sm:px-14 sm:pt-0">
-                                                    <div className="h-px w-full bg-border/50 mb-4 sm:hidden" />
-                                                    {hasImage && (
-                                                        <div className="mb-4 overflow-hidden rounded-xl border border-border/50 aspect-video bg-muted/30 flex items-center justify-center">
-                                                            <AnnouncementImage src={item.image_url!} />
-                                                        </div>
-                                                    )}
-                                                    {hasContent && (
-                                                    <div className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap bg-muted/30 p-4 rounded-lg border border-border/50">
-                                                        {item.content}
-                                                    </div>
-                                                    )}
+                                            <div className="flex items-center gap-2">
+                                                <div className={`text-sm sm:text-base font-medium leading-snug ${item.pinned ? 'text-primary' : 'group-hover:text-primary transition-colors'}`}>
+                                                    {item.title}
                                                 </div>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
+                                                {hasContent && (
+                                                    <ExternalLink className="h-3 w-3 shrink-0 text-muted-foreground/50 group-hover:text-primary/60 transition-colors" />
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </motion.div>
                             );
                         })}
                     </motion.div>
                 )}
             </div>
+
+            <Dialog open={!!selectedItem} onOpenChange={(open) => !open && setSelectedItem(null)}>
+                <DialogContent className="w-[92vw] max-w-xl overflow-hidden rounded-3xl border-border bg-card p-0 shadow-2xl outline-none [&>button]:right-5 [&>button]:top-5 [&>button]:flex [&>button]:h-8 [&>button]:w-8 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-full [&>button]:bg-black/30 [&>button]:text-white [&>button]:backdrop-blur-md hover:[&>button]:bg-black/50 focus:[&>button]:ring-0 transition-all duration-300">
+                    <DialogTitle className="sr-only">公告內容</DialogTitle>
+
+                    <div className="relative aspect-video w-full overflow-hidden">
+                        <img
+                            src={selectedItem?.image_url || "/announcement.png"}
+                            alt=""
+                            className="h-full w-full object-cover"
+                            referrerPolicy="no-referrer"
+                            onError={(e) => {
+                                if (!e.currentTarget.dataset.fallback) {
+                                    e.currentTarget.dataset.fallback = "true";
+                                    e.currentTarget.src = "/announcement.png";
+                                }
+                            }}
+                        />
+                    </div>
+
+                    <div className="p-6 sm:p-8">
+                        <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
+                            <div className="flex items-center gap-3">
+                                <div className="rounded-xl bg-primary/10 p-2.5 text-primary">
+                                    <Megaphone className="h-5 w-5" />
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-bold leading-tight text-foreground">{selectedItem?.title}</h3>
+                                    <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                                        <Calendar className="h-3.5 w-3.5" />
+                                        {selectedItem?.date}
+                                    </div>
+                                </div>
+                            </div>
+                            {selectedItem?.type && (
+                                <Badge variant="outline" className={`rounded-sm px-1.5 py-0 text-[10px] font-medium border ${getTypeConfig(selectedItem.type).color} flex items-center`}>
+                                    {getTypeConfig(selectedItem.type).icon}
+                                    {getTypeConfig(selectedItem.type).label}
+                                </Badge>
+                            )}
+                        </div>
+
+                        <div className="max-h-[35vh] overflow-y-auto pr-2 custom-scrollbar">
+                            {selectedItem?.content ? (
+                                <div className="text-base leading-relaxed text-foreground/90 prose prose-sm dark:prose-invert max-w-none">
+                                    <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+                                        {selectedItem.content}
+                                    </ReactMarkdown>
+                                </div>
+                            ) : (
+                                <div className="rounded-2xl border border-dashed border-border bg-muted/30 p-8 text-center text-muted-foreground">
+                                    <Bell className="mx-auto mb-3 h-8 w-8 opacity-20" />
+                                    <p>這則公告沒有附加詳細內容。</p>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="mt-8 flex justify-end">
+                            <Button variant="outline" className="h-12 rounded-2xl font-semibold px-8" onClick={() => setSelectedItem(null)}>
+                                關閉
+                            </Button>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }

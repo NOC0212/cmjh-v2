@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom design system */
 @layer base {
   :root {
     --background: 210 40% 98%;
@@ -24,8 +23,9 @@
     --border: 214 32% 91%;
     --input: 214 32% 91%;
     --ring: 210 75% 48%;
-    --radius: 1rem;
-    /* Custom tokens */
+    --radius: 0.875rem;
+    --color-saturation: 1;
+
     --gradient-primary: linear-gradient(135deg, hsl(210 75% 48%), hsl(210 75% 60%));
     --gradient-accent: linear-gradient(135deg, hsl(45 93% 58%), hsl(45 93% 68%));
     --gradient-progress-from: hsl(var(--primary));
@@ -35,50 +35,101 @@
     --gradient-calendar: linear-gradient(to bottom right, hsl(var(--primary) / 0.05), hsl(var(--accent) / 0.05));
     --gradient-timer: linear-gradient(135deg, hsl(210 75% 48% / 0.15), hsl(271 81% 56% / 0.1));
     --gradient-site: linear-gradient(to bottom right, hsl(210 75% 48% / 0.03), hsl(45 93% 58% / 0.03));
-    --shadow-card: 0 2px 8px hsl(210 75% 48% / 0.08);
-    --shadow-card-hover: 0 8px 24px hsl(210 75% 48% / 0.16);
+
+    --shadow-xs: 0 1px 2px hsl(210 75% 48% / 0.04);
+    --shadow-sm: 0 1px 3px hsl(210 75% 48% / 0.06), 0 1px 2px hsl(210 75% 48% / 0.04);
+    --shadow-md: 0 4px 12px hsl(210 75% 48% / 0.08);
+    --shadow-lg: 0 8px 24px hsl(210 75% 48% / 0.12);
+    --shadow-xl: 0 16px 40px hsl(210 75% 48% / 0.16);
     --shadow-glow: 0 0 20px hsl(210 75% 48% / 0.2);
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
-    --background: 0 0% 8%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 12%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 12%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 210 75% 55%;
+    --background: 225 25% 6%;
+    --foreground: 0 0% 96%;
+    --card: 225 20% 10%;
+    --card-foreground: 0 0% 96%;
+    --popover: 225 20% 10%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 210 70% 55%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 45 93% 58%;
-    --secondary-foreground: 0 0% 8%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
-    --accent: 210 75% 48%;
+    --secondary: 45 85% 55%;
+    --secondary-foreground: 225 25% 6%;
+    --muted: 225 15% 13%;
+    --muted-foreground: 225 10% 60%;
+    --accent: 210 60% 50%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 63% 50%;
+    --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 210 75% 55%;
-    --sidebar-background: 0 0% 12%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 210 75% 55%;
+    --border: 225 15% 18%;
+    --input: 225 15% 18%;
+    --ring: 210 70% 55%;
+    --sidebar-background: 225 20% 9%;
+    --sidebar-foreground: 0 0% 96%;
+    --sidebar-primary: 210 70% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 15%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 0 0% 20%;
-    --sidebar-ring: 210 75% 55%;
-    --gradient-card: linear-gradient(135deg, hsl(0 0% 14%), hsl(0 0% 12%));
+    --sidebar-accent: 225 15% 13%;
+    --sidebar-accent-foreground: 0 0% 96%;
+    --sidebar-border: 225 15% 18%;
+    --sidebar-ring: 210 70% 55%;
+
+    --gradient-card: linear-gradient(135deg, hsl(225 20% 12%), hsl(225 20% 10%));
     --gradient-calendar: linear-gradient(to bottom right, hsl(var(--primary) / 0.1), hsl(var(--accent) / 0.1));
-    --gradient-timer: linear-gradient(135deg, hsl(210 75% 55% / 0.2), hsl(271 81% 56% / 0.15));
-    --gradient-site: linear-gradient(to bottom right, hsl(210 75% 55% / 0.08), hsl(45 93% 58% / 0.08));
-    --shadow-card: 0 2px 8px hsl(0 0% 0% / 0.2);
-    --shadow-card-hover: 0 8px 24px hsl(0 0% 0% / 0.35);
-    --shadow-glow: 0 0 20px hsl(210 75% 55% / 0.3);
+    --gradient-timer: linear-gradient(135deg, hsl(210 70% 55% / 0.2), hsl(271 81% 56% / 0.15));
+    --gradient-site: linear-gradient(to bottom right, hsl(210 70% 55% / 0.08), hsl(45 85% 55% / 0.08));
+
+    --shadow-xs: 0 1px 2px hsl(0 0% 0% / 0.15);
+    --shadow-sm: 0 1px 3px hsl(0 0% 0% / 0.2), 0 1px 2px hsl(0 0% 0% / 0.1);
+    --shadow-md: 0 4px 12px hsl(0 0% 0% / 0.25);
+    --shadow-lg: 0 8px 24px hsl(0 0% 0% / 0.3);
+    --shadow-xl: 0 16px 40px hsl(0 0% 0% / 0.35);
+    --shadow-glow: 0 0 20px hsl(210 70% 55% / 0.25);
   }
 
-  /* Custom Scrollbar */
+  .force-light {
+    --background: 210 40% 98%;
+    --foreground: 215 25% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+    --primary: 210 75% 48%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 45 93% 58%;
+    --secondary-foreground: 215 25% 15%;
+    --muted: 210 40% 95%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 210 75% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 210 75% 48%;
+    --gradient-card: linear-gradient(135deg, hsl(210 20% 99%), hsl(210 40% 97%));
+  }
+
+  .force-default-theme {
+    --primary: 210 75% 48%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 45 93% 58%;
+    --secondary-foreground: 215 25% 15%;
+    --accent: 210 75% 55%;
+    --accent-foreground: 0 0% 100%;
+    --ring: 210 75% 48%;
+    --gradient-primary: linear-gradient(135deg, hsl(210 75% 48%), hsl(210 75% 60%));
+    --gradient-accent: linear-gradient(135deg, hsl(45 93% 58%), hsl(45 93% 68%));
+    --gradient-progress-from: hsl(var(--primary));
+    --gradient-progress-to: hsl(var(--accent));
+    --gradient-progress: linear-gradient(90deg, var(--gradient-progress-from), var(--gradient-progress-to));
+    --shadow-xs: 0 1px 2px hsl(210 75% 48% / 0.04);
+    --shadow-sm: 0 1px 3px hsl(210 75% 48% / 0.06), 0 1px 2px hsl(210 75% 48% / 0.04);
+    --shadow-md: 0 4px 12px hsl(210 75% 48% / 0.08);
+    --shadow-lg: 0 8px 24px hsl(210 75% 48% / 0.12);
+    --shadow-xl: 0 16px 40px hsl(210 75% 48% / 0.16);
+    --shadow-glow: 0 0 20px hsl(210 75% 48% / 0.2);
+  }
+
   * {
     scrollbar-width: thin;
     scrollbar-color: hsl(var(--muted-foreground) / 0.3) transparent;
@@ -102,8 +153,7 @@
     background-color: hsl(var(--primary) / 0.5);
   }
 
-  /* 日曆圖標 */
-.dark input[type="date"]::-webkit-calendar-picker-indicator,
+  .dark input[type="date"]::-webkit-calendar-picker-indicator,
   .dark input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
     opacity: 0.7;
@@ -159,40 +209,118 @@
   }
 }
 
-/* 配色定義 - 僅含單色及漸層色 */
+@layer components {
+  .glass {
+    background: hsl(var(--card) / 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid hsl(var(--border) / 0.5);
+  }
+
+  .glass-light {
+    background: hsl(var(--card) / 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--border) / 0.3);
+  }
+
+  .glass-strong {
+    background: hsl(var(--card) / 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--border) / 0.6);
+  }
+
+  .nav-active-indicator {
+    position: absolute;
+    inset: 2px;
+    border-radius: calc(var(--radius) - 4px);
+    background: hsl(var(--primary) / 0.1);
+    z-index: 0;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .section-header-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.625rem;
+    background: hsl(var(--primary) / 0.1);
+    color: hsl(var(--primary));
+  }
+
+  .card-hover {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-hover:hover {
+    border-color: hsl(var(--primary) / 0.3);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slide-in-left 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-stagger-1 { animation-delay: 0.05s; }
+  .animate-stagger-2 { animation-delay: 0.1s; }
+  .animate-stagger-3 { animation-delay: 0.15s; }
+  .animate-stagger-4 { animation-delay: 0.2s; }
+  .animate-stagger-5 { animation-delay: 0.25s; }
+  .animate-stagger-6 { animation-delay: 0.3s; }
+  .animate-stagger-7 { animation-delay: 0.35s; }
+  .animate-stagger-8 { animation-delay: 0.4s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in,
+    .animate-slide-in-left,
+    .animate-slide-in-right,
+    .animate-scale-in {
+      animation: none !important;
+    }
+  }
+}
+
 .theme-blue,
 [data-theme="blue"] {
-  --primary: 210 75% 48%;
-  --accent: 210 75% 60%;
-  --ring: 210 75% 48%;
-  --gradient-primary: linear-gradient(135deg, hsl(210 75% 48%), hsl(210 75% 60%));
+  --primary: 203 75% 48%;
+  --accent: 203 70% 70%;
+  --ring: 203 75% 48%;
+  --gradient-primary: linear-gradient(135deg, #DFF7FF, #7FCDFF);
 }
 
 .theme-green,
 [data-theme="green"] {
-  --primary: 142 71% 45%;
-  --accent: 142 71% 55%;
-  --ring: 142 71% 45%;
-  --gradient-primary: linear-gradient(135deg, hsl(142 71% 45%), hsl(142 71% 55%));
-}
-
-.theme-orange,
-[data-theme="orange"] {
-  --primary: 30 95% 55%;
-  --accent: 30 95% 65%;
-  --ring: 30 95% 55%;
-  --gradient-primary: linear-gradient(135deg, hsl(30 95% 55%), hsl(30 95% 65%));
+  --primary: 170 50% 40%;
+  --accent: 170 50% 65%;
+  --ring: 170 50% 40%;
+  --gradient-primary: linear-gradient(135deg, #DFF6F0, #6DD5C4);
 }
 
 .theme-red,
 [data-theme="red"] {
-  --primary: 0 84% 60%;
-  --accent: 0 84% 70%;
-  --ring: 0 84% 60%;
-  --gradient-primary: linear-gradient(135deg, hsl(0 84% 60%), hsl(0 84% 70%));
+  --primary: 300 30% 50%;
+  --accent: 300 25% 70%;
+  --ring: 300 30% 50%;
+  --gradient-primary: linear-gradient(135deg, #FDFCFB, #D8BFD8);
 }
 
-/* 極簡 */
 .theme-minimal,
 [data-theme="minimal"] {
   --background: 0 0% 100%;
@@ -209,8 +337,9 @@
   --ring: 0 0% 0%;
   --gradient-primary: linear-gradient(135deg, hsl(0 0% 0%), hsl(0 0% 30%));
   --gradient-accent: linear-gradient(135deg, hsl(0 0% 30%), hsl(0 0% 50%));
-  --shadow-card: 0 1px 3px hsl(0 0% 0% / 0.06);
-  --shadow-card-hover: 0 4px 12px hsl(0 0% 0% / 0.1);
+  --shadow-sm: 0 1px 3px hsl(0 0% 0% / 0.04);
+  --shadow-md: 0 4px 12px hsl(0 0% 0% / 0.06);
+  --shadow-lg: 0 8px 24px hsl(0 0% 0% / 0.08);
 }
 
 .dark.theme-minimal,
@@ -243,12 +372,13 @@
   --gradient-primary: linear-gradient(135deg, hsl(0 0% 100%), hsl(0 0% 70%));
   --gradient-accent: linear-gradient(135deg, hsl(0 0% 80%), hsl(0 0% 60%));
   --gradient-card: linear-gradient(135deg, hsl(0 0% 7%), hsl(0 0% 5%));
-  --shadow-card: 0 1px 3px hsl(0 0% 0% / 0.4);
-  --shadow-card-hover: 0 4px 12px hsl(0 0% 0% / 0.6);
+  --shadow-xs: 0 1px 2px hsl(0 0% 0% / 0.2);
+  --shadow-sm: 0 1px 3px hsl(0 0% 0% / 0.3);
+  --shadow-md: 0 4px 12px hsl(0 0% 0% / 0.4);
+  --shadow-lg: 0 8px 24px hsl(0 0% 0% / 0.5);
   --shadow-glow: 0 0 10px hsl(0 0% 100% / 0.08);
 }
 
-/* 霓虹 - 未適配淺色模式 深色較佳 */
 .theme-neon,
 [data-theme="neon"] {
   --primary: 190 100% 40%;
@@ -287,8 +417,10 @@
   --gradient-primary: linear-gradient(135deg, hsl(190 100% 50%), hsl(327 100% 54%));
   --gradient-accent: linear-gradient(135deg, hsl(327 100% 54%), hsl(280 100% 50%));
   --shadow-glow: 0 0 15px hsl(190 100% 50% / 0.4);
-  --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.6);
-  --shadow-card-hover: 0 0 20px hsl(190 100% 50% / 0.3), 0 8px 32px hsl(0 0% 0% / 0.8);
+  --shadow-xs: 0 1px 2px hsl(0 0% 0% / 0.3);
+  --shadow-sm: 0 1px 3px hsl(0 0% 0% / 0.4);
+  --shadow-md: 0 4px 20px hsl(0 0% 0% / 0.6);
+  --shadow-lg: 0 0 20px hsl(190 100% 50% / 0.3), 0 8px 32px hsl(0 0% 0% / 0.8);
 }
 
 .theme-neon .border,
@@ -304,67 +436,60 @@
   border: 1px solid hsl(190 100% 50% / 0.2);
 }
 
-/* 現代 */
 .theme-modern,
 [data-theme="modern"] {
-  --primary: 43 100% 52%;
-  --accent: 32 100% 50%;
-  --ring: 43 100% 52%;
-  --gradient-primary: linear-gradient(135deg, hsl(48 100% 50%), hsl(38 100% 50%), hsl(25 100% 48%));
-  --gradient-accent: linear-gradient(135deg, hsl(38 100% 50%), hsl(32 100% 50%), hsl(25 100% 48%));
+  --primary: 24 90% 48%;
+  --accent: 24 80% 60%;
+  --ring: 24 90% 48%;
+  --gradient-primary: linear-gradient(135deg, #FFB088, #FF7A50);
+  --gradient-accent: linear-gradient(135deg, #FF7A50, #FFB088);
 }
 
-/* 現代 - 高對比深色模式 但具有漸層邏輯 */
 .dark.theme-modern,
 .dark[data-theme="modern"] {
   --background: 0 0% 7%;
   --card: 0 0% 11%;
   --border: 0 0% 18%;
   --muted: 0 0% 10%;
-  --shadow-glow: 0 0 15px hsl(43 100% 52% / 0.25);
-  --gradient-card: linear-gradient(135deg, hsl(48 100% 50% / 0.08), hsl(38 100% 50% / 0.08), hsl(25 100% 50% / 0.05));
-  --gradient-calendar: linear-gradient(to bottom right, hsl(48 100% 50% / 0.1), hsl(38 100% 50% / 0.05));
-  --gradient-timer: linear-gradient(135deg, hsl(48 100% 50% / 0.2), hsl(25 100% 50% / 0.15));
-  --gradient-site: linear-gradient(to bottom right, hsl(48 100% 50% / 0.08), hsl(32 100% 50% / 0.08));
-  --gradient-progress-from: hsl(48 100% 50%);
-  --gradient-progress-to: hsl(32 100% 50%);
+  --shadow-glow: 0 0 15px hsl(24 90% 48% / 0.25);
+  --gradient-card: linear-gradient(135deg, hsl(24 90% 48% / 0.08), hsl(24 80% 60% / 0.08));
+  --gradient-calendar: linear-gradient(to bottom right, hsl(24 90% 48% / 0.1), hsl(24 80% 60% / 0.05));
+  --gradient-timer: linear-gradient(135deg, hsl(24 90% 48% / 0.2), hsl(24 80% 60% / 0.15));
+  --gradient-site: linear-gradient(to bottom right, hsl(24 90% 48% / 0.08), hsl(24 80% 60% / 0.08));
+  --gradient-progress-from: hsl(24 90% 48%);
+  --gradient-progress-to: hsl(24 80% 60%);
   --gradient-progress: linear-gradient(90deg, var(--gradient-progress-from), var(--gradient-progress-to));
 }
 
-/* 漸層 */
 .theme-gradient,
 [data-theme="gradient"] {
-  --primary: 240 75% 52%;
-  --ring: 240 75% 52%;
-  --gradient-progress-from: hsl(210 75% 55%);
-  --gradient-progress-to: hsl(271 81% 56%);
-  --gradient-primary: linear-gradient(135deg, hsl(210 75% 48%), hsl(271 81% 56%), hsl(45 93% 58%));
-  --gradient-accent: linear-gradient(135deg, hsl(271 81% 56%), hsl(210 75% 55%), hsl(45 93% 58%));
+  --primary: 248 82% 52%;
+  --ring: 248 82% 52%;
+  --gradient-progress-from: #B8C0FF;
+  --gradient-progress-to: #E7D8FF;
+  --gradient-primary: linear-gradient(135deg, #E7D8FF, #B8C0FF);
+  --gradient-accent: linear-gradient(135deg, #B8C0FF, #E7D8FF);
 }
 
-/* 漸層 - 淺色模式 */
 :root:not(.dark) .theme-gradient,
 :root:not(.dark)[data-theme="gradient"] {
-  --background: 220 60% 99%;
-  --card: 225 55% 99%;
-  --muted: 220 50% 97%;
-  --border: 220 30% 92%;
-  --foreground: 220 20% 20%;
-  --card-foreground: 220 20% 20%;
+  --background: 248 60% 99%;
+  --card: 248 55% 99%;
+  --muted: 248 50% 97%;
+  --border: 248 30% 92%;
+  --foreground: 248 20% 20%;
+  --card-foreground: 248 20% 20%;
 }
 
-/* 漸層 - 深色模式 */
 .dark.theme-gradient,
 .dark[data-theme="gradient"] {
-  --background: 225 30% 6%;
-  --card: 225 30% 10%;
-  --border: 225 20% 15%;
-  --muted: 225 20% 12%;
-  --gradient-card: linear-gradient(135deg, hsl(210 75% 48% / 0.1), hsl(271 81% 56% / 0.1), hsl(45 93% 58% / 0.05));
+  --background: 248 30% 6%;
+  --card: 248 30% 10%;
+  --border: 248 20% 15%;
+  --muted: 248 20% 12%;
+  --gradient-card: linear-gradient(135deg, #E7D8FF / 0.1, #B8C0FF / 0.1);
 }
 
-/* 海洋背景 */
-/* 新主題配色 */
 .bg-primary {
   background-color: hsl(var(--primary));
 }
@@ -381,11 +506,9 @@
   --tw-ring-color: hsl(var(--primary));
 }
 
-
-
 .theme-gradient .bg-primary,
 [data-theme="gradient"] .bg-primary {
-  background: linear-gradient(135deg, hsl(210 75% 55%), hsl(240 75% 52%), hsl(271 81% 56%));
+  background: linear-gradient(135deg, #E7D8FF, #B8C0FF);
 }
 
 .theme-modern .bg-primary,
@@ -395,17 +518,14 @@
 
 .theme-gradient .border-primary,
 [data-theme="gradient"] .border-primary {
-  border-color: hsl(240 75% 52% / 0.5);
+  border-color: hsl(248 82% 52% / 0.5);
 }
 
 .theme-modern .border-primary,
 [data-theme="modern"] .border-primary {
-  border-color: hsl(43 100% 52% / 0.5);
+  border-color: hsl(24 90% 48% / 0.5);
 }
 
-
-
-/* 按鈕 */
 .theme-gradient button:hover,
 [data-theme="gradient"] button:hover,
 .theme-modern button:hover,
@@ -413,14 +533,11 @@
   filter: brightness(1.05);
 }
 
-/* 漸層進度條 */
 @keyframes gradient-shift {
-
   0%,
   100% {
     background-position: 0% 50%;
   }
-
   50% {
     background-position: 100% 50%;
   }
@@ -431,47 +548,32 @@
   animation: gradient-shift 3s ease-in-out infinite;
 }
 
-/* SVG 邊框繞圈動畫 */
 @keyframes dash {
   to {
     stroke-dashoffset: -235;
   }
 }
 
-/* 首次設定淡入動畫 */
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
 @keyframes slide-in-left {
-  from { opacity: 0; transform: translateX(-30px); }
+  from { opacity: 0; transform: translateX(-16px); }
   to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes slide-in-right {
-  from { opacity: 0; transform: translateX(30px); }
+  from { opacity: 0; transform: translateX(16px); }
   to { opacity: 1; transform: translateX(0); }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.6s ease-in-out forwards;
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-.animate-slide-in-left {
-  animation: slide-in-left 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-slide-in-right {
-  animation: slide-in-right 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* 修正手機安全區域 */
-.safe-area-bottom {
-  padding-bottom: env(safe-area-inset-bottom, 20px);
-}
-
-/* 修正手機滾動抖動和佈局拉伸 */
 html,
 body {
   height: 100%;
@@ -486,11 +588,14 @@ body {
   min-height: 100%;
 }
 
-/* 導航列懸停效果 */
 .nav-item-hover {
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-item-hover:hover {
   transform: translateY(-2px);
+}
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 20px);
 }

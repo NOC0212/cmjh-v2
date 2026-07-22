@@ -16,15 +16,15 @@ export default defineConfig(() => {
   plugins: [
     react(),
     VitePWA({
-      registerType: "autoUpdate",
+      registerType: "prompt",
       includeAssets: ["favicon.png", "robots.txt", "placeholder.svg"],
       manifest: {
         name: "崇明國中 v2",
         short_name: "崇明國中 v2",
         description: "專為崇明國中設計的數位工具平台",
-        theme_color: "#0f172a",
-        background_color: "#0f172a",
-        display: "standalone",
+        theme_color: "#f5f7fa",
+        background_color: "#f5f7fa",
+        display: "fullscreen",
         icons: [
           {
             src: "favicon.png",
@@ -131,6 +131,12 @@ export default defineConfig(() => {
             '@radix-ui/react-toast',
             '@radix-ui/react-tooltip',
           ],
+          // 動畫庫
+          'motion-vendor': ['framer-motion'],
+          // 圖示庫
+          'icon-vendor': ['lucide-react'],
+          // Markdown 渲染
+          'markdown-vendor': ['react-markdown', 'remark-gfm', 'remark-breaks'],
           // 工具庫
           'utils-vendor': ['date-fns', 'clsx', 'tailwind-merge'],
         },

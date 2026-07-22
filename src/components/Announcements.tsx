@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { AnimatePresence, motion } from "framer-motion";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useFavorites } from "@/hooks/useFavorites";
 import {
@@ -71,7 +72,6 @@ function normalizeAnnouncement(item: RawAnnouncement): Announcement {
   const attachments = item.attachments ?? item.links ?? [];
   const category = item.category?.trim() || "公告";
   const source = item.source?.trim() || "行政處室";
-
   return {
     id: `announcement-${item.date}-${item.title}`,
     date: item.date,
@@ -94,14 +94,8 @@ export function Announcements() {
 
   const { addFavorite, removeFavorite, isFavorite, cleanupFavorites } = useFavorites();
 
-  useEffect(() => {
-    setExpandedId(null);
-  }, [currentPage]);
-
-  useEffect(() => {
-    setCurrentPage(1);
-    setExpandedId(null);
-  }, [selectedCategory]);
+  useEffect(() => { setExpandedId(null); }, [currentPage]);
+  useEffect(() => { setCurrentPage(1); setExpandedId(null); }, [selectedCategory]);
 
   useEffect(() => {
     const loadAnnouncements = async () => {
@@ -114,9 +108,8 @@ export function Announcements() {
           cleanupFavorites("announcement", normalized.map((item) => item.id));
           return;
         }
-
         const files = ["/data/announcements-p1.json", "/data/announcements-p2.json", "/data/announcements-p3.json"];
-        const oldData = await Promise.all(files.map((file) => fetch(file).then((res) => res.json())));
+        const oldData = await Promise.all(files.map((file) => fetch(file).then((res) => { if (!res.ok) throw new Error("Failed to fetch " + file); return res.json(); })));
         const normalized = oldData.flat().map((item: RawAnnouncement) => normalizeAnnouncement(item));
         setAnnouncements(normalized);
         cleanupFavorites("announcement", normalized.map((item) => item.id));
@@ -126,7 +119,6 @@ export function Announcements() {
         setLoading(false);
       }
     };
-
     loadAnnouncements();
   }, [cleanupFavorites]);
 
@@ -144,29 +136,19 @@ export function Announcements() {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const currentAnnouncements = filteredAnnouncements.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
-  const pageMeta = useMemo(() => `${currentPage} / ${totalPages}`, [currentPage, totalPages]);
-
-  const goPrev = () => {
-    setDirection("left");
-    setCurrentPage((prev) => Math.max(1, prev - 1));
-  };
-
-  const goNext = () => {
-    setDirection("right");
-    setCurrentPage((prev) => Math.min(totalPages, prev + 1));
-  };
+  const goPrev = () => { setDirection("left"); setCurrentPage((prev) => Math.max(1, prev - 1)); };
+  const goNext = () => { setDirection("right"); setCurrentPage((prev) => Math.min(totalPages, prev + 1)); };
 
   if (loading) {
     return (
-      <section id="announcements" className="mb-12 scroll-mt-20">
-        <div className="mb-6 h-10 w-56 animate-pulse rounded-lg bg-primary/20" />
-        <div className="space-y-3">
+      <section id="announcements">
+        <div className="mb-6 h-8 w-48 rounded-lg bg-muted animate-pulse" />
+        <div className="space-y-2">
           {Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className="rounded-2xl border border-border bg-card p-4">
+            <div key={i} className="rounded-xl border border-border bg-card p-4">
               <div className="flex items-start gap-3">
-                <Skeleton className="h-6 w-20 shrink-0" />
-                <Skeleton className="h-6 flex-1" />
-                <Skeleton className="h-8 w-8 shrink-0 rounded-full" />
+                <Skeleton className="h-5 w-16 shrink-0 rounded-md" />
+                <Skeleton className="h-5 flex-1 rounded-md" />
               </div>
             </div>
           ))}
@@ -176,25 +158,29 @@ export function Announcements() {
   }
 
   return (
-    <section id="announcements" className="mb-12 scroll-mt-20">
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-        <h2 className="flex items-center gap-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-3xl font-bold text-transparent">
-          <Megaphone className="h-8 w-8 text-primary" />
-          行政公告
-        </h2>
+    <section id="announcements">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <div className="flex items-center gap-3">
+          <div className="section-header-icon">
+            <Megaphone className="h-4 w-4" />
+          </div>
+          <h2 className="text-xl font-bold text-foreground">行政公告</h2>
+        </div>
 
-        <div className="image-bg-panel flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-2 py-1">
-          <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full" onClick={goPrev} disabled={currentPage === 1}>
-            <ChevronLeft className="h-4 w-4" />
+        <div className="flex items-center gap-1.5 bg-muted/50 border border-border/40 rounded-xl p-1">
+          <Button variant="ghost" size="icon" className="h-7 w-7 rounded-lg" onClick={goPrev} disabled={currentPage === 1}>
+            <ChevronLeft className="h-3.5 w-3.5" />
           </Button>
-          <span className="min-w-[110px] text-center text-xs text-muted-foreground">第 {pageMeta} 頁</span>
-          <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full" onClick={goNext} disabled={currentPage === totalPages}>
-            <ChevronRight className="h-4 w-4" />
+          <span className="min-w-[90px] text-center text-[11px] text-muted-foreground font-medium">
+            {currentPage} / {totalPages}
+          </span>
+          <Button variant="ghost" size="icon" className="h-7 w-7 rounded-lg" onClick={goNext} disabled={currentPage === totalPages}>
+            <ChevronRight className="h-3.5 w-3.5" />
           </Button>
         </div>
       </div>
 
-      <div className="mb-5 flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center gap-1.5 mb-4">
         {categories.map((category) => {
           const isActive = selectedCategory === category;
           const isAll = category === "全部";
@@ -204,9 +190,9 @@ export function Announcements() {
               type="button"
               onClick={() => setSelectedCategory(category)}
               className={cn(
-                "rounded-full border px-3 py-1 text-xs font-semibold transition-all",
-                isAll ? "border-primary/25 bg-primary/10 text-primary" : tagColorClass(category),
-                isActive ? "scale-[1.02] ring-2 ring-primary/30 shadow-sm" : "opacity-80 hover:opacity-100"
+                "rounded-lg border px-2.5 py-1 text-[11px] font-semibold transition-all",
+                isAll ? "border-primary/20 bg-primary/10 text-primary" : tagColorClass(category),
+                isActive ? "ring-2 ring-primary/20 shadow-sm" : "opacity-75 hover:opacity-100"
               )}
             >
               {category}
@@ -215,7 +201,15 @@ export function Announcements() {
         })}
       </div>
 
-      <div key={currentPage} className={cn("space-y-3", direction === "right" ? "animate-slide-in-right" : "animate-slide-in-left")}>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentPage}
+          initial={{ opacity: 0, x: direction === "right" ? 16 : -16 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: direction === "right" ? -16 : 16 }}
+          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="space-y-2"
+        >
         {currentAnnouncements.map((announcement) => {
           const isExpanded = expandedId === announcement.id;
           const favoriteId = announcement.id;
@@ -224,100 +218,99 @@ export function Announcements() {
           return (
             <article
               key={announcement.id}
-              className="image-bg-panel overflow-hidden rounded-2xl border border-border bg-gradient-to-r from-card to-card/90 shadow-sm transition-all hover:border-primary/30 hover:shadow-md"
+              className={cn(
+                "overflow-hidden rounded-xl border transition-all duration-200",
+                isExpanded
+                  ? "border-primary/20 bg-primary/[0.02] shadow-sm"
+                  : "border-border/60 bg-card hover:border-border hover:shadow-sm"
+              )}
             >
               <div
                 role="button"
                 tabIndex={0}
-                className={cn("w-full px-4 py-4 text-left transition-colors cursor-pointer", isExpanded ? "bg-primary/5" : "hover:bg-primary/5")}
+                className={cn(
+                  "w-full px-4 py-3 text-left transition-colors cursor-pointer",
+                  isExpanded && "bg-primary/[0.02]"
+                )}
                 onClick={() => setExpandedId(isExpanded ? null : announcement.id)}
                 onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setExpandedId(isExpanded ? null : announcement.id); } }}
               >
                 <div className="flex items-start gap-3">
-                  <div className="rounded-lg border border-primary/20 bg-primary/10 px-2 py-1 text-xs font-semibold text-primary">
+                  <div className="rounded-lg border border-primary/15 bg-primary/8 px-2 py-1 text-[11px] font-semibold text-primary shrink-0 mt-0.5 leading-none">
                     {announcement.date}
                   </div>
 
                   <div className="min-w-0 flex-1">
-                    <div className="mb-1 flex flex-wrap items-center gap-2">
-                      <span className={cn("rounded-full border px-2 py-0.5 text-[11px] font-semibold", tagColorClass(announcement.category))}>
+                    <div className="flex flex-wrap items-center gap-1.5 mb-1">
+                      <span className={cn("rounded-md border px-1.5 py-0.5 text-[10px] font-semibold leading-none", tagColorClass(announcement.category))}>
                         {announcement.category}
                       </span>
-                      <span className="text-[11px] text-muted-foreground">來源：{announcement.source}</span>
+                      <span className="text-[10px] text-muted-foreground">{announcement.source}</span>
                     </div>
-                    <h3 className="line-clamp-2 text-sm font-semibold text-foreground">{announcement.title}</h3>
+                    <h3 className="line-clamp-2 text-sm font-medium text-foreground leading-snug">{announcement.title}</h3>
                   </div>
 
-                  <div className="flex shrink-0 items-center gap-1">
+                  <div className="flex shrink-0 items-center gap-0.5">
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 rounded-full"
+                      className="h-7 w-7 rounded-lg"
                       onClick={(e) => {
                         e.stopPropagation();
-                        if (favorited) {
-                          removeFavorite(favoriteId);
-                        } else {
-                            addFavorite({
-                              id: favoriteId,
-                              type: "announcement",
-                              title: announcement.title,
-                              date: announcement.date,
-                              url: announcement.url,
-                              content: announcement.content,
-                              category: announcement.category,
-                              source: announcement.source,
-                              links: announcement.attachments,
-                            });
+                        if (favorited) { removeFavorite(favoriteId); }
+                        else {
+                          addFavorite({
+                            id: favoriteId, type: "announcement", title: announcement.title,
+                            date: announcement.date, url: announcement.url, content: announcement.content,
+                            category: announcement.category, source: announcement.source,
+                            links: announcement.attachments,
+                          });
                         }
                       }}
                     >
-                      <Star className={cn("h-4 w-4", favorited ? "fill-primary text-primary" : "text-muted-foreground")} />
+                      <Star className={cn("h-3.5 w-3.5", favorited ? "fill-primary text-primary" : "text-muted-foreground")} />
                     </Button>
-
-                    <ChevronDown className={cn("h-4 w-4 text-muted-foreground transition-transform", isExpanded && "rotate-180")} />
+                    <ChevronDown className={cn("h-3.5 w-3.5 text-muted-foreground transition-transform duration-200", isExpanded && "rotate-180")} />
                   </div>
                 </div>
               </div>
 
               {isExpanded && (
-                <div className="border-t border-border/60 px-4 pb-4 pt-3">
+                <div className="border-t border-border/40 px-4 pb-4 pt-3 space-y-3">
                   {announcement.content && (
-                    <p className="image-bg-soft whitespace-pre-wrap rounded-xl border border-border/70 bg-muted/30 p-3 text-sm leading-relaxed text-foreground/90">
+                    <p className="rounded-xl border border-border/50 bg-muted/30 p-3 text-sm leading-relaxed text-foreground/80 whitespace-pre-wrap">
                       {announcement.content}
                     </p>
                   )}
 
                   {announcement.attachments.length > 0 && (
-                    <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                       {announcement.attachments.map((file, index) => (
                         <a
                           key={`${file.link}-${index}`}
                           href={file.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="image-bg-soft group/file flex items-center gap-2 rounded-xl border border-primary/20 bg-primary/5 px-3 py-2 text-foreground transition-all hover:bg-primary hover:text-primary-foreground dark:bg-primary/10"
+                          className="flex items-center gap-2 rounded-xl border border-primary/15 bg-primary/5 px-3 py-2 text-foreground transition-all hover:bg-primary hover:text-primary-foreground group"
                         >
-                          <div className="rounded-md bg-primary/10 p-1.5 text-primary transition-colors group-hover/file:bg-white/20 group-hover/file:text-primary-foreground">
-                            <FileText className="h-4 w-4" />
+                          <div className="rounded-lg bg-primary/10 p-1.5 text-primary transition-colors group-hover:bg-white/20 group-hover:text-primary-foreground">
+                            <FileText className="h-3.5 w-3.5" />
                           </div>
-                          <span className="truncate text-sm text-foreground transition-colors group-hover/file:text-primary-foreground">
-                            {file.name}
-                          </span>
+                          <span className="truncate text-xs font-medium group-hover:text-primary-foreground">{file.name}</span>
                         </a>
                       ))}
                     </div>
                   )}
 
-                  <div className="mt-3 flex justify-end">
+                  <div className="flex justify-end pt-0.5">
                     <a
                       href={announcement.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                      className="inline-flex items-center gap-1 text-[11px] text-primary hover:underline font-medium"
                     >
                       查看原始公告
-                      <ExternalLink className="h-3.5 w-3.5" />
+                      <ExternalLink className="h-3 w-3" />
                     </a>
                   </div>
                 </div>
@@ -325,14 +318,15 @@ export function Announcements() {
             </article>
           );
         })}
-      </div>
+        </motion.div>
+      </AnimatePresence>
 
       {filteredAnnouncements.length === 0 && (
-        <div className="image-bg-soft mt-4 rounded-2xl border border-dashed border-border bg-muted/20 py-10 text-center text-sm text-muted-foreground">
-          <div className="mb-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+        <div className="rounded-xl border border-dashed border-border bg-muted/20 py-10 text-center">
+          <div className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary mb-2">
             <Calendar className="h-4 w-4" />
           </div>
-          目前沒有符合此標籤的公告
+          <p className="text-sm text-muted-foreground">目前沒有符合此標籤的公告</p>
         </div>
       )}
     </section>

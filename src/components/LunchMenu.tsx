@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Calendar, ImageOff, Sparkles, Utensils } from "lucide-react";
+import { Calendar, ImageOff, Utensils, ChefHat } from "lucide-react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -34,26 +34,20 @@ const categoryColors: Record<string, string> = {
 const defaultCategoryColor = "bg-muted/50 text-muted-foreground border-border";
 
 function normalizeDishes(raw: LunchDataNew | LunchDataOld): DishItem[] {
-  // 使用 'in' 操作符來檢查屬性是否存在，從而進行類型縮小 (Type Narrowing)
   if ("items" in raw && Array.isArray(raw.items) && raw.items.length > 0) {
     return raw.items.filter((item: DishItem) => item?.name);
   }
-
   if ("week_data" in raw && raw.week_data) {
     const today = format(new Date(), "yyyy-MM-dd");
     const todayData = raw.week_data[today];
-    
     if (Array.isArray(todayData) && todayData.length > 0) {
       return todayData as DishItem[];
     }
-
     const firstValid = Object.values(raw.week_data).find(
       (value) => Array.isArray(value) && value.length > 0
     );
-    
     return Array.isArray(firstValid) ? (firstValid as DishItem[]) : [];
   }
-
   return [];
 }
 
@@ -62,14 +56,14 @@ function DishCard({ dish, index }: { dish: DishItem; index: number }) {
   const colorClass = categoryColors[dish.category] ?? defaultCategoryColor;
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 8 }}
+    <motion.div
+      initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.04 }}
-      className="group rounded-2xl border border-border/70 bg-card/80 p-3 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md"
+      className="group rounded-xl border border-border/60 bg-card p-3 transition-all hover:border-primary/30 hover:shadow-sm hover:-translate-y-0.5"
     >
       <div className="flex items-center gap-3">
-        <div className="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-muted">
+        <div className="h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-muted">
           {!imgError && dish.image ? (
             <img
               src={dish.image}
@@ -80,19 +74,18 @@ function DishCard({ dish, index }: { dish: DishItem; index: number }) {
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center">
-              <ImageOff className="h-5 w-5 text-muted-foreground/50" />
+              <ImageOff className="h-4 w-4 text-muted-foreground/50" />
             </div>
           )}
         </div>
-
         <div className="min-w-0 flex-1">
-          <span className={cn("mb-1 inline-block rounded-md border px-2 py-0.5 text-[11px] font-semibold", colorClass)}>
+          <span className={cn("mb-1 inline-block rounded-md border px-1.5 py-0.5 text-[10px] font-semibold leading-none", colorClass)}>
             {dish.category || "餐點"}
           </span>
-          <p className="truncate text-sm font-medium text-foreground">{dish.name}</p>
+          <p className="truncate text-sm font-medium text-foreground mt-0.5">{dish.name}</p>
         </div>
       </div>
-    </motion.article>
+    </motion.div>
   );
 }
 
@@ -106,6 +99,7 @@ export const LunchMenu: React.FC = () => {
     const fetchLunch = async () => {
       try {
         const res = await fetch("/data/lunch.json");
+        if (!res.ok) throw new Error("Failed to fetch lunch data");
         const data: LunchDataNew | LunchDataOld = await res.json();
         setLastUpdated(data.last_updated ?? "");
         setDishes(normalizeDishes(data));
@@ -115,7 +109,6 @@ export const LunchMenu: React.FC = () => {
         setLoading(false);
       }
     };
-
     fetchLunch();
   }, []);
 
@@ -126,43 +119,43 @@ export const LunchMenu: React.FC = () => {
 
   if (loading) {
     return (
-      <section id="lunch" className="mb-12 scroll-mt-20">
-        <div className="mb-6 h-10 w-56 animate-pulse rounded-lg bg-primary/20" />
-        <Card className="overflow-hidden border-primary/20">
-          <CardContent className="space-y-3 p-4">
-            {Array.from({ length: 4 }).map((_, idx) => (
-              <div key={idx} className="h-20 animate-pulse rounded-xl bg-muted/70" />
-            ))}
-          </CardContent>
-        </Card>
+      <section id="lunch">
+        <div className="mb-6 h-8 w-48 rounded-lg bg-muted animate-pulse" />
+        <div className="rounded-xl border border-border/60 bg-card p-4 space-y-3">
+          {Array.from({ length: 4 }).map((_, idx) => (
+            <div key={idx} className="h-16 animate-pulse rounded-lg bg-muted/70" />
+          ))}
+        </div>
       </section>
     );
   }
 
   return (
-    <section id="lunch" className="mb-12 scroll-mt-20">
-      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <h2 className="flex items-center gap-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-3xl font-bold text-transparent">
-          <Utensils className="h-8 w-8 text-primary" />
-          營養午餐
-        </h2>
-        {lastUpdated && (
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs text-muted-foreground">
-            <Calendar className="h-3.5 w-3.5" />
-            更新時間：{lastUpdated}
-          </div>
-        )}
+    <section id="lunch">
+      <div className="flex items-center gap-3 mb-5">
+        <div className="section-header-icon">
+          <Utensils className="h-4 w-4" />
+        </div>
+        <h2 className="text-xl font-bold text-foreground">營養午餐</h2>
       </div>
 
-      <Card className="overflow-hidden border-primary/20 bg-gradient-to-br from-card via-card to-primary/5 shadow-lg">
-        <CardContent className="p-4 sm:p-5">
-          <div className="mb-4 flex items-center gap-2 rounded-xl border border-primary/20 bg-primary/10 px-3 py-2 text-sm font-medium text-primary">
-            <Sparkles className="h-4 w-4" />
-            {sectionTitle}
+      <Card className="overflow-hidden border-border/60 shadow-sm">
+        <CardContent className="p-4">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2 rounded-lg border border-primary/15 bg-primary/8 px-3 py-1.5">
+              <ChefHat className="h-4 w-4 text-primary" />
+              <span className="text-xs font-semibold text-primary">{sectionTitle}</span>
+            </div>
+            {lastUpdated && (
+              <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                <Calendar className="h-3 w-3" />
+                {lastUpdated}
+              </div>
+            )}
           </div>
 
           {dishes.length > 0 ? (
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               {dishes.map((dish, index) => (
                 <button
                   key={`${dish.name}-${index}`}
@@ -175,7 +168,7 @@ export const LunchMenu: React.FC = () => {
               ))}
             </div>
           ) : (
-            <div className="rounded-2xl border border-dashed border-border bg-muted/30 py-10 text-center text-sm text-muted-foreground">
+            <div className="rounded-xl border border-dashed border-border bg-muted/20 py-10 text-center text-sm text-muted-foreground">
               目前沒有可顯示的午餐內容
             </div>
           )}
@@ -183,14 +176,14 @@ export const LunchMenu: React.FC = () => {
       </Card>
 
       <Dialog open={!!previewDish} onOpenChange={(open) => !open && setPreviewDish(null)}>
-        <DialogContent className="max-w-2xl border-border/60 bg-background/95 p-3 sm:p-4">
+        <DialogContent className="max-w-lg border-border/60 bg-background p-3 rounded-xl">
           <DialogTitle className="sr-only">{previewDish?.name || "餐點圖片"}</DialogTitle>
           {previewDish?.image && (
-            <div className="overflow-hidden rounded-xl border border-border/70 bg-muted">
+            <div className="overflow-hidden rounded-lg border border-border/60 bg-muted">
               <img
                 src={previewDish.image}
                 alt={previewDish.name}
-                className="max-h-[70vh] w-full object-contain"
+                className="max-h-[60vh] w-full object-contain"
               />
             </div>
           )}

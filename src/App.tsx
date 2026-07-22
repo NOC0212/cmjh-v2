@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect, lazy, Suspense } from "react";
-import { FirstTimeSetup, checkFirstTimeSetup } from "@/components/FirstTimeSetup";
+import { Home, checkFirstTimeSetup } from "@/pages/Home";
 import { UpdatePrompt } from "@/components/UpdatePrompt";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Loading } from "@/components/Loading";
@@ -23,6 +23,7 @@ const Timer = lazy(() => import("./pages/tools/Timer"));
 const QRCode = lazy(() => import("./pages/tools/QRCode"));
 const Whiteboard = lazy(() => import("./pages/tools/Whiteboard"));
 const Attendance = lazy(() => import("./pages/tools/Attendance"));
+const Docs = lazy(() => import("./pages/Docs"));
 
 
 const queryClient = new QueryClient();
@@ -54,10 +55,10 @@ const App = () => {
               <Route
                 path="/home"
                 element={
-                  <FirstTimeSetup
+                  <Home
                     onComplete={() => {
                       setSetupCompleted(true);
-                      window.location.href = "/";
+                      window.location.href = "/app";
                     }}
                   />
                 }
@@ -128,8 +129,9 @@ function AppContent() {
               />
             ) : (
               <>
+                <Route path="/" element={<Navigate to="/app" replace />} />
                 <Route
-                  path="/"
+                  path="/app"
                   element={
                     <ErrorBoundary>
                       <Index maintenanceConfig={maintenanceConfig} />
@@ -140,7 +142,7 @@ function AppContent() {
                   path="/home"
                   element={
                     <ErrorBoundary>
-                      <FirstTimeSetup onComplete={() => (window.location.href = "/")} />
+                      <Home onComplete={() => (window.location.href = "/app")} />
                     </ErrorBoundary>
                   }
                 />
@@ -227,6 +229,16 @@ function AppContent() {
                   }
                 />
 
+                <Route
+                  path="/docs"
+                  element={
+                    <ErrorBoundary>
+                      <Suspense fallback={<Loading fullScreen message="載入說明頁面..." />}>
+                        <Docs />
+                      </Suspense>
+                    </ErrorBoundary>
+                  }
+                />
                 <Route path="*" element={<NotFound />} />
               </>
             )}

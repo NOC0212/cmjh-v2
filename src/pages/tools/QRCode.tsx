@@ -55,68 +55,61 @@ export default function QRCodeGenerator() {
     };
 
     return (
-        <ToolLayout title="快速 QR Code 產生器">
-            <div className="space-y-6">
-                <div className="text-center">
-                    <h2 className="text-2xl font-bold mb-2 text-foreground flex items-center justify-center gap-2">
-                        <QrCode className="h-8 w-8 text-primary" />
-                        快速 QR Code 產生器
-                    </h2>
-                    <p className="text-muted-foreground">輸入網址或文字，立即生成專屬 QR Code</p>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                    <Card className="p-6 space-y-4">
+        <ToolLayout title="QR Code 產生器">
+            <div className="space-y-4 sm:space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6">
+                    <Card className="lg:col-span-2 p-4 sm:p-5 space-y-4">
                         <div className="space-y-2">
                             <label className="text-sm font-medium flex items-center gap-2">
-                                <LinkIcon className="h-4 w-4" />
-                                內容 (網址或文字)
+                                <LinkIcon className="h-4 w-4 text-primary" />
+                                內容
                             </label>
                             <Input
                                 placeholder="https://example.com"
                                 value={url}
                                 onChange={(e) => setUrl(e.target.value)}
-                                className="font-mono"
+                                className="font-mono text-sm h-10"
                             />
+                            <p className="text-[11px] text-muted-foreground/60">輸入網址或文字</p>
                         </div>
 
                         <div className="space-y-2">
                             <label className="text-sm font-medium flex items-center gap-2">
-                                <RefreshCw className="h-4 w-4" />
-                                顏色設定
+                                <RefreshCw className="h-4 w-4 text-primary" />
+                                顏色
                             </label>
                             <div className="flex gap-2">
                                 <Input
                                     type="color"
                                     value={fgColor}
                                     onChange={(e) => setFgColor(e.target.value)}
-                                    className="w-12 h-10 p-1 cursor-pointer"
+                                    className="w-11 h-10 p-1 cursor-pointer shrink-0"
                                 />
                                 <Input
                                     type="text"
                                     value={fgColor}
                                     onChange={(e) => setFgColor(e.target.value)}
-                                    className="flex-1 font-mono"
+                                    className="flex-1 font-mono text-sm h-10"
                                     placeholder="#000000"
                                 />
                             </div>
                         </div>
 
                         <div className="flex gap-2 pt-2">
-                            <Button onClick={handleCopy} variant="outline" className="flex-1" disabled={!url}>
-                                <Copy className="mr-2 h-4 w-4" />
-                                複製連結
+                            <Button onClick={handleCopy} variant="outline" className="flex-1 h-10" disabled={!url}>
+                                <Copy className="mr-1.5 h-4 w-4" />
+                                複製
                             </Button>
-                            <Button onClick={() => setUrl("")} variant="ghost" className="px-3">
+                            <Button onClick={() => setUrl("")} variant="ghost" className="h-10 px-4">
                                 清空
                             </Button>
                         </div>
                     </Card>
 
-                    <Card className="p-6 flex flex-col items-center justify-center min-h-[300px] bg-white dark:bg-slate-900 transition-colors">
+                    <Card className="lg:col-span-3 p-4 sm:p-6 flex flex-col items-center justify-center min-h-[280px] bg-white dark:bg-slate-900 transition-colors">
                         {url ? (
-                            <div className="space-y-6 text-center">
-                                <div className="p-4 bg-white rounded-xl shadow-inner inline-block">
+                            <div className="space-y-5 text-center">
+                                <div className="p-4 bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.3)] inline-block">
                                     <QRCodeSVG
                                         id="qrcode-svg"
                                         value={url}
@@ -126,39 +119,21 @@ export default function QRCodeGenerator() {
                                         includeMargin={false}
                                     />
                                 </div>
-                                <div className="flex flex-col gap-2">
-                                    <Button onClick={handleDownload} className="w-full">
-                                        <Download className="mr-2 h-4 w-4" />
-                                        下載 PNG 圖片
-                                    </Button>
-                                    <p className="text-xs text-muted-foreground">
-                                        建議使用於簡報、教案或班級佈告欄
-                                    </p>
-                                </div>
+                                <Button onClick={handleDownload} className="w-full sm:w-auto">
+                                    <Download className="mr-1.5 h-4 w-4" />
+                                    下載 PNG
+                                </Button>
                             </div>
                         ) : (
-                            <div className="text-center space-y-4 text-muted-foreground">
-                                <div className="w-32 h-32 mx-auto border-2 border-dashed border-muted-foreground/30 rounded-2xl flex items-center justify-center opacity-50">
-                                    <QrCode className="h-12 w-12" />
+                            <div className="text-center space-y-3 text-muted-foreground/50">
+                                <div className="w-24 h-24 mx-auto border-2 border-dashed rounded-2xl flex items-center justify-center">
+                                    <QrCode className="h-10 w-10" />
                                 </div>
-                                <p>請在左側輸入內容以生成 QR Code</p>
+                                <p className="text-sm">輸入內容以生成 QR Code</p>
                             </div>
                         )}
                     </Card>
                 </div>
-
-                <Card className="p-6 bg-primary/5 border-primary/20">
-                    <h3 className="text-sm font-semibold mb-2 flex items-center gap-2 text-foreground">
-                        <span>💡</span>
-                        使用說明
-                    </h3>
-                    <ul className="text-sm text-muted-foreground space-y-1">
-                        <li>• 在「內容」欄位输入網址（如：學校官網）或任意文字。</li>
-                        <li>• 可自由調整 QR Code 的顏色，配合您的簡報風格。</li>
-                        <li>• 產生的 QR Code 具備高容錯率 (Level H)，即使稍微受損仍可掃描。</li>
-                        <li>• 點擊「下載」可儲存為 PNG 格式，方便插入 Word 或 PPT。</li>
-                    </ul>
-                </Card>
             </div>
         </ToolLayout>
     );

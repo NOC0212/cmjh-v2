@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useTransition, lazy, Suspense } from "react";
 import { CommonSites } from "@/components/CommonSites";
 import { Announcements } from "@/components/Announcements";
 import { CalendarView } from "@/components/CalendarView";
@@ -8,33 +8,49 @@ import { ToolsSection } from "@/components/ToolsSection";
 import { HonorsBoard } from "@/components/HonorsBoard";
 import { LunchMenu } from "@/components/LunchMenu";
 import { ResponsiveNav, NavPage } from "@/components/ResponsiveNav";
-import { SearchPage } from "@/components/SearchPage";
-import { SiteAnnouncementsPage } from "@/components/SiteAnnouncementsPage";
-import { FavoritesPage } from "@/components/FavoritesPage";
-import { SettingsPage } from "@/components/SettingsPage";
-import { AdminPanel } from "@/components/AdminPanel";
 import { VisitCounter } from "@/components/VisitCounter";
 import { useSettings } from "@/hooks/SettingsContext";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { getPageBackgroundStyle } from "@/lib/page-background";
 import { Skeleton } from "@/components/ui/skeleton";
 import MaintenanceModal from "@/components/MaintenanceModal";
-import { LatestAnnouncementModal } from "@/components/LatestAnnouncementModal";
+// 代碼分割：子頁面（不常駐顯示）
+const SearchPage = lazy(() => import("@/components/SearchPage").then(m => ({ default: m.SearchPage })));
+const SiteAnnouncementsPage = lazy(() => import("@/components/SiteAnnouncementsPage").then(m => ({ default: m.SiteAnnouncementsPage })));
+const FavoritesPage = lazy(() => import("@/components/FavoritesPage").then(m => ({ default: m.FavoritesPage })));
+const SettingsPage = lazy(() => import("@/components/SettingsPage").then(m => ({ default: m.SettingsPage })));
+const AdminPanel = lazy(() => import("@/components/AdminPanel").then(m => ({ default: m.AdminPanel })));
+const LatestAnnouncementModal = lazy(() => import("@/components/LatestAnnouncementModal").then(m => ({ default: m.LatestAnnouncementModal })));
 import { isMaintenanceWhitelisted } from "@/lib/app-version";
 import { MaintenanceConfig } from "@/App";
-import React from "react";
+import { cn } from "@/lib/utils";
+import { Loading } from "@/components/Loading";
 
 interface IndexProps {
     maintenanceConfig: MaintenanceConfig | null;
 }
 
+const componentAnimationClass: Record<string, string> = {
+    countdown: "animate-fade-in animate-stagger-1",
+    weather: "animate-fade-in animate-stagger-2",
+    commonSites: "animate-fade-in animate-stagger-3",
+    tools: "animate-fade-in animate-stagger-4",
+    honors: "animate-fade-in animate-stagger-5",
+    announcements: "animate-fade-in animate-stagger-6",
+    calendar: "animate-fade-in animate-stagger-7",
+    lunch: "animate-fade-in animate-stagger-8",
+};
+
 const Index = ({ maintenanceConfig }: IndexProps) => {
     const { settings } = useSettings();
-
     const isMobile = useIsMobile();
     const [currentPage, setCurrentPage] = useState<NavPage>("home");
+    const [isPending, startTransition] = useTransition();
 
-    // 取得已啟用且排序後的組件
+    const handlePageChange = (page: NavPage) => {
+        startTransition(() => setCurrentPage(page));
+    };
+
     const enabledComponents = useMemo(
         () =>
             settings.components
@@ -43,7 +59,6 @@ const Index = ({ maintenanceConfig }: IndexProps) => {
         [settings.components]
     );
 
-    // 渲染首頁組件
     const renderHomePageComponent = (id: string) => {
         if (maintenanceConfig?.isMaintenance && !isMaintenanceWhitelisted()) {
             return (
@@ -56,7 +71,6 @@ const Index = ({ maintenanceConfig }: IndexProps) => {
                 </div>
             );
         }
-
         switch (id) {
             case "countdown": return <CountdownTimer key="countdown" />;
             case "weather": return <WeatherWidget key="weather" />;
@@ -70,30 +84,37 @@ const Index = ({ maintenanceConfig }: IndexProps) => {
         }
     };
 
-    // 根據標籤渲染頁面內容
     const renderPageContent = () => {
         switch (currentPage) {
             case "search":
-                return <SearchPage />;
+                return <Suspense fallback={<Loading message="載入搜尋..." />}><SearchPage /></Suspense>;
             case "announcements":
-                return <SiteAnnouncementsPage />;
+                return <Suspense fallback={<Loading message="載入公告..." />}><SiteAnnouncementsPage /></Suspense>;
             case "favorites":
-                return <FavoritesPage />;
+                return <Suspense fallback={<Loading message="載入收藏..." />}><FavoritesPage /></Suspense>;
             case "settings":
-                return <SettingsPage />;
+                return <Suspense fallback={<Loading message="載入設定..." />}><SettingsPage /></Suspense>;
             case "admin":
-                return <AdminPanel />;
+                return <Suspense fallback={<Loading message="載入管理後台..." />}><AdminPanel /></Suspense>;
             case "home":
             default:
                 return (
-                    <div className="space-y-12">
+                        <div className="space-y-10 md:space-y-14">
                         {enabledComponents.map((component) => (
-                            <HomeSection key={component.id} id={component.id}>
+                            <div
+                                key={component.id}
+                                id={component.id}
+                                className={cn("opacity-0", componentAnimationClass[component.id])}
+                            >
                                 {renderHomePageComponent(component.id)}
-                            </HomeSection>
+                            </div>
                         ))}
-                        {/* 頁尾上方的訪問計數器 */}
-                        <VisitCounter />
+                        <div className="opacity-0 animate-fade-in animate-stagger-8">
+                            <VisitCounter />
+                        </div>
+                        <footer className="mt-8 border-t border-border/40 py-8 text-center text-xs text-muted-foreground">
+                            <p>&copy; 2026 崇明國中 by cy.noc0531</p>
+                        </footer>
                     </div>
                 );
         }
@@ -101,47 +122,38 @@ const Index = ({ maintenanceConfig }: IndexProps) => {
 
     return (
         <div
-            className={`h-[100dvh] w-screen max-w-full flex overflow-hidden ${isMobile ? 'flex-col' : 'flex-row'}`}
+            className={cn(
+                "h-[100dvh] w-screen max-w-full flex overflow-hidden",
+                isMobile ? 'flex-col' : 'flex-row'
+            )}
             style={getPageBackgroundStyle(settings.pageBackground, settings.pageBackgroundImage)}
         >
-            {/* 背景裝飾光圈 */}
             <div className="fixed -right-48 -top-48 w-[600px] h-[600px] md:w-[800px] md:h-[800px] rounded-full pointer-events-none z-0"
-                style={{ background: 'radial-gradient(circle, hsl(210 100% 70% / 0.05), transparent 70%)' }} />
+                style={{ background: 'radial-gradient(circle, hsl(var(--primary) / 0.05), transparent 70%)' }} />
             <div className="fixed -left-8 -bottom-8 w-[350px] h-[350px] md:w-[450px] md:h-[450px] rounded-full pointer-events-none z-0"
-                style={{ background: 'radial-gradient(circle, hsl(190 60% 65% / 0.04), transparent 70%)' }} />
+                style={{ background: 'radial-gradient(circle, hsl(var(--primary) / 0.03), transparent 70%)' }} />
 
-            {/* 桌面版側邊導航 (使用固定定位，所以這裡加一個占位區) */}
             {!isMobile && (
                 <>
-                    <ResponsiveNav currentPage={currentPage} onPageChange={setCurrentPage} />
+                    <ResponsiveNav currentPage={currentPage} onPageChange={handlePageChange} />
                     <div className="w-16 shrink-0" />
                 </>
             )}
 
-            {/* 手機版頂部標題列 */}
             {isMobile && (
-                <ResponsiveNav currentPage={currentPage} onPageChange={setCurrentPage} mode="header" />
+                <ResponsiveNav currentPage={currentPage} onPageChange={handlePageChange} mode="header" />
             )}
 
-            {/* 主內容區塊 */}
             <div className="flex-1 flex flex-col min-h-0 w-full overflow-x-hidden relative">
-                <main className={`flex-1 overflow-y-auto px-4 lg:p-8 max-w-5xl w-full mx-auto overflow-x-hidden ${isMobile ? 'pt-14 pb-14' : ''}`}>
-                    <div className="py-4">
+                <main className={cn(
+                    "flex-1 overflow-y-auto px-4 lg:px-8 max-w-5xl w-full mx-auto overflow-x-hidden",
+                    isMobile ? 'pt-14 pb-14' : 'py-0'
+                )}>
+                    <div className="py-4 md:py-6">
                         {renderPageContent()}
                     </div>
-
-                    {/* 版權資訊 - 在手機版如果不是首頁則隱藏，避免重疊 */}
-                    {currentPage === "home" && (
-                        <footer className="mt-12 border-t border-primary/20 bg-gradient-to-r from-background to-primary/5 py-12 px-4 lg:px-6 rounded-t-3xl text-center text-sm text-muted-foreground">
-                            <div className="flex flex-col items-center gap-1">
-                                <p>© 2026 崇明國中 by cy.noc0531</p>
-
-                            </div>
-                        </footer>
-                    )}
                 </main>
 
-                {/* 維護模式彈窗（白名單使用者跳過） */}
                 {maintenanceConfig?.isMaintenance && !isMaintenanceWhitelisted() && (
                     <MaintenanceModal
                         isOpen={true}
@@ -151,24 +163,17 @@ const Index = ({ maintenanceConfig }: IndexProps) => {
                         message={maintenanceConfig.message}
                     />
                 )}
-                
-                {/* 最新公告彈窗 - 只在首頁顯示 */}
-                {currentPage === "home" && <LatestAnnouncementModal />}
+
+                {currentPage === "home" && (
+                    <Suspense fallback={null}>
+                        <LatestAnnouncementModal />
+                    </Suspense>
+                )}
             </div>
 
-            {/* 手機版底部導航列 */}
             {isMobile && (
-                <ResponsiveNav currentPage={currentPage} onPageChange={setCurrentPage} mode="footer" />
+                <ResponsiveNav currentPage={currentPage} onPageChange={handlePageChange} mode="footer" />
             )}
-        </div>
-    );
-};
-
-// 動態區塊包裝器 (已移除動畫)
-const HomeSection = ({ children, id }: { children: React.ReactNode; id: string }) => {
-    return (
-        <div id={id}>
-            {children}
         </div>
     );
 };

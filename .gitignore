@@ -29,3 +29,6 @@ dist-ssr
 *.sw?
 __pycache__/
 *.pyc
+
+# Freebuff / AI 輔助工具技能目錄
+.opencode/

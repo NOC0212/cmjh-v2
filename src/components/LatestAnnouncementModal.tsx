@@ -1,4 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Calendar, Megaphone, BellRing } from "lucide-react";
@@ -23,7 +26,7 @@ let hasCheckedInSession = false;
 let isUpdateDismissedInSession = false;
 
 export function LatestAnnouncementModal() {
-  const { settings, setShowLatestAnnouncementOnStartup } = useSettings();
+  const { settings } = useSettings();
   const { announcements: allAnnouncements } = useSiteAnnouncements();
   const { appVersion } = useSiteConfig();
   const [isOpen, setIsOpen] = useState(false);
@@ -180,8 +183,10 @@ export function LatestAnnouncementModal() {
 
           <div className="max-h-[35vh] overflow-y-auto pr-2 custom-scrollbar">
             {currentAnn.content ? (
-              <div className="whitespace-pre-wrap text-base leading-relaxed text-foreground/90">
-                {currentAnn.content}
+              <div className="text-base leading-relaxed text-foreground/90 prose prose-sm dark:prose-invert max-w-none">
+                <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+                  {currentAnn.content}
+                </ReactMarkdown>
               </div>
             ) : (
               <div className="rounded-2xl border border-dashed border-border bg-muted/30 p-8 text-center text-muted-foreground">

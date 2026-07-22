@@ -21,16 +21,18 @@ import {
 import { useCalendarEvents } from "@/hooks/useCalendarEvents";
 import { useToast } from "@/hooks/use-toast";
 
-export function CalendarAddDialog() {
+export function CalendarAddDialog({ availableMonths: initialMonths }: { availableMonths?: string[] }) {
   const [open, setOpen] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedDay, setSelectedDay] = useState("");
   const [title, setTitle] = useState("");
-  const [availableMonths, setAvailableMonths] = useState<string[]>([]);
+  const [availableMonths, setAvailableMonths] = useState<string[]>(initialMonths || []);
   const { addEvent } = useCalendarEvents();
   const { toast } = useToast();
 
+  // 若 props 沒給可用月份，獨立 fetch（向後相容）
   useEffect(() => {
+    if (initialMonths && initialMonths.length > 0) return;
     fetch("/data/calendar.json")
       .then((res) => res.json())
       .then((data: Record<string, unknown[]>) => {
@@ -40,7 +42,7 @@ export function CalendarAddDialog() {
       .catch((error) => {
         console.error("Failed to load calendar months:", error);
       });
-  }, []);
+  }, [initialMonths]);
 
   const daysInMonth = useMemo(() => {
     if (!selectedMonth) return [];

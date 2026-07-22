@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { ToolLayout } from "@/components/ToolLayout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -17,7 +17,6 @@ import {
     Grid
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { motion, AnimatePresence } from "framer-motion";
 
 type DrawMode = "pencil" | "eraser" | "line" | "dashed-line";
 
@@ -34,9 +33,9 @@ export default function Whiteboard() {
     const [showWidths, setShowWidths] = useState(false);
     const [startPos, setStartPos] = useState({ x: 0, y: 0 });
     const snapshotRef = useRef<ImageData | null>(null);
+    const pendingUndoRef = useRef(false);
     const { toast } = useToast();
 
-    // 監聽全螢幕變化
     useEffect(() => {
         const handleFSChange = () => {
             setIsFullscreen(!!document.fullscreenElement);
@@ -45,14 +44,12 @@ export default function Whiteboard() {
         return () => document.removeEventListener("fullscreenchange", handleFSChange);
     }, []);
 
-    // 初始化與調整畫布
     useEffect(() => {
         const resizeCanvas = () => {
             const canvas = canvasRef.current;
             const container = containerRef.current;
             if (!canvas || !container) return;
 
-            // 在調整尺寸前獲取最新快照
             const tempImage = canvas.toDataURL();
             const rect = container.getBoundingClientRect();
             if (rect.width === 0 || rect.height === 0) return;
@@ -65,15 +62,17 @@ export default function Whiteboard() {
                 const img = new Image();
                 img.src = tempImage;
                 img.onload = () => {
-                    // 使用 drawImage 縮放至新尺寸
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    ctx.lineCap = "round";
+                    ctx.lineJoin = "round";
+                };
+                img.onerror = () => {
                     ctx.lineCap = "round";
                     ctx.lineJoin = "round";
                 };
             }
         };
 
-        // 監聽尺寸變化 (包括全螢幕切換導致的容器變化)
         const resizeObserver = new ResizeObserver(() => {
             resizeCanvas();
         });
@@ -175,22 +174,27 @@ export default function Whiteboard() {
         }
     };
 
-    const undo = () => {
-        if (history.length === 0) return;
+    const undo = useCallback(() => {
+        if (history.length === 0 || pendingUndoRef.current) return;
         const lastState = history[history.length - 1];
         const canvas = canvasRef.current;
         const ctx = canvas?.getContext("2d");
         if (canvas && ctx) {
+            pendingUndoRef.current = true;
+            setHistory(prev => prev.slice(0, -1));
             const img = new Image();
-            img.src = lastState;
             img.onload = () => {
                 ctx.globalCompositeOperation = "source-over";
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(img, 0, 0);
+                pendingUndoRef.current = false;
             };
-            setHistory(prev => prev.slice(0, -1));
+            img.onerror = () => {
+                pendingUndoRef.current = false;
+            };
+            img.src = lastState;
         }
-    };
+    }, [history]);
 
     const download = () => {
         const canvas = canvasRef.current;
@@ -223,107 +227,95 @@ export default function Whiteboard() {
     const widths = [2, 4, 6, 8, 10, 15, 20, 30, 40, 50];
 
     const Toolbar = () => (
-        <Card className={`flex flex-wrap items-center justify-between gap-4 bg-card/80 backdrop-blur-md border-primary/20 shadow-xl p-4 ${isFullscreen ? 'w-[90%] mx-auto mb-6' : 'sticky top-0 z-30'}`}>
-            <div className="flex items-center gap-2">
-                <Button variant={mode === "pencil" ? "default" : "outline"} size="icon" onClick={() => setMode("pencil")} title="畫筆">
-                    <Pencil className="h-4 w-4" />
-                </Button>
-                <Button variant={mode === "line" ? "default" : "outline"} size="icon" onClick={() => setMode("line")} title="直線">
-                    <Slash className="h-4 w-4" />
-                </Button>
-                <Button variant={mode === "dashed-line" ? "default" : "outline"} size="icon" onClick={() => setMode("dashed-line")} title="虛線">
-                    <Grid className="h-4 w-4 rotate-45" />
-                </Button>
-                <Button variant={mode === "eraser" ? "default" : "outline"} size="icon" onClick={() => setMode("eraser")} title="橡皮擦">
-                    <Eraser className="h-4 w-4" />
-                </Button>
-                <div className="h-8 w-[2px] bg-border mx-1" />
-                <Button variant="outline" size="icon" onClick={undo} disabled={history.length === 0} title="復原">
-                    <Undo2 className="h-4 w-4" />
-                </Button>
-                <Button variant="outline" size="icon" onClick={clearCanvas} title="清除全部">
-                    <Trash2 className="h-4 w-4 text-destructive" />
-                </Button>
-            </div>
-
-            <div className="flex items-center gap-4 flex-wrap">
-                <div className="relative">
-                    <Button variant="outline" size="sm" onClick={() => { setShowColors(!showColors); setShowWidths(false); }} className="gap-2">
-                        <div className="w-4 h-4 rounded-full" style={{ backgroundColor: color }} />
-                        <span className="hidden sm:inline text-xs">顏色</span>
-                        {showColors ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+        <div className={`flex flex-wrap items-stretch gap-2 ${isFullscreen ? 'w-full max-w-3xl mx-auto' : ''}`}>
+            <Card className={`flex flex-wrap items-center gap-1.5 p-2 bg-card/90 backdrop-blur-md border-primary/10 shadow-xl flex-1 ${isFullscreen ? 'mb-4' : 'sticky top-0 z-30'}`}>
+                <div className="flex items-center gap-1">
+                    <Button variant={mode === "pencil" ? "default" : "outline"} size="icon" onClick={() => setMode("pencil")} title="畫筆" className="h-8 w-8">
+                        <Pencil className="h-3.5 w-3.5" />
                     </Button>
-                    <AnimatePresence>
+                    <Button variant={mode === "line" ? "default" : "outline"} size="icon" onClick={() => setMode("line")} title="直線" className="h-8 w-8">
+                        <Slash className="h-3.5 w-3.5" />
+                    </Button>
+                    <Button variant={mode === "dashed-line" ? "default" : "outline"} size="icon" onClick={() => setMode("dashed-line")} title="虛線" className="h-8 w-8">
+                        <Grid className="h-3.5 w-3.5 rotate-45" />
+                    </Button>
+                    <Button variant={mode === "eraser" ? "default" : "outline"} size="icon" onClick={() => setMode("eraser")} title="橡皮擦" className="h-8 w-8">
+                        <Eraser className="h-3.5 w-3.5" />
+                    </Button>
+                    <div className="h-6 w-px bg-border/50 mx-1" />
+                    <Button variant="outline" size="icon" onClick={undo} disabled={history.length === 0} title="復原" className="h-8 w-8">
+                        <Undo2 className="h-3.5 w-3.5" />
+                    </Button>
+                    <Button variant="outline" size="icon" onClick={clearCanvas} title="清除全部" className="h-8 w-8">
+                        <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                    </Button>
+                </div>
+
+                <div className="flex items-center gap-1.5 ml-auto">
+                    <div className="relative">
+                        <Button variant="outline" size="sm" onClick={() => { setShowColors(!showColors); setShowWidths(false); }} className="h-8 gap-1.5 text-xs">
+                            <div className="w-3.5 h-3.5 rounded-full border border-border/50" style={{ backgroundColor: color }} />
+                            <span className="hidden sm:inline">顏色</span>
+                            {showColors ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+                        </Button>
                         {showColors && (
-                            <motion.div 
-                                initial={{ opacity: 0, y: isFullscreen ? 10 : -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: isFullscreen ? 10 : -10 }}
-                                className={`absolute p-3 bg-card border shadow-2xl rounded-xl grid grid-cols-4 gap-2 z-50 min-w-[160px] ${isFullscreen ? 'bottom-12 left-0' : 'top-12 left-0'}`}
-                            >
+                            <div className={`absolute p-2 bg-card border border-border/50 shadow-2xl rounded-xl grid grid-cols-4 gap-1.5 z-50 min-w-[140px] ${isFullscreen ? 'bottom-10 left-0' : 'top-10 left-0'}`}>
                                 {colors.map((c) => (
                                     <button
                                         key={c.val}
-                                        className={`w-8 h-8 rounded-full transition-all hover:scale-125 ${color === c.val ? 'ring-2 ring-primary ring-offset-2 scale-110' : 'opacity-80'}`}
+                                        className={`w-7 h-7 rounded-full transition-all hover:scale-125 active:scale-90 ${color === c.val ? 'ring-2 ring-primary ring-offset-2 scale-110' : 'opacity-80 hover:opacity-100'}`}
                                         style={{ backgroundColor: c.val }}
                                         onClick={() => { setColor(c.val); setShowColors(false); }}
                                         title={c.name}
                                     />
                                 ))}
-                            </motion.div>
+                            </div>
                         )}
-                    </AnimatePresence>
-                </div>
+                    </div>
 
-                <div className="relative">
-                    <Button variant="outline" size="sm" onClick={() => { setShowWidths(!showWidths); setShowColors(false); }} className="gap-2 font-mono">
-                        <span className="text-xs">粗細: {lineWidth}</span>
-                        {showWidths ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
-                    </Button>
-                    <AnimatePresence>
+                    <div className="relative">
+                        <Button variant="outline" size="sm" onClick={() => { setShowWidths(!showWidths); setShowColors(false); }} className="h-8 gap-1.5 text-xs font-mono">
+                            粗細: {lineWidth}
+                            {showWidths ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+                        </Button>
                         {showWidths && (
-                            <motion.div 
-                                initial={{ opacity: 0, y: isFullscreen ? 10 : -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: isFullscreen ? 10 : -10 }}
-                                className={`absolute p-2 bg-card border shadow-2xl rounded-xl grid grid-cols-5 gap-1 z-50 min-w-[180px] ${isFullscreen ? 'bottom-12 left-0' : 'top-12 left-0'}`}
-                            >
+                            <div className={`absolute p-2 bg-card border border-border/50 shadow-2xl rounded-xl grid grid-cols-5 gap-1 z-50 min-w-[160px] ${isFullscreen ? 'bottom-10 left-0' : 'top-10 left-0'}`}>
                                 {widths.map((w) => (
                                     <button
                                         key={w}
-                                        className={`h-8 rounded-lg text-xs font-bold transition-all hover:bg-primary/10 ${lineWidth === w ? 'bg-primary text-primary-foreground' : ''}`}
+                                        className={`h-7 rounded-lg text-xs font-bold transition-all active:scale-90 ${lineWidth === w ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'}`}
                                         onClick={() => { setLineWidth(w); setShowWidths(false); }}
                                     >
                                         {w}
                                     </button>
                                 ))}
-                            </motion.div>
+                            </div>
                         )}
-                    </AnimatePresence>
-                </div>
+                    </div>
 
-                <div className="flex items-center gap-2">
-                    <Button variant="outline" size="icon" onClick={toggleFullscreen} title={isFullscreen ? "退出全螢幕" : "全螢幕分享"}>
-                        {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+                    <div className="h-6 w-px bg-border/50 mx-0.5" />
+
+                    <Button variant="outline" size="icon" onClick={toggleFullscreen} title={isFullscreen ? "退出全螢幕" : "全螢幕"} className="h-8 w-8">
+                        {isFullscreen ? <Minimize2 className="h-3.5 w-3.5" /> : <Maximize2 className="h-3.5 w-3.5" />}
                     </Button>
-                    <Button variant="outline" size="sm" onClick={download} className="gap-2">
-                        <Download className="h-4 w-4" />
+                    <Button variant="outline" size="sm" onClick={download} className="h-8 gap-1.5 text-xs">
+                        <Download className="h-3.5 w-3.5" />
                         <span className="hidden sm:inline">下載</span>
                     </Button>
                 </div>
-            </div>
-        </Card>
+            </Card>
+        </div>
     );
 
     return (
         <ToolLayout title="電子白板">
             <div 
                 ref={containerRef} 
-                className={`flex flex-col gap-4 bg-background relative ${isFullscreen ? 'h-screen w-screen p-6' : 'h-[calc(100vh-200px)] min-h-[500px]'}`}
+                className={`flex flex-col gap-3 bg-background relative ${isFullscreen ? 'h-screen w-screen p-3 sm:p-4' : 'h-[calc(100vh-180px)] min-h-[450px]'}`}
             >
                 {!isFullscreen && <Toolbar />}
 
-                <div className={`flex-1 relative bg-white rounded-2xl border-2 border-primary/10 shadow-inner overflow-hidden cursor-crosshair touch-none ${isFullscreen ? 'rounded-3xl border-0 shadow-2xl mb-4' : ''}`}>
+                <div className={`flex-1 relative bg-white rounded-2xl border border-primary/10 shadow-inner overflow-hidden cursor-crosshair touch-none ${isFullscreen ? 'rounded-3xl border-0 shadow-2xl' : ''}`}>
                     <canvas
                         ref={canvasRef}
                         onMouseDown={startDrawing}
@@ -337,10 +329,8 @@ export default function Whiteboard() {
                     />
                     
                     {!isFullscreen && (
-                        <div className="absolute bottom-4 right-4 pointer-events-none opacity-20 select-none">
-                            <div className="text-black text-xs font-bold flex items-center gap-2">
-                                <Palette className="h-3 w-3" /> 崇明國中 v2 電子白板
-                            </div>
+                        <div className="absolute bottom-3 right-3 pointer-events-none opacity-10 select-none">
+                            <Palette className="h-4 w-4 text-black" />
                         </div>
                     )}
                 </div>

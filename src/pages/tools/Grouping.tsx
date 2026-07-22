@@ -33,18 +33,15 @@ export default function Grouping() {
             return;
         }
 
-        // 洗牌
         const shuffled = [...lines];
         for (let i = shuffled.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
 
-        // 分組
         const groups: string[][] = [];
 
         if (groupType === "count") {
-            // 按組數分組
             const actualGroupCount = Math.min(groupCount, shuffled.length);
             const baseSize = Math.floor(shuffled.length / actualGroupCount);
             const remainder = shuffled.length % actualGroupCount;
@@ -56,7 +53,6 @@ export default function Grouping() {
                 index += size;
             }
         } else {
-            // 按每組人數分組
             for (let i = 0; i < shuffled.length; i += groupSize) {
                 groups.push(shuffled.slice(i, i + groupSize));
             }
@@ -70,122 +66,127 @@ export default function Grouping() {
         setResult([]);
     };
 
+    const groupColors = [
+        "from-blue-500/20 to-blue-600/10 border-blue-500/30",
+        "from-emerald-500/20 to-emerald-600/10 border-emerald-500/30",
+        "from-violet-500/20 to-violet-600/10 border-violet-500/30",
+        "from-amber-500/20 to-amber-600/10 border-amber-500/30",
+        "from-rose-500/20 to-rose-600/10 border-rose-500/30",
+        "from-cyan-500/20 to-cyan-600/10 border-cyan-500/30",
+    ];
+
     return (
         <ToolLayout title="分組工具">
-            <div className="space-y-6">
-                <div className="text-center">
-                    <h2 className="text-2xl font-bold mb-2 text-foreground">👥 分組工具</h2>
-                    <p className="text-muted-foreground">快速將名單分成多個小組</p>
-                </div>
-
-                {/* 輸入區 */}
-                <Card className="p-6">
-                    <h3 className="text-lg font-semibold mb-4 text-foreground">名單輸入</h3>
-                    <Textarea
-                        placeholder="請輸入名單，每行一個&#10;例如：&#10;第一項&#10;第二項&#10;第三項"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        className="min-h-[150px] font-mono"
-                    />
-                    <p className="text-xs text-muted-foreground mt-2">
-                        共 {input.split("\n").filter((line) => line.trim().length > 0).length} 個項目
-                    </p>
-                </Card>
-
-                {/* 分組設定 */}
-                <Card className="p-6">
-                    <h3 className="text-lg font-semibold mb-4 text-foreground">分組設定</h3>
-                    <RadioGroup value={groupType} onValueChange={(value) => setGroupType(value as "count" | "size")}>
-                        <div className="flex items-center space-x-2 mb-4">
-                            <RadioGroupItem value="count" id="count" />
-                            <Label htmlFor="count" className="flex items-center gap-2 flex-1 cursor-pointer">
-                                分成
-                                <Input
-                                    type="number"
-                                    min="1"
-                                    max="20"
-                                    value={groupCount}
-                                    onChange={(e) => setGroupCount(Number(e.target.value))}
-                                    className="w-20 text-center"
-                                    onClick={() => setGroupType("count")}
-                                />
-                                組
-                            </Label>
+            <div className="space-y-4 sm:space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+                    <Card className="lg:col-span-5 p-4 sm:p-5 space-y-4">
+                        <h3 className="text-base sm:text-lg font-bold">名單輸入</h3>
+                        <Textarea
+                            placeholder="請輸入名單，每行一個"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            className="min-h-[180px] font-mono text-sm leading-relaxed resize-none"
+                        />
+                        <div className="text-xs text-muted-foreground/70 flex items-center justify-between">
+                            <span>每行一個項目</span>
+                            <span className="font-medium">
+                                {input.split("\n").filter((line) => line.trim().length > 0).length} 個項目
+                            </span>
                         </div>
-                        <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="size" id="size" />
-                            <Label htmlFor="size" className="flex items-center gap-2 flex-1 cursor-pointer">
-                                每組
-                                <Input
-                                    type="number"
-                                    min="1"
-                                    max="50"
-                                    value={groupSize}
-                                    onChange={(e) => setGroupSize(Number(e.target.value))}
-                                    className="w-20 text-center"
-                                    onClick={() => setGroupType("size")}
-                                />
-                                人
-                            </Label>
+
+                        <div className="space-y-3 pt-1">
+                            <RadioGroup value={groupType} onValueChange={(value) => setGroupType(value as "count" | "size")}>
+                                <div className="flex items-center gap-3 p-3 rounded-xl bg-muted/30 border border-border/40">
+                                    <RadioGroupItem value="count" id="count" />
+                                    <Label htmlFor="count" className="flex items-center gap-2 flex-1 cursor-pointer text-sm">
+                                        分成
+                                        <Input
+                                            type="number"
+                                            min="1"
+                                            max="20"
+                                            value={groupCount}
+                                            onChange={(e) => setGroupCount(Number(e.target.value))}
+                                            className="w-16 h-8 text-center text-sm"
+                                            onClick={() => setGroupType("count")}
+                                        />
+                                        組
+                                    </Label>
+                                </div>
+                                <div className="flex items-center gap-3 p-3 rounded-xl bg-muted/30 border border-border/40">
+                                    <RadioGroupItem value="size" id="size" />
+                                    <Label htmlFor="size" className="flex items-center gap-2 flex-1 cursor-pointer text-sm">
+                                        每組
+                                        <Input
+                                            type="number"
+                                            min="1"
+                                            max="50"
+                                            value={groupSize}
+                                            onChange={(e) => setGroupSize(Number(e.target.value))}
+                                            className="w-16 h-8 text-center text-sm"
+                                            onClick={() => setGroupType("size")}
+                                        />
+                                        人
+                                    </Label>
+                                </div>
+                            </RadioGroup>
+
+                            <div className="flex gap-2 pt-1">
+                                <Button onClick={handleGroup} className="flex-1 h-11">
+                                    <Shuffle className="mr-1.5 h-4 w-4" />
+                                    開始分組
+                                </Button>
+                                <Button onClick={handleClear} variant="outline" className="h-11">
+                                    <Trash2 className="mr-1.5 h-4 w-4" />
+                                    清空
+                                </Button>
+                            </div>
                         </div>
-                    </RadioGroup>
+                    </Card>
 
-                    <div className="mt-6 flex gap-2">
-                        <Button onClick={handleGroup} className="flex-1">
-                            <Shuffle className="mr-2 h-4 w-4" />
-                            開始分組
-                        </Button>
-                        <Button onClick={handleClear} variant="outline">
-                            <Trash2 className="mr-2 h-4 w-4" />
-                            清空
-                        </Button>
-                    </div>
-                </Card>
-
-                {/* 結果顯示 */}
-                {result.length > 0 && (
-                    <div className="space-y-4">
-                        <h3 className="text-lg font-semibold flex items-center gap-2 text-foreground">
-                            <Users className="h-5 w-5" />
-                            分組結果（共 {result.length} 組）
+                    <Card className="lg:col-span-7 p-4 sm:p-5">
+                        <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center gap-2">
+                            <Users className="h-5 w-5 text-primary" />
+                            分組結果
+                            {result.length > 0 && (
+                                <span className="text-xs font-normal text-muted-foreground ml-1">
+                                    {result.reduce((sum, g) => sum + g.length, 0)} 人 · {result.length} 組
+                                </span>
+                            )}
                         </h3>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {result.map((group, groupIndex) => (
-                                <Card key={groupIndex} className="p-4">
-                                    <div className="font-semibold mb-3 flex items-center gap-2">
-                                        <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm">
-                                            {groupIndex + 1}
-                                        </div>
-                                        第 {groupIndex + 1} 組（{group.length} 人）
-                                    </div>
-                                    <div className="space-y-2">
-                                        {group.map((member, memberIndex) => (
-                                            <div key={memberIndex} className="flex items-center gap-2 text-sm p-2 bg-muted/50 rounded">
-                                                <span className="text-muted-foreground">{memberIndex + 1}.</span>
-                                                <span>{member}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </Card>
-                            ))}
-                        </div>
-                    </div>
-                )}
 
-                {/* 使用說明 */}
-                <Card className="p-6 bg-primary/5 border-primary/20">
-                    <h3 className="text-sm font-semibold mb-2 flex items-center gap-2 text-foreground">
-                        <span>💡</span>
-                        使用說明
-                    </h3>
-                    <ul className="text-sm text-muted-foreground space-y-1">
-                        <li>• 預設已填入 1-30 的數字，可直接分組</li>
-                        <li>• 在上方輸入框中輸入名單，每行一個名字</li>
-                        <li>• 選擇「分成 N 組」或「每組 N 人」</li>
-                        <li>• 點擊「開始分組」進行隨機分組</li>
-                        <li>• 分組結果會自動打亂順序</li>
-                    </ul>
-                </Card>
+                        {result.length > 0 ? (
+                            <div className="grid sm:grid-cols-2 gap-3">
+                                {result.map((group, groupIndex) => (
+                                    <div
+                                        key={groupIndex}
+                                        className={`rounded-2xl border bg-gradient-to-br ${groupColors[groupIndex % groupColors.length]} p-4`}
+                                    >
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <div className="w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold">
+                                                {groupIndex + 1}
+                                            </div>
+                                            <span className="text-sm font-semibold">第 {groupIndex + 1} 組</span>
+                                            <span className="text-xs text-muted-foreground ml-auto">{group.length} 人</span>
+                                        </div>
+                                        <div className="space-y-1.5">
+                                            {group.map((member, memberIndex) => (
+                                                <div key={memberIndex} className="flex items-center gap-2 text-sm p-2 bg-background/60 rounded-lg">
+                                                    <span className="text-muted-foreground/50 text-xs w-4 text-right shrink-0">{memberIndex + 1}.</span>
+                                                    <span>{member}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="py-16 text-center text-muted-foreground/50 border-2 border-dashed rounded-2xl">
+                                <Users className="h-10 w-10 mx-auto mb-2 opacity-20" />
+                                <p className="text-sm">輸入名單後點擊「開始分組」</p>
+                            </div>
+                        )}
+                    </Card>
+                </div>
             </div>
         </ToolLayout>
     );

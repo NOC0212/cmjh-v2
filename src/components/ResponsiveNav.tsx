@@ -6,11 +6,17 @@ import { AppSidebar } from "@/components/AppSidebar";
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { isAdminUnlocked } from "@/lib/app-version";
+import { cn } from "@/lib/utils";
 
-// 頁面選單類型定義
 export type NavPage = "home" | "search" | "announcements" | "favorites" | "settings" | "admin";
 
-const navItems: { id: NavPage; label: string; icon: typeof Home }[] = [
+interface NavItem {
+    id: NavPage;
+    label: string;
+    icon: typeof Home;
+}
+
+const navItems: NavItem[] = [
     { id: "home", label: "主頁", icon: Home },
     { id: "search", label: "搜尋", icon: Search },
     { id: "announcements", label: "公告", icon: Megaphone },
@@ -18,9 +24,10 @@ const navItems: { id: NavPage; label: string; icon: typeof Home }[] = [
     { id: "settings", label: "設定", icon: Settings },
 ];
 
-// 管理分頁：預設隱藏，需在設定 > 系統資料點版本箭頭 5 下解鎖
-const adminNavItem: { id: NavPage; label: string; icon: typeof Home } = {
-    id: "admin", label: "管理", icon: Shield,
+const adminNavItem: NavItem = {
+    id: "admin",
+    label: "管理",
+    icon: Shield,
 };
 
 interface ResponsiveNavProps {
@@ -37,100 +44,127 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
     const lastScrollY = useRef(0);
 
     useEffect(() => {
-      if (!isMobile) return;
-      const container = document.querySelector("main");
-      if (!container) return;
-      const handleScroll = () => {
-        const currentY = container.scrollTop;
-        if (currentY > lastScrollY.current && currentY > 80) {
-          setHeaderHidden(true);
-        } else {
-          setHeaderHidden(false);
-        }
-        lastScrollY.current = currentY;
-      };
-      container.addEventListener("scroll", handleScroll, { passive: true });
-      return () => container.removeEventListener("scroll", handleScroll);
+        if (!isMobile) return;
+        const container = document.querySelector("main");
+        if (!container) return;
+        const handleScroll = () => {
+            const currentY = container.scrollTop;
+            if (currentY > lastScrollY.current && currentY > 80) {
+                setHeaderHidden(true);
+            } else {
+                setHeaderHidden(false);
+            }
+            lastScrollY.current = currentY;
+        };
+        container.addEventListener("scroll", handleScroll, { passive: true });
+        return () => container.removeEventListener("scroll", handleScroll);
     }, [isMobile]);
 
     const handleRefresh = () => {
         window.location.reload();
     };
 
-    // 決定目前顯示的導航項目（管理分頁需解鎖才顯示）
+    const handleNavClick = (item: NavItem) => {
+        onPageChange(item.id);
+    };
+
     const visibleItems = isAdminUnlocked()
         ? [...navItems, adminNavItem]
         : navItems;
 
-    // 渲染導航按鈕項目
-    const renderNavItem = (item: typeof navItems[0]) => {
+    const renderNavItem = (item: NavItem, isFooter = false) => {
         const Icon = item.icon;
         const isActive = currentPage === item.id;
 
         return (
-            <Button
+            <button
                 key={item.id}
-                variant="ghost"
-                className={`relative flex items-center transition-all duration-300 rounded-xl overflow-hidden ${
-                    isActive
-                        ? 'text-primary font-bold bg-transparent hover:bg-transparent active:bg-transparent focus:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0'
-                        : 'hover:bg-primary/5 hover:text-primary text-muted-foreground'
-                } ${isMobile
-                    ? 'flex-col justify-center h-12 px-0 flex-1 min-w-0 rounded-2xl [&_svg]:size-6'
-                    : `h-12 justify-start p-0 px-2 ${isHovered ? 'w-full' : 'w-12'}`
-                }`}
-                onClick={() => onPageChange(item.id)}
+                type="button"
+                className={cn(
+                    "relative flex items-center justify-center transition-all duration-200",
+                    isFooter
+                        ? "flex-col h-12 flex-1 min-w-0 gap-0.5"
+                        : "h-12 w-full gap-3 px-2",
+                    !isFooter && "hover:bg-primary/5 rounded-xl"
+                )}
+                onClick={() => handleNavClick(item)}
             >
-                <div className={`relative z-10 flex items-center ${isMobile ? 'flex-col gap-1' : ''}`}>
-                    <div className={`shrink-0 flex items-center justify-center ${isMobile ? '' : 'w-8'}`}>
-                        <div className="relative">
-                            <Icon className={`h-6 w-6 ${isActive ? 'stroke-[2.5px]' : ''}`} fill={isActive && item.id !== "search" && item.id !== "settings" ? 'currentColor' : 'none'} />
-                            {item.id === "favorites" && favorites.length > 0 && (
-                                <span className="absolute -top-1 -right-2 bg-red-500 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center">
-                                    {favorites.length > 9 ? "9+" : favorites.length}
-                                </span>
-                            )}
+                {isFooter && isActive && (
+                    <motion.div
+                        layoutId="nav-active-pill"
+                        className="absolute -top-0.5 inset-x-0 mx-auto w-8 h-1 bg-primary rounded-full"
+                        transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                    />
+                )}
+                <div className={cn(
+                    "relative z-10 flex items-center justify-center",
+                    isFooter ? "flex-col gap-0.5" : "gap-3 w-full"
+                )}>
+                    <div className="relative">
+                        <div className={cn(
+                            "flex items-center justify-center rounded-xl transition-all duration-200",
+                            isFooter ? "w-auto" : "w-8 h-8",
+                            !isFooter && isActive && "bg-primary/10"
+                        )}>
+                            <Icon
+                                className={cn(
+                                    "transition-all duration-200",
+                                    isFooter ? "h-5 w-5" : "h-5 w-5",
+                                    isActive
+                                        ? "text-primary stroke-[2.5px]"
+                                        : "text-muted-foreground"
+                                )}
+                                fill={isActive && item.id !== "search" && item.id !== "settings" ? 'currentColor' : 'none'}
+                            />
                         </div>
+                        {item.id === "favorites" && favorites.length > 0 && (
+                            <span className="absolute -top-1 -right-1.5 bg-destructive text-destructive-foreground text-[10px] font-bold rounded-full h-4 min-w-[16px] flex items-center justify-center px-1 shadow-sm">
+                                {favorites.length > 9 ? "9+" : favorites.length}
+                            </span>
+                        )}
                     </div>
-                    {/* 桌面版展開時標籤 */}
-                    {!isMobile && isHovered && (
-                        <motion.span
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="text-sm font-medium whitespace-nowrap"
-                        >
-                            {item.label}
-                        </motion.span>
-                    )}
+                    <span className={cn(
+                        "font-medium transition-all duration-200",
+                        isFooter ? "text-[10px] leading-tight" : "text-sm",
+                        isActive ? "text-primary" : "text-muted-foreground"
+                    )}>
+                        {item.label}
+                    </span>
                 </div>
-            </Button>
+            </button>
         );
     };
 
-    // 手機版渲染邏輯
     if (isMobile) {
         if (mode === "header") {
             return (
-                <header className={`image-bg-surface bg-background/90 backdrop-blur-md border-b border-border/50 z-50 fixed top-0 left-0 right-0 transition-transform duration-300 ${headerHidden ? '-translate-y-full' : 'translate-y-0'}`}>
-                    <div className="pt-[env(safe-area-inset-top)]">
-                        <div className="flex items-center justify-between h-14 px-4">
-                            <div className="flex items-center gap-2 animate-slide-in-left">
-                                <img src="/favicon.png" alt="崇明國中" className="h-6 w-6" />
-                                <h1 className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                                    崇明國中
-                                </h1>
-                            </div>
-                            <div className="flex items-center gap-2 animate-slide-in-right">
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    onClick={handleRefresh}
-                                    className="hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all"
-                                    title="重新整理頁面"
-                                >
-                                    <RefreshCw className="h-5 w-5" />
-                                </Button>
-                                <AppSidebar />
+                <header className={cn(
+                    "fixed top-0 left-0 right-0 z-50 transition-transform duration-300",
+                    headerHidden ? "-translate-y-full" : "translate-y-0"
+                )}>
+                    <div className="glass">
+                        <div className="pt-[env(safe-area-inset-top)]">
+                            <div className="flex items-center justify-between h-14 px-4">
+                                <div className="flex items-center gap-2.5">
+                                    <div className="flex items-center justify-center w-8 h-8 rounded-xl bg-primary/10">
+                                        <img src="/favicon.png" alt="崇明國中" className="h-5 w-5" />
+                                    </div>
+                                    <h1 className="text-base font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                                        崇明國中
+                                    </h1>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={handleRefresh}
+                                        className="h-9 w-9 rounded-xl text-muted-foreground hover:text-primary hover:bg-primary/10"
+                                        title="重新整理頁面"
+                                    >
+                                        <RefreshCw className="h-4 w-4" />
+                                    </Button>
+                                    <AppSidebar />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -141,11 +175,13 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
         if (mode === "footer") {
             return (
                 <div className="fixed bottom-0 left-0 right-0 z-50">
-                    <nav className="image-bg-surface bg-background/80 backdrop-blur-xl border-t border-white/20 dark:border-white/10 shadow-lg touch-none select-none w-full">
-                        <div className="flex items-center justify-around h-14 w-full">
-                            {visibleItems.map((item) => renderNavItem(item))}
-                        </div>
-                    </nav>
+                    <div className="pt-1">
+                        <nav className="glass-strong rounded-t-2xl px-2 pb-[env(safe-area-inset-bottom,8px)]">
+                            <div className="flex items-center justify-evenly h-14">
+                                {visibleItems.map((item) => renderNavItem(item, true))}
+                            </div>
+                        </nav>
+                    </div>
                 </div>
             );
         }
@@ -153,57 +189,94 @@ export function ResponsiveNav({ currentPage, onPageChange, mode = "full" }: Resp
         return null;
     }
 
-    // 桌面版渲染邏輯
     return (
         <motion.nav
             initial={false}
-            animate={{ width: isHovered ? 240 : 64 }}
-            transition={{ type: "tween", duration: 0.2 }}
+            animate={{ width: isHovered ? 220 : 64 }}
+            transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="image-bg-surface fixed left-0 top-0 bg-background border-r border-border/50 flex flex-col items-center shrink-0 h-full py-6 z-50 shadow-xl px-4 overflow-hidden"
+            className="fixed left-0 top-0 h-full z-50 flex flex-col bg-card border-r border-border/50 shadow-sm py-5 overflow-x-hidden"
         >
-            {/* Logo 區域 */}
-            <div className={`mb-8 flex flex-col gap-4 w-full ${isHovered ? 'items-start' : 'items-center'}`}>
-                <div className="flex items-center w-full overflow-hidden">
-                    <div className="w-8 flex items-center justify-center shrink-0">
-                        <div className="p-1 bg-primary/10 rounded-xl flex items-center justify-center">
-                            <img src="/favicon.png" alt="崇明國中" className="h-5 w-5" />
-                        </div>
+            <div className={cn("mb-6 flex flex-col gap-4 px-3", isHovered ? 'items-stretch' : 'items-center')}>
+                <div className="flex items-center overflow-hidden">
+                    <div className="flex items-center justify-center w-8 h-8 shrink-0 rounded-xl bg-primary/10">
+                        <img src="/favicon.png" alt="崇明國中" className="h-5 w-5" />
                     </div>
                     {isHovered && (
                         <motion.h1
-                            initial={{ opacity: 0, x: -10 }}
+                            initial={{ opacity: 0, x: -8 }}
                             animate={{ opacity: 1, x: 0 }}
-                            className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent whitespace-nowrap pl-1"
+                            className="text-sm font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent whitespace-nowrap ml-2"
                         >
                             崇明國中
                         </motion.h1>
                     )}
                 </div>
 
-                <Button
-                    variant="ghost"
-                    size={isHovered ? "default" : "icon"}
+                <button
+                    type="button"
                     onClick={handleRefresh}
-                    className={`h-12 hover:bg-primary/10 text-muted-foreground hover:text-primary transition-all rounded-xl p-0 px-2 ${isHovered ? 'w-full justify-start' : 'w-12 justify-center'}`}
-                    title="重新整理頁面"
+                    className={cn(
+                        "flex items-center gap-3 h-9 rounded-xl text-muted-foreground hover:text-primary hover:bg-primary/5 transition-all text-xs",
+                        isHovered ? "px-2 w-full justify-start" : "w-9 justify-center"
+                    )}
                 >
-                    <div className={`shrink-0 flex items-center justify-center ${isHovered ? 'w-8' : 'w-8'}`}>
-                        <RefreshCw className="h-5 w-5" />
-                    </div>
-                    {isHovered && <span className="font-medium text-sm">重新整理</span>}
-                </Button>
+                    <RefreshCw className="h-4 w-4 shrink-0" />
+                    {isHovered && <span className="font-medium">重新整理</span>}
+                </button>
             </div>
 
-            {/* 功能項區域 */}
-                <div className={`flex-1 flex flex-col justify-center gap-2 w-full ${isHovered ? 'items-start' : 'items-center'}`}>
-                    {visibleItems.map((item) => renderNavItem(item))}
-                </div>
+            <div className="flex-1 flex flex-col gap-1 px-2">
+                {visibleItems.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = currentPage === item.id;
+                    return (
+                        <button
+                            key={item.id}
+                            type="button"
+                            onClick={() => onPageChange(item.id)}
+                            className={cn(
+                                "relative flex items-center h-10 rounded-xl transition-all duration-200",
+                                isHovered ? "gap-3 px-2 w-full justify-start" : "w-10 justify-center mx-auto",
+                                isActive
+                                    ? "bg-primary/10 text-primary"
+                                    : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+                            )}
+                        >
+                            <div className="relative">
+                                <Icon
+                                    className={cn(
+                                        "h-5 w-5 shrink-0 transition-all",
+                                        isActive && "stroke-[2.5px]"
+                                    )}
+                                    fill={isActive && item.id !== "search" && item.id !== "settings" ? 'currentColor' : 'none'}
+                                />
+                                {item.id === "favorites" && favorites.length > 0 && (
+                                    <span className="absolute -top-1.5 -right-2 bg-destructive text-destructive-foreground text-[9px] font-bold rounded-full h-3.5 min-w-[14px] flex items-center justify-center px-0.5 shadow-sm">
+                                        {favorites.length > 9 ? "9+" : favorites.length}
+                                    </span>
+                                )}
+                            </div>
+                            {isHovered && (
+                                <motion.span
+                                    initial={{ opacity: 0, x: -4 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    className="text-sm font-medium"
+                                >
+                                    {item.label}
+                                </motion.span>
+                            )}
+                        </button>
+                    );
+                })}
 
-            {/* 側邊欄腳部選單 */}
-            <div className={`mt-auto w-full flex flex-col ${isHovered ? 'items-start' : 'items-center'}`}>
-                <AppSidebar expanded={isHovered} />
+            </div>
+
+            <div className="mt-auto px-2">
+                <div className={isHovered ? '' : 'flex justify-center'}>
+                    <AppSidebar expanded={isHovered} />
+                </div>
             </div>
         </motion.nav>
     );

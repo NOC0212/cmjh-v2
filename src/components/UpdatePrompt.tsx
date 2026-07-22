@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { RefreshCw, Download } from "lucide-react";
 import { motion, useSpring } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { getCurrentVersion, FALLBACK_VERSION, migrateData } from "@/lib/app-version";
+import { getCurrentVersion, migrateData } from "@/lib/app-version";
 import { useSettings } from "@/hooks/SettingsContext";
 import { useSiteConfig } from "@/hooks/useSiteConfig";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";

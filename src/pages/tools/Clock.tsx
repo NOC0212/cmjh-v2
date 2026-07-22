@@ -1,8 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useReducer } from "react";
 import { ToolLayout } from "@/components/ToolLayout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Maximize2, Minimize2 } from "lucide-react";
+import { Maximize2, MapPin } from "lucide-react";
 import {
     Select,
     SelectContent,
@@ -63,14 +63,14 @@ function getTimeParts(timeZone: string) {
 }
 
 export default function Clock() {
-    const [time, setTime] = useState(new Date());
+    const [, tick] = useReducer((x: number) => x + 1, 0);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [selectedZone, setSelectedZone] = useState("Asia/Taipei");
 
     useEffect(() => {
-        const timer = setInterval(() => setTime(new Date()), 1000);
+        const timer = setInterval(() => tick(), 1000);
         return () => clearInterval(timer);
-    }, []);
+    }, [tick]);
 
     useEffect(() => {
         const onFsChange = () => setIsFullscreen(!!document.fullscreenElement);
@@ -95,18 +95,18 @@ export default function Clock() {
                 className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background cursor-pointer"
                 onClick={toggleFullscreen}
             >
-                <div className="font-mono text-center space-y-2">
-                    <div className="text-[6rem] sm:text-[10rem] md:text-[14rem] lg:text-[18rem] font-bold leading-none bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                <div className="font-mono text-center space-y-4">
+                    <div className="text-[5rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] font-bold leading-none bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent tracking-wider">
                         {mainTime.hours}:{mainTime.minutes}:{mainTime.seconds}
                     </div>
-                    <div className="text-xl sm:text-2xl md:text-3xl text-muted-foreground mt-4">
-                        {mainTime.year}年{mainTime.month}月{mainTime.date}日 {mainTime.weekday}
+                    <div className="text-xl sm:text-2xl md:text-3xl text-muted-foreground/80">
+                        {mainTime.year} 年 {mainTime.month} 月 {mainTime.date} 日 {mainTime.weekday}
                     </div>
-                    <div className="text-lg sm:text-xl text-muted-foreground/60 mt-1">
-                        {selected.label} ({selected.utc})
+                    <div className="text-base sm:text-lg text-muted-foreground/50">
+                        {selected.label}（{selected.utc}）
                     </div>
                 </div>
-                <div className="absolute bottom-8 text-muted-foreground/40 text-sm">
+                <div className="absolute bottom-8 text-muted-foreground/30 text-sm">
                     點擊任意處退出全螢幕
                 </div>
             </div>
@@ -115,77 +115,63 @@ export default function Clock() {
 
     return (
         <ToolLayout title="時鐘">
-            <div className="space-y-6">
-                <div className="text-center">
-                    <h2 className="text-2xl font-bold mb-2 text-foreground">🕐 時鐘</h2>
-                    <p className="text-muted-foreground">切換時區查看全球時間</p>
-                </div>
-
-                <Card className="p-8 md:p-12 text-center bg-gradient-to-br from-primary/5 to-accent/5">
+            <div className="space-y-4 sm:space-y-6">
+                <Card className="p-6 sm:p-10 text-center bg-gradient-to-br from-primary/[0.03] to-accent/[0.03]">
                     <div className="space-y-6">
                         <div className="font-mono">
-                            <div className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                            <div className="text-5xl sm:text-7xl md:text-8xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent tracking-wider">
                                 {mainTime.hours}:{mainTime.minutes}:{mainTime.seconds}
                             </div>
-                            <div className="text-2xl md:text-3xl text-muted-foreground mt-4">
-                                {mainTime.year}年{mainTime.month}月{mainTime.date}日 {mainTime.weekday}
+                            <div className="text-lg sm:text-xl text-muted-foreground mt-3">
+                                {mainTime.year} 年 {mainTime.month} 月 {mainTime.date} 日 {mainTime.weekday}
                             </div>
-                            <div className="text-lg text-muted-foreground/60 mt-1">
-                                {selected.label} ({selected.utc})
+                            <div className="flex items-center justify-center gap-2 mt-4">
+                                <MapPin className="h-4 w-4 text-primary/60" />
+                                <span className="text-sm text-muted-foreground/70">
+                                    {selected.label}（{selected.utc}）
+                                </span>
                             </div>
                         </div>
 
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                             <Select value={selectedZone} onValueChange={setSelectedZone}>
-                                <SelectTrigger className="w-[200px]">
+                                <SelectTrigger className="w-[180px] sm:w-[200px]">
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {TIMEZONES.map((tz) => (
                                         <SelectItem key={tz.id} value={tz.id}>
-                                            {tz.label} ({tz.utc})
+                                            {tz.label}（{tz.utc}）
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
                             </Select>
-                            <Button onClick={toggleFullscreen} variant="outline" size="lg">
+                            <Button onClick={toggleFullscreen} variant="outline" size="lg" className="h-11">
                                 <Maximize2 className="mr-2 h-4 w-4" />
-                                全螢幕顯示
+                                全螢幕
                             </Button>
                         </div>
                     </div>
                 </Card>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                    {TIMEZONES.filter((tz) => tz.id !== selectedZone).slice(0, 8).map((tz) => {
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
+                    {TIMEZONES.filter((tz) => tz.id !== selectedZone).map((tz) => {
                         const t = getTimeParts(tz.id);
                         return (
-                            <Card
+                            <button
                                 key={tz.id}
-                                className="p-4 text-center cursor-pointer hover:bg-accent/10 transition-colors"
                                 onClick={() => setSelectedZone(tz.id)}
+                                className="p-3 sm:p-4 rounded-2xl border border-border/50 bg-card/50 hover:bg-card hover:border-primary/30 hover:shadow-md transition-all duration-200 text-center active:scale-95"
                             >
-                                <div className="text-sm text-muted-foreground mb-1">{tz.label}</div>
-                                <div className="text-2xl font-bold font-mono">
+                                <div className="text-xs text-muted-foreground/70 mb-1">{tz.label}</div>
+                                <div className="text-xl sm:text-2xl font-bold font-mono text-foreground">
                                     {t.hours}:{t.minutes}
                                 </div>
-                                <div className="text-xs text-muted-foreground mt-1">{tz.utc}</div>
-                            </Card>
+                                <div className="text-[10px] text-muted-foreground/50 mt-1">{tz.utc}</div>
+                            </button>
                         );
                     })}
                 </div>
-
-                <Card className="p-6 bg-primary/5 border-primary/20">
-                    <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
-                        <span>💡</span>
-                        功能說明
-                    </h3>
-                    <ul className="text-sm text-muted-foreground space-y-1">
-                        <li>• 使用下拉選單或點擊時區卡片切換時區</li>
-                        <li>• 全螢幕模式僅顯示目前選定時區的大時鐘</li>
-                        <li>• 使用瀏覽器 Intl API 精確處理各時區時間</li>
-                    </ul>
-                </Card>
             </div>
         </ToolLayout>
     );

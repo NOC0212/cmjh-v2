@@ -27,7 +27,6 @@ export default function Order() {
             return;
         }
 
-        // Fisher-Yates 洗牌演算法
         const shuffled = [...lines];
         for (let i = shuffled.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -53,85 +52,72 @@ export default function Order() {
 
     return (
         <ToolLayout title="順序工具">
-            <div className="space-y-6">
-                <div className="text-center">
-                    <h2 className="text-2xl font-bold mb-2 text-foreground">🔀 順序工具</h2>
-                    <p className="text-muted-foreground">隨機排列名單順序</p>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                    {/* 輸入區 */}
-                    <Card className="p-6">
-                        <h3 className="text-lg font-semibold mb-4 text-foreground">名單輸入</h3>
+            <div className="space-y-4 sm:space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                    <Card className="p-4 sm:p-5 space-y-3">
+                        <h3 className="text-base sm:text-lg font-bold">名單輸入</h3>
                         <Textarea
-                            placeholder="請輸入名單，每行一個&#10;例如：&#10;第一項&#10;第二項&#10;第三項"
+                            placeholder="請輸入名單，每行一個"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
-                            className="min-h-[300px] font-mono"
+                            className="min-h-[200px] font-mono text-sm leading-relaxed resize-none"
                         />
-                        <div className="mt-4 flex gap-2">
-                            <Button onClick={handleShuffle} className="flex-1">
-                                <Shuffle className="mr-2 h-4 w-4" />
+                        <div className="flex gap-2">
+                            <Button onClick={handleShuffle} className="flex-1 h-11">
+                                <Shuffle className="mr-1.5 h-4 w-4" />
                                 隨機排序
                             </Button>
-                            <Button onClick={handleClear} variant="outline">
-                                <Trash2 className="mr-2 h-4 w-4" />
+                            <Button onClick={handleClear} variant="outline" className="h-11">
+                                <Trash2 className="mr-1.5 h-4 w-4" />
                                 清空
                             </Button>
                         </div>
-                        <p className="text-xs text-muted-foreground mt-2">
-                            共 {input.split("\n").filter((line) => line.trim().length > 0).length} 個項目
-                        </p>
+                        <div className="text-xs text-muted-foreground/70">
+                            {input.split("\n").filter((line) => line.trim().length > 0).length} 個項目
+                        </div>
                     </Card>
 
-                    {/* 結果區 */}
-                    <Card className="p-6">
+                    <Card className="p-4 sm:p-5">
                         <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-lg font-semibold text-foreground">排序結果</h3>
+                            <h3 className="text-base sm:text-lg font-bold flex items-center gap-2">
+                                <Shuffle className="h-5 w-5 text-primary" />
+                                排序結果
+                                {result.length > 0 && (
+                                    <span className="text-xs font-normal text-muted-foreground">{result.length} 項</span>
+                                )}
+                            </h3>
                             {result.length > 0 && (
-                                <Button onClick={handleCopy} variant="outline" size="sm">
-                                    <Copy className="mr-2 h-4 w-4" />
+                                <Button onClick={handleCopy} variant="outline" size="sm" className="text-xs h-8">
+                                    <Copy className="mr-1 h-3.5 w-3.5" />
                                     複製
                                 </Button>
                             )}
                         </div>
 
                         {result.length > 0 ? (
-                            <div className="space-y-2 max-h-[300px] overflow-y-auto">
+                            <div className="space-y-1.5 max-h-[400px] overflow-y-auto pr-1">
                                 {result.map((item, index) => (
                                     <div
                                         key={index}
-                                        className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg hover:bg-muted transition-colors"
+                                        className="flex items-center gap-3 p-2.5 rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors"
                                     >
-                                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-sm">
+                                        <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold text-xs">
                                             {index + 1}
                                         </div>
-                                        <div className="flex-1 font-medium">{item}</div>
+                                        <div className="flex-1 text-sm font-medium truncate">{item}</div>
                                     </div>
                                 ))}
                             </div>
                         ) : (
-                            <div className="h-[300px] flex items-center justify-center text-muted-foreground border-2 border-dashed rounded-lg">
-                                點擊「隨機排序」開始
+                            <div className="h-[300px] flex items-center justify-center text-muted-foreground/50 border-2 border-dashed rounded-2xl">
+                                <div className="text-center">
+                                    <Shuffle className="h-8 w-8 mx-auto mb-2 opacity-20" />
+                                    <p className="text-sm">點擊「隨機排序」開始</p>
+                                </div>
                             </div>
                         )}
                     </Card>
                 </div>
-
-                {/* 使用說明 */}
-                <Card className="p-6 bg-primary/5 border-primary/20">
-                    <h3 className="text-sm font-semibold mb-2 flex items-center gap-2 text-foreground">
-                        <span>💡</span>
-                        使用說明
-                    </h3>
-                    <ul className="text-sm text-muted-foreground space-y-1">
-                        <li>• 預設已填入 1-30 的數字，可直接排序</li>
-                        <li>• 在左側輸入框中輸入名單，每行一個名字</li>
-                        <li>• 點擊「隨機排序」按鈕進行排序</li>
-                        <li>• 右側會顯示隨機排列後的結果</li>
-                        <li>• 可以點擊「複製」按鈕複製結果</li>
-                    </ul>
-                </Card>
             </div>
         </ToolLayout>
     );

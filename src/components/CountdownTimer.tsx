@@ -27,7 +27,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useSiteCountdowns } from "@/hooks/useSiteCountdowns";
 import { Reorder, AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { isImagePageBackground } from "@/lib/page-background";
 
 const GRADES = [
   { id: "7", label: "七年級", color: "from-blue-500 to-blue-600", bgColor: "from-blue-500/20 to-blue-600/10" },
@@ -135,7 +134,6 @@ export function CountdownTimer() {
     seconds: number;
   } | null>(null);
   const [progress, setProgress] = useState(0);
-  const [direction, setDirection] = useState(0);
   const [allCountdowns, setAllCountdowns] = useState<CountdownConfig[]>([]);
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [manageDialogOpen, setManageDialogOpen] = useState(false);
@@ -175,8 +173,8 @@ export function CountdownTimer() {
       try {
         targetData = JSON.parse(targetStored).map((c: Record<string, unknown>) => ({
           ...c,
-          targetDate: new Date(c.targetDate),
-          startDate: c.startDate ? new Date(c.startDate) : undefined,
+          targetDate: new Date(c.targetDate as string),
+          startDate: c.startDate ? new Date(c.startDate as string) : undefined,
         }));
       } catch { /* ignore */ }
     }
@@ -237,8 +235,8 @@ export function CountdownTimer() {
         const parsed = JSON.parse(stored);
         savedConfigs = parsed.map((c: Record<string, unknown>) => ({
           ...c,
-          targetDate: new Date(c.targetDate),
-          startDate: c.startDate ? new Date(c.startDate) : undefined,
+          targetDate: new Date(c.targetDate as string),
+          startDate: c.startDate ? new Date(c.startDate as string) : undefined,
         }));
       } catch (e) {
         console.error("Local storage parse error:", e);
@@ -326,12 +324,10 @@ export function CountdownTimer() {
   }, [targetDate, startDate, currentConfig]);
 
   const handlePrevious = () => {
-    setDirection(-1);
     setCurrentIndex((prev) => (prev - 1 + allCountdowns.length) % allCountdowns.length);
   };
 
   const handleNext = () => {
-    setDirection(1);
     setCurrentIndex((prev) => (prev + 1) % allCountdowns.length);
   };
 
@@ -476,50 +472,29 @@ export function CountdownTimer() {
   };
 
   const isComplete = progress >= 100;
-  const hasImageBackground = isImagePageBackground(settings.pageBackground, settings.pageBackgroundImage);
 
   if (!selectedGrade) {
     return (
-      <div
-        className={cn(
-          "image-bg-surface relative w-full max-w-[calc(100vw-2rem)] overflow-hidden rounded-3xl border border-primary/20 p-6 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-md md:p-10",
-          hasImageBackground && "shadow-2xl",
-        )}
-        style={{
-          background: hasImageBackground
-            ? 'linear-gradient(135deg, hsl(var(--card) / 0.9) 0%, hsl(var(--card) / 0.82) 100%)'
-            : 'linear-gradient(135deg, var(--primary-light) 0%, var(--accent-light) 100%)',
-          backdropFilter: hasImageBackground ? 'none' : 'blur(12px) saturate(180%)',
-          WebkitBackdropFilter: hasImageBackground ? 'none' : 'blur(12px) saturate(180%)',
-        }}
-      >
-        <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/5 blur-3xl transition-colors" />
-        <div className="absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-accent/5 blur-3xl transition-colors" />
-
-        <div className="relative z-10 flex flex-col items-center justify-center gap-8 py-16 md:py-20">
-          <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-primary/10 shadow-inner">
-            <Clock className="h-8 w-8 text-primary/60" />
-          </div>
-          <div className="text-center">
-            <h3 className="text-2xl font-black text-muted-foreground/60">選擇年級</h3>
-            <p className="mt-2 text-sm text-muted-foreground/40">請選擇你的班級年級以開始使用倒數計時器</p>
-          </div>
-          <div className="flex flex-col gap-4 w-full max-w-sm">
-            {GRADES.map((grade) => (
-              <button
-                key={grade.id}
-                onClick={() => handleGradeChange(grade.id)}
-                className={cn(
-                  "group relative overflow-hidden rounded-2xl border p-5 text-center transition-all hover:scale-[1.02] hover:shadow-lg cursor-pointer",
-                  `bg-gradient-to-br ${grade.bgColor} border-primary/20 hover:border-primary/40`
-                )}
-              >
-                <div className={cn("bg-gradient-to-r bg-clip-text text-transparent text-xl font-black", grade.color)}>
-                  {grade.label}
-                </div>
-              </button>
-            ))}
-          </div>
+      <div className="relative overflow-hidden flex flex-col items-center justify-center gap-6 rounded-xl border bg-card px-6 py-12 shadow-sm">
+        <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/[0.12] blur-3xl" />
+        <div className="absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-accent/[0.1] blur-3xl" />
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
+          <Clock className="h-6 w-6 text-primary" />
+        </div>
+        <div className="text-center">
+          <h3 className="text-base font-bold text-muted-foreground">選擇年級</h3>
+          <p className="mt-1 text-xs text-muted-foreground/50">請選擇你的班級年級以開始使用倒數計時器</p>
+        </div>
+        <div className="flex w-full max-w-xs flex-col gap-2">
+          {GRADES.map((grade) => (
+            <button
+              key={grade.id}
+              onClick={() => handleGradeChange(grade.id)}
+              className="rounded-xl border px-5 py-3 text-sm font-bold text-foreground transition-all hover:border-primary/30 hover:shadow-md active:scale-[0.98]"
+            >
+              {grade.label}
+            </button>
+          ))}
         </div>
       </div>
     );
@@ -527,167 +502,135 @@ export function CountdownTimer() {
 
   if (!currentConfig) {
     return (
-      <div
-        className={cn(
-          "image-bg-surface relative w-full max-w-[calc(100vw-2rem)] overflow-hidden rounded-3xl border border-primary/20 p-6 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-md md:p-10",
-          hasImageBackground && "shadow-2xl",
-        )}
-        style={{
-          background: hasImageBackground
-            ? 'linear-gradient(135deg, hsl(var(--card) / 0.9) 0%, hsl(var(--card) / 0.82) 100%)'
-            : 'linear-gradient(135deg, var(--primary-light) 0%, var(--accent-light) 100%)',
-          backdropFilter: hasImageBackground ? 'none' : 'blur(12px) saturate(180%)',
-          WebkitBackdropFilter: hasImageBackground ? 'none' : 'blur(12px) saturate(180%)',
-        }}
-      >
-        <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/5 blur-3xl transition-colors" />
-        <div className="absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-accent/5 blur-3xl transition-colors" />
-
-        <div className="relative z-10 flex flex-col items-center justify-center gap-6 py-16 md:py-20">
-          <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-primary/10 shadow-inner">
-            <Clock className="h-8 w-8 text-primary/60" />
-          </div>
-          <div className="text-center">
-            <h3 className="text-2xl font-black text-muted-foreground/60">尚無倒數計時</h3>
-            <p className="mt-2 text-sm text-muted-foreground/40">點擊下方按鈕新增一個倒數計時</p>
-          </div>
-          <Dialog open={addDialogOpen} onOpenChange={setAddDialogOpen}>
-            <DialogTrigger asChild>
-              <Button
-                className="rounded-xl bg-primary hover:bg-primary/90 px-8 py-6 text-base font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.05] active:scale-[0.95] gap-2"
-                onClick={() => {
-                  setEditingId(null);
-                  setFormData({ label: "", targetDate: "", startDate: "", progressLabel: "" });
-                }}
-              >
-                <Plus className="h-5 w-5" />
-                新增倒數計時
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="image-bg-dialog w-[95vw] max-w-md rounded-3xl border-primary/20 bg-background dark:bg-slate-900/95 backdrop-blur-2xl shadow-2xl">
-              <DialogHeader>
-                <DialogTitle className="text-2xl font-bold">{editingId ? "編輯倒數計時" : "新增倒數計時"}</DialogTitle>
-              </DialogHeader>
-              <div className="space-y-5 py-6">
-                <div className="space-y-2">
-                  <Label htmlFor="label-empty" className="text-sm font-bold ml-1">標題</Label>
-                  <Input id="label-empty" className="rounded-xl border-primary/10 bg-muted/30" value={formData.label} onChange={(e) => setFormData({ ...formData, label: e.target.value })} placeholder="例如：寒假倒數" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="targetDate-empty" className="text-sm font-bold ml-1">目標日期時間</Label>
-                  <Input id="targetDate-empty" type="datetime-local" className="rounded-xl border-primary/10 bg-muted/30" value={formData.targetDate} onChange={(e) => setFormData({ ...formData, targetDate: e.target.value })} />
-                  <p className="text-[10px] text-muted-foreground/60 ml-1">必須晚於當前時間</p>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="startDate-empty" className="text-sm font-bold ml-1">開始日期時間（選填）</Label>
-                  <Input id="startDate-empty" type="datetime-local" className="rounded-xl border-primary/10 bg-muted/30" value={formData.startDate} onChange={(e) => setFormData({ ...formData, startDate: e.target.value })} />
-                  <p className="text-[10px] text-muted-foreground/60 ml-1">用於計算進度條，必須早於目標時間</p>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="progressLabel-empty" className="text-sm font-bold ml-1">進度條標籤（選填）</Label>
-                  <Input id="progressLabel-empty" className="rounded-xl border-primary/10 bg-muted/30" value={formData.progressLabel} onChange={(e) => setFormData({ ...formData, progressLabel: e.target.value })} placeholder="例如：學期進度" />
-                </div>
-              </div>
-              <DialogFooter className="gap-2 sm:gap-0">
-                <Button variant="ghost" className="rounded-xl" onClick={() => { setAddDialogOpen(false); setEditingId(null); }}>取消</Button>
-                <Button className="rounded-xl bg-primary hover:bg-primary/90 px-8 font-bold" onClick={editingId ? handleSaveEdit : handleAddNew}>儲存</Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+      <div className="relative overflow-hidden flex flex-col items-center justify-center gap-5 rounded-xl border bg-card px-6 py-12 shadow-sm">
+        <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/[0.12] blur-3xl" />
+        <div className="absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-accent/[0.1] blur-3xl" />
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
+          <Clock className="h-6 w-6 text-primary" />
         </div>
+        <div className="text-center">
+          <h3 className="text-base font-bold text-muted-foreground">尚無倒數計時</h3>
+          <p className="mt-1 text-xs text-muted-foreground/50">點擊下方按鈕新增一個倒數計時</p>
+        </div>
+        <Dialog open={addDialogOpen} onOpenChange={setAddDialogOpen}>
+          <DialogTrigger asChild>
+            <Button size="sm" onClick={() => {
+              setEditingId(null);
+              setFormData({ label: "", targetDate: "", startDate: "", progressLabel: "" });
+            }}>
+              <Plus className="mr-1.5 h-4 w-4" />
+              新增倒數計時
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="bg-background">
+            <DialogHeader>
+              <DialogTitle className="text-lg font-bold">{editingId ? "編輯倒數計時" : "新增倒數計時"}</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="label-empty" className="text-xs font-semibold">標題</Label>
+                <Input id="label-empty" value={formData.label} onChange={(e) => setFormData({ ...formData, label: e.target.value })} placeholder="例如：寒假倒數" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="targetDate-empty" className="text-xs font-semibold">目標日期時間</Label>
+                <Input id="targetDate-empty" type="datetime-local" value={formData.targetDate} onChange={(e) => setFormData({ ...formData, targetDate: e.target.value })} />
+                <p className="text-[10px] text-muted-foreground/60">必須晚於當前時間</p>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="startDate-empty" className="text-xs font-semibold">開始日期時間（選填）</Label>
+                <Input id="startDate-empty" type="datetime-local" value={formData.startDate} onChange={(e) => setFormData({ ...formData, startDate: e.target.value })} />
+                <p className="text-[10px] text-muted-foreground/60">用於計算進度條，必須早於目標時間</p>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="progressLabel-empty" className="text-xs font-semibold">進度條標籤（選填）</Label>
+                <Input id="progressLabel-empty" value={formData.progressLabel} onChange={(e) => setFormData({ ...formData, progressLabel: e.target.value })} placeholder="例如：學期進度" />
+              </div>
+            </div>
+            <DialogFooter className="gap-2">
+              <Button variant="ghost" onClick={() => { setAddDialogOpen(false); setEditingId(null); }}>取消</Button>
+              <Button onClick={editingId ? handleSaveEdit : handleAddNew}>儲存</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     );
   }
 
   return (
-    <div
-      className={cn(
-        "image-bg-surface relative w-full max-w-[calc(100vw-2rem)] overflow-hidden rounded-3xl border border-primary/20 p-6 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-md md:p-10",
-        hasImageBackground && "shadow-2xl",
-      )}
-      style={{
-        background: hasImageBackground
-          ? 'linear-gradient(135deg, hsl(var(--card) / 0.9) 0%, hsl(var(--card) / 0.82) 100%)'
-          : 'linear-gradient(135deg, var(--primary-light) 0%, var(--accent-light) 100%)',
-        backdropFilter: hasImageBackground ? 'none' : 'blur(12px) saturate(180%)',
-        WebkitBackdropFilter: hasImageBackground ? 'none' : 'blur(12px) saturate(180%)',
-      }}
-    >
-      {/* 裝飾性背景磨砂玻璃元素 */}
-      <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/5 blur-3xl transition-colors" />
-      <div className="absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-accent/5 blur-3xl transition-colors" />
-
-      <div className="relative z-10 flex flex-col gap-6 md:gap-8">
-        {/* 標題 - 針對行動裝置進行優化 */}
-        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-4 min-w-0">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/15 shadow-inner">
-              <Clock className="h-6 w-6 text-primary animate-[pulse_2s_infinite]" />
+    <div className="relative overflow-hidden rounded-xl border bg-card shadow-sm">
+      <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/[0.12] blur-3xl transition-colors" />
+      <div className="absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-accent/[0.1] blur-3xl transition-colors" />
+      <div className="relative flex flex-col gap-8 p-5 md:p-7">
+        {/* Header */}
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+              <Clock className="h-6 w-6 text-primary" />
             </div>
-            <div className="flex flex-col min-w-0">
-              <h2 className="text-2xl font-black tracking-tight text-primary md:bg-gradient-to-r md:from-primary md:via-primary md:to-accent md:bg-clip-text md:text-transparent md:text-4xl break-words leading-tight">
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">
                 {renderLabelWithEmoji(label)}
               </h2>
-              <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 md:text-xs">
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/50">
                 倒數計時器
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 self-end md:self-auto">
+          <div className="flex items-center gap-2">
             <Dialog open={addDialogOpen} onOpenChange={setAddDialogOpen}>
               <DialogTrigger asChild>
-                <Button variant="outline" size="icon" className="image-bg-soft h-10 w-10 border-primary/20 bg-background/40 backdrop-blur-sm hover:bg-primary/10 rounded-xl" onClick={() => {
+                <Button variant="outline" size="icon" className="h-8 w-8 rounded-lg" onClick={() => {
                   setEditingId(null);
                   setFormData({ label: "", targetDate: "", startDate: "", progressLabel: "" });
                 }}>
-                  <Plus className="h-5 w-5" />
+                  <Plus className="h-4 w-4" />
                 </Button>
               </DialogTrigger>
-              <DialogContent className="image-bg-dialog w-[95vw] max-w-md rounded-3xl border-primary/20 bg-background dark:bg-slate-900/95 backdrop-blur-2xl shadow-2xl">
+              <DialogContent className="bg-background">
                 <DialogHeader>
-                  <DialogTitle className="text-2xl font-bold">{editingId ? "編輯倒數計時" : "新增倒數計時"}</DialogTitle>
+                  <DialogTitle className="text-lg font-bold">{editingId ? "編輯倒數計時" : "新增倒數計時"}</DialogTitle>
                 </DialogHeader>
-                <div className="space-y-5 py-6">
+                <div className="space-y-4 py-4">
                   <div className="space-y-2">
-                    <Label htmlFor="label" className="text-sm font-bold ml-1">標題</Label>
-                    <Input id="label" className="rounded-xl border-primary/10 bg-muted/30" value={formData.label} onChange={(e) => setFormData({ ...formData, label: e.target.value })} placeholder="例如：寒假倒數" />
+                    <Label htmlFor="label" className="text-xs font-semibold">標題</Label>
+                    <Input id="label" value={formData.label} onChange={(e) => setFormData({ ...formData, label: e.target.value })} placeholder="例如：寒假倒數" />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="targetDate" className="text-sm font-bold ml-1">目標日期時間</Label>
-                    <Input id="targetDate" type="datetime-local" className="rounded-xl border-primary/10 bg-muted/30" value={formData.targetDate} onChange={(e) => setFormData({ ...formData, targetDate: e.target.value })} />
-                    <p className="text-[10px] text-muted-foreground/60 ml-1">必須晚於當前時間</p>
+                    <Label htmlFor="targetDate" className="text-xs font-semibold">目標日期時間</Label>
+                    <Input id="targetDate" type="datetime-local" value={formData.targetDate} onChange={(e) => setFormData({ ...formData, targetDate: e.target.value })} />
+                    <p className="text-[10px] text-muted-foreground/60">必須晚於當前時間</p>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="startDate" className="text-sm font-bold ml-1">開始日期時間（選填）</Label>
-                    <Input id="startDate" type="datetime-local" className="rounded-xl border-primary/10 bg-muted/30" value={formData.startDate} onChange={(e) => setFormData({ ...formData, startDate: e.target.value })} />
-                    <p className="text-[10px] text-muted-foreground/60 ml-1">用於計算進度條，必須早於目標時間</p>
+                    <Label htmlFor="startDate" className="text-xs font-semibold">開始日期時間（選填）</Label>
+                    <Input id="startDate" type="datetime-local" value={formData.startDate} onChange={(e) => setFormData({ ...formData, startDate: e.target.value })} />
+                    <p className="text-[10px] text-muted-foreground/60">用於計算進度條，必須早於目標時間</p>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="progressLabel" className="text-sm font-bold ml-1">進度條標籤（選填）</Label>
-                    <Input id="progressLabel" className="rounded-xl border-primary/10 bg-muted/30" value={formData.progressLabel} onChange={(e) => setFormData({ ...formData, progressLabel: e.target.value })} placeholder="例如：學期進度" />
+                    <Label htmlFor="progressLabel" className="text-xs font-semibold">進度條標籤（選填）</Label>
+                    <Input id="progressLabel" value={formData.progressLabel} onChange={(e) => setFormData({ ...formData, progressLabel: e.target.value })} placeholder="例如：學期進度" />
                   </div>
                 </div>
-                <DialogFooter className="gap-2 sm:gap-0">
-                  <Button variant="ghost" className="rounded-xl" onClick={() => { setAddDialogOpen(false); setEditingId(null); }}>取消</Button>
-                  <Button className="rounded-xl bg-primary hover:bg-primary/90 px-8 font-bold" onClick={editingId ? handleSaveEdit : handleAddNew}>儲存</Button>
+                <DialogFooter className="gap-2">
+                  <Button variant="ghost" onClick={() => { setAddDialogOpen(false); setEditingId(null); }}>取消</Button>
+                  <Button onClick={editingId ? handleSaveEdit : handleAddNew}>儲存</Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
 
             <Dialog open={manageDialogOpen} onOpenChange={setManageDialogOpen}>
               <DialogTrigger asChild>
-                <Button variant="outline" size="icon" className="image-bg-soft h-10 w-10 border-primary/20 bg-background/40 backdrop-blur-sm hover:bg-primary/10 rounded-xl">
-                  <Settings className="h-5 w-5" />
+                <Button variant="outline" size="icon" className="h-8 w-8 rounded-lg">
+                  <Settings className="h-4 w-4" />
                 </Button>
               </DialogTrigger>
-              <DialogContent className="image-bg-dialog max-h-[85vh] w-[95vw] max-w-lg overflow-hidden flex flex-col p-0 rounded-3xl border-primary/20 bg-background dark:bg-slate-900/95 backdrop-blur-2xl shadow-2xl">
-                <DialogHeader className="p-6 pb-0">
-                  <DialogTitle className="text-2xl font-bold">管理倒數計時</DialogTitle>
+              <DialogContent className="max-h-[85vh] w-[95vw] max-w-lg overflow-hidden flex flex-col p-0 bg-background">
+                <DialogHeader className="p-5 pb-0">
+                  <DialogTitle className="text-lg font-bold">管理倒數計時</DialogTitle>
                 </DialogHeader>
-                <div className="px-6 py-3 border-b border-primary/5">
+                <div className="border-b border-border/40 px-5 py-3">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-muted-foreground/60">選擇年級：</span>
+                    <span className="text-xs font-semibold text-muted-foreground/60">選擇年級：</span>
                     <div className="flex gap-1">
                       {GRADES.map(g => (
                         <button
@@ -706,26 +649,26 @@ export function CountdownTimer() {
                     </div>
                   </div>
                 </div>
-                <div className="flex-1 overflow-y-auto p-6">
+                <div className="flex-1 overflow-y-auto p-5">
                   <Reorder.Group
                     axis="y"
                     values={allCountdowns}
                     onReorder={handleReorder}
-                    className="space-y-4"
+                    className="space-y-2"
                   >
                     {allCountdowns.map((countdown, index) => (
                       <Reorder.Item
                         key={countdown.id}
                         value={countdown}
-                        className="image-bg-soft group flex items-center gap-3 rounded-2xl border border-primary/10 bg-muted/40 p-4 shadow-sm hover:shadow-md hover:border-primary/20"
+                        className="group flex items-center gap-3 rounded-xl border bg-card p-3 shadow-sm"
                       >
-                        <div className="cursor-grab active:cursor-grabbing p-1.5 text-muted-foreground/40 group-hover:text-primary transition-colors">
+                        <div className="cursor-grab active:cursor-grabbing p-1 text-muted-foreground/40 group-hover:text-primary transition-colors">
                           <GripVertical className="h-4 w-4" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="mb-0.5 flex flex-wrap items-center gap-2 text-sm font-bold text-foreground">
                             <span className="truncate">{countdown.label}</span>
-                            {countdown.isDefault && <span className="shrink-0 rounded-full bg-primary/10 px-2.5 py-0.5 text-[10px] text-primary font-black uppercase tracking-tighter">預設</span>}
+                            {countdown.isDefault && <span className="shrink-0 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] text-primary font-bold">預設</span>}
                           </div>
                           <div className="text-[10px] text-muted-foreground/60 font-mono">
                             {formatDate(countdown.targetDate)}
@@ -736,48 +679,48 @@ export function CountdownTimer() {
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="h-8 w-8 rounded-lg hover:bg-primary/10"
+                              className="h-7 w-7 rounded-lg hover:bg-primary/10"
                               onClick={() => toggleDefaultDisabled(countdown.id)}
                               title="停用此預設倒數計時"
                             >
-                              <EyeOff className="h-4 w-4 text-muted-foreground/70" />
+                              <EyeOff className="h-3.5 w-3.5 text-muted-foreground/70" />
                             </Button>
                           ) : (
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="h-8 w-8 rounded-lg hover:bg-primary/10"
+                              className="h-7 w-7 rounded-lg hover:bg-primary/10"
                               onClick={() => handleEdit(countdown)}
                             >
-                              <Edit className="h-4 w-4 text-muted-foreground/70" />
+                              <Edit className="h-3.5 w-3.5 text-muted-foreground/70" />
                             </Button>
                           )}
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-8 w-8 rounded-lg hover:bg-primary/10"
+                            className="h-7 w-7 rounded-lg hover:bg-primary/10"
                             onClick={() => handleMoveUp(index)}
                             disabled={index === 0}
                           >
-                            <ChevronUp className="h-4 w-4 text-muted-foreground/70" />
+                            <ChevronUp className="h-3.5 w-3.5 text-muted-foreground/70" />
                           </Button>
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-8 w-8 rounded-lg hover:bg-primary/10"
+                            className="h-7 w-7 rounded-lg hover:bg-primary/10"
                             onClick={() => handleMoveDown(index)}
                             disabled={index === allCountdowns.length - 1}
                           >
-                            <ChevronDown className="h-4 w-4 text-muted-foreground/70" />
+                            <ChevronDown className="h-3.5 w-3.5 text-muted-foreground/70" />
                           </Button>
                           {!countdown.isDefault && (
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="h-8 w-8 rounded-lg hover:bg-destructive/10 text-destructive/70 hover:text-destructive"
+                              className="h-7 w-7 rounded-lg hover:bg-destructive/10 text-destructive/70 hover:text-destructive"
                               onClick={() => handleDelete(countdown.id)}
                             >
-                              <Trash2 className="h-4 w-4" />
+                              <Trash2 className="h-3.5 w-3.5" />
                             </Button>
                           )}
                         </div>
@@ -785,22 +728,21 @@ export function CountdownTimer() {
                     ))}
                   </Reorder.Group>
 
-                  {/* 已停用的預設倒數計時 */}
                   {(() => {
                     const disabledDefaults = gradeDefaults.filter(c => disabledDefaultIds.has(c.id));
                     if (disabledDefaults.length === 0) return null;
                     return (
-                      <div className="mt-6 space-y-2">
+                      <div className="mt-5 space-y-2">
                         <p className="text-[10px] text-muted-foreground/40 font-bold uppercase tracking-wider px-1">已停用預設</p>
                         {disabledDefaults.map((countdown) => (
                           <div
                             key={countdown.id}
-                            className="flex items-center gap-3 rounded-2xl border border-dashed border-muted-foreground/20 bg-muted/20 p-4 opacity-60"
+                            className="flex items-center gap-3 rounded-xl border border-dashed border-muted-foreground/20 bg-muted/20 p-3 opacity-60"
                           >
                             <div className="flex-1 min-w-0">
                               <div className="mb-0.5 flex flex-wrap items-center gap-2 text-sm font-bold text-muted-foreground/60 line-through">
                                 <span className="truncate">{countdown.label}</span>
-                                <span className="shrink-0 rounded-full bg-muted-foreground/10 px-2.5 py-0.5 text-[10px] text-muted-foreground/50 font-black uppercase tracking-tighter">預設</span>
+                                <span className="shrink-0 rounded-full bg-muted-foreground/10 px-2 py-0.5 text-[10px] text-muted-foreground/50 font-bold">預設</span>
                               </div>
                               <div className="text-[10px] text-muted-foreground/40 font-mono">
                                 {formatDate(countdown.targetDate)}
@@ -809,11 +751,11 @@ export function CountdownTimer() {
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="h-8 w-8 rounded-lg hover:bg-primary/10"
+                              className="h-7 w-7 rounded-lg hover:bg-primary/10"
                               onClick={() => toggleDefaultDisabled(countdown.id)}
                               title="啟用此預設倒數計時"
                             >
-                              <Eye className="h-4 w-4 text-muted-foreground/50" />
+                              <Eye className="h-3.5 w-3.5 text-muted-foreground/50" />
                             </Button>
                           </div>
                         ))}
@@ -821,128 +763,97 @@ export function CountdownTimer() {
                     );
                   })()}
                 </div>
-                <div className="p-6 pt-2 bg-muted/10 border-t border-primary/5">
+                <div className="border-t border-border/40 bg-muted/10 p-4">
                   <DialogFooter className="flex-row items-center justify-between gap-4">
-                    <Button variant="ghost" onClick={handleReset} className="text-xs font-bold gap-2 text-muted-foreground hover:text-primary rounded-xl px-0"><RotateCcw className="h-3.5 w-3.5" />重置為預設</Button>
-                    <Button className="rounded-xl px-8 font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.05] active:scale-[0.95]" onClick={() => setManageDialogOpen(false)}>完成</Button>
+                    <Button variant="ghost" onClick={handleReset} className="text-xs font-semibold gap-2 text-muted-foreground hover:text-primary px-0">
+                      <RotateCcw className="h-3.5 w-3.5" />重置為預設
+                    </Button>
+                    <Button onClick={() => setManageDialogOpen(false)}>完成</Button>
                   </DialogFooter>
                 </div>
               </DialogContent>
             </Dialog>
 
             <AlertDialog open={resetDialogOpen} onOpenChange={setResetDialogOpen}>
-              <AlertDialogContent className="rounded-3xl border-primary/20">
+              <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle className="text-xl font-bold">確認重置</AlertDialogTitle>
+                  <AlertDialogTitle className="text-lg font-bold">確認重置</AlertDialogTitle>
                   <AlertDialogDescription className="text-sm">
                     確定要重置為預設倒數計時嗎？這將刪除所有自定義倒數計時。
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter className="gap-2">
-                  <AlertDialogCancel className="rounded-xl border-primary/10">取消</AlertDialogCancel>
-                  <AlertDialogAction onClick={confirmReset} className="rounded-xl bg-destructive hover:bg-destructive/90">確認重置</AlertDialogAction>
+                  <AlertDialogCancel>取消</AlertDialogCancel>
+                  <AlertDialogAction onClick={confirmReset} className="bg-destructive hover:bg-destructive/90">確認重置</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
 
-            <div className="image-bg-panel flex items-center gap-1.5 rounded-2xl bg-background/30 backdrop-blur-md border border-primary/10 p-1">
-              <Button variant="ghost" size="icon" onClick={handlePrevious} className="h-8 w-8 rounded-xl hover:bg-primary/10"><ChevronLeft className="h-4 w-4" /></Button>
-              <div className="min-w-[40px] text-center">
-                <span className="text-xs font-black text-primary/80">{currentIndex + 1} <span className="text-muted-foreground font-light mx-0.5">/</span> {allCountdowns.length}</span>
-              </div>
-              <Button variant="ghost" size="icon" onClick={handleNext} className="h-8 w-8 rounded-xl hover:bg-primary/10"><ChevronRight className="h-4 w-4" /></Button>
+            <div className="flex items-center gap-1 rounded-lg border border-border/30 bg-muted/30 px-1 py-0.5">
+              <button onClick={handlePrevious} className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground/60 hover:text-foreground hover:bg-muted/50 transition-colors">
+                <ChevronLeft className="h-3.5 w-3.5" />
+              </button>
+              <span className="min-w-[36px] text-center text-[11px] font-bold text-muted-foreground/80">
+                {currentIndex + 1}<span className="text-muted-foreground/30 mx-px">/</span>{allCountdowns.length}
+              </span>
+              <button onClick={handleNext} className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground/60 hover:text-foreground hover:bg-muted/50 transition-colors">
+                <ChevronRight className="h-3.5 w-3.5" />
+              </button>
             </div>
           </div>
         </div>
 
-        {/* 帶有動畫的計時器內容 */}
-        <div className="relative overflow-hidden min-h-[280px] md:min-h-[300px]">
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={currentConfig.id}
-              custom={direction}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2, ease: "linear" }}
-              className="w-full flex flex-col gap-8"
-            >
-              {isComplete ? (
-                <div className="image-bg-tint relative group rounded-3xl bg-gradient-to-br from-primary/10 via-accent/5 to-primary/5 py-16 text-center border border-primary/20 shadow-inner overflow-hidden">
-                  <div className="absolute inset-0 bg-grid-slate-100/50 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-slate-700/50" />
-                  <div className="relative z-10">
-                    <div className="mb-6 animate-bounce text-7xl inline-block">🎉</div>
-                    <h3 className="text-4xl font-black bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent italic tracking-tighter">
-                      時間到啦！
-                    </h3>
-                    <p className="mt-2 text-muted-foreground font-bold text-lg">
-                      目標時間已達成
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-8 mt-2">
-                  <div className="grid w-full grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-4 lg:gap-6">
-                    {[
-                      { label: "天", value: timeLeft?.days || 0, color: "primary" as const },
-                      { label: "時", value: timeLeft?.hours || 0, color: "accent" as const },
-                      { label: "分", value: timeLeft?.minutes || 0, color: "primary" as const },
-                      { label: "秒", value: timeLeft?.seconds || 0, color: "accent" as const }
-                    ].map((item, idx) => {
-                      const styles = {
-                        primary: {
-                          container: "border-primary/15 bg-gradient-to-br from-primary/10 to-transparent hover:border-primary/30",
-                          glow: "bg-primary/5 group-hover:bg-primary/10",
-                          text: "from-primary to-accent"
-                        },
-                        accent: {
-                          container: "border-accent/15 bg-gradient-to-br from-accent/10 to-transparent hover:border-accent/30",
-                          glow: "bg-accent/5 group-hover:bg-accent/10",
-                          text: "from-accent to-primary"
-                        }
-                      }; // 設定樣式映射
-                      const style = styles[item.color];
-
-                      return (
-                        <div key={idx} className={cn(
-                          `relative group overflow-hidden rounded-3xl border p-5 text-center transition-all hover:scale-[1.02] hover:shadow-lg md:p-7 ${style.container}`,
-                          hasImageBackground && "image-bg-panel",
-                        )}>
-                          <div className={`absolute -right-4 -top-4 h-16 w-16 rounded-full blur-2xl transition-colors ${style.glow}`} />
-                          <div className={`mb-1 bg-gradient-to-r bg-clip-text text-4xl font-black tracking-tighter text-transparent md:text-6xl font-mono ${style.text}`}>
-                            {(item.value).toString().padStart(2, '0')}
-                          </div>
-                          <div className="text-[10px] uppercase font-black tracking-widest text-muted-foreground/60 md:text-xs">
-                            {item.label}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  <div className="image-bg-panel relative overflow-hidden space-y-4 rounded-3xl border border-primary/10 bg-background/30 backdrop-blur-sm p-6 shadow-sm">
-                    <div className="flex items-end justify-between">
-                      <div className="flex flex-col gap-0.5">
-                        <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">進度條</span>
-                        <span className="text-lg font-black text-foreground/90">{progressLabel}</span>
-                      </div>
-                      <div className="flex flex-col items-end gap-0.5">
-                        <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">已完成</span>
-                        <span className="rounded-full bg-primary/15 px-4 py-1.5 text-base font-black text-primary ring-1 ring-primary/20 shadow-sm">{progress.toFixed(1)}%</span>
-                      </div>
+        {/* Timer body */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentConfig.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.12, ease: "easeOut" }}
+          >
+            {isComplete ? (
+              <div className="flex flex-col items-center justify-center rounded-lg border bg-muted/20 py-12">
+                <span className="mb-3 text-4xl">🎉</span>
+                <h3 className="text-base font-bold text-foreground">目標時間已達成</h3>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-5">
+                {/* Number blocks */}
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {[
+                    { label: "天", value: timeLeft?.days || 0 },
+                    { label: "時", value: timeLeft?.hours || 0 },
+                    { label: "分", value: timeLeft?.minutes || 0 },
+                    { label: "秒", value: timeLeft?.seconds || 0 }
+                  ].map((item, idx) => (
+                    <div key={idx} className="flex flex-col items-center justify-center rounded-lg border bg-muted/20 py-5">
+                      <span className="font-mono text-3xl font-bold tracking-tight text-foreground md:text-5xl">
+                        {(item.value).toString().padStart(2, '0')}
+                      </span>
+                      <span className="mt-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60">
+                        {item.label}
+                      </span>
                     </div>
-                    <div className="relative">
-                      <Progress value={progress} className="h-4 rounded-full bg-primary/5" gradient />
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                        <div className="h-1 w-full bg-white/20 blur-sm rounded-full" />
-                      </div>
-                    </div>
-                  </div>
+                  ))}
                 </div>
-              )}
-            </motion.div>
-          </AnimatePresence>
-        </div>
+
+                {/* Progress */}
+                <div className="rounded-lg border bg-muted/20 px-4 py-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold text-muted-foreground">進度條</span>
+                    <span className="text-[10px] font-semibold text-muted-foreground">已完成</span>
+                  </div>
+                  <div className="mt-1 flex items-center justify-between">
+                    <p className="text-base font-bold text-foreground">{progressLabel}</p>
+                    <span className="text-sm font-bold text-primary">{progress.toFixed(1)}%</span>
+                  </div>
+                  <Progress value={progress} className="mt-3 h-2 w-full rounded-full" gradient />
+                </div>
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );

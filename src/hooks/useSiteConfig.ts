@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase, SUPABASE_ENABLED } from "@/lib/supabase";
 import { hashPassword } from "@/lib/crypto";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 
 export interface MaintenanceConfig {
   isMaintenance: boolean;
