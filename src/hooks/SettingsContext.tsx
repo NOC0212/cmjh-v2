@@ -191,7 +191,17 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
                     disableUpdatePrompt = !parsedSettings.showUpdatePrompt;
                 }
 
-                const existingComponents = parsedSettings.components || [];
+                let existingComponents = parsedSettings.components || [];
+
+                // 安全檢查：如果所有元件都被關閉，重置為預設啟用狀態
+                const anyEnabled = existingComponents.some((c: ComponentSettings) => c.enabled);
+                if (!anyEnabled && existingComponents.length > 0) {
+                  existingComponents = DEFAULT_COMPONENTS.map(dc => ({
+                    ...dc,
+                    enabled: true,
+                  }));
+                }
+
                 const existingIds = new Set(existingComponents.map((c: ComponentSettings) => c.id));
                 const newComponents = DEFAULT_COMPONENTS.filter((c) => !existingIds.has(c.id));
                 const mergedComponents = [...existingComponents, ...newComponents];

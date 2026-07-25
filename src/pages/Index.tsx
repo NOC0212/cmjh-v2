@@ -109,6 +109,16 @@ const Index = ({ maintenanceConfig }: IndexProps) => {
                                 {renderHomePageComponent(component.id)}
                             </div>
                         ))}
+                        {enabledComponents.length === 0 && (
+                            <div className="flex flex-col items-center justify-center py-16 text-center">
+                                <div className="rounded-2xl border border-dashed border-border/60 bg-muted/30 p-8 max-w-md">
+                                    <p className="text-muted-foreground">目前沒有啟用的頁面區塊</p>
+                                    <p className="text-xs text-muted-foreground/60 mt-2">
+                                        請點擊左側設定圖示開啟需要的功能
+                                    </p>
+                                </div>
+                            </div>
+                        )}
                         <div className="opacity-0 animate-fade-in animate-stagger-8">
                             <VisitCounter />
                         </div>

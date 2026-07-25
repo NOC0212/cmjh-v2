@@ -150,18 +150,18 @@ export default function Timer() {
                                         </div>
 
                                         <div className="mt-6 relative w-40 h-40 sm:w-48 sm:h-48">
-                                            <svg className="w-full h-full -rotate-90">
+                                            <svg className="w-full h-full -rotate-90" viewBox="0 0 184 184">
                                                 <circle
-                                                    cx="50%"
-                                                    cy="50%"
+                                                    cx="92"
+                                                    cy="92"
                                                     r={radius}
                                                     className="stroke-primary/15"
                                                     strokeWidth="8"
                                                     fill="none"
                                                 />
                                                 <circle
-                                                    cx="50%"
-                                                    cy="50%"
+                                                    cx="92"
+                                                    cy="92"
                                                     r={radius}
                                                     className="stroke-primary transition-all duration-1000 ease-linear"
                                                     strokeWidth="8"

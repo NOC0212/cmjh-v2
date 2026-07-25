@@ -4,15 +4,8 @@ import App from "./App.tsx";
 import "./index.css";
 
 // 註冊 PWA Service Worker
-// 若發現新版本，在 React 渲染前重新整理，確保使用者看到最新內容
-const updateSW = registerSW({
-  onNeedRefresh() {
-    updateSW(true);
-  },
-});
+// 使用 prompt 模式，新版本靜默等待，下次進入頁面才啟用，避免強制重新載入
+registerSW();
 
-// 略延遲渲染，讓 SW 更新檢查有時間完成
-// 若發現新版本，會在渲染前重新整理頁面
-requestAnimationFrame(() => {
-  createRoot(document.getElementById("root")!).render(<App />);
-});
+// 渲染 React 應用
+createRoot(document.getElementById("root")!).render(<App />);

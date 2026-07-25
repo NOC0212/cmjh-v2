@@ -31,8 +31,8 @@ const Progress = React.forwardRef<
           {/* Edge glow effect */}
           {value && value > 0 && (
             <>
-              <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-white/40 via-white/20 to-transparent pointer-events-none" />
-              <div className="absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-white/60 to-transparent animate-pulse pointer-events-none" />
+              <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-background/40 via-background/20 to-transparent pointer-events-none" />
+              <div className="absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-background/60 to-transparent animate-pulse pointer-events-none" />
             </>
           )}
         </>

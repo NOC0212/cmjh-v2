@@ -508,7 +508,7 @@ export function AdminPanel() {
                 <Shield className="h-7 w-7 text-primary" />
               )}
             </div>
-            <h2 className="text-xl font-bold tracking-tight">
+            <h2 className="text-xl font-bold tracking-tight text-foreground">
               {passwordMode === "setup" ? "設定管理密碼" : "管理員驗證"}
             </h2>
             <p className="mt-1 text-xs text-muted-foreground">
