@@ -475,7 +475,7 @@ export function CountdownTimer() {
 
   if (!selectedGrade) {
     return (
-      <div className="relative overflow-hidden flex flex-col items-center justify-center gap-6 rounded-xl border bg-card px-6 py-12 shadow-sm">
+      <div className="relative overflow-hidden flex flex-col items-center justify-center gap-6 rounded-xl border border-border/60 bg-card px-6 py-12 shadow-sm">
         <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/[0.12] blur-3xl" />
         <div className="absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-accent/[0.1] blur-3xl" />
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
@@ -490,7 +490,7 @@ export function CountdownTimer() {
             <button
               key={grade.id}
               onClick={() => handleGradeChange(grade.id)}
-              className="rounded-xl border px-5 py-3 text-sm font-bold text-foreground transition-all hover:border-primary/30 hover:shadow-md active:scale-[0.98]"
+              className="rounded-xl border border-border/60 px-5 py-3 text-sm font-bold text-foreground transition-all hover:border-primary/30 hover:shadow-md active:scale-[0.98]"
             >
               {grade.label}
             </button>
@@ -502,7 +502,7 @@ export function CountdownTimer() {
 
   if (!currentConfig) {
     return (
-      <div className="relative overflow-hidden flex flex-col items-center justify-center gap-5 rounded-xl border bg-card px-6 py-12 shadow-sm">
+      <div className="relative overflow-hidden flex flex-col items-center justify-center gap-5 rounded-xl border border-border/60 bg-card px-6 py-12 shadow-sm">
         <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/[0.12] blur-3xl" />
         <div className="absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-accent/[0.1] blur-3xl" />
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
@@ -557,7 +557,7 @@ export function CountdownTimer() {
   }
 
   return (
-    <div className="relative overflow-hidden rounded-xl border bg-card shadow-sm">
+    <div className="relative overflow-hidden rounded-xl border border-border/60 bg-card shadow-sm">
       <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/[0.12] blur-3xl transition-colors" />
       <div className="absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-accent/[0.1] blur-3xl transition-colors" />
       <div className="relative flex flex-col gap-8 p-5 md:p-7">
@@ -660,7 +660,7 @@ export function CountdownTimer() {
                       <Reorder.Item
                         key={countdown.id}
                         value={countdown}
-                        className="group flex items-center gap-3 rounded-xl border bg-card p-3 shadow-sm"
+                        className="group flex items-center gap-3 rounded-xl border border-border/60 bg-card p-3 shadow-sm"
                       >
                         <div className="cursor-grab active:cursor-grabbing p-1 text-muted-foreground/40 group-hover:text-primary transition-colors">
                           <GripVertical className="h-4 w-4" />
@@ -813,7 +813,7 @@ export function CountdownTimer() {
             transition={{ duration: 0.12, ease: "easeOut" }}
           >
             {isComplete ? (
-              <div className="flex flex-col items-center justify-center rounded-lg border bg-muted/20 py-12">
+              <div className="flex flex-col items-center justify-center rounded-lg border border-border/60 bg-muted/20 py-12">
                 <span className="mb-3 text-4xl">🎉</span>
                 <h3 className="text-base font-bold text-foreground">目標時間已達成</h3>
               </div>
@@ -827,7 +827,7 @@ export function CountdownTimer() {
                     { label: "分", value: timeLeft?.minutes || 0 },
                     { label: "秒", value: timeLeft?.seconds || 0 }
                   ].map((item, idx) => (
-                    <div key={idx} className="flex flex-col items-center justify-center rounded-lg border bg-muted/20 py-5">
+                    <div key={idx} className="flex flex-col items-center justify-center rounded-lg border border-border/60 bg-muted/20 py-5">
                       <span className="font-mono text-3xl font-bold tracking-tight text-foreground md:text-5xl">
                         {(item.value).toString().padStart(2, '0')}
                       </span>
@@ -839,7 +839,7 @@ export function CountdownTimer() {
                 </div>
 
                 {/* Progress */}
-                <div className="rounded-lg border bg-muted/20 px-4 py-3">
+                <div className="rounded-lg border border-border/60 bg-muted/20 px-4 py-3">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-semibold text-muted-foreground">進度條</span>
                     <span className="text-[10px] font-semibold text-muted-foreground">已完成</span>
