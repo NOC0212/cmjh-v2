@@ -34,7 +34,7 @@ export function useSiteCountdowns() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["siteCountdowns"],
     queryFn: fetchCountdownsFromSupabase,
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: import.meta.env.DEV ? 0 : 1000 * 60 * 5,
     enabled: SUPABASE_ENABLED,
   });
 

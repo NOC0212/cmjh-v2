@@ -17,6 +17,9 @@ export default defineConfig(() => {
     react(),
     VitePWA({
       registerType: "prompt",
+      devOptions: {
+        enabled: false,
+      },
       includeAssets: ["favicon.png", "robots.txt", "placeholder.svg"],
       manifest: {
         name: "崇明國中 v2",

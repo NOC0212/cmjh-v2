@@ -41,19 +41,11 @@ export function SearchPage() {
         const promises: Promise<DataResult>[] = [];
 
         // 載入所有資料以供搜尋使用
-        // 行政公告 (分 3 頁讀取)
-        const announcementPromises = ["p1", "p2", "p3"].map(p => 
-            fetch(`/data/announcements-${p}.json`)
-                .then((res) => res.json())
-                .catch(() => [])
-        );
-
         promises.push(
-            Promise.all(announcementPromises)
-                .then((allPagesData): DataResult => ({ 
-                    type: "announcements", 
-                    data: allPagesData.flat() 
-                }))
+            fetch("/data/announcements.json")
+                .then((res) => res.json() as Promise<Announcement[]>)
+                .then((data): DataResult => ({ type: "announcements", data }))
+                .catch(() => ({ type: "announcements", data: [] }))
         );
 
         promises.push(
