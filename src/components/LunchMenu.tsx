@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Calendar, ImageOff, Utensils, ChefHat } from "lucide-react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { useJsonData } from "@/hooks/useJsonData";
 
 interface DishItem {
   category: string;
@@ -90,27 +91,19 @@ function DishCard({ dish, index }: { dish: DishItem; index: number }) {
 }
 
 export const LunchMenu: React.FC = () => {
-  const [loading, setLoading] = useState(true);
-  const [lastUpdated, setLastUpdated] = useState("");
-  const [dishes, setDishes] = useState<DishItem[]>([]);
   const [previewDish, setPreviewDish] = useState<DishItem | null>(null);
 
-  useEffect(() => {
-    const fetchLunch = async () => {
-      try {
-        const res = await fetch("/data/lunch.json");
-        if (!res.ok) throw new Error("Failed to fetch lunch data");
-        const data: LunchDataNew | LunchDataOld = await res.json();
-        setLastUpdated(data.last_updated ?? "");
-        setDishes(normalizeDishes(data));
-      } catch (error) {
-        console.error("Failed to fetch lunch data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchLunch();
-  }, []);
+  // 使用 useJsonData 統一管理午餐資料
+  const {
+    data: lunchData,
+    isLoading: loading,
+  } = useJsonData<LunchDataNew | LunchDataOld>(["lunch"], "/data/lunch.json");
+
+  const lastUpdated = lunchData?.last_updated ?? "";
+  const dishes = useMemo(() => {
+    if (!lunchData) return [];
+    return normalizeDishes(lunchData);
+  }, [lunchData]);
 
   const sectionTitle = useMemo(
     () => (dishes.length > 0 ? `今日供應 ${dishes.length} 道餐點` : "今日尚無餐點資料"),

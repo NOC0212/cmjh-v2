@@ -5,11 +5,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect, lazy, Suspense } from "react";
 import { Home, checkFirstTimeSetup } from "@/pages/Home";
-import { UpdatePrompt } from "@/components/UpdatePrompt";
+import { UpdateBadge } from "@/components/UpdateBadge";
+import { UpdateDialog } from "@/components/UpdateDialog";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Loading } from "@/components/Loading";
-import { ensureVersion, isMaintenanceWhitelisted, getCurrentVersion, FALLBACK_VERSION, updateVersionToLatest } from "@/lib/app-version";
+import { ensureVersion, isMaintenanceWhitelisted } from "@/lib/app-version";
 import { useSiteConfig } from "@/hooks/useSiteConfig";
+import { useAutoUpdate } from "@/hooks/useAutoUpdate";
 import Index from "./pages/Index";
 import { SettingsProvider } from "./hooks/SettingsContext";
 import NotFound from "./pages/NotFound";
@@ -99,17 +101,10 @@ const App = () => {
  * 因此可以使用 useSiteConfig 等依賴 React Query 的 Hook。
  */
 function AppContent() {
-  const { maintenance: maintenanceConfig, isLoading: loadingMaintenance, appVersion } = useSiteConfig();
-
-  // 伺服器版本載入後，確保儲存的版本號是最新的
-  useEffect(() => {
-    if (appVersion?.latestVersion) {
-      const current = getCurrentVersion();
-      if (!current || current === FALLBACK_VERSION) {
-        updateVersionToLatest(appVersion.latestVersion);
-      }
-    }
-  }, [appVersion]);
+  const { maintenance: maintenanceConfig, isLoading: loadingMaintenance } = useSiteConfig();
+  
+  // 啟動背景自動更新系統（版本檢查、資料重新驗證）
+  const { latestVersion, showUpdateDialog, updateInfo, dismissUpdateDialog } = useAutoUpdate();
 
   // 維護設定載入中，立即顯示 loading 畫面
   if (loadingMaintenance && !maintenanceConfig) {
@@ -122,7 +117,13 @@ function AppContent() {
 
   return (
     <>
-      <UpdatePrompt isHidden={maintenanceConfig?.isMaintenance} />
+      {/* 背景更新狀態指示器 + 更新內容彈窗 */}
+      <UpdateBadge latestVersion={latestVersion} />
+      <UpdateDialog
+        open={showUpdateDialog}
+        updateInfo={updateInfo}
+        onClose={dismissUpdateDialog}
+      />
       <Toaster />
       <Sonner />
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>

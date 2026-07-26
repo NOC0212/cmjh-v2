@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, ExternalLink, Star, Trophy } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useFavorites } from "@/hooks/useFavorites";
+import { useJsonData } from "@/hooks/useJsonData";
 import { cn } from "@/lib/utils";
 
 interface Honor {
@@ -15,23 +16,23 @@ interface Honor {
 const ITEMS_PER_PAGE = 10;
 
 export function HonorsBoard() {
-    const [honors, setHonors] = useState<Honor[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [loading, setLoading] = useState(true);
-    const { addFavorite, removeFavorite, isFavorite, cleanupFavorites } = useFavorites();
     const [direction, setDirection] = useState<'left' | 'right'>('right');
+    const { addFavorite, removeFavorite, isFavorite, cleanupFavorites } = useFavorites();
 
+    // 使用 useJsonData 統一管理榮譽榜資料
+    const {
+        data: honors,
+        isLoading: loading,
+    } = useJsonData<Honor[]>(["honors"], "/data/honors.json");
+
+    // 清理收藏中的無效 ID（資料載入時執行）
     useEffect(() => {
-        fetch("/data/honors.json")
-            .then((res) => { if (!res.ok) throw new Error("Failed to fetch honors"); return res.json(); })
-            .then((data) => {
-                setHonors(data);
-                setLoading(false);
-                const validIds = data.map((honor: Honor) => `honor-${honor.date}-${honor.title}`);
-                cleanupFavorites("honor", validIds);
-            })
-            .catch(() => setLoading(false));
-    }, [cleanupFavorites]);
+      if (honors) {
+        const validIds = honors.map((h: Honor) => `honor-${h.date}-${h.title}`);
+        cleanupFavorites("honor", validIds);
+      }
+    }, [honors, cleanupFavorites]);
 
     const totalPages = Math.ceil(honors.length / ITEMS_PER_PAGE);
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;

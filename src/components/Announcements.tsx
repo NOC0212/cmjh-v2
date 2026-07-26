@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion } from "framer-motion";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useFavorites } from "@/hooks/useFavorites";
+import { useJsonData } from "@/hooks/useJsonData";
 import {
   Calendar,
   ChevronLeft,
@@ -86,42 +87,29 @@ function normalizeAnnouncement(item: RawAnnouncement): Announcement {
 }
 
 export function Announcements() {
-  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
   const [selectedCategory, setSelectedCategory] = useState("全部");
-  const [loading, setLoading] = useState(true);
   const [direction, setDirection] = useState<"left" | "right">("right");
 
   const { addFavorite, removeFavorite, isFavorite, cleanupFavorites } = useFavorites();
 
+  // 使用 useJsonData 統一管理資料擷取與背景更新
+  const {
+    data: rawAnnouncements,
+    isLoading: loading,
+  } = useJsonData<RawAnnouncement[]>(["announcements"], "/data/announcements.json");
+
+  const announcements = useMemo(() => {
+    if (!rawAnnouncements) return [];
+    const normalized = rawAnnouncements.map(normalizeAnnouncement);
+    // 清理收藏中已不存在的公告
+    cleanupFavorites("announcement", normalized.map((item) => item.id));
+    return normalized;
+  }, [rawAnnouncements, cleanupFavorites]);
+
   useEffect(() => { setSelectedAnnouncement(null); }, [currentPage]);
   useEffect(() => { setCurrentPage(1); setSelectedAnnouncement(null); }, [selectedCategory]);
-
-  useEffect(() => {
-    const loadAnnouncements = async () => {
-      try {
-        const singleFile = await fetch("/data/announcements.json");
-        if (singleFile.ok) {
-          const raw = (await singleFile.json()) as RawAnnouncement[];
-          const normalized = raw.map(normalizeAnnouncement);
-          setAnnouncements(normalized);
-          cleanupFavorites("announcement", normalized.map((item) => item.id));
-          return;
-        }
-        const files = ["/data/announcements-p1.json", "/data/announcements-p2.json", "/data/announcements-p3.json"];
-        const oldData = await Promise.all(files.map((file) => fetch(file).then((res) => { if (!res.ok) throw new Error("Failed to fetch " + file); return res.json(); })));
-        const normalized = oldData.flat().map((item: RawAnnouncement) => normalizeAnnouncement(item));
-        setAnnouncements(normalized);
-        cleanupFavorites("announcement", normalized.map((item) => item.id));
-      } catch (error) {
-        console.error("Failed to load announcements:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadAnnouncements();
-  }, [cleanupFavorites]);
 
   const categories = useMemo(() => {
     const set = new Set(announcements.map((item) => item.category).filter(Boolean));

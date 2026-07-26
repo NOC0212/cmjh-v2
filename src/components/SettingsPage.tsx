@@ -27,6 +27,7 @@ import { Separator } from "@/components/ui/separator";
 import { useSettings, AppSettings, ComponentSettings } from "@/hooks/SettingsContext";
 import { useToast } from "@/hooks/use-toast";
 import { useSiteConfig } from "@/hooks/useSiteConfig";
+import { useAutoUpdate } from "@/hooks/useAutoUpdate";
 import { getCurrentVersion, FALLBACK_VERSION, exportUserData, importUserData, isAdminUnlocked, unlockAdmin } from "@/lib/app-version";
 import { cn } from "@/lib/utils";
 
@@ -83,9 +84,10 @@ export function SettingsPage() {
     const [backgroundUrlInput, setBackgroundUrlInput] = useState(settings.pageBackgroundImage || "");
 
     const { appVersion } = useSiteConfig();
+    const { checkForUpdates } = useAutoUpdate();
     const latestVersionFromServer = appVersion?.latestVersion || FALLBACK_VERSION;
     const currentVersion = getCurrentVersion();
-    const canUpdate = currentVersion !== latestVersionFromServer;
+    const isLatestVersion = currentVersion === latestVersionFromServer;
     const disabledComponents = settings.components.filter((component) => !component.enabled);
 
     useEffect(() => {
@@ -102,9 +104,9 @@ export function SettingsPage() {
         toast({ title: "已儲存", description: "設定已套用" });
     };
 
-    const handleUpdate = () => {
-        if (!canUpdate) return;
-        window.dispatchEvent(new CustomEvent("show-update-prompt"));
+    const handleCheckUpdate = () => {
+        checkForUpdates();
+        toast({ title: "正在檢查更新", description: "已在背景檢查最新版本與資料" });
     };
 
     const handleExport = () => {
@@ -521,14 +523,16 @@ export function SettingsPage() {
                                                 <AdminUnlockButton />
                                                 <Button
                                                     size="default"
-                                                    variant={canUpdate ? "default" : "outline"}
-                                                    disabled={!canUpdate}
-                                                    onClick={handleUpdate}
-                                                    className={cn("h-11 w-full text-sm font-semibold", canUpdate && "shadow-sm")}
+                                                    variant="outline"
+                                                    onClick={handleCheckUpdate}
+                                                    className="h-11 w-full text-sm font-semibold"
                                                 >
-                                                    {canUpdate ? "前往更新" : "已是最新版本"}
+                                                    檢查更新
                                                 </Button>
                                             </div>
+                                            <p className="text-[11px] text-muted-foreground/60 text-center">
+                                                {isLatestVersion ? '✓ 版本已在背景自動同步' : '版本檢查中...'}
+                                            </p>
                                         </div>
                                     </div>
 

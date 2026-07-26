@@ -61,6 +61,12 @@ export function updateVersionToLatest(targetVersion?: string) {
     setVersion(targetVersion, true);
 }
 
+/**
+ * 資料遷移：版本變更時執行下列操作
+ * - 更新 localStorage 中的版本號
+ * - 檢查所有 localStorage JSON 資料完整性
+ * - 保持已閱讀公告記錄不變
+ */
 export function migrateData(targetVersion?: string) {
     const target = targetVersion || FALLBACK_VERSION;
     const current = getCurrentVersion();
@@ -73,31 +79,16 @@ export function migrateData(targetVersion?: string) {
 
     if (current === target) return;
 
-    console.log(`正在從 ${current} 遷移至 ${target}...`);
-
-    // 在此加入特定版本的遷移邏輯（範例）
-    // if (current < "v1.5.0") { ... }
-
-    // 每次更新版本時，自動清除已讀公告記錄
-    localStorage.removeItem(STORAGE_KEYS.READ_ANNOUNCEMENTS);
+    console.log(`[AutoUpdate] 正在從 ${current} 遷移至 ${target}...`);
 
     // 通用檢查：確保所有存儲的 JSON 格式正確，避免組件崩潰
     Object.values(STORAGE_KEYS).forEach(storageKey => {
         const val = localStorage.getItem(storageKey);
         if (val) {
             try {
-                // 嘗試解析，如果失敗則可能需要處理
-                const parsed = JSON.parse(val);
-                
-                // 針對特定組件的資料補齊 (例如 Countdown 計時器如果少了某個欄位)
-                if ((storageKey === STORAGE_KEYS.COUNTDOWNS_7 || storageKey === STORAGE_KEYS.COUNTDOWNS_8 || storageKey === STORAGE_KEYS.COUNTDOWNS_9) && Array.isArray(parsed)) {
-                    // 確保每個計時器都有必要的欄位，防止舊資料導致新版組件出錯
-                    // parsed.forEach(item => { if (!item.color) item.color = 'primary'; });
-                    // localStorage.setItem(storageKey, JSON.stringify(parsed));
-                }
+                JSON.parse(val); // 僅驗證格式正確性
             } catch (e) {
-                console.error(`資料損壞或格式不符: ${storageKey}`, e);
-                // 這裡可以選擇不處理，或者重置損壞的欄位
+                console.error(`[AutoUpdate] 資料損壞: ${storageKey}`, e);
             }
         }
     });
@@ -105,6 +96,9 @@ export function migrateData(targetVersion?: string) {
     updateVersionToLatest(target);
 }
 
+/**
+ * 匯出使用者資料（settings + 自訂資料）為 JSON 檔案
+ */
 export function exportUserData() {
     const data: Record<string, unknown> = {};
     Object.entries(STORAGE_KEYS).forEach(([key, storageKey]) => {
@@ -129,6 +123,9 @@ export function exportUserData() {
     URL.revokeObjectURL(url);
 }
 
+/**
+ * 匯入使用者資料
+ */
 export function importUserData(jsonData: Record<string, unknown>) {
     Object.entries(STORAGE_KEYS).forEach(([key, storageKey]) => {
         if (jsonData[key]) {

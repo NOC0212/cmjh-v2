@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useCalendarEvents } from "@/hooks/useCalendarEvents";
+import { useJsonData } from "@/hooks/useJsonData";
 import { cn } from "@/lib/utils";
 
 interface CalendarEvent {
@@ -39,34 +40,48 @@ const formatDayLabel = (monthKey: string, day: number) => {
   return `${year} 年 ${parseInt(month, 10)} 月 ${day} 日`;
 };
 
+/** 取得初始月份（從行事曆資料中選取當前月份或第一個月份） */
+function getInitialMonth(data: CalendarData | undefined): string {
+  if (!data) return "";
+  const today = new Date();
+  const currentMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
+  const sortedMonths = Object.keys(data).sort();
+  return sortedMonths.includes(currentMonth) ? currentMonth : sortedMonths[0] || "";
+}
+
 export function CalendarView() {
-  const [calendarData, setCalendarData] = useState<CalendarData>({});
   const [selectedMonth, setSelectedMonth] = useState("");
   const [openDay, setOpenDay] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
   const { customEvents } = useCalendarEvents();
 
+  // 使用 useJsonData 統一管理行事曆資料
+  const {
+    data: rawCalendarData,
+    isLoading: loading,
+  } = useJsonData<CalendarData>(["calendar"], "/data/calendar.json");
+
+  // 正規化行事曆資料（加入 isCustom 標記）
+  const calendarData = useMemo<CalendarData>(() => {
+    if (!rawCalendarData) return {};
+    const normalized: CalendarData = {};
+    Object.keys(rawCalendarData).forEach((month) => {
+      normalized[month] = rawCalendarData[month].map((event) => ({
+        ...event,
+        isCustom: false,
+      }));
+    });
+    return normalized;
+  }, [rawCalendarData]);
+
+  // 初始月份設定（僅在 first load 時執行）
   useEffect(() => {
-    fetch("/data/calendar.json")
-      .then((res) => { if (!res.ok) throw new Error("Failed to fetch calendar"); return res.json(); })
-      .then((data: CalendarData) => {
-        const normalizedData: CalendarData = {};
-        Object.keys(data).forEach((month) => {
-          normalizedData[month] = data[month].map((event) => ({
-            ...event,
-            isCustom: false,
-          }));
-        });
-        const today = new Date();
-        const currentMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
-        const sortedMonths = Object.keys(normalizedData).sort();
-        const initialMonth = sortedMonths.includes(currentMonth) ? currentMonth : sortedMonths[0] || "";
-        setCalendarData(normalizedData);
+    if (!selectedMonth) {
+      const initialMonth = getInitialMonth(rawCalendarData);
+      if (initialMonth) {
         setSelectedMonth(initialMonth);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
+      }
+    }
+  }, [rawCalendarData, selectedMonth]);
 
   const mergedCalendarData = useMemo(() => {
     const merged: CalendarData = { ...calendarData };
