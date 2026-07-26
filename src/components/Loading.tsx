@@ -29,6 +29,7 @@ export function Loading({ fullScreen = false, message }: LoadingProps) {
             strokeWidth="5"
             strokeDasharray="40 280"
             strokeLinecap="round"
+            pathLength="320"
             className="text-primary"
             style={{ animation: "dash 0.7s linear infinite" }}
           />

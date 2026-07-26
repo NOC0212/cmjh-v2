@@ -5,7 +5,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useFavorites } from "@/hooks/useFavorites";
 import {
   Calendar,
-  ChevronDown,
   ChevronLeft,
   ChevronRight,
   ExternalLink,
@@ -14,6 +13,8 @@ import {
   Star,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import DOMPurify from "dompurify";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 interface AttachmentLink {
   name: string;
@@ -87,15 +88,15 @@ function normalizeAnnouncement(item: RawAnnouncement): Announcement {
 export function Announcements() {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
   const [selectedCategory, setSelectedCategory] = useState("全部");
   const [loading, setLoading] = useState(true);
   const [direction, setDirection] = useState<"left" | "right">("right");
 
   const { addFavorite, removeFavorite, isFavorite, cleanupFavorites } = useFavorites();
 
-  useEffect(() => { setExpandedId(null); }, [currentPage]);
-  useEffect(() => { setCurrentPage(1); setExpandedId(null); }, [selectedCategory]);
+  useEffect(() => { setSelectedAnnouncement(null); }, [currentPage]);
+  useEffect(() => { setCurrentPage(1); setSelectedAnnouncement(null); }, [selectedCategory]);
 
   useEffect(() => {
     const loadAnnouncements = async () => {
@@ -211,115 +212,127 @@ export function Announcements() {
           className="space-y-2"
         >
         {currentAnnouncements.map((announcement) => {
-          const isExpanded = expandedId === announcement.id;
           const favoriteId = announcement.id;
           const favorited = isFavorite(favoriteId);
 
           return (
             <article
               key={announcement.id}
-              className={cn(
-                "overflow-hidden rounded-xl border transition-all duration-200",
-                isExpanded
-                  ? "border-primary/20 bg-primary/[0.02] shadow-sm"
-                  : "border-border/60 bg-card hover:border-border hover:shadow-sm"
-              )}
+              className="overflow-hidden rounded-xl border border-border/60 bg-card transition-all duration-200 hover:border-border hover:shadow-sm cursor-pointer"
+              onClick={() => setSelectedAnnouncement(announcement)}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setSelectedAnnouncement(announcement); } }}
+              tabIndex={0}
+              role="button"
             >
-              <div
-                role="button"
-                tabIndex={0}
-                className={cn(
-                  "w-full px-4 py-3 text-left transition-colors cursor-pointer",
-                  isExpanded && "bg-primary/[0.02]"
-                )}
-                onClick={() => setExpandedId(isExpanded ? null : announcement.id)}
-                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setExpandedId(isExpanded ? null : announcement.id); } }}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="rounded-lg border border-primary/15 bg-primary/8 px-2 py-1 text-[11px] font-semibold text-primary shrink-0 mt-0.5 leading-none">
-                    {announcement.date}
-                  </div>
-
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-1.5 mb-1">
-                      <span className={cn("rounded-md border px-1.5 py-0.5 text-[10px] font-semibold leading-none", tagColorClass(announcement.category))}>
-                        {announcement.category}
-                      </span>
-                      <span className="text-[10px] text-muted-foreground">{announcement.source}</span>
-                    </div>
-                    <h3 className="line-clamp-2 text-sm font-medium text-foreground leading-snug">{announcement.title}</h3>
-                  </div>
-
-                  <div className="flex shrink-0 items-center gap-0.5">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-7 w-7 rounded-lg"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (favorited) { removeFavorite(favoriteId); }
-                        else {
-                          addFavorite({
-                            id: favoriteId, type: "announcement", title: announcement.title,
-                            date: announcement.date, url: announcement.url, content: announcement.content,
-                            category: announcement.category, source: announcement.source,
-                            links: announcement.attachments,
-                          });
-                        }
-                      }}
-                    >
-                      <Star className={cn("h-3.5 w-3.5", favorited ? "fill-primary text-primary" : "text-muted-foreground")} />
-                    </Button>
-                    <ChevronDown className={cn("h-3.5 w-3.5 text-muted-foreground transition-transform duration-200", isExpanded && "rotate-180")} />
-                  </div>
+              <div className="flex items-start gap-3 px-4 py-3">
+                <div className="rounded-lg border border-primary/15 bg-primary/8 px-2 py-1 text-[11px] font-semibold text-primary shrink-0 mt-0.5 leading-none">
+                  {announcement.date}
                 </div>
+
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-1.5 mb-1">
+                    <span className={cn("rounded-md border px-1.5 py-0.5 text-[10px] font-semibold leading-none", tagColorClass(announcement.category))}>
+                      {announcement.category}
+                    </span>
+                    <span className="text-[10px] text-muted-foreground">{announcement.source}</span>
+                  </div>
+                  <h3 className="line-clamp-2 text-sm font-medium text-foreground leading-snug">{announcement.title}</h3>
+                </div>
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-7 w-7 rounded-lg shrink-0"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (favorited) { removeFavorite(favoriteId); }
+                    else {
+                      addFavorite({
+                        id: favoriteId, type: "announcement", title: announcement.title,
+                        date: announcement.date, url: announcement.url, content: announcement.content,
+                        category: announcement.category, source: announcement.source,
+                        links: announcement.attachments,
+                      });
+                    }
+                  }}
+                >
+                  <Star className={cn("h-3.5 w-3.5", favorited ? "fill-primary text-primary" : "text-muted-foreground")} />
+                </Button>
               </div>
-
-              {isExpanded && (
-                <div className="border-t border-border/40 px-4 pb-4 pt-3 space-y-3">
-                  {announcement.content && (
-                    <p className="rounded-xl border border-border/50 bg-muted/30 p-3 text-sm leading-relaxed text-foreground/80 whitespace-pre-wrap">
-                      {announcement.content}
-                    </p>
-                  )}
-
-                  {announcement.attachments.length > 0 && (
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                      {announcement.attachments.map((file, index) => (
-                        <a
-                          key={`${file.link}-${index}`}
-                          href={file.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 rounded-xl border border-primary/15 bg-primary/5 px-3 py-2 text-foreground transition-all hover:bg-primary hover:text-primary-foreground group"
-                        >
-                          <div className="rounded-lg bg-primary/10 p-1.5 text-primary transition-colors group-hover:bg-white/20 group-hover:text-primary-foreground">
-                            <FileText className="h-3.5 w-3.5" />
-                          </div>
-                          <span className="truncate text-xs font-medium group-hover:text-primary-foreground">{file.name}</span>
-                        </a>
-                      ))}
-                    </div>
-                  )}
-
-                  <div className="flex justify-end pt-0.5">
-                    <a
-                      href={announcement.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-[11px] text-primary hover:underline font-medium"
-                    >
-                      查看原始公告
-                      <ExternalLink className="h-3 w-3" />
-                    </a>
-                  </div>
-                </div>
-              )}
             </article>
           );
         })}
         </motion.div>
       </AnimatePresence>
+
+      <Dialog open={!!selectedAnnouncement} onOpenChange={(open) => !open && setSelectedAnnouncement(null)}>
+        <DialogContent className="w-[92vw] max-w-xl overflow-hidden rounded-3xl border-border bg-card p-0 shadow-2xl outline-none [&>button]:right-5 [&>button]:top-5 [&>button]:flex [&>button]:h-8 [&>button]:w-8 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-full [&>button]:bg-black/30 [&>button]:text-white [&>button]:backdrop-blur-md hover:[&>button]:bg-black/50">
+          <DialogTitle className="sr-only">公告內容</DialogTitle>
+
+          <div className="p-6 sm:p-8 pt-14">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="rounded-xl bg-primary/10 p-2.5 text-primary">
+                <Megaphone className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold leading-tight text-foreground">{selectedAnnouncement?.title}</h3>
+                <div className="mt-1 flex items-center gap-3 text-xs text-muted-foreground">
+                  <span className="flex items-center gap-1"><Calendar className="h-3.5 w-3.5" />{selectedAnnouncement?.date}</span>
+                  <span className={cn("rounded-md border px-1.5 py-0.5 text-[10px] font-semibold leading-none", tagColorClass(selectedAnnouncement?.category ?? ""))}>
+                    {selectedAnnouncement?.category}
+                  </span>
+                  <span>{selectedAnnouncement?.source}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="max-h-[50vh] overflow-y-auto overflow-x-auto pr-2 custom-scrollbar min-w-0">
+              {selectedAnnouncement?.content ? (
+                <div
+                  className="text-sm leading-relaxed text-foreground/90 [&_table]:w-full [&_table]:table-fixed [&_table]:border-collapse [&_table]:text-xs [&_td]:border [&_td]:border-border/60 [&_td]:p-2 [&_td]:break-words [&_th]:border [&_th]:border-border/60 [&_th]:bg-muted/50 [&_th]:p-2 [&_th]:break-words [&_th]:font-semibold [&_a]:text-primary [&_a]:underline [&_a]:hover:no-underline [&_img]:max-w-full [&_img]:rounded-lg [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:mb-1"
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selectedAnnouncement.content) }}
+                />
+              ) : (
+                <div className="rounded-2xl border border-dashed border-border bg-muted/30 p-8 text-center text-muted-foreground">
+                  <Megaphone className="mx-auto mb-3 h-8 w-8 opacity-20" />
+                  <p>這則公告沒有附加詳細內容。</p>
+                </div>
+              )}
+
+              {selectedAnnouncement && selectedAnnouncement.attachments.length > 0 && (
+                <div className="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                  {selectedAnnouncement.attachments.map((file, index) => (
+                    <a
+                      key={`${file.link}-${index}`}
+                      href={file.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 rounded-xl border border-primary/15 bg-primary/5 px-3 py-2 text-foreground transition-all hover:bg-primary hover:text-primary-foreground group"
+                    >
+                      <div className="rounded-lg bg-primary/10 p-1.5 text-primary transition-colors group-hover:bg-white/20 group-hover:text-primary-foreground">
+                        <FileText className="h-3.5 w-3.5" />
+                      </div>
+                      <span className="truncate text-xs font-medium group-hover:text-primary-foreground">{file.name}</span>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="mt-6 flex justify-end">
+              <a
+                href={selectedAnnouncement?.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-xs text-primary hover:underline font-medium"
+              >
+                查看原始公告
+                <ExternalLink className="h-3 w-3" />
+              </a>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {filteredAnnouncements.length === 0 && (
         <div className="rounded-xl border border-dashed border-border bg-muted/20 py-10 text-center">

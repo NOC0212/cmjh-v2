@@ -1,6 +1,6 @@
 /**
- * Hash a password using SHA-256 via the Web Crypto API.
- * Returns a hex-encoded hash string.
+ * 使用 Web Crypto API 以 SHA-256 對密碼進行雜湊。
+ * 回傳 hex 編碼的雜湊字串。
  */
 export async function hashPassword(password: string): Promise<string> {
   const encoder = new TextEncoder();

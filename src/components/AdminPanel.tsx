@@ -72,6 +72,7 @@ import {
 } from "recharts";
 import { hashPassword } from "@/lib/crypto";
 import { isMaintenanceWhitelisted, setMaintenanceWhitelist } from "@/lib/app-version";
+import { useCrudManager } from "@/hooks/useCrudManager";
 
 type AdminSection = "countdowns" | "announcements" | "maintenance" | "appversion" | "password" | "visitstats" | null;
 
@@ -136,16 +137,34 @@ export function AdminPanel() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [localCountdowns, setLocalCountdowns] = useState<SiteCountdown[]>([]);
-  const [cdDialogOpen, setCdDialogOpen] = useState(false);
-  const [editingCd, setEditingCd] = useState<EditingCountdown | null>(null);
-  const [cdDeleteConfirm, setCdDeleteConfirm] = useState<string | null>(null);
   const [cdGradeFilter, setCdGradeFilter] = useState<string>("all");
 
-  const [localAnnouncements, setLocalAnnouncements] = useState<SiteAnnouncement[]>([]);
-  const [annDialogOpen, setAnnDialogOpen] = useState(false);
-  const [editingAnn, setEditingAnn] = useState<EditingAnnouncement | null>(null);
-  const [annDeleteConfirm, setAnnDeleteConfirm] = useState<string | null>(null);
+  const cdMgr = useCrudManager(countdowns, (editing, items): SiteCountdown => ({
+    id: editing.id || `admin-cd-${Date.now()}`,
+    label: editing.label,
+    target_date: taiwanInputToUtc(editing.target_date),
+    start_date: editing.start_date ? taiwanInputToUtc(editing.start_date) : null,
+    progress_label: editing.progress_label || "進度",
+    sort_order: editing.id
+      ? items.find((c) => c.id === editing.id)?.sort_order ?? items.length
+      : items.length,
+    active: true,
+    grade: editing.grade === "all" ? null : editing.grade,
+  }));
+
+  const annMgr = useCrudManager(announcements, (editing, items): SiteAnnouncement => ({
+    id: editing.id || `admin-ann-${Date.now()}`,
+    title: editing.title,
+    date: editing.date,
+    type: editing.type,
+    pinned: editing.pinned,
+    content: editing.content || "",
+    image_url: editing.image_url || undefined,
+    sort_order: editing.id
+      ? items.find((a) => a.id === editing.id)?.sort_order ?? items.length
+      : items.length,
+    active: true,
+  }));
 
   const [localMaintenance, setLocalMaintenance] = useState({
     isMaintenance: false,
@@ -159,17 +178,7 @@ export function AdminPanel() {
   const [localVersion, setLocalVersion] = useState("");
   const [localHighlights, setLocalHighlights] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (countdowns.length > 0) {
-      setLocalCountdowns([...countdowns]);
-    }
-  }, [countdowns]);
-
-  useEffect(() => {
-    if (announcements.length > 0) {
-      setLocalAnnouncements([...announcements]);
-    }
-  }, [announcements]);
+  // countdown/announcement sync is handled by useCrudManager
 
   useEffect(() => {
     if (maintenance) {
@@ -242,99 +251,24 @@ export function AdminPanel() {
     setIsVerifying(false);
   };
 
-  const handleAddCountdown = () => {
-    setEditingCd({ id: undefined, label: "", target_date: "", start_date: "", progress_label: "進度", grade: "all" });
-    setCdDialogOpen(true);
-  };
-
-  const handleEditCountdown = (cd: SiteCountdown) => {
-    setEditingCd({
-      id: cd.id,
-      label: cd.label,
-      target_date: utcToTaiwanInputStr(cd.target_date),
-      start_date: cd.start_date ? utcToTaiwanInputStr(cd.start_date) : "",
-      progress_label: cd.progress_label,
-      grade: cd.grade || "all",
-    });
-    setCdDialogOpen(true);
-  };
-
   const handleSaveCountdown = () => {
-    if (!editingCd || !editingCd.label || !editingCd.target_date) {
+    if (!cdMgr.editing?.label || !cdMgr.editing?.target_date) {
       toast({ title: "請填寫標題和目標日期", variant: "destructive" });
       return;
     }
-
-    const newCountdown: SiteCountdown = {
-      id: editingCd.id || `admin-cd-${Date.now()}`,
-      label: editingCd.label,
-      target_date: taiwanInputToUtc(editingCd.target_date),
-      start_date: editingCd.start_date ? taiwanInputToUtc(editingCd.start_date) : null,
-      progress_label: editingCd.progress_label || "進度",
-      sort_order: editingCd.id
-        ? localCountdowns.find((c) => c.id === editingCd.id)?.sort_order ?? localCountdowns.length
-        : localCountdowns.length,
-      active: true,
-      grade: editingCd.grade === "all" ? null : editingCd.grade,
-    };
-
-    if (editingCd.id && localCountdowns.some((c) => c.id === editingCd.id)) {
-      setLocalCountdowns((prev) => prev.map((c) => (c.id === editingCd.id ? newCountdown : c)));
-    } else {
-      setLocalCountdowns((prev) => [...prev, newCountdown]);
-    }
-
-    setCdDialogOpen(false);
-    setEditingCd(null);
-  };
-
-  const handleDeleteCountdown = (id: string) => {
-    setLocalCountdowns((prev) => prev.filter((c) => c.id !== id));
-    setCdDeleteConfirm(null);
-  };
-
-  const handleMoveCd = (index: number, direction: "up" | "down") => {
-    const newList = [...localCountdowns];
-    const targetIndex = direction === "up" ? index - 1 : index + 1;
-    if (targetIndex < 0 || targetIndex >= newList.length) return;
-    [newList[index], newList[targetIndex]] = [newList[targetIndex], newList[index]];
-    setLocalCountdowns(newList.map((c, i) => ({ ...c, sort_order: i })));
+    cdMgr.handleSave();
   };
 
   const handleSaveCountdowns = async () => {
     try {
-      await updateCountdowns(localCountdowns);
+      await updateCountdowns(cdMgr.items);
       toast({ title: "儲存成功", description: "預設倒數計時已更新" });
     } catch (err) {
       toast({ title: "儲存失敗", description: String(err), variant: "destructive" });
     }
   };
 
-  const handleAddAnnouncement = () => {
-    setEditingAnn({
-      id: undefined,
-      title: "",
-      date: new Date().toISOString().slice(0, 10),
-      type: "info",
-      pinned: false,
-      content: "",
-      image_url: "",
-    });
-    setAnnDialogOpen(true);
-  };
 
-  const handleEditAnnouncement = (ann: SiteAnnouncement) => {
-    setEditingAnn({
-      id: ann.id,
-      title: ann.title,
-      date: ann.date,
-      type: ann.type,
-      pinned: ann.pinned,
-      content: ann.content,
-      image_url: ann.image_url || "",
-    });
-    setAnnDialogOpen(true);
-  };
 
   const handleUploadImage = async (file: File) => {
     if (!SUPABASE_ENABLED) {
@@ -350,7 +284,7 @@ export function AdminPanel() {
       return;
     }
     try {
-      const oldUrl = editingAnn?.image_url;
+      const oldUrl = annMgr.editing?.image_url;
       if (oldUrl) {
         const BUCKET_PATH = "/announcement-images/";
         const idx = oldUrl.lastIndexOf(BUCKET_PATH);
@@ -371,7 +305,7 @@ export function AdminPanel() {
       const { data: urlData } = supabase.storage
         .from("announcement-images")
         .getPublicUrl(fileName);
-      setEditingAnn((prev) => (prev ? { ...prev, image_url: urlData.publicUrl } : null));
+      annMgr.setEditing((prev) => (prev ? { ...prev, image_url: urlData.publicUrl } : null));
       toast({ title: "上傳成功" });
     } catch (err) {
       toast({ title: "上傳失敗", description: String(err), variant: "destructive" });
@@ -379,51 +313,16 @@ export function AdminPanel() {
   };
 
   const handleSaveAnnouncement = () => {
-    if (!editingAnn || !editingAnn.title || !editingAnn.date) {
+    if (!annMgr.editing?.title || !annMgr.editing?.date) {
       toast({ title: "請填寫標題和日期", variant: "destructive" });
       return;
     }
-
-    const newAnnouncement: SiteAnnouncement = {
-      id: editingAnn.id || `admin-ann-${Date.now()}`,
-      title: editingAnn.title,
-      date: editingAnn.date,
-      type: editingAnn.type,
-      pinned: editingAnn.pinned,
-      content: editingAnn.content || "",
-      image_url: editingAnn.image_url || undefined,
-      sort_order: editingAnn.id
-        ? localAnnouncements.find((a) => a.id === editingAnn.id)?.sort_order ?? localAnnouncements.length
-        : localAnnouncements.length,
-      active: true,
-    };
-
-    if (editingAnn.id && localAnnouncements.some((a) => a.id === editingAnn.id)) {
-      setLocalAnnouncements((prev) => prev.map((a) => (a.id === editingAnn.id ? newAnnouncement : a)));
-    } else {
-      setLocalAnnouncements((prev) => [...prev, newAnnouncement]);
-    }
-
-    setAnnDialogOpen(false);
-    setEditingAnn(null);
-  };
-
-  const handleDeleteAnnouncement = (id: string) => {
-    setLocalAnnouncements((prev) => prev.filter((a) => a.id !== id));
-    setAnnDeleteConfirm(null);
-  };
-
-  const handleMoveAnn = (index: number, direction: "up" | "down") => {
-    const newList = [...localAnnouncements];
-    const targetIndex = direction === "up" ? index - 1 : index + 1;
-    if (targetIndex < 0 || targetIndex >= newList.length) return;
-    [newList[index], newList[targetIndex]] = [newList[targetIndex], newList[index]];
-    setLocalAnnouncements(newList.map((a, i) => ({ ...a, sort_order: i })));
+    annMgr.handleSave();
   };
 
   const handleSaveAnnouncements = async () => {
     try {
-      await updateAnnouncements(localAnnouncements);
+      await updateAnnouncements(annMgr.items);
       toast({ title: "儲存成功", description: "本站公告已更新" });
     } catch (err) {
       toast({ title: "儲存失敗", description: String(err), variant: "destructive" });
@@ -608,8 +507,7 @@ export function AdminPanel() {
     password: "變更密碼",
   }[activeSection ?? "countdowns"];
 
-  const countdownsChanged = JSON.stringify(localCountdowns) !== JSON.stringify(countdowns);
-  const announcementsChanged = JSON.stringify(localAnnouncements) !== JSON.stringify(announcements);
+
 
   return (
     <div className="min-h-[500px] pb-8 text-foreground">
@@ -642,7 +540,7 @@ export function AdminPanel() {
               title="預設倒數計時"
               description="管理學校預設的倒數計時器"
               color="blue"
-              badge={localCountdowns.length.toString()}
+              badge={cdMgr.items.length.toString()}
               onClick={() => setActiveSection("countdowns")}
             />
             <AdminMenuCard
@@ -650,7 +548,7 @@ export function AdminPanel() {
               title="本站公告"
               description="管理網站公告內容"
               color="purple"
-              badge={localAnnouncements.length.toString()}
+              badge={annMgr.items.length.toString()}
               onClick={() => setActiveSection("announcements")}
             />
             <AdminMenuCard
@@ -719,14 +617,14 @@ export function AdminPanel() {
               <div className="space-y-4 p-5">
                 <div className="flex items-center justify-between">
                   <p className="text-xs font-semibold text-muted-foreground">
-                    共 {localCountdowns.length} 個倒數計時
+                    共 {cdMgr.items.length} 個倒數計時
                   </p>
                   <div className="flex gap-2">
-                    <Button size="sm" variant="outline" onClick={handleAddCountdown}>
+                    <Button size="sm" variant="outline" onClick={() => cdMgr.handleAdd({ id: undefined, label: "", target_date: "", start_date: "", progress_label: "進度", grade: "all" })}>
                       <Plus className="mr-1 h-4 w-4" />
                       新增
                     </Button>
-                    <Button size="sm" onClick={handleSaveCountdowns} disabled={!countdownsChanged || cdUpdating}>
+                    <Button size="sm" onClick={handleSaveCountdowns} disabled={!cdMgr.changed || cdUpdating}>
                       <Save className="mr-1 h-4 w-4" />
                       {cdUpdating ? "儲存中..." : "儲存變更"}
                     </Button>
@@ -762,13 +660,13 @@ export function AdminPanel() {
                 </div>
 
                 <div className="space-y-2">
-                  {localCountdowns.length === 0 ? (
+                  {cdMgr.items.length === 0 ? (
                     <div className="py-12 text-center text-muted-foreground">
                       <Clock className="mx-auto mb-3 h-8 w-8 opacity-30" />
                       <p className="text-sm">尚無倒數計時</p>
                     </div>
                   ) : (
-                    localCountdowns
+                    cdMgr.items
                       .filter(cd => cdGradeFilter === "all" || cd.grade === cdGradeFilter)
                       .map((cd) => {
                         const gradeLabel = COUNTDOWN_GRADES.find(g => g.value === cd.grade)?.label || "全部年級";
@@ -779,15 +677,15 @@ export function AdminPanel() {
                         >
                           <div className="flex flex-col gap-0.5">
                             <button
-                              onClick={() => handleMoveCd(localCountdowns.indexOf(cd), "up")}
-                              disabled={localCountdowns.indexOf(cd) === 0}
+                              onClick={() => cdMgr.handleMove(cdMgr.items.indexOf(cd), "up")}
+                              disabled={cdMgr.items.indexOf(cd) === 0}
                               className="text-muted-foreground/40 hover:text-primary disabled:opacity-20"
                             >
                               <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 15l7-7 7 7" /></svg>
                             </button>
                             <button
-                              onClick={() => handleMoveCd(localCountdowns.indexOf(cd), "down")}
-                              disabled={localCountdowns.indexOf(cd) === localCountdowns.length - 1}
+                              onClick={() => cdMgr.handleMove(cdMgr.items.indexOf(cd), "down")}
+                              disabled={cdMgr.items.indexOf(cd) === cdMgr.items.length - 1}
                               className="text-muted-foreground/40 hover:text-primary disabled:opacity-20"
                             >
                               <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
@@ -811,7 +709,7 @@ export function AdminPanel() {
                               variant="ghost"
                               size="icon"
                               className="h-8 w-8 rounded-lg hover:bg-primary/10"
-                              onClick={() => handleEditCountdown(cd)}
+                              onClick={() => cdMgr.handleEdit(cd, (c) => ({ id: c.id, label: c.label, target_date: utcToTaiwanInputStr(c.target_date), start_date: c.start_date ? utcToTaiwanInputStr(c.start_date) : "", progress_label: c.progress_label, grade: c.grade || "all" }))}
                             >
                               <Edit className="h-4 w-4 text-muted-foreground/70" />
                             </Button>
@@ -819,7 +717,7 @@ export function AdminPanel() {
                               variant="ghost"
                               size="icon"
                               className="h-8 w-8 rounded-lg hover:bg-destructive/10 text-destructive/70"
-                              onClick={() => setCdDeleteConfirm(cd.id)}
+                              onClick={() => cdMgr.setDeleteConfirmId(cd.id)}
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>
@@ -835,14 +733,14 @@ export function AdminPanel() {
               <div className="space-y-4 p-5">
                 <div className="flex items-center justify-between">
                   <p className="text-xs font-semibold text-muted-foreground">
-                    共 {localAnnouncements.length} 則公告
+                    共 {annMgr.items.length} 則公告
                   </p>
                   <div className="flex gap-2">
-                    <Button size="sm" variant="outline" onClick={handleAddAnnouncement}>
+                    <Button size="sm" variant="outline" onClick={() => annMgr.handleAdd({ id: undefined, title: "", date: new Date().toISOString().slice(0, 10), type: "info", pinned: false, content: "", image_url: "" })}>
                       <Plus className="mr-1 h-4 w-4" />
                       新增
                     </Button>
-                    <Button size="sm" onClick={handleSaveAnnouncements} disabled={!announcementsChanged || annUpdating}>
+                    <Button size="sm" onClick={handleSaveAnnouncements} disabled={!annMgr.changed || annUpdating}>
                       <Save className="mr-1 h-4 w-4" />
                       {annUpdating ? "儲存中..." : "儲存變更"}
                     </Button>
@@ -850,13 +748,13 @@ export function AdminPanel() {
                 </div>
 
                 <div className="space-y-2">
-                  {localAnnouncements.length === 0 ? (
+                  {annMgr.items.length === 0 ? (
                     <div className="py-12 text-center text-muted-foreground">
                       <Megaphone className="mx-auto mb-3 h-8 w-8 opacity-30" />
                       <p className="text-sm">尚無公告</p>
                     </div>
                   ) : (
-                    localAnnouncements.map((ann, index) => (
+                    annMgr.items.map((ann, index) => (
                       <div
                         key={ann.id}
                         className={cn(
@@ -868,15 +766,15 @@ export function AdminPanel() {
                       >
                         <div className="flex flex-col gap-0.5">
                           <button
-                            onClick={() => handleMoveAnn(index, "up")}
+                            onClick={() => annMgr.handleMove(index, "up")}
                             disabled={index === 0}
                             className="text-muted-foreground/40 hover:text-primary disabled:opacity-20"
                           >
                             <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 15l7-7 7 7" /></svg>
                           </button>
                           <button
-                            onClick={() => handleMoveAnn(index, "down")}
-                            disabled={index === localAnnouncements.length - 1}
+                            onClick={() => annMgr.handleMove(index, "down")}
+                            disabled={index === annMgr.items.length - 1}
                             className="text-muted-foreground/40 hover:text-primary disabled:opacity-20"
                           >
                             <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
@@ -899,7 +797,7 @@ export function AdminPanel() {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8 rounded-lg hover:bg-primary/10"
-                            onClick={() => handleEditAnnouncement(ann)}
+                            onClick={() => annMgr.handleEdit(ann, (a) => ({ id: a.id, title: a.title, date: a.date, type: a.type, pinned: a.pinned, content: a.content, image_url: a.image_url || "" }))}
                           >
                             <Edit className="h-4 w-4 text-muted-foreground/70" />
                           </Button>
@@ -907,7 +805,7 @@ export function AdminPanel() {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8 rounded-lg hover:bg-destructive/10 text-destructive/70"
-                            onClick={() => setAnnDeleteConfirm(ann.id)}
+                            onClick={() => annMgr.setDeleteConfirmId(ann.id)}
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
@@ -1280,20 +1178,20 @@ export function AdminPanel() {
         </motion.div>
       )}
 
-      <Dialog open={cdDialogOpen} onOpenChange={setCdDialogOpen}>
+      <Dialog open={cdMgr.dialogOpen} onOpenChange={cdMgr.setDialogOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="text-lg font-bold">
-              {editingCd?.id ? "編輯倒數計時" : "新增倒數計時"}
+              {cdMgr.editing?.id ? "編輯倒數計時" : "新增倒數計時"}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
               <Label className="text-xs font-semibold">標題</Label>
               <Input
-                value={editingCd?.label || ""}
+                value={cdMgr.editing?.label || ""}
                 onChange={(e) =>
-                  setEditingCd((prev) => (prev ? { ...prev, label: e.target.value } : null))
+                  cdMgr.setEditing((prev) => (prev ? { ...prev, label: e.target.value } : null))
                 }
                 placeholder="例如：寒假倒數"
               />
@@ -1302,9 +1200,9 @@ export function AdminPanel() {
               <Label className="text-xs font-semibold">目標日期時間</Label>
               <Input
                 type="datetime-local"
-                value={editingCd?.target_date || ""}
+                value={cdMgr.editing?.target_date || ""}
                 onChange={(e) =>
-                  setEditingCd((prev) => (prev ? { ...prev, target_date: e.target.value } : null))
+                  cdMgr.setEditing((prev) => (prev ? { ...prev, target_date: e.target.value } : null))
                 }
               />
             </div>
@@ -1312,18 +1210,18 @@ export function AdminPanel() {
               <Label className="text-xs font-semibold">開始日期時間（選填）</Label>
               <Input
                 type="datetime-local"
-                value={editingCd?.start_date || ""}
+                value={cdMgr.editing?.start_date || ""}
                 onChange={(e) =>
-                  setEditingCd((prev) => (prev ? { ...prev, start_date: e.target.value } : null))
+                  cdMgr.setEditing((prev) => (prev ? { ...prev, start_date: e.target.value } : null))
                 }
               />
             </div>
             <div className="space-y-2">
               <Label className="text-xs font-semibold">進度條標籤（選填）</Label>
               <Input
-                value={editingCd?.progress_label || ""}
+                value={cdMgr.editing?.progress_label || ""}
                 onChange={(e) =>
-                  setEditingCd((prev) => (prev ? { ...prev, progress_label: e.target.value } : null))
+                  cdMgr.setEditing((prev) => (prev ? { ...prev, progress_label: e.target.value } : null))
                 }
                 placeholder="例如：學期進度"
               />
@@ -1331,9 +1229,9 @@ export function AdminPanel() {
             <div className="space-y-2">
               <Label className="text-xs font-semibold">適用年級</Label>
               <Select
-                value={editingCd?.grade ?? "all"}
+                value={cdMgr.editing?.grade ?? "all"}
                 onValueChange={(value) =>
-                  setEditingCd((prev) => (prev ? { ...prev, grade: value } : null))
+                  cdMgr.setEditing((prev) => (prev ? { ...prev, grade: value } : null))
                 }
               >
                 <SelectTrigger>
@@ -1351,8 +1249,8 @@ export function AdminPanel() {
             <Button
               variant="ghost"
               onClick={() => {
-                setCdDialogOpen(false);
-                setEditingCd(null);
+                cdMgr.setDialogOpen(false);
+                cdMgr.setEditing(null);
               }}
             >
               取消
@@ -1364,20 +1262,20 @@ export function AdminPanel() {
         </DialogContent>
       </Dialog>
 
-      <Dialog open={annDialogOpen} onOpenChange={setAnnDialogOpen}>
+      <Dialog open={annMgr.dialogOpen} onOpenChange={annMgr.setDialogOpen}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle className="text-lg font-bold">
-              {editingAnn?.id ? "編輯公告" : "新增公告"}
+              {annMgr.editing?.id ? "編輯公告" : "新增公告"}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4 max-h-[60vh] overflow-y-auto">
             <div className="space-y-2">
               <Label className="text-xs font-semibold">標題</Label>
               <Input
-                value={editingAnn?.title || ""}
+                value={annMgr.editing?.title || ""}
                 onChange={(e) =>
-                  setEditingAnn((prev) => (prev ? { ...prev, title: e.target.value } : null))
+                  annMgr.setEditing((prev) => (prev ? { ...prev, title: e.target.value } : null))
                 }
                 placeholder="公告標題"
               />
@@ -1387,18 +1285,18 @@ export function AdminPanel() {
                 <Label className="text-xs font-semibold">日期</Label>
                 <Input
                   type="date"
-                  value={editingAnn?.date || ""}
+                  value={annMgr.editing?.date || ""}
                   onChange={(e) =>
-                    setEditingAnn((prev) => (prev ? { ...prev, date: e.target.value } : null))
+                    annMgr.setEditing((prev) => (prev ? { ...prev, date: e.target.value } : null))
                   }
                 />
               </div>
               <div className="space-y-2">
                 <Label className="text-xs font-semibold">類型</Label>
                 <Select
-                  value={editingAnn?.type || "info"}
+                  value={annMgr.editing?.type || "info"}
                   onValueChange={(value) =>
-                    setEditingAnn((prev) => (prev ? { ...prev, type: value } : null))
+                    annMgr.setEditing((prev) => (prev ? { ...prev, type: value } : null))
                   }
                 >
                   <SelectTrigger>
@@ -1415,9 +1313,9 @@ export function AdminPanel() {
             </div>
             <div className="flex items-center gap-3 rounded-xl border border-border/40 bg-card p-4">
               <Switch
-                checked={editingAnn?.pinned || false}
+                checked={annMgr.editing?.pinned || false}
                 onCheckedChange={(checked) =>
-                  setEditingAnn((prev) => (prev ? { ...prev, pinned: checked } : null))
+                  annMgr.setEditing((prev) => (prev ? { ...prev, pinned: checked } : null))
                 }
               />
               <div>
@@ -1427,13 +1325,13 @@ export function AdminPanel() {
             </div>
             <div className="space-y-3">
               <Label className="text-xs font-semibold">自訂圖片（選填）</Label>
-              {editingAnn?.image_url && (
+              {annMgr.editing?.image_url && (
                 <div className="relative rounded-xl overflow-hidden border border-border/50 aspect-video bg-muted/30">
-                  <img src={editingAnn.image_url} alt="" className="h-full w-full object-cover" referrerPolicy="no-referrer" />
+                  <img src={annMgr.editing.image_url} alt="" className="h-full w-full object-cover" referrerPolicy="no-referrer" />
                   <button
                     type="button"
                     className="absolute top-2 right-2 h-7 w-7 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/70 transition-colors"
-                    onClick={() => setEditingAnn((prev) => (prev ? { ...prev, image_url: "" } : null))}
+                    onClick={() => annMgr.setEditing((prev) => (prev ? { ...prev, image_url: "" } : null))}
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -1464,17 +1362,17 @@ export function AdminPanel() {
               <div className="relative">
                 <Input
                   className="pr-9"
-                  value={editingAnn?.image_url || ""}
+                  value={annMgr.editing?.image_url || ""}
                   onChange={(e) =>
-                    setEditingAnn((prev) => (prev ? { ...prev, image_url: e.target.value } : null))
+                    annMgr.setEditing((prev) => (prev ? { ...prev, image_url: e.target.value } : null))
                   }
                   placeholder="或貼上圖片網址..."
                 />
-                {editingAnn?.image_url && (
+                {annMgr.editing?.image_url && (
                   <button
                     type="button"
                     className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                    onClick={() => setEditingAnn((prev) => (prev ? { ...prev, image_url: "" } : null))}
+                    onClick={() => annMgr.setEditing((prev) => (prev ? { ...prev, image_url: "" } : null))}
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -1485,9 +1383,9 @@ export function AdminPanel() {
               <Label className="text-xs font-semibold">內容（選填）</Label>
               <Textarea
                 className="min-h-[120px]"
-                value={editingAnn?.content || ""}
+                value={annMgr.editing?.content || ""}
                 onChange={(e) =>
-                  setEditingAnn((prev) => (prev ? { ...prev, content: e.target.value } : null))
+                  annMgr.setEditing((prev) => (prev ? { ...prev, content: e.target.value } : null))
                 }
                 placeholder="公告詳細內容..."
               />
@@ -1497,8 +1395,8 @@ export function AdminPanel() {
             <Button
               variant="ghost"
               onClick={() => {
-                setAnnDialogOpen(false);
-                setEditingAnn(null);
+                annMgr.setDialogOpen(false);
+                annMgr.setEditing(null);
               }}
             >
               取消
@@ -1511,8 +1409,8 @@ export function AdminPanel() {
       </Dialog>
 
       <AlertDialog
-        open={!!cdDeleteConfirm}
-        onOpenChange={(open) => !open && setCdDeleteConfirm(null)}
+        open={!!cdMgr.deleteConfirmId}
+        onOpenChange={(open) => !open && cdMgr.setDeleteConfirmId(null)}
       >
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -1524,7 +1422,7 @@ export function AdminPanel() {
           <AlertDialogFooter className="gap-2">
             <AlertDialogCancel>取消</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => cdDeleteConfirm && handleDeleteCountdown(cdDeleteConfirm)}
+              onClick={() => cdMgr.deleteConfirmId && cdMgr.handleDelete(cdMgr.deleteConfirmId)}
               className="bg-destructive hover:bg-destructive/90"
             >
               確認刪除
@@ -1534,8 +1432,8 @@ export function AdminPanel() {
       </AlertDialog>
 
       <AlertDialog
-        open={!!annDeleteConfirm}
-        onOpenChange={(open) => !open && setAnnDeleteConfirm(null)}
+        open={!!annMgr.deleteConfirmId}
+        onOpenChange={(open) => !open && annMgr.setDeleteConfirmId(null)}
       >
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -1547,7 +1445,7 @@ export function AdminPanel() {
           <AlertDialogFooter className="gap-2">
             <AlertDialogCancel>取消</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => annDeleteConfirm && handleDeleteAnnouncement(annDeleteConfirm)}
+              onClick={() => annMgr.deleteConfirmId && annMgr.handleDelete(annMgr.deleteConfirmId)}
               className="bg-destructive hover:bg-destructive/90"
             >
               確認刪除

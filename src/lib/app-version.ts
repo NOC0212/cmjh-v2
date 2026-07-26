@@ -46,15 +46,19 @@ export function getCurrentVersion(): string {
     return localStorage.getItem(VERSION_STORAGE_KEY) || "";
 }
 
-export function ensureVersion(targetVersion?: string) {
+function setVersion(targetVersion?: string, force = false) {
     const current = getCurrentVersion();
-    if (!current) {
+    if (force || !current) {
         localStorage.setItem(VERSION_STORAGE_KEY, targetVersion || FALLBACK_VERSION);
     }
 }
 
+export function ensureVersion(targetVersion?: string) {
+    setVersion(targetVersion, false);
+}
+
 export function updateVersionToLatest(targetVersion?: string) {
-    localStorage.setItem(VERSION_STORAGE_KEY, targetVersion || FALLBACK_VERSION);
+    setVersion(targetVersion, true);
 }
 
 export function migrateData(targetVersion?: string) {

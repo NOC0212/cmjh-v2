@@ -59,7 +59,7 @@ const parseTaiwanInput = (inputStr: string): Date => {
 // 輔助函數：處理 Emoji 與漸層文字衝突
 const renderLabelWithEmoji = (text: string) => {
   // 使用更全面的正則表達式匹配 Emoji
-  const emojiRegex = /(\ud83c[\udf00-\udfff]|\ud83d[\udc00-\ude4f]|\ud83d[\ude80-\udeff]|\ud83e[\udd00-\uddff]|\ud83f[\udc00-\udfff]|[\u2600-\u26FF]|[\u2700-\u27BF]|\u00a9|\u00ae)/g;
+  const emojiRegex = /(\ud83c[\udf00-\udfff]|\ud83d[\udc00-\ude4f]|\ud83d[\ude80-\udeff]|\ud83e[\udd00-\uddff]|\ud83f[\udc00-\udfff]|[\u2600-\u26FF]|[\u2700-\u27BF]|\u00a9|\u00ae)/;
   const parts = text.split(emojiRegex);
   
   return parts.map((part, index) => {
@@ -423,11 +423,14 @@ export function CountdownTimer() {
 
   const handleDelete = (id: string) => {
     const filtered = allCountdowns.filter(c => c.id !== id);
+    const deletedIndex = allCountdowns.findIndex(c => c.id === id);
     setAllCountdowns(filtered);
     persistMergedList(filtered);
 
-    if (currentIndex >= allCountdowns.length - 1) {
-      setCurrentIndex(Math.max(0, allCountdowns.length - 2));
+    if (deletedIndex < currentIndex) {
+      setCurrentIndex(currentIndex - 1);
+    } else if (currentIndex >= filtered.length) {
+      setCurrentIndex(Math.max(0, filtered.length - 1));
     }
   };
 
@@ -472,6 +475,37 @@ export function CountdownTimer() {
   };
 
   const isComplete = progress >= 100;
+
+  const renderCountdownFormDialog = () => (
+    <DialogContent className="bg-background">
+      <DialogHeader>
+        <DialogTitle className="text-lg font-bold">{editingId ? "編輯倒數計時" : "新增倒數計時"}</DialogTitle>
+      </DialogHeader>
+      <div className="space-y-4 py-4">
+        {(["label", "targetDate", "startDate", "progressLabel"] as const).map((field) => (
+          <div key={field} className="space-y-2">
+            <Label htmlFor={field} className="text-xs font-semibold">
+              {field === "label" ? "標題" : field === "targetDate" ? "目標日期時間" : field === "startDate" ? "開始日期時間（選填）" : "進度條標籤（選填）"}
+            </Label>
+            {field === "targetDate" || field === "startDate" ? (
+              <>
+                <Input id={field} type="datetime-local" value={formData[field]} onChange={(e) => setFormData({ ...formData, [field]: e.target.value })} />
+                <p className="text-[10px] text-muted-foreground/60">
+                  {field === "targetDate" ? "必須晚於當前時間" : "用於計算進度條，必須早於目標時間"}
+                </p>
+              </>
+            ) : (
+              <Input id={field} value={formData[field]} onChange={(e) => setFormData({ ...formData, [field]: e.target.value })} placeholder={field === "label" ? "例如：寒假倒數" : "例如：學期進度"} />
+            )}
+          </div>
+        ))}
+      </div>
+      <DialogFooter className="gap-2">
+        <Button variant="ghost" onClick={() => { setAddDialogOpen(false); setEditingId(null); }}>取消</Button>
+        <Button onClick={editingId ? handleSaveEdit : handleAddNew}>儲存</Button>
+      </DialogFooter>
+    </DialogContent>
+  );
 
   if (!selectedGrade) {
     return (
@@ -522,35 +556,7 @@ export function CountdownTimer() {
               新增倒數計時
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-background">
-            <DialogHeader>
-              <DialogTitle className="text-lg font-bold">{editingId ? "編輯倒數計時" : "新增倒數計時"}</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4 py-4">
-              <div className="space-y-2">
-                <Label htmlFor="label-empty" className="text-xs font-semibold">標題</Label>
-                <Input id="label-empty" value={formData.label} onChange={(e) => setFormData({ ...formData, label: e.target.value })} placeholder="例如：寒假倒數" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="targetDate-empty" className="text-xs font-semibold">目標日期時間</Label>
-                <Input id="targetDate-empty" type="datetime-local" value={formData.targetDate} onChange={(e) => setFormData({ ...formData, targetDate: e.target.value })} />
-                <p className="text-[10px] text-muted-foreground/60">必須晚於當前時間</p>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="startDate-empty" className="text-xs font-semibold">開始日期時間（選填）</Label>
-                <Input id="startDate-empty" type="datetime-local" value={formData.startDate} onChange={(e) => setFormData({ ...formData, startDate: e.target.value })} />
-                <p className="text-[10px] text-muted-foreground/60">用於計算進度條，必須早於目標時間</p>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="progressLabel-empty" className="text-xs font-semibold">進度條標籤（選填）</Label>
-                <Input id="progressLabel-empty" value={formData.progressLabel} onChange={(e) => setFormData({ ...formData, progressLabel: e.target.value })} placeholder="例如：學期進度" />
-              </div>
-            </div>
-            <DialogFooter className="gap-2">
-              <Button variant="ghost" onClick={() => { setAddDialogOpen(false); setEditingId(null); }}>取消</Button>
-              <Button onClick={editingId ? handleSaveEdit : handleAddNew}>儲存</Button>
-            </DialogFooter>
-          </DialogContent>
+          {renderCountdownFormDialog()}
         </Dialog>
       </div>
     );
@@ -587,35 +593,7 @@ export function CountdownTimer() {
                   <Plus className="h-4 w-4" />
                 </Button>
               </DialogTrigger>
-              <DialogContent className="bg-background">
-                <DialogHeader>
-                  <DialogTitle className="text-lg font-bold">{editingId ? "編輯倒數計時" : "新增倒數計時"}</DialogTitle>
-                </DialogHeader>
-                <div className="space-y-4 py-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="label" className="text-xs font-semibold">標題</Label>
-                    <Input id="label" value={formData.label} onChange={(e) => setFormData({ ...formData, label: e.target.value })} placeholder="例如：寒假倒數" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="targetDate" className="text-xs font-semibold">目標日期時間</Label>
-                    <Input id="targetDate" type="datetime-local" value={formData.targetDate} onChange={(e) => setFormData({ ...formData, targetDate: e.target.value })} />
-                    <p className="text-[10px] text-muted-foreground/60">必須晚於當前時間</p>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="startDate" className="text-xs font-semibold">開始日期時間（選填）</Label>
-                    <Input id="startDate" type="datetime-local" value={formData.startDate} onChange={(e) => setFormData({ ...formData, startDate: e.target.value })} />
-                    <p className="text-[10px] text-muted-foreground/60">用於計算進度條，必須早於目標時間</p>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="progressLabel" className="text-xs font-semibold">進度條標籤（選填）</Label>
-                    <Input id="progressLabel" value={formData.progressLabel} onChange={(e) => setFormData({ ...formData, progressLabel: e.target.value })} placeholder="例如：學期進度" />
-                  </div>
-                </div>
-                <DialogFooter className="gap-2">
-                  <Button variant="ghost" onClick={() => { setAddDialogOpen(false); setEditingId(null); }}>取消</Button>
-                  <Button onClick={editingId ? handleSaveEdit : handleAddNew}>儲存</Button>
-                </DialogFooter>
-              </DialogContent>
+              {renderCountdownFormDialog()}
             </Dialog>
 
             <Dialog open={manageDialogOpen} onOpenChange={setManageDialogOpen}>

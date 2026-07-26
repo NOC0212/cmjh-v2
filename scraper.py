@@ -17,27 +17,50 @@ headers = {
     'Accept-Language': 'zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7',
 }
 
-def fetch_details(detail_url):
+def sanitize_html(html_content):
     """
-    進入公告內頁，抓取內容文字與精確的附件下載連結
+    移除危險標籤與屬性，保留安全的 HTML 結構（表格、排版、連結等）
+    """
+    soup = BeautifulSoup(html_content, "html.parser")
+    # 移除危險標籤
+    for tag in soup.find_all([
+        'script', 'iframe', 'object', 'embed', 'style',
+        'link', 'meta', 'form', 'input', 'button', 'textarea', 'select'
+    ]):
+        tag.decompose()
+    # 移除危險屬性
+    for tag in soup.find_all(True):
+        for attr in list(tag.attrs):
+            if attr.startswith('on'):
+                del tag[attr]
+            if attr in ('href', 'src', 'action'):
+                val = tag.get(attr, '')
+                if isinstance(val, str) and val.strip().lower().startswith('javascript:'):
+                    del tag[attr]
+    return str(soup)
+
+def fetch_details(detail_url, retries=3):
+    """
+    進入公告內頁，抓取內容 HTML 與精確的附件下載連結
     """
     print(f"  --> 深入解析：{detail_url}")
-    try:
-        resp = requests.get(detail_url, headers=headers, timeout=15)
-        resp.encoding = resp.apparent_encoding
+    for attempt in range(retries):
+        try:
+            resp = requests.get(detail_url, headers=headers, timeout=15)
+            resp.encoding = resp.apparent_encoding
         soup = BeautifulSoup(resp.text, "html.parser")
         
-        # 1. 抓取公告本文 (#print_content 是最準確的區塊)
+        # 1. 抓取公告本文 HTML (#print_content 是最準確的區塊)
         content_area = soup.select_one('#print_content')
         if content_area:
             temp_soup = BeautifulSoup(str(content_area), "html.parser")
-            # 移除內文末尾的附件清單標籤，避免文字重複
+            # 移除內文末尾的附件清單標籤，避免重複
             file_list_part = temp_soup.select_one('ul.tuf-icon')
             if file_list_part:
                 file_list_part.decompose()
-            content_text = temp_soup.get_text(separator="\n", strip=True)
+            content_html = sanitize_html(str(temp_soup))
         else:
-            content_text = "無詳細內文"
+            content_html = "無詳細內文"
 
         # 2. 抓取附件連結
         attachments = []
@@ -66,10 +89,15 @@ def fetch_details(detail_url):
                         "link": final_link
                     })
             
-        return content_text, attachments
-    except Exception as e:
-        print(f"      [失敗] 內頁解析出錯: {e}")
-        return "內容讀取失敗", []
+            return content_html, attachments
+        except Exception as e:
+            if attempt < retries - 1:
+                wait = 2 ** attempt
+                print(f"      [重試 {attempt + 1}/{retries}] {wait}秒後重試: {e}")
+                time.sleep(wait)
+            else:
+                print(f"      [失敗] 內頁解析出錯: {e}")
+                return "內容讀取失敗", []
 
 def main():
     print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] 啟動崇明國中公告爬蟲...")

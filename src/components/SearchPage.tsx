@@ -3,6 +3,7 @@ import { Search, ExternalLink, Calendar as CalendarIcon, ChevronRight, ChevronLe
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useFavorites } from "@/hooks/useFavorites";
+import DOMPurify from "dompurify";
 
 interface Announcement {
     date: string;
@@ -134,7 +135,7 @@ export function SearchPage() {
                                         return (
                                             <div
                                                 key={idx}
-                                                className="group bg-card rounded-2xl border border-border hover:border-primary transition-all duration-300 hover:shadow-lg overflow-hidden"
+                                                className="group bg-card rounded-2xl border border-border hover:border-primary transition-all duration-300 hover:shadow-lg"
                                             >
                                                 <div 
                                                     className={`p-4 cursor-pointer transition-colors ${isExpanded ? 'bg-primary/5' : 'hover:bg-primary/5'}`}
@@ -184,9 +185,10 @@ export function SearchPage() {
                                                     <div className="px-4 pb-4 animate-in fade-in slide-in-from-top-1 duration-300">
                                                         <div className="h-px bg-border mb-4" />
                                                         <div className="space-y-4">
-                                                            <div className="text-sm text-card-foreground/80 leading-relaxed whitespace-pre-wrap">
-                                                                {item.content}
-                                                            </div>
+                                                            <div
+                                                            className="text-sm text-card-foreground/80 leading-relaxed [&_table]:w-full [&_table]:table-fixed [&_table]:border-collapse [&_table]:text-xs [&_td]:border [&_td]:border-border/60 [&_td]:p-2 [&_td]:break-words [&_th]:border [&_th]:border-border/60 [&_th]:bg-muted/50 [&_th]:p-2 [&_th]:break-words [&_th]:font-semibold [&_a]:text-primary [&_a]:underline [&_a]:hover:no-underline [&_img]:max-w-full [&_img]:rounded-lg [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:mb-1"
+                                                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.content) }}
+                                                        />
                                                             
                                                             {item.links && item.links.length > 0 && (
                                                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">

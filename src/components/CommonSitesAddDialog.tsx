@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCommonSites } from "@/hooks/useCommonSites";
 import { useToast } from "@/hooks/use-toast";
+import { validateUrl } from "@/lib/utils";
 
 export function CommonSitesAddDialog() {
   const [open, setOpen] = useState(false);
@@ -31,18 +32,13 @@ export function CommonSitesAddDialog() {
       return;
     }
 
-    // 簡單的 URL 驗證
-    try {
-      new URL(url);
-    } catch {
-      if (!url.startsWith("/") && !url.startsWith("./")) {
-        toast({
-          title: "驗證失敗",
-          description: "請輸入有效的網址（例如：https://example.com 或 /path/to/file）",
-          variant: "destructive",
-        });
-        return;
-      }
+    if (!validateUrl(url)) {
+      toast({
+        title: "驗證失敗",
+        description: "請輸入有效的網址（例如：https://example.com 或 /path/to/file）",
+        variant: "destructive",
+      });
+      return;
     }
 
     addSite(name.trim(), url.trim());

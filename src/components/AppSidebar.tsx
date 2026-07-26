@@ -1,4 +1,4 @@
-import { Home, Bell, Calendar, Github, ExternalLink, Menu, Clock, Cloud, Wrench, Trophy, Utensils } from "lucide-react";
+import { Home, Bell, Calendar, Github, ExternalLink, Menu, Clock, Cloud, Wrench, Trophy, Utensils, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -8,6 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useNavigate } from "react-router-dom";
 
 import { useSettings } from "@/hooks/SettingsContext";
 
@@ -28,6 +29,7 @@ const SECTION_ID_MAP: Record<string, string> = {
 
 export function AppSidebar({ expanded = false }: { expanded?: boolean }) {
   const { settings } = useSettings();
+  const navigate = useNavigate();
 
   const enabledComponents = settings.components
     .filter((c) => c.enabled)
@@ -66,6 +68,18 @@ export function AppSidebar({ expanded = false }: { expanded?: boolean }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel>快速導航</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem onClick={() => navigate('/home')} className="cursor-pointer">
+          <Home className="h-4 w-4 mr-2" />
+          <span>首頁</span>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem onClick={() => navigate('/docs')} className="cursor-pointer">
+          <BookOpen className="h-4 w-4 mr-2" />
+          <span>文檔頁</span>
+        </DropdownMenuItem>
+
         <DropdownMenuSeparator />
 
         {navItems.map((item) => (

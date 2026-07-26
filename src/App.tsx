@@ -25,6 +25,16 @@ const Whiteboard = lazy(() => import("./pages/tools/Whiteboard"));
 const Attendance = lazy(() => import("./pages/tools/Attendance"));
 const Docs = lazy(() => import("./pages/Docs"));
 
+const toolRoutes = [
+  { path: "/tools/wheel", Component: Wheel, message: "載入輪盤工具..." },
+  { path: "/tools/grouping", Component: Grouping, message: "載入分組工具..." },
+  { path: "/tools/order", Component: Order, message: "載入順序工具..." },
+  { path: "/tools/clock", Component: Clock, message: "載入時鐘..." },
+  { path: "/tools/timer", Component: Timer, message: "載入計時器..." },
+  { path: "/tools/qrcode", Component: QRCode, message: "載入 QR Code 工具..." },
+  { path: "/tools/whiteboard", Component: Whiteboard, message: "載入電子白板..." },
+  { path: "/tools/attendance", Component: Attendance, message: "載入課堂點名..." },
+];
 
 const queryClient = new QueryClient();
 
@@ -148,86 +158,19 @@ function AppContent() {
                 />
 
                 {/* 工具頁面路由 - 使用代碼分割和錯誤邊界 */}
-                <Route
-                  path="/tools/wheel"
-                  element={
-                    <ErrorBoundary>
-                      <Suspense fallback={<Loading fullScreen message="載入輪盤工具..." />}>
-                        <Wheel />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="/tools/grouping"
-                  element={
-                    <ErrorBoundary>
-                      <Suspense fallback={<Loading fullScreen message="載入分組工具..." />}>
-                        <Grouping />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="/tools/order"
-                  element={
-                    <ErrorBoundary>
-                      <Suspense fallback={<Loading fullScreen message="載入順序工具..." />}>
-                        <Order />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="/tools/clock"
-                  element={
-                    <ErrorBoundary>
-                      <Suspense fallback={<Loading fullScreen message="載入時鐘..." />}>
-                        <Clock />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="/tools/timer"
-                  element={
-                    <ErrorBoundary>
-                      <Suspense fallback={<Loading fullScreen message="載入計時器..." />}>
-                        <Timer />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="/tools/qrcode"
-                  element={
-                    <ErrorBoundary>
-                      <Suspense fallback={<Loading fullScreen message="載入 QR Code 工具..." />}>
-                        <QRCode />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="/tools/whiteboard"
-                  element={
-                    <ErrorBoundary>
-                      <Suspense fallback={<Loading fullScreen message="載入電子白板..." />}>
-                        <Whiteboard />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="/tools/attendance"
-                  element={
-                    <ErrorBoundary>
-                      <Suspense fallback={<Loading fullScreen message="載入課堂點名..." />}>
-                        <Attendance />
-                      </Suspense>
-                    </ErrorBoundary>
-                  }
-                />
+                {toolRoutes.map(({ path, Component, message }) => (
+                  <Route
+                    key={path}
+                    path={path}
+                    element={
+                      <ErrorBoundary>
+                        <Suspense fallback={<Loading fullScreen message={message} />}>
+                          <Component />
+                        </Suspense>
+                      </ErrorBoundary>
+                    }
+                  />
+                ))}
 
                 <Route
                   path="/docs"

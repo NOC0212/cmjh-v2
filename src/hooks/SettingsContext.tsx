@@ -34,6 +34,7 @@ interface SettingsContextType {
     setShowLatestAnnouncementOnStartup: (show: boolean) => void;
     setShowSiteFavicons: (show: boolean) => void;
     setDisableDefaultCountdowns: (disabled: boolean) => void;
+    updateSettings: (partial: Partial<AppSettings>) => void;
     resetToDefault: () => void;
     showAll: () => void;
     reorderComponents: (newComponents: ComponentSettings[]) => void;
@@ -213,7 +214,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
                     pageBackground: parsedSettings.pageBackground ?? "default",
                     pageBackgroundImage: parsedSettings.pageBackgroundImage ?? "",
                     showLatestAnnouncementOnStartup: parsedSettings.showLatestAnnouncementOnStartup ?? true,
-                    showSiteFavicons: parsedSettings.showSiteFavicons ?? true,
+                    showSiteFavicons: parsedSettings.showSiteFavicons ?? false,
                     disableDefaultCountdowns: parsedSettings.disableDefaultCountdowns ?? false,
                 };
             }
@@ -318,6 +319,10 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setSettings((prev) => ({ ...prev, disableDefaultCountdowns }));
     };
 
+    const updateSettings = (partial: Partial<AppSettings>) => {
+        setSettings((prev) => ({ ...prev, ...partial }));
+    };
+
     const resetToDefault = () => {
         setSettings(DEFAULT_SETTINGS);
     };
@@ -359,6 +364,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setShowLatestAnnouncementOnStartup,
         setShowSiteFavicons,
         setDisableDefaultCountdowns,
+        updateSettings,
         resetToDefault,
         showAll,
         reorderComponents

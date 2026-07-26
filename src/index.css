@@ -518,7 +518,7 @@
 
 @keyframes dash {
   to {
-    stroke-dashoffset: -235;
+    stroke-dashoffset: -320;
   }
 }
 

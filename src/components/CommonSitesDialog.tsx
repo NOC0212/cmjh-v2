@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCommonSites, type CommonSite } from "@/hooks/useCommonSites";
 import { useToast } from "@/hooks/use-toast";
+import { validateUrl } from "@/lib/utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -49,19 +50,13 @@ export function CommonSitesDialog() {
       return;
     }
 
-    // 簡單的 URL 驗證
-    try {
-      new URL(formData.url);
-    } catch {
-      // 如果不是完整 URL，檢查是否為相對路徑
-      if (!formData.url.startsWith("/") && !formData.url.startsWith("./")) {
-        toast({
-          title: "驗證失敗",
-          description: "請輸入有效的網址（例如：https://example.com 或 /path/to/file）",
-          variant: "destructive",
-        });
-        return;
-      }
+    if (!validateUrl(formData.url)) {
+      toast({
+        title: "驗證失敗",
+        description: "請輸入有效的網址（例如：https://example.com 或 /path/to/file）",
+        variant: "destructive",
+      });
+      return;
     }
 
     if (editingId) {
