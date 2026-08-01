@@ -48,48 +48,48 @@ def fetch_details(detail_url, retries=3):
         try:
             resp = requests.get(detail_url, headers=headers, timeout=15)
             resp.encoding = resp.apparent_encoding
-        soup = BeautifulSoup(resp.text, "html.parser")
-        
-        # 1. 抓取公告本文 HTML (#print_content 是最準確的區塊)
-        content_area = soup.select_one('#print_content')
-        if content_area:
-            temp_soup = BeautifulSoup(str(content_area), "html.parser")
-            # 移除內文末尾的附件清單標籤，避免重複
-            file_list_part = temp_soup.select_one('ul.tuf-icon')
-            if file_list_part:
-                file_list_part.decompose()
-            content_html = sanitize_html(str(temp_soup))
-        else:
-            content_html = "無詳細內文"
-
-        # 2. 抓取附件連結
-        attachments = []
-        file_items = soup.select('li.tuf-icon-item')
-        
-        for li in file_items:
-            a_tag = li.find('a', onclick=True)
-            if a_tag:
-                onclick_text = a_tag.get('onclick', '')
-                # Regex 說明：抓取 downloadFile(數字, '原始檔名')
-                match = re.search(r"downloadFile\((\d+),\s*['\"](.+?)['\"]\)", onclick_text)
-                
-                if match:
-                    file_sn = match.group(1)
-                    # 關鍵：直接使用網頁提供的原始檔名字串 (raw_fn)，不進行任何 quote 編碼
-                    raw_fn = match.group(2)
-                    
-                    # 按照學校網站 JS 邏輯拼接 URL
-                    final_link = f"{BASE_URL}modules/school/index.php?op=tufdl&fn={raw_fn}&files_sn={file_sn}"
-                    
-                    # 顯示名稱則還原成中文，方便閱讀
-                    display_name = unquote(raw_fn)
-                    
-                    attachments.append({
-                        "name": display_name,
-                        "link": final_link
-                    })
+            soup = BeautifulSoup(resp.text, "html.parser")
             
-            return content_html, attachments
+            # 1. 抓取公告本文 HTML (#print_content 是最準確的區塊)
+            content_area = soup.select_one('#print_content')
+            if content_area:
+                temp_soup = BeautifulSoup(str(content_area), "html.parser")
+                # 移除內文末尾的附件清單標籤，避免重複
+                file_list_part = temp_soup.select_one('ul.tuf-icon')
+                if file_list_part:
+                    file_list_part.decompose()
+                content_html = sanitize_html(str(temp_soup))
+            else:
+                content_html = "無詳細內文"
+
+            # 2. 抓取附件連結
+            attachments = []
+            file_items = soup.select('li.tuf-icon-item')
+            
+            for li in file_items:
+                a_tag = li.find('a', onclick=True)
+                if a_tag:
+                    onclick_text = a_tag.get('onclick', '')
+                    # Regex 說明：抓取 downloadFile(數字, '原始檔名')
+                    match = re.search(r"downloadFile\((\d+),\s*['\"](.+?)['\"]\)", onclick_text)
+                    
+                    if match:
+                        file_sn = match.group(1)
+                        # 關鍵：直接使用網頁提供的原始檔名字串 (raw_fn)，不進行任何 quote 編碼
+                        raw_fn = match.group(2)
+                        
+                        # 按照學校網站 JS 邏輯拼接 URL
+                        final_link = f"{BASE_URL}modules/school/index.php?op=tufdl&fn={raw_fn}&files_sn={file_sn}"
+                        
+                        # 顯示名稱則還原成中文，方便閱讀
+                        display_name = unquote(raw_fn)
+                        
+                        attachments.append({
+                            "name": display_name,
+                            "link": final_link
+                        })
+                
+                return content_html, attachments
         except Exception as e:
             if attempt < retries - 1:
                 wait = 2 ** attempt
