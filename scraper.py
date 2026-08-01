@@ -89,7 +89,7 @@ def fetch_details(detail_url, retries=3):
                             "link": final_link
                         })
                 
-                return content_html, attachments
+            return content_html, attachments
         except Exception as e:
             if attempt < retries - 1:
                 wait = 2 ** attempt
