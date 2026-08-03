@@ -1,5 +1,27 @@
 [
     {
+        "date": "2026-08-03",
+        "category": "一般",
+        "source": "教務處",
+        "title": "115學年新生班級座號學號公告",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=516&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>各位新生及家長：</p>\n<p>附件一為<span style=\"color:#c0392b;\"><strong>新生班級座號學號</strong></span>，請自行參考附件參閱。因個資法不便公開全名，請參考身分證號末三碼比對。</p>\n<p>另因應<strong>教育局公告編號290247號</strong>，115學年度起編排學號及座號須<span style=\"color:#c0392b;\">排除性別資訊</span>，因此會呈現出性別交錯之座號排列。</p>\n<h3 class=\"fs-4 fw-bold\">後續重要日程</h3>\n<p>8/10~11(8:30~13:30):新生服裝販售：請自行至學校合作社購買(到校後請依指示牌指示)，後續之繡學號規定請依照附件二之說明辦理。</p>\n<p>8/21(五)新生訓練((7:45前到校，15:55放學)，請穿著崇明國中<strong><span style=\"color:#2980b9;\">新購買之制服或運動服</span></strong>，若未完成購買者，請著<strong>國小制服、運動服</strong></p>\n<p class=\"fw-bold\">新生訓練請攜帶：</p>\n<ul>\n<li>(1)<strong><span style=\"background-color:#f1c40f;\">1吋</span></strong>大頭照1張：學生證使用<span style=\"color:#c0392b;\">(2吋過大，不便製作請留意)</span></li>\n<li>(2)童軍椅</li>\n<li>(3)文具</li>\n<li>(4)午餐由<strong>學校準備餐盒</strong>，可自備環保餐具，若無則由學校提供免洗餐具</li>\n<li>(5)戶口名簿影本1份，右上角寫上正式班級座號及姓名。</li>\n</ul>\n<p>若為國小畢業成績為各班畢業前三名(無市長特別獎)，請交獎狀影本給導師，以便申請優秀新生獎學金。（獎狀影本右上角寫上正式班級、座號及名次）逾期視同棄權，請把握申請時間。</p>\n<p>具<span style=\"color:#c0392b;\">其他相關身分須繳交資料者</span>請參考新生報到手冊第5頁行事曆(附件三)。</p>\n<p><span style=\"color:#c0392b;\">新生訓練當天沒有校車</span>，請家長自行接送。其他注意事項，請密切注意學務處之公告。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "115新生正式班級座號學號公告.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115新生正式班級座號學號公告.pdf&files_sn=422"
+            },
+            {
+                "name": "崇明國民中學學生學校服裝繡學號規範.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=崇明國民中學學生學校服裝繡學號規範.pdf&files_sn=423"
+            },
+            {
+                "name": "115新生行事曆.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115新生行事曆.pdf&files_sn=424"
+            }
+        ]
+    },
+    {
         "date": "2026-07-31",
         "category": "行政",
         "source": "教務處",
@@ -226,20 +248,6 @@
             {
                 "name": "內政部 函.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=內政部 函.pdf&files_sn=368"
-            }
-        ]
-    },
-    {
-        "date": "2026-07-27",
-        "category": "研習",
-        "source": "教務處",
-        "title": "轉知國立臺北教育大學辦理「C⁺1親子科技輔助自主學習概念探究與實作講師培訓工作坊」",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=485&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據國立臺北教育大學115年7月23日北教大師培字第1150390314號函辦理。</p>\n<p>二、旨揭工作坊資訊如下:</p>\n<p>（一）辦理時間：115年8月22日（星期六）上午9時至下午4時。</p>\n<p>（二）辦理地點：臺中市翁子國民小學視聽教室。</p>\n<p>（三）參與對象：曾參與A⁺親子科技輔助自主學習探究工作坊(3小時)研習課程之家長。</p>\n<p>（四）報名方式：請於7月31日（星期五）中午12時前至<a href=\"https://forms.gle/pqastwXSmSZF5RHN8\">工作坊線上報名表單</a>報名，若報名人數已達上限，將會提早關閉表單。</p>\n<p>三、檢附本案實施計畫。</p>\n<p>四、本案聯絡單位: 國立臺北教育大學張友妮專任助理，聯絡電話：（02）6639-6688 分機 53363，電子信箱：ynzhang@mail.ntue.edu.tw。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "親子科技輔助自主學習概念探究與實作_講師培訓工作坊.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=親子科技輔助自主學習概念探究與實作_講師培訓工作坊.pdf&files_sn=367"
             }
         ]
     }
