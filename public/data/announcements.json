@@ -42,7 +42,7 @@
     },
     {
         "date": "2026-07-27",
-        "category": "簡章",
+        "category": "行政",
         "source": "教務處",
         "title": "臺南市立崇明國中115學年度第二次代理教師甄選第3次甄選結果暨第4次甄選公告",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=484&type=news&from_op=all_news",
@@ -76,6 +76,15 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市崇明國中115學年度各年級教科書用書版本.pdf&files_sn=173"
             }
         ]
+    },
+    {
+        "date": "2026-08-04",
+        "category": "一般",
+        "source": "人事室",
+        "title": "職場霸凌防治宣導影片",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=6&zone_id=0&page_id=48&content_id=519&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>\n<a href=\"https://www.youtube.com/watch?v=uEr9aGbjvVc\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">職場冷暴力壓力大！我該沉默還是反擊？（YouTube 影片）</a>\n</p>\n<p>\n<a href=\"https://www.youtube.com/watch?v=gm3rcq7aeGM\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">菜鳥的戰爭（YouTube 影片）</a>\n</p>\n<p>\n<a href=\"https://www.youtube.com/watch?v=w9hFjieYgf0\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">告別職場霸凌，沒有人是局外人（YouTube 影片）</a>\n</p>\n</div>",
+        "attachments": []
     },
     {
         "date": "2026-08-04",
@@ -233,14 +242,5 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市115學年度學生美術比賽實施計畫.pdf&files_sn=370"
             }
         ]
-    },
-    {
-        "date": "2026-07-29",
-        "category": "競賽",
-        "source": "教務處",
-        "title": "「第七屆遠哲文創科學探究競賽」歡迎本校學生踴躍報名參加",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=488&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<p>一、為鼓勵學生從日常生活中發掘科學問題，透過觀察、探究與創意表達，培養科學思考、問題解決及跨域整合能力，本會辦理「第七屆遠哲文創科學探究競賽」，敬邀全國國民中學及高級中等學校學生踴躍參加。</p>\n<p>二、本競賽設有「科學寫作組」、「科學漫畫組」及「科學短片組」三組，鼓勵學生運用文字、漫畫或影音等多元方式呈現科學探究成果，符合108課綱探究與實作及科學素養精神。</p>\n<p>三、本屆競賽收件日期自115年8月5日起至9月8日止，採線上報名及作品上傳方式辦理。</p>\n<p>四、檢附競賽簡章及宣傳海報各1份，相關活動資訊、競賽辦法及報名方式請參閱遠哲科學教育基金會網站。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": []
     }
 ]
