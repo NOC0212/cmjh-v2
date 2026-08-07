@@ -59,7 +59,7 @@
     },
     {
         "date": "2026-07-29",
-        "category": "行政",
+        "category": "簡章",
         "source": "教務處",
         "title": "臺南市立崇明國中115學年度第二次代理教師甄選第4次甄選結果暨第5次甄選公告",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=499&type=news&from_op=all_news",
@@ -73,7 +73,7 @@
     },
     {
         "date": "2026-07-27",
-        "category": "簡章",
+        "category": "行政",
         "source": "教務處",
         "title": "臺南市立崇明國中115學年度第二次代理教師甄選第3次甄選結果暨第4次甄選公告",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=484&type=news&from_op=all_news",
@@ -96,6 +96,20 @@
             {
                 "name": "臺南市崇明國中115學年度各年級教科書用書版本.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市崇明國中115學年度各年級教科書用書版本.pdf&files_sn=173"
+            }
+        ]
+    },
+    {
+        "date": "2026-08-07",
+        "category": "競賽",
+        "source": "學務處",
+        "title": "115年金融知識線上競賽活動辦法，鼓勵大家盡量參與。",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=532&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "活動辦法.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=活動辦法.pdf&files_sn=436"
             }
         ]
     },
@@ -238,20 +252,6 @@
             {
                 "name": "臺南市政府勞工局115 年度「勞動法令扎根校園師資培育」課程表.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市政府勞工局115 年度「勞動法令扎根校園師資培育」課程表.pdf&files_sn=420"
-            }
-        ]
-    },
-    {
-        "date": "2026-08-03",
-        "category": "一般",
-        "source": "教務處",
-        "title": "「外語能力測驗-基礎級（FLPT-Basic）」線上說明會",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=513&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、「外語能力測驗-基礎級（FLPT-Basic）」是專為臺灣日、法、德、西語初學者特別研發之測驗，可一次檢測出Pre-A1～A2程度，是初階語言學習者的最佳選擇。成績廣獲學校及機構採認，亦可登錄學習歷程檔案。</p>\n<p>二、為協助師生更深入了解本測驗，語言訓練測驗中心（LTTC）將舉辦旨揭線上說明會，由本中心歐日語研究員主講，並詳細介紹測驗特色、題型架構、學習資源等，相關資訊如下：</p>\n<p>(一) 時間：115年8月19日（星期三）下午2時至3時。</p>\n<p>(二) 形式：Google Meet線上會議（說明會連結將於活動開始前一日以電子郵件發送）</p>\n<p>(三) 報名方式：採線上報名，請至<a href=\"https://lttc.tw/3D488x\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">線上報名表單連結</a>填寫。</p>\n<p>(四) 報名期間：即日起至8月14日或人數額滿為止。</p>\n<p>三、檢附說明會資訊如附件，敬請協助轉發校內相關科系師長、學生或第二外語教學相關人員。</p>\n<p>四、如有任何疑問，請逕洽語言訓練測驗中心綜合測驗處第一科劉小姐，電話：02-2365-5050分機253；電子郵件：flptbasic@lttc.ntu.edu.tw。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "線上說明會.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=線上說明會.pdf&files_sn=419"
             }
         ]
     }
