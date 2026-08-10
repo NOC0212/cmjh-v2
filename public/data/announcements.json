@@ -86,20 +86,6 @@
         ]
     },
     {
-        "date": "2026-07-27",
-        "category": "簡章",
-        "source": "教務處",
-        "title": "臺南市立崇明國中115學年度第二次代理教師甄選第3次甄選結果暨第4次甄選公告",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=484&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><span style=\"font-size: 1.5rem;\"><span style=\"color:#3333ff;\"><strong>臺南市立崇明國中115學年度第二次代理教師甄選第3次甄選結果</strong></span></span></p>\n<p><span style=\"font-size: 1.333rem;\">國文科：吳○洳 正取1</span></p>\n<p><span style=\"font-size: 1.333rem;\">請以上正取老師於115年7月28日(星期二)上午8:30至人事室報到。</span></p>\n<p><span style=\"font-size: 1.333rem;\">理化科無人報名須第4次招考。</span></p>\n<p><span style=\"font-size: 1.5rem;\"><span style=\"color:#3333ff;\"><strong>臺南市立崇明國中115學年度第二次代理教師甄選第4次甄選</strong></span></span></p>\n<p><span style=\"font-size: 1.333rem;\">報名時間：115年7月28日(星期二)上午8:30-11:00 逾時不候。</span></p>\n<p><span style=\"font-size: 1.333rem;\">考試時間：115年7月29日(星期三)上午8:30請至2F教務處報到，9:00開始考試。</span></p>\n<p><span style=\"font-size: 1.333rem;\">招考科目：理化</span></p>\n<p><span style=\"font-size: 1.333rem;\">其餘請參閱簡章。</span></p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "115學年崇明國中第二次代理教師甄選簡章0715.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115學年崇明國中第二次代理教師甄選簡章0715.pdf&files_sn=366"
-            }
-        ]
-    },
-    {
         "date": "2026-05-26",
         "category": "行政",
         "source": "教務處",
@@ -252,6 +238,20 @@
             {
                 "name": "臺南市 115 年機器人教育優良課程徵選計畫.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市 115 年機器人教育優良課程徵選計畫.pdf&files_sn=426"
+            }
+        ]
+    },
+    {
+        "date": "2026-08-04",
+        "category": "活動",
+        "source": "教務處",
+        "title": "國立成功大學辦理「台語文教學共融平台-教案暨教學示範徵件」活動訊息",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=517&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據國立成功大學115年7月30日成大文院字第1152102570號函辦理。</p>\n<p>二、旨揭活動，參賽報名件數不限，每件報名人數限1至3人，投稿教案以高中、高職、國中之學生為教學對象，報名期限自即日起至115年8月20日止。</p>\n<p>三、檢附徵件活動辦法1份。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "徵件活動辦法.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=徵件活動辦法.pdf&files_sn=425"
             }
         ]
     }
