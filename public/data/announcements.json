@@ -73,7 +73,7 @@
     },
     {
         "date": "2026-07-29",
-        "category": "行政",
+        "category": "簡章",
         "source": "教務處",
         "title": "臺南市立崇明國中115學年度第二次代理教師甄選第4次甄選結果暨第5次甄選公告",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=499&type=news&from_op=all_news",
@@ -98,6 +98,15 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市崇明國中115學年度各年級教科書用書版本.pdf&files_sn=173"
             }
         ]
+    },
+    {
+        "date": "2026-08-10",
+        "category": "宣導",
+        "source": "學務處",
+        "title": "8月份防制藥物濫用宣導：「賽拉嗪」圖卡宣導",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=536&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>8月份宣導重點：</p>\n<p>（一）慎防新興毒品：如毒糖果、毒咖啡、毒貼紙……等，避免學生誤食。</p>\n<p>（二）慎防不良宮廟或團體吸收：學校需與宮廟及陣頭建立聯繫資訊，避免學生滯留，並加強與警政單位橫向聯繫。</p>\n<p>（三）全面禁止電子煙：不肖業者將依托咪酯添加進電子煙油，行政院已於115年6月27日公告依托咪酯類列為一級毒品。</p>\n<p>（四）慎防不法分子利用12歲以下兒童運送毒品：加強宣導國小教職人員及家長留意不法分子利用12歲以下兒童擔任小蜜蜂運毒。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": []
     },
     {
         "date": "2026-08-07",
@@ -238,20 +247,6 @@
             {
                 "name": "臺南市 115 年機器人教育優良課程徵選計畫.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市 115 年機器人教育優良課程徵選計畫.pdf&files_sn=426"
-            }
-        ]
-    },
-    {
-        "date": "2026-08-04",
-        "category": "活動",
-        "source": "教務處",
-        "title": "國立成功大學辦理「台語文教學共融平台-教案暨教學示範徵件」活動訊息",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=517&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據國立成功大學115年7月30日成大文院字第1152102570號函辦理。</p>\n<p>二、旨揭活動，參賽報名件數不限，每件報名人數限1至3人，投稿教案以高中、高職、國中之學生為教學對象，報名期限自即日起至115年8月20日止。</p>\n<p>三、檢附徵件活動辦法1份。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "徵件活動辦法.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=徵件活動辦法.pdf&files_sn=425"
             }
         ]
     }
