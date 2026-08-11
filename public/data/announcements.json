@@ -101,7 +101,21 @@
     },
     {
         "date": "2026-08-11",
-        "category": "宣導",
+        "category": "競賽",
+        "source": "學務處",
+        "title": "轉知-臺南市115年中小學羽球錦標賽競賽規程",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=543&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<p>(一)比賽日期：115年9月14日（星期一）至18日（星期五），共5日。</p>\n<p>(二)比賽地點：臺南市立羽球館。</p>\n<p>(三)報名期間：即日起至115年8月13日（星期四）中午12時止。</p>\n<p>(四)報名辦法：至本校學務處體育組報名。</p>\n<p>(五)有關賽事相關問題，請逕洽本市新化國中楊士瑩教練，電話：0929-175973。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "臺南市115年中小學羽球錦標賽競賽規程.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市115年中小學羽球錦標賽競賽規程.pdf&files_sn=447"
+            }
+        ]
+    },
+    {
+        "date": "2026-08-11",
+        "category": "活動",
         "source": "學務處",
         "title": "8/28衛生組志工取消通知~",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=542&type=news&from_op=all_news",
@@ -110,7 +124,7 @@
     },
     {
         "date": "2026-08-11",
-        "category": "獎學金",
+        "category": "宣導",
         "source": "教務處",
         "title": "國教署114學年度第2學期原住民學生學業優秀獎學金名單核定",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=541&type=news&from_op=all_news",
@@ -229,15 +243,6 @@
         "title": "職場霸凌防治教育宣導",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=6&zone_id=0&page_id=48&content_id=526&type=news&from_op=all_news",
         "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>職場霸凌防治教育訓練(1)-職安法相關規定說明</p>\n<p>教材來源：<br/>勞動部職業安全衛生署</p>\n<p>影片連結：<br/><a href=\"https://youtu.be/8Q6ojSV1ZbI\">勞動部職業安全衛生署職場霸凌防治教育訓練影片</a></p>\n<p>職安署YouTube官方頻道：<br/><a href=\"https://www.youtube.com/@cla2010100\">職安署YouTube官方頻道</a></p>\n<p>職場冷暴力壓力大！我該沉默還是反擊？（YouTube影片）</p>\n<p>菜鳥的戰爭（YouTube 影片）</p>\n<p>告別職場霸凌，沒有人是局外人（YouTube 影片）</p>\n</div>",
-        "attachments": []
-    },
-    {
-        "date": "2026-08-05",
-        "category": "活動",
-        "source": "教務處",
-        "title": "國立彰化師範大學辦理「SDGs 飛英任務暑期活動-打造永續城市藍圖」活動辦法",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=522&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據國立彰化師範大學115年7月20日英語字第1153400510號號函辦理。</p>\n<p>二、為提升全國國公私立中小學、高級中學(含普高、技高、綜合 型高中)學生英語口說及寫作素養，增加學生溝通意願與學習動機，爰舉辦「SDGs 飛英任務暑期活動-打造永續城市藍圖」活動。</p>\n<p>三、旨揭計劃資訊如下：</p>\n<p>(一)參加對象：本市公私立國中小學生、高級中學(含普高、技高、 綜合型高中)學生。</p>\n<p>(二)活動日期：115年8月3日（星期一）中午12：00起至8月21日（星期五）中午12：00止。</p>\n<p>(三)詳細活動資訊，請參閱<a href=\"https://adl.edu.tw/HomePage/news-detail/?Id=262\">SDGs飛英任務暑期活動訊息</a>。</p>\n<p>四、若有問題，請逕洽本計畫客服專線：(04)7232105 分機 2573、2574 或電子信箱:admin@sdgsncue.org。</p>\n</div>",
         "attachments": []
     }
 ]
