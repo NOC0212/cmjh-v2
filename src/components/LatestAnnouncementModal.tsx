@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
@@ -33,11 +33,6 @@ export function LatestAnnouncementModal() {
   const [unreadAnns, setUnreadAnns] = useState<SiteAnnouncement[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const disableUpdatePromptRef = useRef(settings.disableUpdatePrompt);
-  useEffect(() => {
-    disableUpdatePromptRef.current = settings.disableUpdatePrompt;
-  }, [settings.disableUpdatePrompt]);
-
   useEffect(() => {
     if (!settings.showLatestAnnouncementOnStartup) return;
 
@@ -50,7 +45,6 @@ export function LatestAnnouncementModal() {
         currentVersion &&
         latestVersionFromServer &&
         currentVersion !== latestVersionFromServer &&
-        !disableUpdatePromptRef.current &&
         !isUpdateDismissedInSession &&
         !isManualTrigger
       ) {

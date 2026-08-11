@@ -66,7 +66,6 @@ export function SettingsPage() {
         setThemeColor,
         setPageBackground,
         setPageBackgroundImage,
-        setDisableUpdatePrompt,
         setShowLatestAnnouncementOnStartup,
         setShowSiteFavicons,
         setDisableDefaultCountdowns,
@@ -468,13 +467,6 @@ export function SettingsPage() {
                                         <span className="ml-2 text-[11px] text-muted-foreground">調整啟動行為與常用介面細節</span>
                                     </div>
                                     <div className="space-y-1">
-                                        <PrefOption
-                                            id="preference-update"
-                                            label="顯示更新提示"
-                                            desc="有新版本時顯示更新提示視窗"
-                                            checked={!settings.disableUpdatePrompt}
-                                            onChange={(value: boolean) => setDisableUpdatePrompt(!value)}
-                                        />
                                         <PrefOption
                                             id="preference-announcement"
                                             label="啟動顯示公告"

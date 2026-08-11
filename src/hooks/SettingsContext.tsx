@@ -14,7 +14,6 @@ export interface AppSettings {
     themeColor: string;
     pageBackground: string;
     pageBackgroundImage: string;
-    disableUpdatePrompt: boolean;
     showLatestAnnouncementOnStartup: boolean;
     showSiteFavicons: boolean;
     disableDefaultCountdowns: boolean;
@@ -30,7 +29,6 @@ interface SettingsContextType {
     setThemeColor: (themeColor: string) => void;
     setPageBackground: (pageBackground: string) => void;
     setPageBackgroundImage: (pageBackgroundImage: string) => void;
-    setDisableUpdatePrompt: (disabled: boolean) => void;
     setShowLatestAnnouncementOnStartup: (show: boolean) => void;
     setShowSiteFavicons: (show: boolean) => void;
     setDisableDefaultCountdowns: (disabled: boolean) => void;
@@ -57,7 +55,6 @@ const DEFAULT_SETTINGS: AppSettings = {
     themeColor: "blue",
     pageBackground: "default",
     pageBackgroundImage: "",
-    disableUpdatePrompt: false,
     showLatestAnnouncementOnStartup: true,
     showSiteFavicons: false,
     disableDefaultCountdowns: false,
@@ -94,7 +91,6 @@ const migrateOldSettings = (): AppSettings | null => {
             themeColor: (oldTheme && oldTheme !== "dark" && oldTheme !== "light" ? oldTheme : "blue"),
             pageBackground: "default",
             pageBackgroundImage: "",
-            disableUpdatePrompt: false,
             disableDefaultCountdowns: false,
             showLatestAnnouncementOnStartup: true,
             showSiteFavicons: false,
@@ -186,12 +182,6 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
                     delete parsedSettings.theme;
                 }
 
-                // 處理剛才過渡期的 showUpdatePrompt 回到 disableUpdatePrompt 的遷移
-                let disableUpdatePrompt = parsedSettings.disableUpdatePrompt;
-                if (disableUpdatePrompt === undefined && parsedSettings.showUpdatePrompt !== undefined) {
-                    disableUpdatePrompt = !parsedSettings.showUpdatePrompt;
-                }
-
                 let existingComponents = parsedSettings.components || [];
 
                 // 安全檢查：如果所有元件都被關閉，重置為預設啟用狀態
@@ -210,7 +200,6 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
                 return {
                     ...parsedSettings,
                     components: mergedComponents,
-                    disableUpdatePrompt: disableUpdatePrompt ?? false,
                     pageBackground: parsedSettings.pageBackground ?? "default",
                     pageBackgroundImage: parsedSettings.pageBackgroundImage ?? "",
                     showLatestAnnouncementOnStartup: parsedSettings.showLatestAnnouncementOnStartup ?? true,
@@ -303,10 +292,6 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setSettings((prev) => ({ ...prev, pageBackgroundImage }));
     };
 
-    const setDisableUpdatePrompt = (disableUpdatePrompt: boolean) => {
-        setSettings((prev) => ({ ...prev, disableUpdatePrompt }));
-    };
-
     const setShowLatestAnnouncementOnStartup = (showLatestAnnouncementOnStartup: boolean) => {
         setSettings((prev) => ({ ...prev, showLatestAnnouncementOnStartup }));
     };
@@ -360,7 +345,6 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setThemeColor,
         setPageBackground,
         setPageBackgroundImage,
-        setDisableUpdatePrompt,
         setShowLatestAnnouncementOnStartup,
         setShowSiteFavicons,
         setDisableDefaultCountdowns,

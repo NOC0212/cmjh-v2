@@ -127,7 +127,7 @@ VITE_CWA_API_KEY=你的氣象署金鑰（選填）
   前端元件
 ```
 
-**② 靜態 JSON**（行政公告、榮譽榜、午餐、行事曆等 — GitHub Actions 自動爬取）
+**② 靜態 JSON**（行政公告、榮譽榜、午餐由 GitHub Actions 自動爬取；行事曆為手動維護）
 
 ```
 GitHub Actions (排程)
@@ -140,12 +140,15 @@ GitHub Actions (排程)
                          public/data/*.json
                                   │
                                   ▼
-                    TanStack Query / 直接 fetch
-                    (快取+重試, 30分自動更新)
+                 useJsonData (TanStack Query)
+               (queryKey 前綴 ["jsonData", ...],
+                5 分鐘 stale + 視窗 focus 重新驗證)
                                   │
                                   ▼
                              前端元件
 ```
+
+> `useJsonData` 使用統一的 `"jsonData"` queryKey 前綴。當 `useAutoUpdate` 偵測到 Supabase 版本變更時，會執行 `migrateData()` 並 invalidate 所有 `["jsonData"]` 查詢，讓使用者取得最新爬蟲資料。
 
 **③ 天氣 API**（中央氣象署即時資料）
 
@@ -284,9 +287,9 @@ GitHub Actions (排程)
 
 | 模式 | 桌面版 | 手機版 |
 |------|--------|--------|
-| **頂部** | 左側伸縮側邊欄 (64px → 240px hover 展開) | 固定頂部 header（校名 + 重新整理 + 漢堡選單） |
+| **頂部** | 左側伸縮側邊欄 (64px → 220px hover 展開) | 固定頂部 header（校名 + 重新整理 + 漢堡選單） |
 | **底部** | — | 半透明浮動底部導航列 (毛玻璃效果) |
-| **功能** | 主頁 · 搜尋 · 公告 · 收藏 · 設定 | 同上 |
+| **功能** | 主頁 · 搜尋 · 公告 · 收藏 · 設定（解鎖後多「管理」） | 同上 |
 
 - 收藏圖示顯示即時數量徽章 (紅色圓點)
 - 側邊欄含重新整理按鈕與快速導航選單
@@ -314,7 +317,7 @@ GitHub Actions (排程)
 
 ```
 主題模式：淺色 🌞 · 深色 🌙 · 跟隨系統 💻
-主題顏色：藍 · 紅 · 綠 · 橙 · 紫 · 霓虹 · 現代漸層 · 主題漸層
+主題顏色：藍色 · 桃紅 · 綠色 · 霓虹 · 極簡 · 橘色 · 漸層
 ```
 
 ### 3. 自訂背景 (Background)
@@ -333,15 +336,15 @@ GitHub Actions (排程)
 
 | 選項 | 預設 | 說明 |
 |------|------|------|
-| 顯示更新提示 | ✅ | 有新版本時顯示更新提示視窗 |
 | 啟動顯示公告 | ✅ | 登入首頁後自動展開 7 天內最新快訊 |
 | 顯示網站圖示 | ❌ | 常用網站卡片顯示 Google Favicon |
+| 停用預設倒數計時器 | ❌ | 關閉後只顯示自訂的倒數計時，不載入學校預設倒數 |
 
 ### 5. 系統資料 (System)
 
 | 功能 | 說明 |
 |------|------|
-| **版本資訊** | 顯示目前版本與最新版本，支援一鍵更新 |
+| **版本資訊** | 顯示目前版本與最新版本，一鍵「檢查更新」；點擊 5 次解鎖管理後台 |
 | **匯出資料** | 下載所有個人設定與資料 (JSON) |
 | **匯入資料** | 還原已備份的設定檔 (自動重新整理) |
 | **重置設定** | 恢復所有設定至預設值 (需二次確認) |
@@ -365,12 +368,12 @@ GitHub Actions (排程)
 - 啟用時首頁顯示 Skeleton 載入骨架 + 全螢幕維護對話框
 - 支援倒數計時器（日/時/分/秒即時更新）
 
-### 版本更新系統 (UpdatePrompt)
+### 版本更新系統 (UpdateDialog + UpdateBadge)
 
-- 啟動時自動比對本地版本與 `LATEST_VERSION`
-- 不一致時顯示精美更新對話框（版本號 + 更新亮點）
-- 更新過程中顯示圓形進度動畫 → 自動遷移資料 → 重新整理
-- 可於偏好設定中關閉更新提示
+- `useAutoUpdate` 每 5 分鐘輪詢 Supabase `site_config.app_version`（未設定 Supabase 時停用）
+- 版本變更時自動執行 `migrateData()`（驗證 localStorage 資料完整性）→ 更新本地版本 → invalidate 所有 `["jsonData"]` 查詢強制重新擷取
+- 版本升級時顯示 `UpdateDialog`（目前版本 → 最新版本 + 更新亮點）；版本已最新時右下角短暫顯示 `UpdateBadge`「已是最新版本」
+- 更新對話框一律顯示，無法從偏好設定關閉
 
 ### 最新公告彈窗 (LatestAnnouncementModal)
 
@@ -378,6 +381,7 @@ GitHub Actions (排程)
 - 過濾出 7 天內未讀公告，依序顯示
 - 支援「下一則」「略過」「不再顯示」互動
 - 已讀狀態記錄在 localStorage
+- 可於偏好設定「啟動顯示公告」關閉；偵測到版本更新時會由版本更新對話框取代而不顯示
 
 ## 技術棧
 
@@ -390,7 +394,7 @@ GitHub Actions (排程)
 | **動畫** | Framer Motion |
 | **路由** | React Router 6 (lazy loading, ErrorBoundary) |
 | **狀態管理** | TanStack Query + React Context (LocalStorage) |
-| **PWA** | vite-plugin-pwa (NetworkFirst, 1 天快取) |
+| **PWA** | vite-plugin-pwa (靜默背景更新；資料 JSON StaleWhileRevalidate、校網頁面 NetworkFirst) |
 | **資料庫** | Supabase (PostgreSQL + pgcrypto bcrypt) |
 | **爬蟲** | Python 3 + requests + BeautifulSoup 4 |
 | **排程** | GitHub Actions (cron) |
@@ -404,7 +408,7 @@ GitHub Actions (排程)
 
 | 指令稿 | 輸出 | 排程 |
 |--------|------|------|
-| `lunch.py` | `public/data/lunch.json` | 每日 08:00 CST |
+| `lunch.py` | `public/data/lunch.json` | 每日 22:00 UTC（= 06:00 CST） |
 | `scraper.py` | `public/data/announcements.json` | 每 30 分鐘 |
 | `honors_scraper.py` | `public/data/honors.json` | 每 30 分鐘 |
 
@@ -422,7 +426,7 @@ public/data/
 ├── lunch.json              # 營養午餐當日菜單
 ├── announcements.json      # 行政公告清單
 ├── honors.json             # 榮譽榜資料
-├── calendar.json           # 校園行事曆 (由 GitHub Actions 自動更新)
+├── calendar.json           # 校園行事曆（手動維護）
 ```
 
 #### 資料格式範例 (lunch.json)
@@ -446,14 +450,17 @@ public/data/
 ### 常用指令
 
 ```bash
-npm install             # 安裝相依套件
-npm run dev             # 啟動開發伺服器 (port 8080)
-npm run build           # 生產環境建置
-npm run build:dev       # 開發模式建置
-npm run lint            # ESLint 檢查
-npm run preview         # 預覽生產建置 (port 8080)
-npx tsc --noEmit        # TypeScript 型別檢查
+npm install                 # 安裝相依套件
+npm run dev                 # 啟動開發伺服器 (port 8080)
+npm run build               # 生產環境建置
+npm run build:dev           # 開發模式建置
+npm run lint                # ESLint 檢查
+npm run preview             # 預覽生產建置 (port 8080)
+npx tsc --noEmit -p tsconfig.app.json    # 型別檢查 (app code)
+npx tsc --noEmit -p tsconfig.node.json   # 型別檢查 (vite.config.ts)
 ```
+
+> 根目錄 `tsconfig.json` 為 solution-style（`"files": []`），直接執行 `npx tsc --noEmit` 會報「No inputs were found」，請改用上方 per-project 指令。
 
 ### 目錄結構
 
@@ -467,39 +474,44 @@ src/
 │   ├── CountdownTimer.tsx   # 倒數計時器
 │   ├── WeatherWidget.tsx    # 天氣動態
 │   ├── CommonSites.tsx      # 常用網站
+│   ├── CommonSitesDialog.tsx / CommonSitesAddDialog.tsx  # 常用網站編輯
 │   ├── LunchMenu.tsx        # 營養午餐
 │   ├── CalendarView.tsx     # 校園行事曆
+│   ├── CalendarDialog.tsx / CalendarAddDialog.tsx  # 自訂行事曆事件
 │   ├── Announcements.tsx    # 行政公告
 │   ├── HonorsBoard.tsx      # 榮譽榜
 │   ├── ToolsSection.tsx     # 小工具展示
 │   ├── ResponsiveNav.tsx    # 響應式導航
 │   ├── AppSidebar.tsx       # 快速導航選單
+│   ├── NavPill.tsx          # 導航分頁膠囊指示
 │   ├── SettingsPage.tsx     # 設定頁面
 │   ├── FavoritesPage.tsx    # 我的收藏
 │   ├── SearchPage.tsx       # 全文搜尋
 │   ├── SiteAnnouncementsPage.tsx  # 站內公告
-│   ├── FirstTimeSetup.tsx   # 首次設定精靈
 │   ├── LatestAnnouncementModal.tsx # 最新公告彈窗
 │   ├── AdminPanel.tsx       # 管理後台
 │   ├── VisitCounter.tsx     # 訪問計數器
-│   ├── UpdatePrompt.tsx     # 版本更新提示
+│   ├── UpdateDialog.tsx / UpdateBadge.tsx  # 版本更新提示
 │   ├── MaintenanceModal.tsx # 維護模式
 │   ├── ErrorBoundary.tsx    # 錯誤邊界
+│   ├── Loading.tsx          # 載入中指示器
 │   ├── ToolLayout.tsx       # 工具頁面佈局
 │   └── ...
 ├── hooks/               # 自訂 hook
-│   ├── SettingsContext.tsx
-│   ├── useCalendarEvents.ts
-│   ├── useCommonSites.ts
-│   ├── useFavorites.tsx
-│   ├── useNotes.ts
-│   ├── useScrollAnimation.tsx
-│   ├── useComponentSettings.ts
-│   ├── use-mobile.tsx
-│   ├── useSiteConfig.ts        # 站台設定（維護、版本、管理密碼）
-│   ├── useSiteCountdowns.ts    # 預設倒數計時（Supabase）
+│   ├── SettingsContext.tsx   # 個人設定（localStorage + 主題套用）
+│   ├── useJsonData.ts        # 統一 JSON 資料擷取 (["jsonData", ...])
+│   ├── useAutoUpdate.ts      # 背景版本檢查 / 資料遷移 / jsonData 失效
+│   ├── useSiteConfig.ts      # 站台設定（維護、版本、管理密碼）
+│   ├── useSiteCountdowns.ts  # 預設倒數計時（Supabase）
 │   ├── useSiteAnnouncements.ts # 站內公告（Supabase）
-│   └── useVisitCounter.ts      # 訪問計數器（Supabase）
+│   ├── useCalendarEvents.ts  # 自訂行事曆事件（localStorage）
+│   ├── useCommonSites.ts     # 常用網站（localStorage）
+│   ├── useFavorites.tsx      # 收藏（localStorage）
+│   ├── useCrudManager.ts     # 通用 CRUD 管理 hook
+│   ├── useVisitCounter.ts    # 訪問計數器（Supabase）
+│   ├── useVisitStats.ts      # 訪問統計（Supabase）
+│   ├── use-mobile.tsx        # 響應式偵測
+│   └── use-toast.ts          # shadcn toast
 ├── lib/                 # 工具函式
 │   ├── utils.ts
 │   ├── app-version.ts
@@ -544,7 +556,7 @@ npm run build
 
 ```json
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [{ "source": "/((?!.*\\.).*)", "destination": "/index.html" }]
 }
 ```
 
