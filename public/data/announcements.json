@@ -17,7 +17,7 @@
         "date": "2026-08-06",
         "category": "宣導",
         "source": "教務處",
-        "title": "115學年新生班級座號學號修正後公告",
+        "title": "115學年新生班級座號學號修正後公告&繡學號範本與說明",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=516&type=news&from_op=all_news",
         "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>各位新生及家長：</p>\n<p>附件一為<span style=\"color:#c0392b;\"><strong>新生班級座號學號</strong></span>，請自行參考附件參閱。因個資法不便公開全名，請參考身分證號末三碼比對。</p>\n<p>另因<strong>教育局公告編號290247號停止適用</strong>，<span style=\"color:#c0392b;\">座號重新依往例編排，造成不便敬請見諒</span>。</p>\n<h3 class=\"fs-4 fw-bold\">後續重要日程</h3>\n<p>8/10~11(8:30~13:30):新生服裝販售：請自行至學校合作社購買(到校後請依指示牌指示)，後續之繡學號規定請依照附件二之說明辦理。</p>\n<p>8/21(五)新生訓練(7:45前到校，15:55放學)，請穿著崇明國中<strong><span style=\"color:#2980b9;\">新購買之運動服</span></strong>，若未完成購買者，請著<strong>國小運動服</strong></p>\n<p class=\"fw-bold\">新生訓練請攜帶：</p>\n<ul>\n<li>(1)<strong><span style=\"background-color:#f1c40f;\">1吋</span></strong>大頭照1張：學生證使用<span style=\"color:#c0392b;\">(2吋過大，不便製作請留意)</span></li>\n<li>(2)童軍椅</li>\n<li>(3)文具</li>\n<li>(4)午餐由<strong>學校準備餐盒</strong>，可自備環保餐具，若無則由學校提供免洗餐具</li>\n<li>(5)戶口名簿影本1份，右上角寫上正式班級座號及姓名。</li>\n</ul>\n<p>若為國小畢業成績為各班畢業前三名(無市長特別獎)，請交獎狀影本給導師，以便申請優秀新生獎學金。（獎狀影本右上角寫上正式班級、座號及名次）逾期視同棄權，請把握申請時間。</p>\n<p>具<span style=\"color:#c0392b;\">其他相關身分須繳交資料者</span>請參考新生報到手冊第5頁行事曆(附件三)。</p>\n<p><span style=\"color:#c0392b;\">新生訓練當天沒有校車</span>，請家長自行接送。<strong><span style=\"color:#c0392b;\"><span style=\"background-color:#f1c40f;\">其他注意事項，請密切注意學務處之公告</span></span></strong>。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
         "attachments": [
@@ -73,7 +73,7 @@
     },
     {
         "date": "2026-07-29",
-        "category": "簡章",
+        "category": "行政",
         "source": "教務處",
         "title": "臺南市立崇明國中115學年度第二次代理教師甄選第4次甄選結果暨第5次甄選公告",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=499&type=news&from_op=all_news",
@@ -82,6 +82,46 @@
             {
                 "name": "115學年崇明國中第二次代理教師甄選簡章0715.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115學年崇明國中第二次代理教師甄選簡章0715.pdf&files_sn=371"
+            }
+        ]
+    },
+    {
+        "date": "2026-08-12",
+        "category": "獎學金",
+        "source": "學務處",
+        "title": "財團法人國際單親兒童文教基金會辦理「單親獎助學金」活動，鼓勵單親家庭子女踴躍參加",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=547&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<p>一、本會藉由辦理頒發單親獎助學金，來鼓勵單親家庭之子女們能勤奮向學，給予正向肯定並建立信心。</p>\n<p>二、旨揭活動實施辦法及申請表等電子檔如附件，請逕至本基金會網站 <a href=\"https://www.spef.org.tw\">最新消息-活動訊息</a> 項下下載。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "「單親獎助學金」申請表.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=「單親獎助學金」申請表.pdf&files_sn=453"
+            },
+            {
+                "name": "「單親獎助學金」申請範例.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=「單親獎助學金」申請範例.pdf&files_sn=454"
+            },
+            {
+                "name": "「單親獎助學金」實施辦法.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=「單親獎助學金」實施辦法.pdf&files_sn=455"
+            }
+        ]
+    },
+    {
+        "date": "2026-08-12",
+        "category": "活動",
+        "source": "學務處",
+        "title": "財團法人國際單親兒童文教基金會辦理「單親家庭子女徵文繪畫比賽」",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=546&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<p>一、藉由辦理徵文及繪畫比賽，讓單親家庭之民眾能藉此記錄自己的單親生活歷程，及將親子之間相互扶持的寶貴經驗加以描繪。</p>\n<p>二、旨揭活動實施辦法及申請表等電子檔如附件，請逕至本基金會網站<a href=\"https://www.spef.org.tw\">本基金會網站最新消息-活動訊息</a>項下下載。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "2026年度單親家庭徵文、繪畫比賽報名表.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2026年度單親家庭徵文、繪畫比賽報名表.pdf&files_sn=451"
+            },
+            {
+                "name": "2026年單親家庭徵文繪畫比賽辦法.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2026年單親家庭徵文繪畫比賽辦法.pdf&files_sn=452"
             }
         ]
     },
@@ -133,7 +173,7 @@
     },
     {
         "date": "2026-08-11",
-        "category": "宣導",
+        "category": "獎學金",
         "source": "教務處",
         "title": "國教署114學年度第2學期原住民學生學業優秀獎學金名單核定",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=541&type=news&from_op=all_news",
@@ -225,24 +265,6 @@
         "title": "「智慧沙崙・綠能防線：AI Robotics Wildfire Defense Workshop—AI機器人野火防禦工作坊」活動資訊，歡迎本校學生踴躍報名參加",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=530&type=news&from_op=all_news",
         "content": "<div class=\"flex-items\" id=\"print_content\">\n<h3>說明</h3>\n<p>一、為推廣人工智慧及機器人技術於氣候災害與火災防禦之應用，並激發青年學生創意專題發想，特辦理「智慧沙崙・綠能防線：AI Robotics Wildfire Defense Workshop—AI 機器人野火防禦工作坊」，期提升青少年對AI、AIoT及智慧科技之認識、興趣與實作能力。</p>\n<p>二、活動資訊如下：</p>\n<p>(一)活動時間：中華民國115年8月5日（星期三）上午9時至下午4時。</p>\n<p>(二)活動地點：沙崙綠能科技示範場域資安暨智慧科技研發大樓第一會議室（臺南市歸仁區歸仁十三路一段6號）。</p>\n<p>(三)參加對象：國中及高中職學生。</p>\n<p>(四)主辦單位：臺南市政府經濟發展局。</p>\n<p>(五)執行單位：頡亨資訊股份有限公司。</p>\n<p>(六)協辦單位：國立成功大學、長榮大學、貝登堡智能股份有限公司、學宏有限公司及BeFiring機器人團隊。</p>\n<p>三、檢附本活動宣傳海報1份，<a href=\"https://www.accupass.com/event/2607222247431342863130\">活動報名網址</a>。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": []
-    },
-    {
-        "date": "2026-08-06",
-        "category": "研習",
-        "source": "教務處",
-        "title": "轉知國立臺中教育大學辦理「B4數位教學工作坊-國中小英語文」",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=528&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據國立臺中教育大學115年8月3日臺中大學英語字第1153060774號函辦理。</p>\n<p>二、旨揭工作坊資訊如下:</p>\n<p>(一)辦理時間：115年8月25日（星期二）下午1時30分至下午4時30分。</p>\n<p>(二)活動對象：全國國中小英語教師、對英語教學感興趣者、欲成為B4講師或為AI Di+實驗方案大學伴等優先錄取參加。</p>\n<p>(三)報名方式：請於115年8月18日（星期二）中午12時前至<a href=\"https://forms.gle/1QXLCexmmwP6KQLP8\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">線上報名表單</a>報名。</p>\n<p>三、本案聯絡單位: 國立臺中教育大學黃小姐，電話：04-2218-3465，電子信箱：sophiehuang@mail.ntcu.edu.tw</p>\n</div>",
-        "attachments": []
-    },
-    {
-        "date": "2026-08-05",
-        "category": "宣導",
-        "source": "教務處",
-        "title": "新生座號重編，對應學號之新資料整理完畢後訂於8/6(四)上午10:00前公告",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=527&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>造成各位新生及家長不便之處，敬請見諒</p>\n</div>",
         "attachments": []
     }
 ]
