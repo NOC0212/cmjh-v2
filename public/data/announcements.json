@@ -72,6 +72,20 @@
         ]
     },
     {
+        "date": "2026-05-26",
+        "category": "行政",
+        "source": "教務處",
+        "title": "[在校生] 115學年度各年級教科書用書版本",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=242&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一二三年級使用版本</p>\n<p>請見附件</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "臺南市崇明國中115學年度各年級教科書用書版本.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市崇明國中115學年度各年級教科書用書版本.pdf&files_sn=173"
+            }
+        ]
+    },
+    {
         "date": "2026-08-12",
         "category": "活動",
         "source": "學務處",
@@ -245,20 +259,6 @@
             {
                 "name": "聖恩關懷協會獎學金申請書.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=聖恩關懷協會獎學金申請書.pdf&files_sn=438"
-            }
-        ]
-    },
-    {
-        "date": "2026-08-07",
-        "category": "活動",
-        "source": "學務處",
-        "title": "臺南市立崇明國中115學年度新生訓練時程表及注意事項",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=533&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>哈囉，各位親愛的新生及新生守護者(家長)們：<br/>\r\n首先非常歡迎大家加入崇明國中這個大家庭。<br/>\r\n8/21(五)是我們最重要的第一次相見歡，非常期待看到大家喔!<br/>\r\n附件是當天的時程表及注意事項，請務必詳閱。<br/>\r\n如果有任何問題，可以聯繫學務處學生活動組，吳雪華老師：06-2907261 #822</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "115學年度 新生訓練時程及注意事項校網公告版-家長學生final.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115學年度 新生訓練時程及注意事項校網公告版-家長學生final.pdf&files_sn=437"
             }
         ]
     }
