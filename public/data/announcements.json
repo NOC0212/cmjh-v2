@@ -83,6 +83,24 @@
     },
     {
         "date": "2026-08-17",
+        "category": "宣導",
+        "source": "學務處",
+        "title": "115學年度新生選填社團相關事項",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=560&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>除了國樂班、體育班同學，其他人都需參與社團選填。</p>\n<p>每學期 (16 堂課 + 60 分鐘以上) 才能有多元分數 3 分。</p>\n<p>每學年選填一次，學期中不得更換社團 (除非有重大情事)。</p>\n<h3>社團選填方式</h3>\n<ul>\n<li>競賽型社團 (直笛、合唱、鼓術)：請事先向活動組報名。</li>\n<li>填寫 <a href=\"https://forms.gle/FbziaKu71FGeqgX16\">Google 線上表單</a>。</li>\n<li>掃描新生訓練手冊第 34 頁的 QR Code。</li>\n<li>開學後發放紙本社團確認單，請務必準時繳回。</li>\n</ul>\n<h3>選填注意事項</h3>\n<ul>\n<li>請填選 6 個不同社團。</li>\n<li>※ 注意：第一選填不代表一定是第一志願。</li>\n<li>若出現以下情況，將由學校統一分發社團：重複填寫志願、志願數不足、或逾期未繳交表單。</li>\n</ul>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "26 01 115社團實施辦法及社團介紹表(新生).pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=26 01 115社團實施辦法及社團介紹表(新生).pdf&files_sn=472"
+            },
+            {
+                "name": "26 02 競賽型社團招募文宣.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=26 02 競賽型社團招募文宣.pdf&files_sn=473"
+            }
+        ]
+    },
+    {
+        "date": "2026-08-17",
         "category": "競賽",
         "source": "教務處",
         "title": "臺南市115年度國民中學學生獨立研究競賽實施計畫，歡迎本校師生踴躍報名參加",
@@ -259,14 +277,5 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市崇明國中115 學年度競賽型社團 新生錄取名單.pdf&files_sn=448"
             }
         ]
-    },
-    {
-        "date": "2026-08-11",
-        "category": "活動",
-        "source": "學務處",
-        "title": "8/28衛生組志工取消通知~",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=542&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>各位親愛的衛生組志工同學及家長您好：<!--TgQPHd|||[]--></p>\n<p>感謝大家踴躍報名參與本學期的衛生組志工服務。<!--TgQPHd|||[]--></p>\n<p>由於原訂之志工服務時間8/28(五)，與學校公告之&lt;全校返校日&gt; 時間重疊<!--TgQPHd|||[]-->，為避免耽誤同學們進行班級註冊、導師時間及領取教科書等返校重要行程，衛生組經評估後，決定將當日志工服務時間取消!<br/>\n<br/>\r\n造成各位同學們時間規劃上的不便，敬請見諒。</p>\n</div>",
-        "attachments": []
     }
 ]
