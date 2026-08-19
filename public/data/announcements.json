@@ -82,6 +82,20 @@
         ]
     },
     {
+        "date": "2026-08-19",
+        "category": "一般",
+        "source": "教務處",
+        "title": "「【看見分子相遇的奇妙】特展-科學探索與創新學習計畫書」，歡迎本校師生踴躍報名參與",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=567&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、本計畫由中央研究院原子與分子科學研究所與財團法人遠哲科學教育基金會共同推動，並與國立臺灣科學教育館合作辦理。</p>\n<p>二、計畫主軸為「攜手全國國、高中職學校，探索諾貝爾科學之美與永續未來」，透過「看見分子相遇的奇妙」特展展場導覽、實作探究與AI輔助學習，結合STEAM教育，呼應108課綱之核心素養，深化學生對科學探究、環境永續及數位素養之理解。</p>\n<p>三、「看見分子相遇的奇妙」特展活動亮點包含首次公開展示李遠哲院士諾貝爾獎研究核心儀器「交叉分子束儀器—35 inch」，並設計「暖化熱輻射實驗」及AI探究應用，期能引導學生連結科學知識與永續議題。</p>\n<p>四、計畫詳細內容、學習流程及報名方式，請參閱附件。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "科學探索與創新學習計畫書.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=科學探索與創新學習計畫書.pdf&files_sn=481"
+            }
+        ]
+    },
+    {
         "date": "2026-08-18",
         "category": "一般",
         "source": "學務處",
@@ -268,14 +282,5 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2026年單親家庭徵文繪畫比賽辦法.pdf&files_sn=452"
             }
         ]
-    },
-    {
-        "date": "2026-08-12",
-        "category": "活動",
-        "source": "學務處",
-        "title": "財政部南區國稅局臺南分局於115年9月4日舉辦「雲端發票e飛棒」租稅教育及宣導活動",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=545&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、本次活動藉由觀看職業棒球比賽辦理租稅宣導，以捐贈發票方式兌換臺南亞太成棒主球場（台鋼雄鷹vs統一7-ELEVEN獅），門票兌換時間自115年8月18日起(上班日9:00至12:00、13:30至16:30)，換完為止。</p>\n<p>二、活動詳情請至<a href=\"https://gov.tw/5pF\">南區國稅局官網</a>或<a href=\"https://www.facebook.com/ntbsa\">南區國稅局粉絲專頁</a>查詢。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": []
     }
 ]
