@@ -69,15 +69,6 @@
         ]
     },
     {
-        "date": "2026-08-20",
-        "category": "行政",
-        "source": "教務處",
-        "title": "新生國中智力測驗施測說明",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=568&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<h2><a href=\"http://120.115.12.5:8080/share.cgi?ssid=7bade5223d8b457a821fb0a2fd03f124\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">新生國中智力測驗施測說明</a></h2>\n</div>",
-        "attachments": []
-    },
-    {
         "date": "2026-08-19",
         "category": "一般",
         "source": "教務處",
@@ -269,5 +260,19 @@
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=545&type=news&from_op=all_news",
         "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、本次活動藉由觀看職業棒球比賽辦理租稅宣導，以捐贈發票方式兌換臺南亞太成棒主球場（台鋼雄鷹vs統一7-ELEVEN獅），門票兌換時間自115年8月18日起(上班日9:00至12:00、13:30至16:30)，換完為止。</p>\n<p>二、活動詳情請至<a href=\"https://gov.tw/5pF\">南區國稅局官網</a>或<a href=\"https://www.facebook.com/ntbsa\">南區國稅局粉絲專頁</a>查詢。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
         "attachments": []
+    },
+    {
+        "date": "2026-08-12",
+        "category": "活動",
+        "source": "學務處",
+        "title": "臺南市立崇明國中115學年度競賽型社團錄取名單及暑訓注意事項",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=544&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>各位報名競賽型社團的新生：</p>\n<p>附件錄取名單，以下為注意事項。<br/>\r\n1.請確認附件中的班級座號姓名是否有誤。<br/>\r\n2.如有報名但未錄取，可致電學務處確認名單。<br/>\r\n3.請務必參加暑訓，如無法參加請致電請假。<br/>\r\n4.暑訓時間：115年8/17(一) ~ 8/20(四)，9:00~11:30。集合地點：學務處前走廊<br/>\r\n5.業務承辦人：學務處學生活動組吳組長<br/>\r\n                         06-2907261#822</p>\n<p>6.直笛隊同學，請記得攜帶高音笛及中音笛，如尚未購買者可先至學務處進行借用。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "臺南市崇明國中115 學年度競賽型社團 新生錄取名單.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市崇明國中115 學年度競賽型社團 新生錄取名單.pdf&files_sn=448"
+            }
+        ]
     }
 ]
