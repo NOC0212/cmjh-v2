@@ -1,5 +1,14 @@
 [
     {
+        "date": "2026-08-21",
+        "category": "行政",
+        "source": "教務處",
+        "title": "新生國中智力測驗施測說明",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=568&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<h2><a href=\"http://120.115.12.5:8080/share.cgi?ssid=7bade5223d8b457a821fb0a2fd03f124\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">新生國中智力測驗施測說明</a></h2>\n</div>",
+        "attachments": []
+    },
+    {
         "date": "2026-08-17",
         "category": "升學",
         "source": "學務處",
@@ -258,24 +267,6 @@
             {
                 "name": "「單親獎助學金」實施辦法.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=「單親獎助學金」實施辦法.pdf&files_sn=455"
-            }
-        ]
-    },
-    {
-        "date": "2026-08-12",
-        "category": "活動",
-        "source": "學務處",
-        "title": "財團法人國際單親兒童文教基金會辦理「單親家庭子女徵文繪畫比賽」",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=546&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<p>一、藉由辦理徵文及繪畫比賽，讓單親家庭之民眾能藉此記錄自己的單親生活歷程，及將親子之間相互扶持的寶貴經驗加以描繪。</p>\n<p>二、旨揭活動實施辦法及申請表等電子檔如附件，請逕至本基金會網站<a href=\"https://www.spef.org.tw\">本基金會網站最新消息-活動訊息</a>項下下載。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "2026年度單親家庭徵文、繪畫比賽報名表.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2026年度單親家庭徵文、繪畫比賽報名表.pdf&files_sn=451"
-            },
-            {
-                "name": "2026年單親家庭徵文繪畫比賽辦法.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2026年單親家庭徵文繪畫比賽辦法.pdf&files_sn=452"
             }
         ]
     }
