@@ -1,5 +1,23 @@
 [
     {
+        "date": "2026-08-17",
+        "category": "宣導",
+        "source": "學務處",
+        "title": "115學年度新生選填社團相關事項",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=560&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>除了國樂班、體育班同學，其他人都需參與社團選填。</p>\n<p>每學期 (16 堂課 + 60 分鐘以上) 才能有多元分數 3 分。</p>\n<p>每學年選填一次，學期中不得更換社團 (除非有重大情事)。</p>\n<h3>社團選填方式</h3>\n<ul>\n<li>競賽型社團 (直笛、合唱、鼓術)：請事先向活動組報名。</li>\n<li>填寫 <a href=\"https://forms.gle/FbziaKu71FGeqgX16\">Google 線上表單</a>。</li>\n<li>掃描新生訓練手冊第 34 頁的 QR Code。</li>\n<li>開學後發放紙本社團確認單，請務必準時繳回。</li>\n</ul>\n<h3>選填注意事項</h3>\n<ul>\n<li>請填選 6 個不同社團。</li>\n<li>※ 注意：第一選填不代表一定是第一志願。</li>\n<li>若出現以下情況，將由學校統一分發社團：重複填寫志願、志願數不足、或逾期未繳交表單。</li>\n</ul>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "26 01 115社團實施辦法及社團介紹表(新生).pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=26 01 115社團實施辦法及社團介紹表(新生).pdf&files_sn=472"
+            },
+            {
+                "name": "26 02 競賽型社團招募文宣.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=26 02 競賽型社團招募文宣.pdf&files_sn=473"
+            }
+        ]
+    },
+    {
         "date": "2026-08-12",
         "category": "活動",
         "source": "學務處",
@@ -50,15 +68,6 @@
         ]
     },
     {
-        "date": "2026-08-06",
-        "category": "研習",
-        "source": "教務處",
-        "title": "有關教育部於edu磨課師上架「教師數位教學增能培訓」A3及B5-1課程",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=529&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據教育部115年6月22日數位學習推動辦公室第2次工作會議及教育部115年7月27日臺教資(三)字第1152702268號函辦理。</p>\n<p>二、「A3數位素養增能研習」為教育部規定之數位教學增能必修課程，115年12月31日前各校須完成學校編制內正式教師總數60%。</p>\n<p>三、「B5-1生成式AI與教育應用工作坊」為教育部規定之數位教學增能必修課程，115年12月31日前各校須完成學校編制內正式教師總數40%。</p>\n<p>四、上開研習可至<a href=\"https://moocs.moe.edu.tw/\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">教育部edu磨課師平臺</a>線上修習，課程連結如下：</p>\n<p>(一) <a href=\"https://moocs.moe.edu.tw/moocs/#/course/detail/10002252\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">A3數位素養增能研習</a></p>\n<p>(二) <a href=\"https://moocs.moe.edu.tw/moocs/#/course/detail/10003217\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">B5-1生成式AI與教育應用工作坊(國中小)</a></p>\n<p>(三) <a href=\"https://moocs.moe.edu.tw/moocs/#/course/detail/10003191\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">B5-1生成式AI與教育應用工作坊(高中職)</a></p>\n<p>五、如有相關疑問，請洽本局數位學習推動辦公室 邱珮瑜小姐，網電：69191，市話2130669分機483</p>\n</div>",
-        "attachments": []
-    },
-    {
         "date": "2026-07-20",
         "category": "行政",
         "source": "教務處",
@@ -106,24 +115,6 @@
             {
                 "name": "截圖 2026-08-17 晚上11.29.04.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=截圖 2026-08-17 晚上11.29.04.pdf&files_sn=479"
-            }
-        ]
-    },
-    {
-        "date": "2026-08-17",
-        "category": "宣導",
-        "source": "學務處",
-        "title": "115學年度新生選填社團相關事項",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=560&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>除了國樂班、體育班同學，其他人都需參與社團選填。</p>\n<p>每學期 (16 堂課 + 60 分鐘以上) 才能有多元分數 3 分。</p>\n<p>每學年選填一次，學期中不得更換社團 (除非有重大情事)。</p>\n<h3>社團選填方式</h3>\n<ul>\n<li>競賽型社團 (直笛、合唱、鼓術)：請事先向活動組報名。</li>\n<li>填寫 <a href=\"https://forms.gle/FbziaKu71FGeqgX16\">Google 線上表單</a>。</li>\n<li>掃描新生訓練手冊第 34 頁的 QR Code。</li>\n<li>開學後發放紙本社團確認單，請務必準時繳回。</li>\n</ul>\n<h3>選填注意事項</h3>\n<ul>\n<li>請填選 6 個不同社團。</li>\n<li>※ 注意：第一選填不代表一定是第一志願。</li>\n<li>若出現以下情況，將由學校統一分發社團：重複填寫志願、志願數不足、或逾期未繳交表單。</li>\n</ul>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "26 01 115社團實施辦法及社團介紹表(新生).pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=26 01 115社團實施辦法及社團介紹表(新生).pdf&files_sn=472"
-            },
-            {
-                "name": "26 02 競賽型社團招募文宣.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=26 02 競賽型社團招募文宣.pdf&files_sn=473"
             }
         ]
     },
@@ -282,5 +273,14 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2026年單親家庭徵文繪畫比賽辦法.pdf&files_sn=452"
             }
         ]
+    },
+    {
+        "date": "2026-08-12",
+        "category": "活動",
+        "source": "學務處",
+        "title": "財政部南區國稅局臺南分局於115年9月4日舉辦「雲端發票e飛棒」租稅教育及宣導活動",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=545&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、本次活動藉由觀看職業棒球比賽辦理租稅宣導，以捐贈發票方式兌換臺南亞太成棒主球場（台鋼雄鷹vs統一7-ELEVEN獅），門票兌換時間自115年8月18日起(上班日9:00至12:00、13:30至16:30)，換完為止。</p>\n<p>二、活動詳情請至<a href=\"https://gov.tw/5pF\">南區國稅局官網</a>或<a href=\"https://www.facebook.com/ntbsa\">南區國稅局粉絲專頁</a>查詢。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": []
     }
 ]
