@@ -1,14 +1,5 @@
 [
     {
-        "date": "2026-08-21",
-        "category": "行政",
-        "source": "教務處",
-        "title": "新生國中智力測驗施測說明",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=568&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<h2><a href=\"http://120.115.12.5:8080/share.cgi?ssid=7bade5223d8b457a821fb0a2fd03f124\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">新生國中智力測驗施測說明</a></h2>\n</div>",
-        "attachments": []
-    },
-    {
         "date": "2026-08-17",
         "category": "升學",
         "source": "學務處",
@@ -65,6 +56,24 @@
             {
                 "name": "臺南市崇明國中115學年度各年級教科書用書版本.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市崇明國中115學年度各年級教科書用書版本.pdf&files_sn=173"
+            }
+        ]
+    },
+    {
+        "date": "2026-08-21",
+        "category": "一般",
+        "source": "人事室",
+        "title": "有關2026年大台南國公營事業工會聯誼健行交流活動，將於8月22日中午12時起開放報名，符合資格女性同仁屆時踴躍參加",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=6&zone_id=0&page_id=48&content_id=572&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>有關2026年大台南國公營事業工會聯誼健行交流活動，將於8月22日中午12時起開放報名，敬請貴單位鼓勵符合資格女性同仁屆時踴躍參加</p>\n<p>說明：</p>\n<p>一、本活動限市府暨所屬各機關學校單身員工報名參加，女性請至<a href=\"https://reurl.cc/nxrvEe\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">大台南國公營事業工會聯誼健行交流活動女性報名網站</a>報名。</p>\n<p>二、檢附「2026年國公營事業工會聯誼健行交流活動DM-尖山倒影戀曲啟航」及「活動日程」各1份供參。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "活動日程.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=活動日程.pdf&files_sn=485"
+            },
+            {
+                "name": "活動.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=活動.pdf&files_sn=486"
             }
         ]
     },
