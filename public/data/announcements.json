@@ -55,15 +55,6 @@
         ]
     },
     {
-        "date": "2026-07-20",
-        "category": "行政",
-        "source": "教務處",
-        "title": "114學年第二學期總補考公告",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=468&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>HTML</p>\n<p class=\"fs-4 fw-bold text-dark border-bottom pb-2\">114-2 學期總補考時間</p>\n<p class=\"fw-bold text-danger\">一升二及二升三年級同學請注意，補考科目及補考題庫可以開始查詢。</p>\n<div class=\"card my-3 border-secondary\">\n<div class=\"card-body\">\n<p class=\"card-text fw-bold text-dark\">本土語、健體等非考科補考，請於開學起至 9/04 於下課時間找任課老師進行補考，逾期不候。</p>\n</div>\n</div>\n<ol class=\"list-group list-group-numbered my-3\">\n<li class=\"list-group-item border-0 ps-0\"><span class=\"fw-bold\">時間：</span>三年級 8/20 上午 10:00 ~ 13:20，二年級 8/20 上午 9:00 ~ 10:00</li>\n<li class=\"list-group-item border-0 ps-0\"><span class=\"fw-bold\">地點：</span>學生請務必上網看補考電腦教室及日期時間</li>\n<li class=\"list-group-item border-0 ps-0\"><span class=\"fw-bold\">科目：</span>請學生前往 <a class=\"text-primary text-decoration-underline\" href=\"https://schoolweb2.tn.edu.tw/~cmjh_sport110/\">崇明國中/補考查詢系統網站</a>。請讓孩子輸入自己的學號及身分證字號，查詢自己 114-2 學期是否需要補考，或洽各班級導師查詢。<span style=\"color:#c0392b;\">暑期轉學生請於9:00~13:20期間內至教務處進行補考。</span></li>\n<li class=\"list-group-item border-0 ps-0\"><span class=\"fw-bold\">補考題庫：</span>請至舊校網學生園地前往 <a class=\"text-primary text-decoration-underline\" href=\"https://web.cmjh.tn.edu.tw/modules/tad_uploader/index.php?of_cat_sn=9\">崇明國中補考題庫專區</a> 下載。</li>\n</ol>\n<div class=\"alert alert-danger my-3\" role=\"alert\">\n<p class=\"fw-bold mb-1\">再次強調：</p>\n<p class=\"mb-2\">國中階段超過四領域以上不及格將無法取得畢業證書，請務必留意。</p>\n<p class=\"fw-bold mb-0 text-dark\">無故缺考者不再給予補考（只能考一次，且必須在補考期限內完成，不然系統會關閉資料上傳）。</p>\n</div>\n</div>",
-        "attachments": []
-    },
-    {
         "date": "2026-05-26",
         "category": "行政",
         "source": "教務處",
@@ -74,6 +65,20 @@
             {
                 "name": "臺南市崇明國中115學年度各年級教科書用書版本.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市崇明國中115學年度各年級教科書用書版本.pdf&files_sn=173"
+            }
+        ]
+    },
+    {
+        "date": "2026-08-21",
+        "category": "研習",
+        "source": "教務處",
+        "title": "台南市115年度科學教育「穿梭古今野外地質探究」研習計畫，歡迎本校教師踴躍報名參加",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=571&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><span class=\"fs-5 fw-bold\">說明：</span></p>\n<ol>\n<li>依據「臺南市115年度科學教育總體計畫」辦理。</li>\n<li>本活動重要資訊摘述如下：\r\n\t<ul>\n<li>時間及地點：115年9月15日 (二) 07:10-15:20，顯宮國小 7:30 搭中型巴士或自行開車 8:10 前於那拔國小會合。</li>\n<li>參加對象：臺南市國中小擔任自然科學教師計35人，額滿為止。</li>\n<li>報名方式：臺南市教育局資訊中心學習護照報名，研習代碼：320051。（開課單位:大橋國小）</li>\n</ul>\n</li>\n<li>檢附實施計畫詳如附件。</li>\n<li>請穿著輕便服裝(長袖.長褲)、防滑鞋、雨具、防曬用品、藥品、乾糧、水及採集工具(如鐵錘、小圓鍬、手套、放大鏡、採集袋…)等物品。</li>\n<li>本案聯絡人：大橋國小李麗菁，2033001#787。</li>\n</ol>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "115地質探究研習計畫.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115地質探究研習計畫.pdf&files_sn=484"
             }
         ]
     },
@@ -97,7 +102,7 @@
     },
     {
         "date": "2026-08-20",
-        "category": "活動",
+        "category": "宣導",
         "source": "學務處",
         "title": "轉知-115年臺南市「Level Up！青春心挑戰」心理健康月活動",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=569&type=news&from_op=all_news",
