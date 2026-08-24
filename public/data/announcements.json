@@ -1,7 +1,7 @@
 [
     {
         "date": "2026-08-17",
-        "category": "宣導",
+        "category": "升學",
         "source": "學務處",
         "title": "115學年度新生選填社團相關事項",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=560&type=news&from_op=all_news",
@@ -30,6 +30,15 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市崇明國中115學年度各年級教科書用書版本.pdf&files_sn=173"
             }
         ]
+    },
+    {
+        "date": "2026-08-24",
+        "category": "宣導",
+        "source": "學務處",
+        "title": "【重要通知】8/25 衛生組返校志工因應風雨調整說明",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=578&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>8/25 衛生組返校志工說明<!--TgQPHd|||[]--></p>\n<p>主旨<!--TgQPHd|||[]-->：因應天然災害之安全維護通知<!--TgQPHd|||[]--><!--TgQPHd|||[]--></p>\n<p>1.當日若達停班停課標準：凡經縣市政府正式發布停止上班及上課<!--TgQPHd|||[]-->之地區，請各位同學切勿到校<!--TgQPHd|||[]-->。<!--TgQPHd|||[]--><!--TgQPHd|||[]-->原訂的「衛生組返校志工」活動將直接取消。<!--TgQPHd|||[]--><!--TgQPHd|||[]--></p>\n<p><!--TgQPHd|||[]--></p>\n<p><!--TgQPHd|||[]--></p>\n<p><!--TgQPHd|||[]--><!--TgQPHd|||[]--></p>\n<p>2.當日若未達停班停課標準 : 但同學居住地、通學沿途風雨過大、有安全顧慮<!--TgQPHd|||[]-->時，家長可自主決定是否讓學生到校,學校將予以彈性處理，不列入紀錄<!--TgQPHd|||[]-->。<!--TgQPHd|||[]--><!--TgQPHd|||[]--></p>\n<p><!--TgQPHd|||[]--></p>\n<p><!--TgQPHd|||[]--></p>\n<p><!--TgQPHd|||[]--><!--TgQPHd|||[]--></p>\n<p>3.安全提醒 : 天候惡劣期間請同學待在室內，切勿前往外頭、山區、河川或海邊遊玩。<!--TgQPHd|||[]--><!--TgQPHd|||[]-->請密切留意縣市政府的最新停班停課通報。</p>\n<p><!--TgQPHd|||[]--></p>\n<p><!--TgQPHd|||[]--></p>\n<p><!--TgQPHd|||[]--></p>\n</div>",
+        "attachments": []
     },
     {
         "date": "2026-08-21",
@@ -260,15 +269,6 @@
         "title": "臺南市立崇明國中115學年度第三次代理教師甄選第1次甄選結果公告",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=552&type=news&from_op=all_news",
         "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><span style=\"font-size: 1.833rem;\">臺南市立崇明國中115學年度第三次代理教師甄選第1次甄選結果</span></p>\n<p><span style=\"font-size: 1.833rem;\">國文科：林○亨  正取1<br/>\r\n請以上正取老師於115年8月13日(星期四)下午14:00至人事室報到。</span></p>\n<p><span style=\"font-size: 1.833rem;\">本次代理教師甄選招聘結束。</span></p>\n</div>",
-        "attachments": []
-    },
-    {
-        "date": "2026-08-13",
-        "category": "宣導",
-        "source": "學務處",
-        "title": "9月份友善校園週~性別平等教育",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=551&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p> </p>\n<p>宣導影片放置於學校首頁公告區，請導師利用9月份的早修或班週會時間或午休進行播放，並請拍攝宣導照片（導師及班上同學都要入鏡），並請導師將照片上傳到各年級的群組相簿；每班發下3張學習單(優秀名單前3名，各10元合作社禮券)，請於9/25之前將學習單繳交學務處生教組。</p>\n<p>1.一年級觀看影片：拒絕短音與社群平台風險影片：your_life</p>\n<p>2.二年級觀看影片：跟騷防治影片：跟蹤騷擾 觀念篇 V3-1</p>\n<p>3.三年級觀看影片：防治數位性別暴力影片：【數位性別暴力】防治懶人包說明影片_1080p60</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
         "attachments": []
     }
 ]
