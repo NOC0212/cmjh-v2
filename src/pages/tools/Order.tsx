@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { ToolLayout } from "@/components/ToolLayout";
+import { ToolLayout } from "./ToolLayout";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Shuffle, Trash2, Copy } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/toast";
 
 export default function Order() {
     const defaultContent = Array.from({ length: 30 }, (_, i) => (i + 1).toString()).join("\n");

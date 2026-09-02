@@ -4,7 +4,7 @@ on:
   schedule:
     # 台灣時間每天早上 8:00 執行 (UTC 0:00)
     - cron: '0 22 * * *'
-  workflow_dispatch: 
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -24,12 +24,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # 如果沒有 requirements.txt，可以直接寫 pip install requests beautifulsoup4
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install requests beautifulsoup4; fi
+          if [ -f scripts/requirements.txt ]; then pip install -r scripts/requirements.txt; else pip install requests beautifulsoup4; fi
 
       - name: Run lunch scraper
         run: |
-          python lunch.py
+          python scripts/lunch.py
 
       - name: Commit and push if changed
         run: |

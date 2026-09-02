@@ -2,87 +2,127 @@
 
 ## Project Overview
 
-崇明國中 (CMJH) school info platform — React 18 SPA with PWA support. UI text is Traditional Chinese (zh-TW).
+崇明國中（CMJH）校園資訊平台 — 一體式 PWA app，React 18 + TypeScript + Vite 5。
 
 ## Commands
 
 ```bash
-npm install        # install deps (both package-lock.json and bun.lockb are committed; npm is canonical)
-npm run dev        # dev server, port 8080 (host "::")
+npm install        # install deps
+npm run dev        # dev server on port 8081
 npm run build      # production build
-npm run build:dev  # development-mode build
-npm run lint       # eslint
-npm run preview    # preview production build on port 8080
+npm run preview    # preview production build on port 8081
 ```
 
-No test runner is configured. Root `tsconfig.json` is a solution-style file (`"files": []`) — a bare `npx tsc --noEmit` fails with "No inputs were found". Validate per-project instead:
+無測試框架。靜態檢查用 `npx tsc --noEmit`。
 
-```bash
-npx tsc --noEmit -p tsconfig.app.json    # app code (src/)
-npx tsc --noEmit -p tsconfig.node.json   # vite.config.ts
-```
-
-> ⚠️ **Do NOT run `build`, `build:dev`, or `preview` commands** — these are slow, resource-intensive, and unnecessary for code review. Only run `lint` or `tsc` for validation.
+> ⚠️ **盡量不要執行 `build` / `preview`** — 耗時且資源密集。僅執行 `tsc --noEmit` 驗證。
 
 ## Architecture
 
-- **Entry**: `src/main.tsx` → `src/App.tsx` (React Router; tool pages lazy-loaded in `App.tsx`). `index.html` is the SPA shell (Google Fonts, favicon, meta).
-- **First-run flow**: if localStorage `cmjh-first-setup-completed` is unset, all routes redirect to `/home` (setup wizard in `src/pages/Home.tsx`), which completes → hard redirect to `/app`. Don't break `/home`.
-- **Pages**: `src/pages/Index.tsx` (main dashboard), `src/pages/tools/*.tsx` (8 lazy-loaded tools), `src/pages/Docs.tsx`, `NotFound.tsx`.
-- **Components**: `src/components/` (app components), `src/components/ui/` (shadcn/ui — do not hand-edit these)
-- **Hooks**: `src/hooks/` — `SettingsContext` (localStorage settings + theme), `useJsonData` (server JSON fetching), `useSiteConfig`/`useAutoUpdate` (Supabase-backed), plus custom-data hooks (`useCalendarEvents`, `useCommonSites`, `useSiteCountdowns`, `useCrudManager`)
-- **Lib**: `src/lib/` — `utils.ts`, `supabase.ts`, `crypto.ts`, `page-background.ts`, `app-version.ts`
+- **Entry**: `src/main.tsx` → `src/app/App.tsx` (React Router, lazy-loaded pages)
+- **Layout**: `src/app/AppLayout.tsx` — 桌面側欄（可收合）＋ 手機頂欄＋底列
+- **Pages**: `src/pages/` (路由對應頁面); `src/pages/tools/` (工具頁，獨立 ToolLayout)
+- **Home widgets**: `src/features/home/` (8 個首頁區塊)
+- **Components**: `src/components/` (共用元件); `src/components/ui/` (基礎 UI — 不應手動編輯)
+- **Hooks**: `src/hooks/` (SettingsContext, 自訂 hooks, Supabase 資料 hooks)
+- **Lib**: `src/lib/` (utils, supabase client, crypto, app-version, data types)
+- **Static data**: `public/data/*.json` (爬蟲產生的 JSON)
 - **Path alias**: `@/` → `./src/` (tsconfig + vite.config.ts)
-- **Static data**: `public/data/*.json` (lunch, announcements, honors, calendar — scraper-generated, see below)
 
-## Data Flow (important, non-obvious)
+## Theme
 
-- All `public/data/*.json` is fetched through `useJsonData` (`src/hooks/useJsonData.ts`), which forces a query-key prefix `["jsonData", ...]` and uses TanStack Query (5-min stale, refetch on window focus).
-- `useAutoUpdate` polls Supabase `site_config.app_version` every 5 min. On version change it runs `migrateData()` and invalidates **all** `["jsonData"]` queries — this is how fresh scraper JSON reaches users. Any new JSON data hook must use the `"jsonData"` prefix or it won't be invalidated.
-- `src/lib/app-version.ts` owns all localStorage keys (settings, common sites, calendar events, countdowns, favorites, read announcements, maintenance whitelist) and version migration. Add new storage keys to `STORAGE_KEYS` so migrate/export/import cover them.
-- Admin access is a hidden unlock: click the version label ~5 times in Settings → `cmjh-admin-unlocked=true`.
+單一品牌主題色，由 CSS 變數 `--hue` 驅動（`src/styles/theme.css`），預設 `--hue: 191`（深藍×青碧）。
+- 使用者可在設定頁用滑桿調整品牌色相（0-360），透過 `useSettings().setThemeHue()` 套用
+- light/dark/system 模式切換（class 策略）；無自訂背景
+- `.bg-brand-gradient` / `.text-brand-gradient` / `.bg-brand-soft` / `.section-icon` 等輔助 class
+
+## 可用 UI 元件
+
+| 元件 | 路徑 |
+|------|------|
+| Button | `@/components/ui/button` |
+| Card | `@/components/ui/card` |
+| Input | `@/components/ui/input` |
+| Textarea | `@/components/ui/textarea` |
+| Label | `@/components/ui/label` |
+| Badge | `@/components/ui/badge` |
+| Skeleton | `@/components/ui/skeleton` |
+| Separator | `@/components/ui/separator` |
+| Dialog | `@/components/ui/dialog` |
+| AlertDialog | `@/components/ui/alert-dialog` |
+| DropdownMenu | `@/components/ui/dropdown-menu` |
+| Select | `@/components/ui/select` |
+| Switch | `@/components/ui/switch` |
+| Tabs | `@/components/ui/tabs` |
+| Progress | `@/components/ui/progress` |
+| Popover | `@/components/ui/popover` |
+| Tooltip | `@/components/ui/tooltip` |
+| Collapsible | `@/components/ui/collapsible` |
+| Toast | `@/components/ui/toast` (`useToast()` → `toast({...})`) |
+
+**不存在的元件**（不可 import）：chart, table, radio-group, calendar, sonner, recharts, react-day-picker, react-hook-form, next-themes, cmdk, vaul, use-toast (舊路徑)
+
+## 資料層
+
+### 靜態 JSON（爬蟲）
+- `useAnnouncements()` → `{ data: Announcement[], isLoading }`
+- `useHonors()` → `{ data: HonorItem[], isLoading }`
+- `useLunch()` → `{ data: LunchData, isLoading }`
+- `useSchoolCalendar()` → `{ data: CalendarData, isLoading }`
+- 全部來自 `@/hooks/use-static-data`
+
+### Supabase 資料
+- `useSiteConfig()` → `{ maintenance, appVersion, updateConfig, ... }`
+- `useSiteCountdowns()` → `{ countdowns, updateCountdowns, ... }`
+- `useSiteAnnouncements()` → `{ announcements, updateAnnouncements, ... }`
+- `useVisitCounter()` → `{ total, today, increment }`
+- `useVisitStats(days)` → `{ stats, dailyVisits, ... }`
+- `useCalendarEvents()` → `{ customEvents, addEvent, ... }`
+- `useCommonSites()` → `{ sites, addSite, updateSite, removeSite }`
+- 全部來自 `@/hooks/`
+
+### 設定
+- `useSettings()` → `{ settings, updateSettings }` 來自 `@/hooks/settings-context`
+- `useFavorites()` → `{ favorites, addFavorite, removeFavorite, isFavorite, cleanupFavorites }` 來自 `@/hooks/use-favorites`
+
+## 路由
+
+| 路徑 | 頁面 | 說明 |
+|------|------|------|
+| `/` | — | 重新導向：未完成首次體驗 → `/home`；已完成 → `/app` |
+| `/home` | LandingPage | 登陸頁（全螢幕，不套用 AppLayout） |
+| `/app` | HomePage | 首頁（8 個可排序區塊） |
+| `/announcements` | AnnouncementsPage | 公告（Tabs: 學校公告 / 站內公告） |
+| `/favorites` | FavoritesPage | 依類型分組的收藏 |
+| `/search` | SearchPage | 全文搜尋 |
+| `/settings` | SettingsPage | 設定（外觀含品牌色相/偏好/系統） |
+| `/admin` | AdminPage | 管理後台（需密碼） |
+| `/docs` | DocsPage | 使用說明 |
+| `/tools/*` | 工具頁 | 8 種工具（獨立 ToolLayout，無 AppLayout 導航） |
+
+## Styling Rules
+
+- **一律使用品牌色**：`primary`, `bg-primary`, `text-primary`, `bg-primary/10`, `bg-brand-gradient` 等
+- **禁止** `from-blue-500`, `bg-rose-100`, `text-emerald-700` 等非品牌色 class
+- 年級、分類用品牌色柔和底（`bg-primary/10`, `bg-success/10`, `bg-warning/10`）
+- Toast API：`const { toast } = useToast()` → `toast({ title, description?, variant?: "default"|"success"|"destructive" })`
 
 ## Python Scrapers
 
-Three root-level Python 3 scripts feed `public/data/` via GitHub Actions:
+位於 `scripts/`，由 GitHub Actions 排程執行：
 
-| Script | Output | Schedule (cron) |
-|--------|--------|-----------------|
-| `lunch.py` | `public/data/lunch.json` | `0 22 * * *` UTC (= 06:00 CST; the "08:00" in the workflow comment is wrong) |
-| `scraper.py` | `public/data/announcements.json` | `*/30 * * * *` |
-| `honors_scraper.py` | `public/data/honors.json` | `*/30 * * * *` (same job as scraper.py) |
+| 腳本 | 輸出 | 排程 |
+|------|------|------|
+| `scraper.py` | `public/data/announcements.json` | 每 30 分鐘 |
+| `honors_scraper.py` | `public/data/honors.json` | 每 30 分鐘 |
+| `lunch.py` | `public/data/lunch.json` | 每日 08:00 CST |
 
-Dependencies: `requests`, `beautifulsoup4` (see `requirements.txt`). Workflows commit the JSON back to the repo; data updates land in git history, not a server.
+依賴：`requests`, `beautifulsoup4`（見 `scripts/requirements.txt`）
 
-## Key Conventions
+## 環境
 
-- **shadcn/ui**: Components in `src/components/ui/` are generated — use `npx shadcn-ui@latest add <component>` to add new ones, don't hand-write
-- **State management**: TanStack Query for server/remote data, LocalStorage for user settings (via `SettingsContext`)
-- **Styling**: Tailwind CSS with CSS variables; dark mode + theme colors + page backgrounds applied as classes on `<body>`/`#root` by `SettingsContext.applyTheme`
-- **ESLint**: `@typescript-eslint/no-unused-vars` is `off` (unused vars are allowed)
-- **tsconfig**: `strict` is `false`, but `strictNullChecks`, `noImplicitAny`, `noUnusedLocals`, `noUnusedParameters` are all `true`
-- **PWA**: vite-plugin-pwa, `registerType: "prompt"` with silent background auto-update (see `src/main.tsx`). Workbox runtime caches (see `vite.config.ts`): school `data/*.json` → StaleWhileRevalidate 1d; `www.cmjh.tn.edu.tw` pages → NetworkFirst 1d; Google Fonts & favicons → CacheFirst
+複製 `.env.example` 為 `.env` 並填寫 Supabase 憑證（VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY）及氣象 API（VITE_CWA_API_KEY，選填）。
 
-## Environment
+## 部署
 
-Copy `.env.example` to `.env`:
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `VITE_SUPABASE_URL` | No* | Supabase project URL (visit counter, admin) |
-| `VITE_SUPABASE_ANON_KEY` | No* | Supabase anon/public key |
-| `VITE_CWA_API_KEY` | No | Central Weather Administration API key (browser-side, weather widget). Get from https://opendata.cwa.gov.tw |
-
-\* App **runs fine without these** — `SUPABASE_ENABLED` in `src/lib/supabase.ts` gates the visit counter and admin features off (they log a warning). Good for local dev without setup.
-
-### Supabase Setup
-
-1. Create a free project at https://supabase.com
-2. Run `supabase-setup-complete.sql` (project root) in **SQL Editor** — one file sets up everything (tables, RLS, SECURITY DEFINER functions)
-3. Copy project URL + anon key from **Settings > API** into `.env`
-
-The visit counter increments once per page load via a secure PostgreSQL function (`SECURITY DEFINER`); RLS lets the anon role only read and call the increment function. Admin passwords are bcrypt-hashed (pgcrypto) at rest and SHA-256 hashed in the browser for transport — raw passwords never leave the client. Admin config lives in the `site_config` table (id=1): maintenance mode, app version, password hash. There is **no `api/` folder** — weather is fetched client-side with `VITE_CWA_API_KEY` (CWA WAF blocks Vercel's IP range, so a server proxy was removed).
-
-## Deploy
-
-Vercel with SPA rewrite rule (all non-file routes → `index.html`, see `vercel.json`). Set `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_CWA_API_KEY` (optional) in Vercel Dashboard > Environment Variables.
+Vercel SPA 模式（`vercel.json` 含 rewrite 規則）。在 Vercel Dashboard 設定環境變數。

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { ToolLayout } from "@/components/ToolLayout";
+import { ToolLayout } from "@/pages/tools/ToolLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { QrCode, Download, Copy, RefreshCw, Link as LinkIcon } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/toast";
 import { QRCodeSVG } from "qrcode.react";
 
 export default function QRCodeGenerator() {
@@ -106,7 +106,7 @@ export default function QRCodeGenerator() {
                         </div>
                     </Card>
 
-                    <Card className="lg:col-span-3 p-4 sm:p-6 flex flex-col items-center justify-center min-h-[280px] bg-white dark:bg-slate-900 transition-colors">
+                    <Card className="lg:col-span-3 p-4 sm:p-6 flex flex-col items-center justify-center min-h-[280px] bg-card transition-colors">
                         {url ? (
                             <div className="space-y-5 text-center">
                                 <div className="p-4 bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.3)] inline-block">
@@ -116,7 +116,6 @@ export default function QRCodeGenerator() {
                                         size={200}
                                         fgColor={fgColor}
                                         level="H"
-                                        includeMargin={false}
                                     />
                                 </div>
                                 <Button onClick={handleDownload} className="w-full sm:w-auto">

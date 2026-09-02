@@ -5,10 +5,10 @@ import remarkBreaks from "remark-breaks";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Calendar, Megaphone, BellRing } from "lucide-react";
-import { useSettings } from "@/hooks/SettingsContext";
+import { useSettings } from "@/hooks/settings-context";
 import { getCurrentVersion, STORAGE_KEYS } from "@/lib/app-version";
-import { useSiteAnnouncements } from "@/hooks/useSiteAnnouncements";
-import { useSiteConfig } from "@/hooks/useSiteConfig";
+import { useSiteAnnouncements } from "@/hooks/use-site-announcements";
+import { useSiteConfig } from "@/hooks/use-site-config";
 
 interface SiteAnnouncement {
   id: string;
@@ -53,7 +53,9 @@ export function LatestAnnouncementModal() {
 
       if (!allAnnouncements?.length) return;
 
-      const sortedData = [...allAnnouncements].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      const sortedData = [...allAnnouncements].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+      );
       const now = new Date();
       const readStr = localStorage.getItem(READ_ANNOUNCEMENTS_KEY);
       const readList: string[] = readStr ? JSON.parse(readStr) : [];
@@ -125,8 +127,8 @@ export function LatestAnnouncementModal() {
   const hasMore = currentIndex < unreadAnns.length - 1;
 
   return (
-    <Dialog 
-      open={isOpen} 
+    <Dialog
+      open={isOpen}
       onOpenChange={(open) => {
         if (!open) {
           markCurrentAsRead();
@@ -134,14 +136,13 @@ export function LatestAnnouncementModal() {
         setIsOpen(open);
       }}
     >
-      <DialogContent className="w-[92vw] max-w-xl overflow-hidden rounded-3xl border-border bg-card p-0 shadow-2xl outline-none [&>button]:right-5 [&>button]:top-5 [&>button]:flex [&>button]:h-8 [&>button]:w-8 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-full [&>button]:bg-black/30 [&>button]:text-white [&>button]:backdrop-blur-md hover:[&>button]:bg-black/50 focus:[&>button]:ring-0 transition-all duration-300">
+      <DialogContent className="w-[92vw] max-w-xl overflow-hidden rounded-3xl border-border bg-card p-0 shadow-2xl outline-none [&>button]:right-5 [&>button]:top-5 [&>button]:flex [&>button]:h-8 [&>button]:w-8 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-full [&>button]:bg-black/30 [&>button]:text-white hover:[&>button]:bg-black/50">
         <DialogTitle className="sr-only">站內公告通知</DialogTitle>
 
-        {/* 16:9 Header Image */}
         <div className="relative aspect-video w-full overflow-hidden">
-          <img 
-            src={currentAnn.image_url || "/announcement.png"} 
-            alt="Announcement Header" 
+          <img
+            src={currentAnn.image_url || "/announcement.png"}
+            alt="Announcement Header"
             className="h-full w-full object-cover"
             referrerPolicy="no-referrer"
             onError={(e) => {
@@ -167,7 +168,6 @@ export function LatestAnnouncementModal() {
                 </div>
               </div>
             </div>
-            
             {unreadAnns.length > 1 && (
               <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
                 {currentIndex + 1} / {unreadAnns.length}
@@ -175,9 +175,9 @@ export function LatestAnnouncementModal() {
             )}
           </div>
 
-          <div className="max-h-[35vh] overflow-y-auto pr-2 custom-scrollbar">
+          <div className="max-h-[35vh] overflow-y-auto pr-2">
             {currentAnn.content ? (
-              <div className="text-base leading-relaxed text-foreground/90 prose prose-sm dark:prose-invert max-w-none">
+              <div className="text-base leading-relaxed text-foreground/90 markdown-body">
                 <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
                   {currentAnn.content}
                 </ReactMarkdown>
@@ -191,18 +191,14 @@ export function LatestAnnouncementModal() {
           </div>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button 
-              className="h-12 flex-[2] rounded-2xl text-lg font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]" 
+            <Button
+              className="h-12 flex-[2] rounded-2xl text-lg font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
               onClick={hasMore ? handleNextOrClose : handleDontShowAgain}
             >
               {hasMore ? "下一則公告" : "關閉"}
             </Button>
             {hasMore ? (
-              <Button 
-                variant="outline" 
-                className="h-12 flex-1 rounded-2xl font-semibold" 
-                onClick={markCurrentAsRead}
-              >
+              <Button variant="outline" className="h-12 flex-1 rounded-2xl font-semibold" onClick={markCurrentAsRead}>
                 略過此通知
               </Button>
             ) : null}

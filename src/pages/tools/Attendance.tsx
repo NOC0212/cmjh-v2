@@ -1,20 +1,20 @@
 import { useState } from "react";
-import { ToolLayout } from "@/components/ToolLayout";
+import { ToolLayout } from "@/pages/tools/ToolLayout";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { 
-    Trash2, 
-    RotateCcw, 
-    ClipboardCheck, 
-    UserCheck, 
-    UserX, 
+import {
+    Trash2,
+    RotateCcw,
+    ClipboardCheck,
+    UserCheck,
+    UserX,
     Clock,
     Users,
     AlertTriangle,
     ArrowRight
 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/toast";
 import { useBeforeUnload, useNavigate } from "react-router-dom";
 import {
     AlertDialog,
@@ -58,13 +58,13 @@ export default function Attendance() {
         if (students.length > 0) {
             setShowExitDialog(true);
         } else {
-            navigate("/app");
+            navigate("/");
         }
     };
 
     const confirmExit = () => {
         setShowExitDialog(false);
-        navigate("/app");
+        navigate("/");
     };
 
     const handleSetList = () => {
@@ -127,17 +127,17 @@ export default function Attendance() {
     };
 
     const modeConfig = [
-        { id: "present" as const, label: "出席", color: "bg-emerald-600", activeColor: "bg-emerald-600 text-white", inactiveColor: "text-emerald-600 border-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-950", icon: UserCheck },
-        { id: "absent" as const, label: "缺席", color: "bg-red-600", activeColor: "bg-red-600 text-white", inactiveColor: "text-red-600 border-red-300 hover:bg-red-50 dark:hover:bg-red-950", icon: UserX },
-        { id: "late" as const, label: "遲到", color: "bg-orange-600", activeColor: "bg-orange-600 text-white", inactiveColor: "text-orange-600 border-orange-300 hover:bg-orange-50 dark:hover:bg-orange-950", icon: Clock },
-        { id: "none" as const, label: "未點", color: "bg-slate-600", activeColor: "bg-slate-600 text-white", inactiveColor: "text-slate-600 border-slate-300 hover:bg-slate-50 dark:hover:bg-slate-950", icon: RotateCcw },
+        { id: "present" as const, label: "出席", icon: UserCheck, activeColor: "bg-success text-success-foreground", inactiveColor: "text-success hover:bg-success/10 border-success/40" },
+        { id: "absent" as const, label: "缺席", icon: UserX, activeColor: "bg-destructive text-destructive-foreground", inactiveColor: "text-destructive hover:bg-destructive/10 border-destructive/40" },
+        { id: "late" as const, label: "遲到", icon: Clock, activeColor: "bg-warning text-warning-foreground", inactiveColor: "text-warning hover:bg-warning/10 border-warning/40" },
+        { id: "none" as const, label: "未點", icon: RotateCcw, activeColor: "bg-muted text-muted-foreground", inactiveColor: "text-muted-foreground hover:bg-muted/50 border-border" },
     ] as const;
 
     const getStatusCardStyle = (status: AttendanceStatus) => {
         switch (status) {
-            case "present": return "border-emerald-500 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-bold shadow-sm";
-            case "absent": return "border-red-500 bg-red-500/10 text-red-700 dark:text-red-400 font-bold shadow-sm";
-            case "late": return "border-orange-500 bg-orange-500/10 text-orange-700 dark:text-orange-400 font-bold shadow-sm";
+            case "present": return "border-success bg-success/10 text-success font-bold shadow-sm";
+            case "absent": return "border-destructive bg-destructive/10 text-destructive font-bold shadow-sm";
+            case "late": return "border-warning bg-warning/10 text-warning font-bold shadow-sm";
             default: return "border-border/50 bg-card hover:border-primary/30 text-foreground";
         }
     };
@@ -148,8 +148,10 @@ export default function Attendance() {
                 {students.length === 0 ? (
                     <Card className="p-4 sm:p-6 max-w-lg mx-auto space-y-4">
                         <div className="text-center mb-2">
-                            <ClipboardCheck className="h-10 w-10 text-primary mx-auto mb-2" />
-                            <h2 className="text-lg font-bold">建立點名單</h2>
+                            <span className="section-icon inline-flex">
+                                <ClipboardCheck className="h-4 w-4" />
+                            </span>
+                            <h2 className="text-lg font-bold text-foreground">建立點名單</h2>
                             <p className="text-xs text-muted-foreground mt-1">每行輸入一個學生姓名</p>
                         </div>
                         <Textarea
@@ -170,7 +172,7 @@ export default function Attendance() {
                 ) : (
                     <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
                         <div className="lg:w-56 shrink-0">
-                            <Card className="p-3 sm:p-4 bg-card/50 backdrop-blur-sm border-primary/10 space-y-3 lg:sticky lg:top-4">
+                            <Card className="p-3 sm:p-4 bg-card/50 backdrop-blur-sm border-border/60 space-y-3 lg:sticky lg:top-4">
                                 <div>
                                     <h3 className="font-bold text-xs mb-2 text-muted-foreground/70 uppercase tracking-wider">點名模式</h3>
                                     <div className="grid grid-cols-2 lg:grid-cols-1 gap-1.5">
@@ -195,15 +197,15 @@ export default function Attendance() {
                                 <div className="border-t border-border/40 pt-3">
                                     <h3 className="font-bold text-xs mb-2 text-muted-foreground/70 uppercase tracking-wider">統計</h3>
                                     <div className="grid grid-cols-2 gap-1.5">
-                                        <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
+                                        <div className="p-2 rounded-lg bg-success/10 text-success">
                                             <div className="text-[10px] opacity-80">出席</div>
                                             <div className="text-lg font-black">{stats.present}</div>
                                         </div>
-                                        <div className="p-2 rounded-lg bg-red-500/10 text-red-700 dark:text-red-400">
+                                        <div className="p-2 rounded-lg bg-destructive/10 text-destructive">
                                             <div className="text-[10px] opacity-80">缺席</div>
                                             <div className="text-lg font-black">{stats.absent}</div>
                                         </div>
-                                        <div className="p-2 rounded-lg bg-orange-500/10 text-orange-700 dark:text-orange-400">
+                                        <div className="p-2 rounded-lg bg-warning/10 text-warning">
                                             <div className="text-[10px] opacity-80">遲到</div>
                                             <div className="text-lg font-black">{stats.late}</div>
                                         </div>
@@ -261,7 +263,7 @@ export default function Attendance() {
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         <AlertDialogTitle className="flex items-center gap-2 text-base">
-                            <AlertTriangle className="h-5 w-5 text-orange-500 shrink-0" />
+                            <AlertTriangle className="h-5 w-5 text-warning shrink-0" />
                             確定要離開點名工具嗎？
                         </AlertDialogTitle>
                         <AlertDialogDescription className="text-sm">
@@ -270,7 +272,7 @@ export default function Attendance() {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel className="rounded-xl">返回點名</AlertDialogCancel>
-                        <AlertDialogAction 
+                        <AlertDialogAction
                             onClick={confirmExit}
                             className="rounded-xl bg-destructive text-destructive-foreground hover:bg-destructive/90"
                         >
@@ -284,7 +286,7 @@ export default function Attendance() {
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         <AlertDialogTitle className="flex items-center gap-2 text-base">
-                            <AlertTriangle className="h-5 w-5 text-orange-500 shrink-0" />
+                            <AlertTriangle className="h-5 w-5 text-warning shrink-0" />
                             確定要更換名單嗎？
                         </AlertDialogTitle>
                         <AlertDialogDescription className="text-sm">

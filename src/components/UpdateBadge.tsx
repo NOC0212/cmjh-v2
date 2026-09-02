@@ -7,12 +7,7 @@ interface UpdateBadgeProps {
   latestVersion: string | null;
 }
 
-/**
- * 背景更新狀態指示器
- *
- * 以微小的徽章顯示在右下角，通知使用者版本已是最新。
- * 不自訂呼叫 useAutoUpdate，由 AppContent 傳入版本資訊。
- */
+/** 背景更新狀態指示器 */
 export function UpdateBadge({ latestVersion }: UpdateBadgeProps) {
   const [showBadge, setShowBadge] = useState(false);
 
@@ -21,7 +16,6 @@ export function UpdateBadge({ latestVersion }: UpdateBadgeProps) {
 
     const current = getCurrentVersion();
     if (current && current === latestVersion) {
-      // 版本一致 → 短暫顯示「已是最新」後自動消失
       setShowBadge(true);
       const timer = setTimeout(() => setShowBadge(false), 3000);
       return () => clearTimeout(timer);
@@ -36,12 +30,10 @@ export function UpdateBadge({ latestVersion }: UpdateBadgeProps) {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 8, scale: 0.9 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
-          className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full border border-border/60 bg-card px-3.5 py-2 shadow-lg backdrop-blur-md"
+          className="fixed bottom-24 md:bottom-6 right-4 z-50 flex items-center gap-2 rounded-full border border-border/60 bg-card px-3.5 py-2 shadow-lg"
         >
-          <CheckCircle2 className="h-3.5 w-3.5 text-green-500" />
-          <span className="text-xs font-medium text-foreground">
-            已是最新版本
-          </span>
+          <CheckCircle2 className="h-3.5 w-3.5 text-success" />
+          <span className="text-xs font-medium text-foreground">已是最新版本</span>
         </motion.div>
       )}
     </AnimatePresence>

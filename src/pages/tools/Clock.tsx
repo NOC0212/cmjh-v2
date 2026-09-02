@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useReducer } from "react";
-import { ToolLayout } from "@/components/ToolLayout";
+import { ToolLayout } from "@/pages/tools/ToolLayout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Maximize2, MapPin } from "lucide-react";
@@ -96,7 +96,7 @@ export default function Clock() {
                 onClick={toggleFullscreen}
             >
                 <div className="font-mono text-center space-y-4">
-                    <div className="text-[5rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] font-bold leading-none bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent tracking-wider">
+                    <div className="text-[5rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] font-bold leading-none text-brand-gradient tracking-wider">
                         {mainTime.hours}:{mainTime.minutes}:{mainTime.seconds}
                     </div>
                     <div className="text-xl sm:text-2xl md:text-3xl text-muted-foreground/80">
@@ -116,10 +116,10 @@ export default function Clock() {
     return (
         <ToolLayout title="時鐘">
             <div className="space-y-4 sm:space-y-6">
-                <Card className="p-6 sm:p-10 text-center bg-gradient-to-br from-primary/[0.03] to-accent/[0.03]">
+                <Card className="p-6 sm:p-10 text-center bg-brand-soft">
                     <div className="space-y-6">
                         <div className="font-mono">
-                            <div className="text-5xl sm:text-7xl md:text-8xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent tracking-wider">
+                            <div className="text-5xl sm:text-7xl md:text-8xl font-bold text-brand-gradient tracking-wider">
                                 {mainTime.hours}:{mainTime.minutes}:{mainTime.seconds}
                             </div>
                             <div className="text-lg sm:text-xl text-muted-foreground mt-3">

@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write  
+  contents: write
 
 jobs:
   update:
@@ -23,14 +23,14 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          pip install -r scripts/requirements.txt
 
       - name: Run scrapers
         run: |
           # 確保資料夾存在，避免爬蟲寫入失敗
           mkdir -p public/data
-          python scraper.py
-          python honors_scraper.py
+          python scripts/scraper.py
+          python scripts/honors_scraper.py
 
       - name: Commit and push if changed
         run: |

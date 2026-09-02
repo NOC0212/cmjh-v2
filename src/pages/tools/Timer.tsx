@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ToolLayout } from "@/components/ToolLayout";
+import { ToolLayout } from "@/pages/tools/ToolLayout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -144,7 +144,7 @@ export default function Timer() {
 
                                 {(timeLeft > 0 || isCountdownRunning) && (
                                     <div className="flex flex-col items-center">
-                                        <div className="text-6xl sm:text-8xl font-bold font-mono bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent tracking-wider">
+                                        <div className="text-6xl sm:text-8xl font-bold font-mono text-brand-gradient tracking-wider">
                                             {displayMinutes.toString().padStart(2, "0")}:
                                             {displaySeconds.toString().padStart(2, "0")}
                                         </div>
@@ -155,7 +155,7 @@ export default function Timer() {
                                                     cx="92"
                                                     cy="92"
                                                     r={radius}
-                                                    className="stroke-primary/15"
+                                                    stroke="hsl(var(--primary) / 0.15)"
                                                     strokeWidth="8"
                                                     fill="none"
                                                 />
@@ -163,7 +163,8 @@ export default function Timer() {
                                                     cx="92"
                                                     cy="92"
                                                     r={radius}
-                                                    className="stroke-primary transition-all duration-1000 ease-linear"
+                                                    stroke="hsl(var(--primary))"
+                                                    className="transition-all duration-1000 ease-linear"
                                                     strokeWidth="8"
                                                     fill="none"
                                                     strokeDasharray={circumference}
@@ -224,7 +225,7 @@ export default function Timer() {
                         <Card className="p-6 sm:p-8 text-center">
                             <div className="space-y-6">
                                 <div className="font-mono tracking-wider">
-                                    <span className="text-6xl sm:text-8xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                                    <span className="text-6xl sm:text-8xl font-bold text-brand-gradient">
                                         {stopwatchMinutes.toString().padStart(2, "0")}:
                                         {stopwatchSeconds.toString().padStart(2, "0")}
                                     </span>

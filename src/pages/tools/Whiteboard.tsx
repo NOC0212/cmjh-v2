@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { ToolLayout } from "@/components/ToolLayout";
+import { ToolLayout } from "@/pages/tools/ToolLayout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { 
-    Pencil, 
-    Eraser, 
-    Trash2, 
-    Download, 
-    Undo2, 
+import {
+    Pencil,
+    Eraser,
+    Trash2,
+    Download,
+    Undo2,
     Palette,
     Maximize2,
     Minimize2,
@@ -16,7 +16,7 @@ import {
     Slash,
     Grid
 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/toast";
 
 type DrawMode = "pencil" | "eraser" | "line" | "dashed-line";
 
@@ -24,7 +24,7 @@ export default function Whiteboard() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const [isDrawing, setIsDrawing] = useState(false);
-    const [color, setColor] = useState("#3b82f6");
+    const [color, setColor] = useState("hsl(191 87% 31%)");
     const [lineWidth, setLineWidth] = useState(5);
     const [mode, setMode] = useState<DrawMode>("pencil");
     const [history, setHistory] = useState<string[]>([]);
@@ -76,7 +76,7 @@ export default function Whiteboard() {
         const resizeObserver = new ResizeObserver(() => {
             resizeCanvas();
         });
-        
+
         if (containerRef.current) {
             resizeObserver.observe(containerRef.current);
         }
@@ -94,14 +94,14 @@ export default function Whiteboard() {
         const canvas = canvasRef.current;
         const ctx = canvas?.getContext("2d");
         if (!canvas || !ctx) return;
-        
+
         setIsDrawing(true);
         saveToHistory();
 
         const rect = canvas.getBoundingClientRect();
         const x = ("touches" in e ? e.touches[0].clientX : e.clientX) - rect.left;
         const y = ("touches" in e ? e.touches[0].clientY : e.clientY) - rect.top;
-        
+
         setStartPos({ x, y });
         snapshotRef.current = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
@@ -228,7 +228,7 @@ export default function Whiteboard() {
 
     const Toolbar = () => (
         <div className={`flex flex-wrap items-stretch gap-2 ${isFullscreen ? 'w-full max-w-3xl mx-auto' : ''}`}>
-            <Card className={`flex flex-wrap items-center gap-1.5 p-2 bg-card/90 backdrop-blur-md border-primary/10 shadow-xl flex-1 ${isFullscreen ? 'mb-4' : 'sticky top-0 z-30'}`}>
+            <Card className={`flex flex-wrap items-center gap-1.5 p-2 bg-card/90 backdrop-blur-md border-border/60 shadow-xl flex-1 ${isFullscreen ? 'mb-4' : 'sticky top-0 z-30'}`}>
                 <div className="flex items-center gap-1">
                     <Button variant={mode === "pencil" ? "default" : "outline"} size="icon" onClick={() => setMode("pencil")} title="畫筆" className="h-8 w-8">
                         <Pencil className="h-3.5 w-3.5" />
@@ -309,13 +309,13 @@ export default function Whiteboard() {
 
     return (
         <ToolLayout title="電子白板">
-            <div 
-                ref={containerRef} 
+            <div
+                ref={containerRef}
                 className={`flex flex-col gap-3 bg-background relative ${isFullscreen ? 'h-screen w-screen p-3 sm:p-4' : 'h-[calc(100vh-180px)] min-h-[450px]'}`}
             >
                 {!isFullscreen && <Toolbar />}
 
-                <div className={`flex-1 relative bg-white rounded-2xl border border-primary/10 shadow-inner overflow-hidden cursor-crosshair touch-none ${isFullscreen ? 'rounded-3xl border-0 shadow-2xl' : ''}`}>
+                <div className={`flex-1 relative bg-white rounded-2xl border border-border/60 shadow-inner overflow-hidden cursor-crosshair touch-none ${isFullscreen ? 'rounded-3xl border-0 shadow-2xl' : ''}`}>
                     <canvas
                         ref={canvasRef}
                         onMouseDown={startDrawing}
@@ -327,10 +327,10 @@ export default function Whiteboard() {
                         onTouchEnd={stopDrawing}
                         className="absolute inset-0"
                     />
-                    
+
                     {!isFullscreen && (
                         <div className="absolute bottom-3 right-3 pointer-events-none opacity-10 select-none">
-                            <Palette className="h-4 w-4 text-black" />
+                            <Palette className="h-4 w-4 text-foreground" />
                         </div>
                     )}
                 </div>

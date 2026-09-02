@@ -1,11 +1,11 @@
 import { useState, useEffect, useMemo } from "react";
-import { useSettings } from "@/hooks/SettingsContext";
-import { ToolLayout } from "@/components/ToolLayout";
+import { useSettings } from "@/hooks/settings-context";
+import { ToolLayout } from "./ToolLayout";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Target, Play, Trash2, Plus, History, XCircle, CheckCircle2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
 
 interface HistoryItem {
@@ -97,7 +97,7 @@ export default function Wheel() {
             setSpinning(false);
 
             const newItem: HistoryItem = {
-                id: Math.random().toString(36).substr(2, 9),
+                id: Math.random().toString(36).slice(2, 11),
                 result: selectedResult,
                 timestamp: Date.now(),
             };
@@ -122,6 +122,8 @@ export default function Wheel() {
 
     const { settings } = useSettings();
 
+    // 單一品牌色系：以 primary 為基準，色相在小範圍內漸變、明度交替，
+    // 產生 12 個可辨識但不偏離品牌色的扇形色階（取代舊版彩虹配色）。
     const colors = useMemo(() => {
         const getCSSVar = (name: string): string =>
             getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -133,16 +135,15 @@ export default function Wheel() {
 
         const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         const isDark = settings.themeMode === "dark" || (settings.themeMode === "system" && prefersDark);
-        const lightness = isDark ? 55 : 48;
+        const lightness = isDark ? 58 : 46;
 
         return Array.from({ length: 12 }, (_, i) => {
-            const hue = (baseHue + i * 30) % 360;
+            const hue = (baseHue - 24 + (i * 48) / 11 + 360) % 360;
             const sat = Math.max(55, Math.min(90, baseSat - (i % 3) * 8));
             const light = lightness + (i % 2 === 0 ? 8 : -5);
             return `hsl(${hue}, ${sat}%, ${light}%)`;
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [settings.themeColor, settings.themeMode]);
+    }, [settings.themeMode]);
 
     const effectiveOptions = excludeDrawn
         ? options.filter(opt => !history.some(h => h.result === opt))
@@ -170,7 +171,7 @@ export default function Wheel() {
                                             transition: spinning ? "transform 4.5s cubic-bezier(0.12, 0.75, 0.1, 1)" : "none",
                                         }}
                                     >
-                                        <circle cx="150" cy="150" r="150" fill="white" />
+                                        <circle cx="150" cy="150" r="150" fill="hsl(var(--card))" />
 
                                         {effectiveOptions.map((option, index) => {
                                             const angle = 360 / effectiveOptions.length;
@@ -197,7 +198,7 @@ export default function Wheel() {
 
                                             return (
                                                 <g key={index}>
-                                                    <path d={path} fill={color} stroke="white" strokeWidth="1" />
+                                                    <path d={path} fill={color} stroke="hsl(var(--card))" strokeWidth="1" />
                                                     <text
                                                         x={textX}
                                                         y={textY}
@@ -213,7 +214,7 @@ export default function Wheel() {
                                                 </g>
                                             );
                                         })}
-                                        <circle cx="150" cy="150" r="148" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
+                                        <circle cx="150" cy="150" r="148" fill="none" stroke="hsl(var(--primary) / 0.25)" strokeWidth="2" />
                                     </svg>
                                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-background shadow-2xl flex items-center justify-center z-10 border-4 border-border">
                                         <Target className="h-7 w-7 sm:h-10 sm:w-10 text-primary/70" />
@@ -233,7 +234,7 @@ export default function Wheel() {
                                     </Button>
 
                                     {result && (
-                                        <div className="w-full p-4 sm:p-5 bg-primary/10 rounded-2xl border-2 border-primary animate-in zoom-in duration-500">
+                                        <div className="w-full p-4 sm:p-5 bg-primary/10 rounded-2xl border-2 border-primary animate-fade-in">
                                             <div className="text-center">
                                                 <div className="text-xs text-muted-foreground mb-1">抽中結果</div>
                                                 <div className="text-3xl sm:text-4xl font-black text-primary truncate">{result}</div>
@@ -344,5 +345,3 @@ export default function Wheel() {
         </ToolLayout>
     );
 }
-
-
