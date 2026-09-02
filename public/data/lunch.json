@@ -1,25 +1,30 @@
 {
-    "last_updated": "2026-09-02 07:50:18",
+    "last_updated": "2026-09-03 07:53:04",
     "items": [
         {
             "category": "主食",
-            "name": "白醬義大利螺旋麵",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074643018654"
+            "name": "糙米飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144959"
         },
         {
             "category": "主菜",
-            "name": "椰子麵包",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807903009528"
+            "name": "涼拌素雞",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807903009547"
+        },
+        {
+            "category": "副菜",
+            "name": "煙燻豆包絲佐白花椰菜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807903009548"
+        },
+        {
+            "category": "蔬菜",
+            "name": "高麗菜炒紅蘿蔔",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853320096721"
         },
         {
             "category": "湯品",
-            "name": "竹筍排骨湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1630466476381987"
-        },
-        {
-            "category": "附餐",
-            "name": "國產豆奶",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1759469191048385"
+            "name": "鮮蝦仁蛋豆腐羹",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807903009549"
         }
     ]
 }
