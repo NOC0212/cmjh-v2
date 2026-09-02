@@ -94,6 +94,20 @@
         ]
     },
     {
+        "date": "2026-09-02",
+        "category": "獎學金",
+        "source": "學務處",
+        "title": "臺南市愛家協會獎學金，請符合資格者自行參閱申請。",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=680&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明:<br/>\r\n1.為鼓勵國民中學學子重視品格鍛錬,積極實踐誠實、善良、負責與尊重等美好德行,特設立本獎學金,期能引導青年學子於善的道路上持續努力,傳遞社會正向影響力。<br/>\r\n2.獎助名額及金額:預計錄取10名,每名頒發獎學金新臺幣 5,000 元整及獎狀乙紙。<br/>\r\n3.本獎學金申請資格、應備文件及作業時程等詳細內容，請參閱附件。如需進一步諮詢,加入本協會 LINE 官方窗口詢問(附件中有相關聯繫方式)。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "臺南市愛家協會獎學金申請公告.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市愛家協會獎學金申請公告.pdf&files_sn=575"
+            }
+        ]
+    },
+    {
         "date": "2026-09-01",
         "category": "活動",
         "source": "教務處",
@@ -242,20 +256,11 @@
     },
     {
         "date": "2026-08-31",
-        "category": "活動",
+        "category": "簡章",
         "source": "學務處",
         "title": "財團法人金車文教基金會第十六屆「愛讓世界轉動 兒少公益行動徵選」",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=617&type=news&from_op=all_news",
         "content": "<div class=\"flex-items\" id=\"print_content\">\n<div>\n<p>說明：</p>\n<p>一、本會自2011年開始舉辦「愛讓世界轉動 兒少公益行動」徵選，以STAGE行動步驟為基礎，從發現問題、創意思考、行動實踐到收穫反思，鼓勵老師陪伴孩子以國際視野、在地行動，走出教室落實社會關懷，培養下個世代成為具備同理心、溝通力與行動力的世界公民。</p>\n<p>二、第十六屆「愛讓世界轉動 兒少公益行動徵選」資訊</p>\n<p>(一)活動報名：行動提案即日起至2026年10月16日止</p>\n<p>(二)活動對象：國小至高中各級學校師生</p>\n<p>(三)組隊資格：以班級、社區、家庭為單位報名。</p>\n<p>(四)投稿主題：凡符合「全球議題」、「文化理解」、「環境永續」、「在地關懷」任一主題，且能呼應SDGs 17項指標之公益行動方案，皆可投稿徵選。</p>\n<p>(五)獎勵項目：行動提案潛力獎15組，行動基金5,000~10,000元/組。</p>\n<p>(六)報名及詳情：請至<a href=\"https://kingcar.org.tw/project/600474\">第十六屆愛讓世界轉動兒少公益行動徵選活動網頁</a>查詢。</p>\n<p>三、活動聯絡：余組長，電話:02-2100-1110分機205，傳真:02-2100-1185，信箱:lynn@kingcar.org.tw。</p>\n</div>\n</div>",
-        "attachments": []
-    },
-    {
-        "date": "2026-08-31",
-        "category": "宣導",
-        "source": "學務處",
-        "title": "友善校園~月經平權教育宣導及多元生理用品取用點公告",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=616&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>本校配合國教署推動高級中等以下學校友善提供多元生理用品及推動月經平權計畫，落實友善關懷與月經平權，提供多元生理用品，營造同理關懷、性別友善的校園氛圍。共創月經平權支持性環境，實踐性別平等價值。提升健康促進、性別平等與月經平權之行動力，共築具同理、尊重、關懷、包容等多元價值之友善校園。</p>\n<p><strong><span style=\"color:#8e44ad;\">本學期定點放置點如下，歡迎有需要的師生索取:<br/>\r\n大型置物盒(提供免洗褲或生理褲、護墊、量少、量多型衛生棉)-健康中心、學務處、專輔辦公室、圖書館</span></strong></p>\n<p><strong><span style=\"color:#8e44ad;\">小型置物盒(提供量少、量多型衛生棉)-教務處、總務處、人事室、特教辦公室、二樓導師室、三樓導師室、三樓科大辦公室、 4 樓導師室</span></strong><br/>\r\n </p>\n<p><strong><u><span style=\"color:#e74c3c;\">**若衣物染污有更換需求請洽諮商輔導室借用**</span></u></strong><span style=\"color:#e74c3c;\"></span></p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
         "attachments": []
     }
 ]
