@@ -1,30 +1,35 @@
 {
-    "last_updated": "2026-09-03 07:53:04",
+    "last_updated": "2026-09-04 07:49:09",
     "items": [
         {
             "category": "主食",
-            "name": "糙米飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144959"
+            "name": "小米飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020151003"
         },
         {
             "category": "主菜",
-            "name": "涼拌素雞",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807903009547"
+            "name": "高昇排骨",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020151040"
         },
         {
             "category": "副菜",
-            "name": "煙燻豆包絲佐白花椰菜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807903009548"
+            "name": "涼拌木瓜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807904012043"
         },
         {
             "category": "蔬菜",
-            "name": "高麗菜炒紅蘿蔔",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1774853320096721"
+            "name": "什錦白菜滷",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807904012044"
         },
         {
             "category": "湯品",
-            "name": "鮮蝦仁蛋豆腐羹",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807903009549"
+            "name": "馬鈴薯蘑菇濃湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807904012045"
+        },
+        {
+            "category": "附餐",
+            "name": "紅龍果",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1733443163049454"
         }
     ]
 }
