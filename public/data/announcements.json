@@ -1,5 +1,14 @@
 [
     {
+        "date": "2026-09-04",
+        "category": "活動",
+        "source": "學務處",
+        "title": "115學年度新生體檢日期公告及檢查影片連結",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=685&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><strong>本學期新生健康檢查日期如下，屆時會通知各班排檢時間依序檢查：</strong></p>\n<div class=\"table-responsive\">\n<table class=\"table table-bordered\">\n<caption class=\"fw-bold text-dark\" style=\"caption-side: top;\">新生健康檢查時程表</caption>\n<thead>\n<tr class=\"table-light\">\n<th scope=\"col\">檢查項目</th>\n<th scope=\"col\">檢查日期與時間</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<th scope=\"row\"><strong><span style=\"color:#16a085;\">尿液檢查</span></strong></th>\n<td><strong><span style=\"color:#16a085;\">10/13(二) 08:30</span></strong></td>\n</tr>\n<tr>\n<th scope=\"row\"><strong><span style=\"color:#16a085;\">尿液補(複)檢</span></strong></th>\n<td><strong><span style=\"color:#16a085;\">10/27(二) 08:30</span></strong></td>\n</tr>\n<tr>\n<th scope=\"row\"><span style=\"color:#c0392b;\">抽血檢查</span></th>\n<td><span style=\"color:#c0392b;\">11/11(三)、11/12(四) 08:00-10:00 </span><span style=\"color:#ff0000;\"><strong> 檢查前一日午夜12點之後及當日早餐禁食</strong></span><span style=\"color:#c0392b;\"></span></td>\n</tr>\n<tr>\n<th scope=\"row\"><span style=\"color:#8e44ad;\"><span style=\"background-color:#ffffff;\">醫師理學檢查</span></span></th>\n<td><span style=\"color:#8e44ad;\"><span style=\"background-color:#ffffff;\">12/10(四) 07:40-16:00、12/11(五) 07:40-16:00  </span></span><strong><span style=\"color:#ff0000;\"><span style=\"background-color:#ffffff;\">檢查當日請穿著運動服裝</span></span></strong></td>\n</tr>\n</tbody>\n</table>\n</div>\n<ul class=\"list-unstyled\">\n<li class=\"mb-2\"><a href=\"https://www.youtube.com/watch?v=2AjOE_aRSek\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">觀看尿液檢查指導影片</a></li>\n<li class=\"mb-2\"><a href=\"https://youtu.be/n8es_TIbJzQ\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">觀看理學檢查與抽血指導影片</a></li>\n</ul>\n</div>",
+        "attachments": []
+    },
+    {
         "date": "2026-09-01",
         "category": "活動",
         "source": "輔導室",
@@ -7,20 +16,6 @@
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=637&type=news&from_op=all_news",
         "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><img alt=\"\" class=\"img-fluid\" role=\"presentation\" src=\"https://www.cmjh.tn.edu.tw/uploads/school/image/5/39/20260901085121_ZhNi.png\"/></p>\n</div>",
         "attachments": []
-    },
-    {
-        "date": "2026-08-29",
-        "category": "行政",
-        "source": "教務處",
-        "title": "115學年度第一學期行事曆",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=613&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><span style=\"font-size: 2.167rem;\">115學年度第一學期行事曆於115.8.27日本校期初校務會議通過，</span></p>\n<p><span style=\"font-size: 2.167rem;\">相關電子檔全體教職員工生參考。</span></p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "115學年度第一學期學校行事曆8.27.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115學年度第一學期學校行事曆8.27.pdf&files_sn=538"
-            }
-        ]
     },
     {
         "date": "2026-08-28",
@@ -108,6 +103,66 @@
             {
                 "name": "臺南市崇明國中115學年度各年級教科書用書版本.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市崇明國中115學年度各年級教科書用書版本.pdf&files_sn=173"
+            }
+        ]
+    },
+    {
+        "date": "2026-09-04",
+        "category": "宣導",
+        "source": "教務處",
+        "title": "轉知大陸委員會近日接獲民眾陳情，提醒學校妥適選用教材，避免衍生爭議。",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=689&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據教育部國民及學前教育署 115 年 8 月 11 日臺教國署原字第 1150072331 號書函辦理。</p>\n<p>二、該會近期接獲民眾陳情，國內學校、教保服務機構使用中國大陸製文書表單或歌曲輔助教學，因文件內容使用簡體字，歌曲創作背景亦具政治意涵等情形，引發外界關注。</p>\n<p>三、請學校從事教學活動時，應審慎選用教材（如避免使用中國大陸簡體字教材或具政治意涵歌曲），將本土相關素材融入日常作息中，認識並認同在地文化，以維學生學習權益。</p>\n</div>",
+        "attachments": []
+    },
+    {
+        "date": "2026-09-04",
+        "category": "一般",
+        "source": "教務處",
+        "title": "臺南市115學年度獎勵高中以下學校學生參加本土語文能力認證實施計畫",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=688&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<h3 class=\"fs-4 fw-bold\">臺南市115學年度獎勵高中以下學校學生參加本土語文能力認證實施計畫</h3>\n<h4 class=\"fs-5 fw-bold\">壹、依據：</h4>\n<p>一、教育部國教署推動「提升國民中小學本土語文師資專業素養改進措施」。<br/>\r\n二、臺南市115學年度本土教育整體推動方案 。</p>\n<h4 class=\"fs-5 fw-bold\">貳、實施期程：</h4>\n<p>自<strong>115年8月1日</strong>起至<strong>116年7月31日</strong>止。</p>\n<h4 class=\"fs-5 fw-bold\">參、實施對象：</h4>\n<p>本市所屬高國中小在學學生。</p>\n<h4 class=\"fs-5 fw-bold\">肆、獎勵方式：</h4>\n<p>一、通過臺灣台語語言能力認證：現在學之國小學生通過臺灣台語 A1 級(基礎級)以上由學校發予獎狀乙紙獎勵；<u><strong>國、高中學生通過A2級(初級)由學校核予嘉獎1次獎勵，通過B1級(中級)以上，由學校核予嘉獎2次獎勵。</strong></u><br/>\r\n二、通過客語語言能力認證：現在學之國小學生通過客語初級以上認證合格者，學校發予獎狀乙紙獎勵；<u><strong>國、高中學生通過客語中級以上認證合格者，由學校核予嘉獎2次獎勵。</strong></u><br/>\r\n三、通過原住民族語語言能力認證：現在學之國小學生通過原住民族語初級以上認證合格者，敘嘉由學校發予獎狀乙紙鼓勵；<u><strong>國、高中學生通過族語中級以上認證合格者，由學校核予嘉獎2次獎勵。</strong></u><br/>\r\n四、上開三項能力認證證書或成績單合格效力，應以中央主管機關認可之發證單位所發之正式文書為準且同一級別敘獎一次為限 。<br/>\r\n五、<strong>額外獎勵：為鼓勵學生踴躍報考並精進本土語文能力，除上述獎勵外，凡通過上述任一語別<span style=\"background-color:#f1c40f;\">初級（A2級）或以上</span>之學生，另核發新臺幣500元面額之禮券。</strong></p>\n<h4 class=\"fs-5 fw-bold\">伍、申請及獎勵程序：</h4>\n<p>一、符合本實施計畫第二點獎勵規定之現在學學生，請<strong>檢附認證證書</strong>或<strong>成績單</strong>向<strong>學校教務處</strong>提出，並由各校本權責予以敘獎 。<br/>\r\n二、<strong>以上敘獎請於該級別本土語文能力認證考試寄發合格證書後六個月內向就讀學校提出申請</strong>，各校應於申請期限屆至時起一個月內造具學生敘獎清冊送本局備查。<br/>\r\n三、禮券申請：各校送交敘獎名冊時，請檢附相關證明文件併同申請禮券。俟本局審核通過後，將另案公告核定名冊及發放事宜，並由學校代為轉發獲獎學生。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "公文1151291227-附件1_學生參加本土語文能力認證實施計畫.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=公文1151291227-附件1_學生參加本土語文能力認證實施計畫.pdf&files_sn=583"
+            }
+        ]
+    },
+    {
+        "date": "2026-09-04",
+        "category": "競賽",
+        "source": "學務處",
+        "title": "轉知-臺南市115年中小學空手道對抗賽競賽規程",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=687&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>(一)比賽日期：115年9月19日(星期六)至20日(星期日)，共2日。</p>\n<p>(二)比賽地點：臺南市立文賢國中(學生活動中心3F)。</p>\n<p>(三)報名期間：即日起至115年9月7日（星期一）中午12時止。</p>\n<p>(四)報名辦法：至學務處找體育組洪組長報名。</p>\n<p>(五)有關賽事相關問題，請逕洽本市文賢國中體育組岑雅慧組長，電話：06-2587571分機130。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "臺南市115年中小學空手道對抗賽競賽規程.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市115年中小學空手道對抗賽競賽規程.pdf&files_sn=582"
+            }
+        ]
+    },
+    {
+        "date": "2026-09-04",
+        "category": "活動",
+        "source": "輔導室",
+        "title": "臺南高商—優質化「適性學習社區連結」活動",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=686&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>【臺南高商—優質化「適性學習社區連結」活動】</p>\n<p>說明：</p>\n<p>一、本活動邀請鄰近國中學生參與本校適性試探活動與實作體驗活動，藉以認識本校特色，落實適性學習發展，選讀符合自我性向的科別。</p>\n<p>二、體驗群別：商管群、外語群、設計群、餐旅群。</p>\n<p>三、活動地點：國立臺南高商(臺南市南區健康路一段327號)</p>\n<p>四、活動時間：115年10月17日(星期六) 8:50~15:30</p>\n<p>　　　　　　　115年10月18日(星期日) 9:20~15:30</p>\n<p>　　課程時間為兩天，全程參加者，授予研習證書，以資證明。</p>\n<p>五、本活動參加人數預定60-70人，即日起依報名順序做為錄取依據，每校至多8人，若報名人數未達限額，再另行開放各校增額錄取。錄取名單於115年9月24日(星期四)前公告於臺南高商網站，不另寄發報到通知單。</p>\n<p>六、本活動提供兩日午餐，材料費及膳費為本校優質化支應，錄取後請務必全程參與。</p>\n<p>七、聯絡人：臺南高商實習處 就業組 張芳慈組長 06-2617123#812。</p>\n<p> </p>\n<p><span style=\"font-size: 1.333rem;\"><strong>※有意報名此活動的同學，請於 9 月 16 日前至二樓「輔導室資料組」領取相關資料與家長同意書，簽名繳交後完成報名。假日活動請家長自行安排接送前往。</strong></span></p>\n</div>",
+        "attachments": []
+    },
+    {
+        "date": "2026-09-04",
+        "category": "競賽",
+        "source": "教務處",
+        "title": "「臺南市115年度國民中小學手擲機創作設計競賽」，歡迎本校師生踴躍報名參與",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=684&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<p>一、依據「臺南市115年度科學教育推動計畫」辦理。</p>\n<p>二、本活動重要資訊摘述如下：</p>\n<p>(一)參賽資格：本市各公私立國中、國小高年級學生。</p>\n<p>(二)參賽組別：</p>\n<ol style=\"list-style-type: none; padding-left: 1rem;\">\n<li>１、珍珠板組（國小高年級組限70隊）：115學年度本市公私立國小5、6年級學生，指導老師1名。每隊必須由1位指導老師與1位學生組成（指導老師與學生需為同校），單一學校第一階段報名隊伍數不得超過3隊，若超過3隊則以報名順序錄取。</li>\n<li>２、巴爾紗木組（國中組限70隊）：115學年度本市公私立國中學生，指導老師1名。每隊必須由1位指導老師與1至2位學生組成（指導老師與學生需為同校），單一學校第一階段報名隊伍數不得超過3隊，若超過3隊則以報名順序錄取。</li>\n</ol>\n<p>(三)報名日期：</p>\n<ol style=\"list-style-type: none; padding-left: 1rem;\">\n<li>１、第一階段：115年9月16日上午8時30分起至115年9月21日下午4時。115年9月24日（星期四）公布第一階段報名結果。</li>\n<li>２、第二階段：115年9月29日上午8時30分至115年10月1日下午4時。115年10月6日（星期二）公布第二階段報名結果。</li>\n</ol>\n<p>(四)報名方式：皆採線上報名，請至<a href=\"https://reurl.cc/pYnZKd\">科學教育競賽報名網站</a>。</p>\n<p>(五)領隊會議：115年10月21日(星期三)。</p>\n<p>(六)裁判暨工作人員會議：115年11月4日(星期三)。</p>\n<p>(七)競賽日期及地點：115年11月18日(星期三)，麻豆國中。</p>\n<p>三、本案聯絡人：臺南市麻豆國中科技中心</p>\n<p>(一)麻豆國中李和興老師，電話：(06)5722128轉23。</p>\n<p>(二)麻豆國中林小祺助理，電話：(06)5722128轉21。</p>\n<p>四、鑑於手擲機全國賽已於113年辦理完竣，不再辦理，爰本市手擲機創作設計競賽今（115）年辦理後亦不再辦理。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "手擲機創作設計競賽實施計畫.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=手擲機創作設計競賽實施計畫.pdf&files_sn=581"
             }
         ]
     },
@@ -222,66 +277,6 @@
             {
                 "name": "115學年PaGamO班級經營 差異化教學增能研習簡章.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115學年PaGamO班級經營 差異化教學增能研習簡章.pdf&files_sn=572"
-            }
-        ]
-    },
-    {
-        "date": "2026-09-01",
-        "category": "一般",
-        "source": "學務處",
-        "title": "國立中正紀念堂「一步一腳印的民主先行者」人權教具箱開放受理申請",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=636&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>иӘӘжҳҺпјҡ</p>\n<ol>\n<li>зӮәжҺЁеӢ•ж°‘дё»дәәж¬Ҡж•ҷиӮІпјҢи©Іиҷ•й–ӢзҷјгҖҢдёҖжӯҘдёҖи…іеҚ°зҡ„ж°‘дё»е…ҲиЎҢиҖ…гҖҚдәәж¬Ҡж•ҷе…·з®ұпјҢд»ҘжЎҢйҒҠйҒҠжҲІеј•е°Һеӯёз”ҹеӣһйЎ§иҮәзҒЈж°‘дё»зҷјеұ•жӯ·зЁӢеҸҠйҮҚиҰҒж°‘дё»дәӢд»¶пјҢжҝҖзҷјж•ҷиӮІзҸҫе ҙеё«з”ҹе°Қж°‘дё»дәәж¬Ҡиӯ°йЎҢд№ӢжҺўз©¶иҲҲи¶ЈиҲҮжҖқиҖғгҖӮ</li>\n<li>ж•ҷе…·з®ұе…§еҗ«ж•ҷеӯёеҪұзүҮеҸҠеҸғиҖғж•ҷжЎҲпјҢжҸҗдҫӣиҖҒеё«е®№жҳ“дёҠжүӢж“ҚдҪңгҖӮдҫқж“ҡ114е№ҙеё«з”ҹеӣһйҘӢпјҢи©Іж•ҷе…·з®ұдёҚеғ…еҸҜдҪңзӮәеҫҢзәҢж•ҷеӯёиЁӯиЁҲзҡ„еј•иө·еӢ•ж©ҹжҙ»еӢ•пјҢеј•зҷјеӯёз”ҹзҡ„еӯёзҝ’иҲҲи¶Јпјӣи—үз”ұж•ҷе…·з®ұж·ұе…Ҙж·әеҮәзҡ„жЎҢйҒҠж–№ејҸпјҢи®“е°Қж°‘дё»зҷјеұ•зҷјеұ•йӮ„жңӘзҶҹзЁ”зҡ„еӯёз”ҹпјҢеҚ°иұЎж·ұеҲ»гҖҒиӘҚиӯҳж°‘дё»зҷјеұ•зҡ„жӯ·зЁӢзӯүгҖӮ</li>\n<li>115е№ҙж•ҷе…·з®ұеҖҹз”Ёз”іи«ӢиіҮиЁҠиӘӘжҳҺеҰӮдёӢпјҡ\r\n\t<ul>\n<li>з”іи«Ӣе°ҚиұЎпјҡе…ЁеңӢеҗ„еңӢж°‘дёӯгҖҒе°Ҹеӯёж•ҷеё«гҖӮ</li>\n<li>еҸ—зҗҶжҷӮй–“пјҡиҮӘеҚіж—Ҙиө·иҮіж°‘еңӢ115е№ҙ12жңҲ11ж—ҘжӯўгҖӮ</li>\n<li>з”іи«Ӣж–№ејҸпјҡе…ҚиІ»еҖҹз”ЁпјҢи«ӢдёӢијүеЎ«еҰҘгҖҢж•ҷе…·з®ұж•ҷеӯёеҖҹз”Ёз”іи«ӢиЎЁгҖҚеҸҠгҖҢж•ҷе…·з®ұеҖҹз”ЁеҗҢж„ҸжӣёгҖҚпјҢйҖ•еҜ„иҮідҝЎз®ұпјҡyuqi1120@ms.cksmh.gov.twгҖӮ</li>\n</ul>\n</li>\n<li>жңүй—ңж•ҷе…·з®ұд»Ӣзҙ№гҖҒз”іи«ӢеҖҹз”ЁиЎЁе–®еҸҠиҫҰжі•пјҢи«Ӣи©іжң¬иҷ•<a href=\"https://www.cksmh.gov.tw/cp.aspx?n=8284\">е®ҳз¶ІгҖҢжҺЁе»Јж•ҷиӮІ/ж•ҷе…·з®ұз”іи«ӢгҖҚй Ғйқў</a>гҖӮ</li>\n</ol>\n</div>",
-        "attachments": []
-    },
-    {
-        "date": "2026-08-31",
-        "category": "活動",
-        "source": "學務處",
-        "title": "原定8/31第八節籃球隊甄選，因雨延期，延後至9/7(星期ㄧ)第八節進行",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=624&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>з”ұж–јеӨ©еҖҷдёҚдҪіпјҢе ҙең°жҝ•ж»‘</p>\n<p>еҺҹе®ҡ8/31(жҳҹжңҹдёҖ)з¬¬е…«зҜҖиҲүиҫҰзұғзҗғйҡҠз”„йҒёпјҢе»¶еҫҢиҮі9/7(жҳҹжңҹдёҖ)з¬¬е…«зҜҖиҲүиҫҰ</p>\n<p>и«ӢдёҖгҖҒдәҢе№ҙзҙҡиҰҒеҸғеҠ з”„йҒёзҡ„еӯёз”ҹпјҢдёӢеҚҲ4:05иҮізұғзҗғе ҙйӣҶеҗҲпјҢжңүеҸғеҠ з¬¬е…«зҜҖзҡ„еӯёз”ҹпјҢи«Ӣи·ҹе°Һеё«йӮ„жңүд»»иӘІиҖҒеё«и«ӢеҒҮдёҖж¬Ў</p>\n</div>",
-        "attachments": []
-    },
-    {
-        "date": "2026-08-31",
-        "category": "一般",
-        "source": "人事室",
-        "title": "115 年度會員優秀子女獎學金開始申請了",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=6&zone_id=0&page_id=48&content_id=623&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p class=\"fs-4 fw-bold\">115 年度會員優秀子女獎學金開始申請了</p>\n<p><strong>申請對象：</strong><br/>\r\n臺南市教育會（本會）會員入會兩年以上者之子女。</p>\n<p><strong>獎學金之名額：</strong></p>\n<ol>\n<li>大專院校（含研究所及五專五年級）： 12 名，每名發給 2000 元。(升大一生參加高中組)<br/>\r\n\t各區基本名額 1 名，其餘不分區以學業成績之高低順序錄取，若學業成績相同者，增額錄取。</li>\n<li>高中職校（含五專二至三年級）： 15 名，每名發給 1500 元。(升高一生參加國中組)<br/>\r\n\t各區基本名額 1 名，其餘不分區以學業成績之高低順序錄取，若學業成績相同者，增額錄取。</li>\n<li>國民中學： 25 名，每名發給 1000 元。(升國一生無國中成績不得申請)<br/>\r\n\t各區基本名額 2 名，其餘不分區以學業成績之高低順序錄取，若學業成績相同者，增額錄取。</li>\n</ol>\n<p><strong>申請資格：</strong><br/>\r\n學業（智育）成績（國中為學習領域總成績）：平均在 85 分（含）以上者。但在職進修班之學生不予受理。</p>\n<p><strong>申請時間：</strong>本校收件至 115 年 9 月 18 日止，逾期恕不受理。</p>\n<p><strong>申請地點：</strong>向會員所屬的區教育會申請，區教育會彙整後於 10 月 5 日前送至本市教育會。</p>\n<p><strong>申請手續：</strong>填具本會印製的申請書（向會員所屬學校索取），連同下列文件送至所屬區教育會。</p>\n<ol>\n<li>114 學年度上/下學期成績單副（影）本，加蓋原學校教務處印戳一份，或成績證明一份（需註明有關學科成績）。</li>\n<li>申請人子女之身分證正反面影本或戶口名簿影本。</li>\n</ol>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "115 年度會員優秀子女獎學金申請單-2.doc",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115 年度會員優秀子女獎學金申請單-2.doc&files_sn=561"
-            }
-        ]
-    },
-    {
-        "date": "2026-08-31",
-        "category": "活動",
-        "source": "輔導室",
-        "title": "臺南市歸仁文化中心戶外廣場9月6日辦理115年臺南市「Level Up！青春心挑戰」心理健康月活動",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=622&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<p>一、依據115年臺南市「強化社會安全網計畫2.0」一強化精神疾病、自殺防治、藥癮個案及加害人處遇服務計畫辦理。</p>\n<p>二、結合世界心理健康日精神，正式啟動臺南市心理健康月，號召市民共同關注青少年心理健康，推動理解、支持與主動求助的友善文化，以互動闖關、成果展示及心理健康教育等多元形式，促進親子共同參與，提升市民心理健康識能與社區支持量能。</p>\n<p>三、活動資訊如下：</p>\n<p>(一)活動時間：115年9月6日（星期日）下午2時30分至5時。</p>\n<p>(二)活動地點：臺南市歸仁文化中心戶外廣場（臺南市歸仁區許厝里信義南路78號）。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "活動海報.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=活動海報.pdf&files_sn=555"
-            }
-        ]
-    },
-    {
-        "date": "2026-08-31",
-        "category": "研習",
-        "source": "輔導室",
-        "title": "115年度新住民子女暨原住民族多元文化及輔導教師知能研習實施計畫",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=621&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據教育部國民及學前教育署115年8月7日臺教國署原字第1155702607號函辦理。</p>\n<p>二、為增進教師多元文化認知與素養並鼓勵教師發展多元文化議題融入教學課程及輔導，藉由辦理旨揭研習活動提供教師實務經驗分享教學與交流，營造校園多元文化氛圍，提升學生未來競爭力。</p>\n<p>三、旨揭研習相關內容如下：</p>\n<ul class=\"list-unstyled ms-4\">\n<li>(一)參加對象：本市學校輔導主任、組長、導師、輔導老師、特教老師或業務相關人員出席，每校1至2名。</li>\n<li>(二)報名方式：自即日起至9月8日止，教師身分請至<a href=\"https://www3.inservice.edu.tw/\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">全國教師在職進修資訊網</a>自行選擇場次登錄報名；行政業務相關人員請另於<a href=\"https://forms.gle/izhbgKzSXPkY3Nsc9\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">行政業務相關人員、無教師進修帳號人員表單</a>報名，已於教師網報名者請勿重複於表單報名。</li>\n<li>(三)研習時間及地點：\r\n    <ul class=\"list-unstyled ms-4\">\n<li>１、第一場：115年9月23日（星期三），地點於劍潭青年活動中心（臺北市士林區中山北路四段16號）。</li>\n<li>２、第二場：115年10月6日（星期二），地點於太子文旅（臺南市東區大學路2號）。</li>\n</ul>\n</li>\n</ul>\n<p>四、相關問題請洽詢國立南投高級商業職業學校049-2222269：</p>\n<ul class=\"list-unstyled ms-4\">\n<li>(一)蔡小姐（ 分機： 6126 、email ：assist1@mails.pntcv.ntct.edu.tw)。</li>\n<li>(二)賴主任（ 分機： 6121 、email ：ytlay@mails.pntcv.ntct.edu.tw)。</li>\n</ul>\n<p>五、檢附實施計畫(如附件)1份供參，並請貴校惠予出席人員公(差)假登記出席。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "原住民族多元文化及輔導教.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=原住民族多元文化及輔導教.pdf&files_sn=554"
             }
         ]
     }
