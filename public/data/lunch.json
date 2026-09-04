@@ -1,35 +1,4 @@
 {
-    "last_updated": "2026-09-04 07:49:09",
-    "items": [
-        {
-            "category": "主食",
-            "name": "小米飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020151003"
-        },
-        {
-            "category": "主菜",
-            "name": "高昇排骨",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020151040"
-        },
-        {
-            "category": "副菜",
-            "name": "涼拌木瓜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807904012043"
-        },
-        {
-            "category": "蔬菜",
-            "name": "什錦白菜滷",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807904012044"
-        },
-        {
-            "category": "湯品",
-            "name": "馬鈴薯蘑菇濃湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807904012045"
-        },
-        {
-            "category": "附餐",
-            "name": "紅龍果",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1733443163049454"
-        }
-    ]
+    "last_updated": "2026-09-05 07:46:43",
+    "items": []
 }
