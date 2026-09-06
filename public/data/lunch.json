@@ -1,4 +1,35 @@
 {
-    "last_updated": "2026-09-06 07:35:54",
-    "items": []
+    "last_updated": "2026-09-07 07:32:56",
+    "items": [
+        {
+            "category": "主食",
+            "name": "胚芽飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1509074610361893"
+        },
+        {
+            "category": "主菜",
+            "name": "菇菇肉燥",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807930009585"
+        },
+        {
+            "category": "副菜",
+            "name": "五色玉米",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807930009586"
+        },
+        {
+            "category": "蔬菜",
+            "name": "鹹水蔬菜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1432278820356780"
+        },
+        {
+            "category": "湯品",
+            "name": "紫菜蛋花湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144976"
+        },
+        {
+            "category": "附餐",
+            "name": "葡萄",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1412553444122491"
+        }
+    ]
 }
