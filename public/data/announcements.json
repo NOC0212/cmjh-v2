@@ -45,8 +45,12 @@
         "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><img alt=\"\" class=\"img-fluid\" role=\"presentation\" src=\"https://www.cmjh.tn.edu.tw/uploads/school/image/5/39/20260901085121_ZhNi.png\"/></p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
         "attachments": [
             {
-                "name": "輔導室115-1班親會資料.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=輔導室115-1班親會資料.pdf&files_sn=594"
+                "name": "輔導室宣導資料.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=輔導室宣導資料.pdf&files_sn=613"
+            },
+            {
+                "name": "學務處宣導資料.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=學務處宣導資料.pdf&files_sn=614"
             }
         ]
     },
@@ -113,6 +117,20 @@
             {
                 "name": "9.115九上性平學習單0518.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=9.115九上性平學習單0518.pdf&files_sn=495"
+            }
+        ]
+    },
+    {
+        "date": "2026-09-10",
+        "category": "宣導",
+        "source": "輔導室",
+        "title": "115學年度第一學期班親會學生自主學習區",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=714&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<h3>115學年度第一學期班親會-學生自主學習任務</h3>\n<h4>一、請點布可星球進行挖掘任務</h4>\n<p>\n<a href=\"https://read.tn.edu.tw/\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">布可星球網站</a>\n</p>\n<div data-oembed-url=\"https://read.tn.edu.tw/\">\n<div>\n<div style=\"left: 0; width: 100%; height: 0; position: relative; padding-bottom: 39.5731%; padding-top: 120px;\">\n\n</div>\n</div>\n\n</div>\n<p>班親會 9/19 上午時段本校四樓圖書館有對外開放，並提供平板現場使用，完成布可星球能量挖掘。</p>\n<h4>二、觀賞性平宣導影片</h4>\n<h5>A. 學校通報校園性別事件調查及處理程序教學影片(教育部性別平等教育網)</h5>\n<ol>\n<li>\n<a href=\"https://www.youtube.com/watch?v=7DtcvMdYr-A\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">學校通報處理及受理階段</a>\n</li>\n<li>\n<a href=\"https://www.youtube.com/watch?v=hoPWHoDCw1Q\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">調查處置階段</a>\n</li>\n<li>\n<a href=\"https://www.youtube.com/watch?v=aiIk5hUviN0\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">行為人心理輔導及性平教育階段</a>\n</li>\n</ol>\n<h5>B. 臺南市教育局防治數位性別暴力微電影三部曲</h5>\n<ol>\n<li>\n<a href=\"https://www.youtube.com/watch?v=lamiBlBgIdQ&amp;t=14s\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">看不見的恐懼－數位科技下的跟蹤騷擾</a>\n</li>\n<li>\n<a href=\"https://www.youtube.com/watch?v=vpQnCv_3r48\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">性私密影像外流－真的不是我們的錯</a>\n</li>\n<li>\n<a href=\"https://www.youtube.com/watch?v=kvl7fhvH9Q4\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">保護自己 勇敢求助</a>\n</li>\n</ol>\n<h5>C. 公共電視青少年新聞議題節目：《青春發言人》</h5>\n<ol>\n<li>\n<a href=\"https://www.youtube.com/playlist?list=PLCgIUUzhBJQcsCox98rzNRWr2Fx6VUj0z\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">躲在螢幕背後的人是誰？</a>\n</li>\n<li>\n<a href=\"https://www.youtube.com/playlist?list=PLCgIUUzhBJQcRMYBU4-H70QU3g_F0r6LG\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">性別平權</a>\n</li>\n</ol>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "115學年度第一學期自主學習時間說明.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115學年度第一學期自主學習時間說明.pdf&files_sn=615"
             }
         ]
     },
@@ -268,19 +286,5 @@
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=700&type=news&from_op=all_news",
         "content": "<div class=\"flex-items\" id=\"print_content\">\n<ol class=\"list-unstyled\">\n<li class=\"mb-2\"><strong>一、申請資格：</strong>設籍臺灣地區、金門縣及連江縣之下列低收入戶學生</li>\n<li class=\"mb-2\"><strong>二、申請條件：</strong>就讀國內公私立國民中學或國民小學，其<span style=\"color:#c0392b;\">前一學期在學未受記過以上之處分</span>者。</li>\n<li class=\"mb-2\"><strong>三、<span style=\"color:#c0392b;\">每學期</span>助學金金額：</strong>國民中學每人新臺幣<span style=\"color:#c0392b;\">二千五百元</span>。</li>\n<li class=\"mb-2\"><strong>四、本助學金統一由學校造冊，於9月16日至10月5日提出請領。</strong></li>\n<li class=\"mb-2\"><strong>五、已領有下列補助之一者，不得申請本補助；已領取者，應繳回：</strong>\n<ol class=\"list-unstyled ps-4 mt-2\">\n<li class=\"mb-1\">(一) 公教人員子女教育補助。</li>\n<li class=\"mb-1\">(二) 身心障礙學生及身心障礙人士子女就學費用減免。</li>\n<li class=\"mb-1\">(三) 特殊教育學生獎學金及補助金。</li>\n<li class=\"mb-1\">(四) 軍公教遺族就學費用優待。</li>\n<li class=\"mb-1\">(五) 現役軍人子女就讀中等以上學校學費減免。</li>\n<li class=\"mb-1\">(六) 原住民學生助學金、伙食費及住宿費補助。</li>\n<li class=\"mb-1\">(七) 特殊境遇家庭子女孫子女就讀高級中等以上學校學雜費減免。</li>\n<li class=\"mb-1\">(八) 教育部補助高級中等學校學生免納學費之補助及定額補助。</li>\n<li class=\"mb-1\">(九) 師資培育公費生及公費醫師培育之公費待遇。</li>\n<li class=\"mb-1\">(十) 國軍退除役官兵輔導委員會之清寒榮民及清寒遺眷子女獎助學金。</li>\n<li class=\"mb-1\">(十一) 勞動部之失業勞工子女助學金。</li>\n<li class=\"mb-1\">(十二) 農業部之農漁民子女助學金。</li>\n<li class=\"mb-1\">(十三) 內政部移民署之新住民及其子女清寒助學金。</li>\n<li class=\"mb-1\">(十四) 其他經教育部公告之政府各類學雜費減免及優待補助。</li>\n</ol>\n</li>\n</ol>\n</div>",
         "attachments": []
-    },
-    {
-        "date": "2026-09-08",
-        "category": "活動",
-        "source": "教務處",
-        "title": "「臺南市2026全臺首學課程博覽會暨南風薈萃—臺南市AI創學中心揭牌典禮」，請教師踴躍報名參加",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=699&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、為展現本市數位學習、AI教育、PBL探究實作、AI-STEAM及課中差異化教學等課程推動成果，並啟用「南風薈萃—臺南市AI創學中心」，爰辦理旨揭活動。</p>\n<p>二、旨揭活動資訊如下：</p>\n<p>(一)活動時間：115年9月19日（星期六）上午8時30分至下午3時30分。</p>\n<p>(二)活動地點：南風薈萃—臺南市AI創學中心（本市安定區159-31號）。</p>\n<p>(三)活動內容：包含揭牌典禮、教育論壇及課程策展等活動；其中課程策展分為PBL、AI-STEAM及機器人教育等主題，詳細流程請參閱附件實施計畫。</p>\n<p>三、參加對象以本市現職教師及代理教師為主，並開放全國各縣市現職教師參加；請各校鼓勵至少1名智慧科技相關領域教師或行政人員(含校長)參加，以促進跨校課程交流及智慧教學經驗分享。</p>\n<p>四、有意參加者請於115年9月14日（星期一）前至「全國教師在職進修資訊網」完成報名，相關課程代碼及辦理內容詳如附件實施計畫。</p>\n<p>五、請各校核予參加旨揭活動人員公（差）假登記及課務排代；如屬非上班時間出勤者，得依實際出勤時數於法定期限內擇期補休。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "臺南市AI創學中心揭牌典禮實施計畫.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市AI創學中心揭牌典禮實施計畫.pdf&files_sn=595"
-            }
-        ]
     }
 ]
