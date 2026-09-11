@@ -1,35 +1,4 @@
 {
-    "last_updated": "2026-09-11 07:47:31",
-    "items": [
-        {
-            "category": "主食",
-            "name": "小米飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020151003"
-        },
-        {
-            "category": "主菜",
-            "name": "肉骨茶軟骨排",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074642023427"
-        },
-        {
-            "category": "副菜",
-            "name": "台式泡菜豆腐",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807932007499"
-        },
-        {
-            "category": "蔬菜",
-            "name": "涼拌小黃瓜粉皮",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807932007500"
-        },
-        {
-            "category": "湯品",
-            "name": "香菇貢丸湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807932007501"
-        },
-        {
-            "category": "附餐",
-            "name": "龍眼",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144964"
-        }
-    ]
+    "last_updated": "2026-09-12 07:55:15",
+    "items": []
 }
