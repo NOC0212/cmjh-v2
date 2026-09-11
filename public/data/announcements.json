@@ -29,7 +29,7 @@
     },
     {
         "date": "2026-09-04",
-        "category": "活動",
+        "category": "行政",
         "source": "學務處",
         "title": "115學年度新生體檢日期公告及檢查影片連結",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=685&type=news&from_op=all_news",
@@ -38,7 +38,7 @@
     },
     {
         "date": "2026-09-01",
-        "category": "行政",
+        "category": "活動",
         "source": "輔導室",
         "title": "115學年度第一學期 <班級親師會> 訂於9月19日星期六上午辦理，歡迎家長參加 (各處室宣導資料請下載附件閱覽)",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=637&type=news&from_op=all_news",
@@ -103,6 +103,20 @@
             {
                 "name": "9.115九上性平學習單0518.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=9.115九上性平學習單0518.pdf&files_sn=495"
+            }
+        ]
+    },
+    {
+        "date": "2026-09-11",
+        "category": "活動",
+        "source": "學務處",
+        "title": "2027里港玉賢宮-第一屆元宵燈籠藝術季活動",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=727&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>活動辦法如附件</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "2027 里港玉賢宮第一屆元宵燈籠藝術季.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2027 里港玉賢宮第一屆元宵燈籠藝術季.pdf&files_sn=634"
             }
         ]
     },
@@ -305,28 +319,6 @@
             {
                 "name": "高科大金科字第1157500140號附件1.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=高科大金科字第1157500140號附件1.pdf&files_sn=605"
-            }
-        ]
-    },
-    {
-        "date": "2026-09-09",
-        "category": "競賽",
-        "source": "學務處",
-        "title": "教育部國民及學前教育署辦理115年度弘揚孝道漫畫比賽、孝道故事徵文比賽及Ü好攝影徵件比賽延長報名",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=708&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：　<br/>\r\n一、依據教育部孝道「心」文化實施計畫辦理。<br/>\r\n二、考量新學期學生身分及學習階段轉換，為鼓勵學生踴躍參 與，爰延長報名截止期限，旨揭比賽資訊如下：<br/>\r\n    (一)徵件時間：115年6月1日（星期一）至115年9月21日（ 星期一）止。<br/>\r\n    (二)徵件對象： １、弘揚孝道漫畫比賽、孝道故事徵文比賽：全國高級中 等以下學校（含五專前三年）在學學生。 ２、Ü好攝影徵件比賽：中學生組（國民中學、高級中等 學校、五專前三年學生）、社會組（含大專院校、研 究所學生、成年民眾，其中五專限後二年學生）。<br/>\r\n三、獲獎資訊及頒獎日期將公告於孝道教育資源中心網站。<br/>\r\n四、如有相關洽詢事宜，請逕洽教育部國民及學前教育署孝道 教育資源中心（國立高雄師範大學附屬高級中學）:<br/>\r\n    (一)聯絡人：蔡助理。<br/>\r\n    (二)聯絡電話：（07）7613875轉5041。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "115 年度 弘揚孝道 漫 畫 比賽實施計畫.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115 年度 弘揚孝道 漫 畫 比賽實施計畫.pdf&files_sn=600"
-            },
-            {
-                "name": "115 年度孝道故事徵文比賽實施計畫.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115 年度孝道故事徵文比賽實施計畫.pdf&files_sn=601"
-            },
-            {
-                "name": "115 年度 Ü 好攝影徵件 比賽實施計畫.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115 年度 Ü 好攝影徵件 比賽實施計畫.pdf&files_sn=602"
             }
         ]
     }
