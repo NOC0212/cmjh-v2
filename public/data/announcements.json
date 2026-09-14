@@ -29,7 +29,7 @@
     },
     {
         "date": "2026-09-04",
-        "category": "行政",
+        "category": "活動",
         "source": "學務處",
         "title": "115學年度新生體檢日期公告及檢查影片連結",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=685&type=news&from_op=all_news",
@@ -73,38 +73,22 @@
         ]
     },
     {
-        "date": "2026-08-25",
+        "date": "2026-09-14",
+        "category": "一般",
+        "source": "學務處",
+        "title": "反毒健康學堂",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=732&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、為積極宣導市民運用本市毒品危害防制中心資源，製作推廣「為青春把關 一日個管師」、「如何辨別新興毒品」宣導影片，希冀結合各級學校辦理「反毒健康學堂」線上學習營，俾利學生族群更瞭解毒品危害及健康促進生活型態。</p>\n<p>二、邀請全校學生參加本市「反毒健康學堂」線上學習營，於線上觀看反毒宣導影片，並填答題目後即可完成。</p>\n<p>三、線上學習營請至<a href=\"https://forms.gle/aa9BhiVUaKqeoNkv5\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">「反毒健康學堂」線上學習營網站</a>或掃手機 QR 碼連結（請如附檔）至學習營網站。</p>\n</div>",
+        "attachments": []
+    },
+    {
+        "date": "2026-09-14",
         "category": "宣導",
-        "source": "輔導室",
-        "title": "115學年度第一學期全校性別平等入班宣導於9月14日辦理，教材請於附件下載",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=581&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><strong><span style=\"font-size: 1.167rem;\">本校配合友善校園週性平教育入班宣導課程內容說明</span></strong></p>\n<p><strong>一、入班宣導實施日期: <span style=\"background-color:#f1c40f;\">115年9月14日。</span></strong></p>\n<p style=\"margin-left: 40px;\">1. <span style=\"background-color:#f1c40f;\">全校在第一節實施、體育班在第7節實施</span><span style=\"background-color:#f1c40f;\"></span></p>\n<p style=\"margin-left: 40px;\">2. 請宣導教師按照分配之班級至班級宣導</p>\n<p style=\"margin-left: 40px;\">3. 於<span style=\"background-color:#f1c40f;\">9月14日放學前</span>將學習單及回條放在信封內，交回輔導室，並請宣導教師記得來輔導室簽名，需回傳給教育局。</p>\n<p><strong>二、宣導及施測流程建議如下:</strong></p>\n<p style=\"margin-left: 40px;\">1. 宣導課程：約30分鐘</p>\n<p style=\"margin-left: 80px;\">(1)參考簡報請從本校網頁下載。</p>\n<p style=\"margin-left: 80px;\">(2)請宣導教師要撥放影片並說明簡報內容。</p>\n<p style=\"margin-left: 40px;\">2. 學生填寫學習單或問卷：約10分鐘</p>\n<p style=\"margin-left: 40px;\">3. 請宣導教師檢視學生回饋單，倘有關懷個案，依據臺南市政府教育局及所屬學校辦理性平教育入班宣導流程，請向學務處通報性別事件。</p>\n<p style=\"margin-left: 40px;\">4.完成宣導後請填寫回條，將回條及學習單裝進信封交回輔導組，並至輔導室簽名。</p>\n<p><br/>\r\n </p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "7.115七上性霸凌防制0518.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=7.115七上性霸凌防制0518.pdf&files_sn=492"
-            },
-            {
-                "name": "8.115八上性平法令0518.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=8.115八上性平法令0518.pdf&files_sn=493"
-            },
-            {
-                "name": "9.115九上數位性別暴力0518.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=9.115九上數位性別暴力0518.pdf&files_sn=496"
-            },
-            {
-                "name": "7.115七上性平學習單0518.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=7.115七上性平學習單0518.pdf&files_sn=491"
-            },
-            {
-                "name": "8.115八上性平學習單0518.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=8.115八上性平學習單0518.pdf&files_sn=494"
-            },
-            {
-                "name": "9.115九上性平學習單0518.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=9.115九上性平學習單0518.pdf&files_sn=495"
-            }
-        ]
+        "source": "學務處",
+        "title": "校園毒品危害防制宣導",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=731&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>依據教育局提供之圖卡與影片做宣導，請各班導師幫忙於早自修或週會時間進行影片與圖卡的介紹分享。</p>\n<p>請各班於 <strong>9/21 前</strong> 完成宣導。</p>\n<ul>\n<li>必要分享的有三個檔案</li>\n<li>選用的檔案有兩個</li>\n<li>宣導資料：<a href=\"https://reurl.cc/8Ybkej\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">教育局圖卡與影片資料夾</a></li>\n</ul>\n<p>拍照上傳各年級班級的資料夾內 (需登錄 google 帳號)</p>\n<p>感謝各位導師協助，如有問題請洽生教組 分機824</p>\n</div>",
+        "attachments": []
     },
     {
         "date": "2026-09-14",
@@ -122,7 +106,7 @@
     },
     {
         "date": "2026-09-14",
-        "category": "簡章",
+        "category": "行政",
         "source": "教務處",
         "title": "115年度第2次原住民族語言能力認證測驗即日起報名，至9月30日止，敬請踴躍報名參加。",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=729&type=news&from_op=all_news",
@@ -154,11 +138,11 @@
         "source": "學務處",
         "title": "2027里港玉賢宮-第一屆元宵燈籠藝術季活動",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=727&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>活動辦法如附件</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>Т┤╗тІЋУЙдТ│ЋтдѓжЎёС╗Х</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
         "attachments": [
             {
-                "name": "2027 里港玉賢宮第一屆元宵燈籠藝術季.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2027 里港玉賢宮第一屆元宵燈籠藝術季.pdf&files_sn=634"
+                "name": "2027 жЄїТИ»ујЅУ│бт««уггСИђт▒єтЁЃт«хуЄѕу▒аУЌЮУАЊтГБ.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2027 жЄїТИ»ујЅУ│бт««уггСИђт▒єтЁЃт«хуЄѕу▒аУЌЮУАЊтГБ.pdf&files_sn=634"
             }
         ]
     },
@@ -295,19 +279,5 @@
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=715&type=news&from_op=all_news",
         "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據臺南市政府環境保護局115年9月7日環續字第1150112838號函辦理。</p>\n<p>二、該局辦理「臺南市中學生淨零小達人：校園淨零永續行動提案」活動，引導國中學生從日常生活發現環境問題，透過調查現況、分析原因、討論解方及提出行動方案，培養學生問題分析、方案規劃、團隊合作及簡報表達能力，歡迎本市國民中學師生踴躍組隊參加。</p>\n<p>三、參賽資訊如下：</p>\n<ul>\n<li>（一）參加對象：本市轄內國民中學學生。</li>\n<li>（二）組隊方式：每隊由3至5名學生及1名指導教師組成，得由學校推薦或學生自行組隊參加。</li>\n<li>（三）提案主題：\r\n\t<ol>\n<li>節能減碳。</li>\n<li>資源循環再利用。</li>\n<li>低碳生活習慣。</li>\n<li>綠色交通與通學。</li>\n<li>環境調適。</li>\n<li>綠色消費與永續環境。</li>\n</ol>\n</li>\n<li>（四）線上報名期限：115年9月30日（星期三）晚上11時55分止。</li>\n<li>（五）報名網址：<a href=\"https://reurl.cc/nxDlE1\">臺南市中學生淨零小達人活動報名網站</a>。</li>\n<li>（六）提案資料繳交期限：115年10月23日（星期五）前。</li>\n<li>（七）繳交資料：\r\n\t<ol>\n<li>提案計畫書PDF檔，檔案大小不得超過3MB。</li>\n<li>全體參賽學生本人及法定代理人簽署之「影像及影音授權同意書」掃描檔或電子檔。</li>\n</ol>\n</li>\n</ul>\n<p>四、活動期程：</p>\n<ul>\n<li>（一）初選結果公告：115年11月6日（星期五）。</li>\n<li>（二）實體簡報複選：115年11月14日（星期六），預定假臺南文創園區辦理；每隊報告10分鐘、評審問答10分鐘，場次及報到時間另行通知。</li>\n<li>（三）得獎名單公告：115年11月16日（星期一）。</li>\n<li>（四）頒獎及表揚交流會：115年11月21日（星期六），預定假全美戲院辦理。</li>\n</ul>\n<p>五、獎勵方式：</p>\n<ul>\n<li>（一）第一名1組：禮券新臺幣6,000元及獎狀。</li>\n<li>（二）第二名1組：禮券新臺幣5,000元及獎狀。</li>\n<li>（三）第三名1組：禮券新臺幣4,000元及獎狀。</li>\n<li>（四）佳作3組：每組禮券新臺幣2,000元及獎狀。</li>\n<li>（五）各獎項禮券每組1份，獎狀每位隊員1張。</li>\n</ul>\n<p>六、線上說明會：</p>\n<ul>\n<li>（一）時間：115年9月14日（星期一）中午12時15分至下午1時。</li>\n<li>（二）報名網址：<a href=\"https://reurl.cc/4Y628V\">線上說明會報名網站</a>。</li>\n</ul>\n<p>七、活動簡章下載網址：<a href=\"https://lihi2.me/RC3a4\">點此下載活動簡章</a>。</p>\n<p>八、參加人員之差假、課務、交通及相關事宜，由服務學校依權責辦理。</p>\n<p>九、活動聯絡資訊：</p>\n<ul>\n<li>（一）主辦單位：臺南市政府環境保護局環境淨零永續科于小姐，電話：06-2686751分機1801。</li>\n<li>（二）執行單位：稚葉社創股份有限公司鄭小姐或林先生，電話：06-2238051，電子郵件：netzerotnn@gmail.com。</li>\n</ul>\n</div>",
         "attachments": []
-    },
-    {
-        "date": "2026-09-10",
-        "category": "宣導",
-        "source": "輔導室",
-        "title": "115學年度第一學期班親會學生自主學習區",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=714&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<h3>115學年度第一學期班親會-學生自主學習任務</h3>\n<h4>一、請點布可星球進行挖掘任務</h4>\n<p><a href=\"https://read.tn.edu.tw/\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">布可星球網站</a></p>\n<div data-oembed-url=\"https://read.tn.edu.tw/\">\n<div>\n<div style=\"left: 0; width: 100%; height: 0; position: relative; padding-bottom: 39.5731%; padding-top: 120px;\"></div>\n</div>\n</div>\n<p>班親會 9/19 上午時段本校四樓圖書館有對外開放，並提供平板現場使用，完成布可星球能量挖掘。</p>\n<h4>二、觀賞性平宣導影片</h4>\n<h5>A. 學校通報校園性別事件調查及處理程序教學影片(教育部性別平等教育網)</h5>\n<ol>\n<li><a href=\"https://www.youtube.com/watch?v=7DtcvMdYr-A\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">學校通報處理及受理階段</a></li>\n<li><a href=\"https://www.youtube.com/watch?v=hoPWHoDCw1Q\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">調查處置階段</a></li>\n<li><a href=\"https://www.youtube.com/watch?v=aiIk5hUviN0\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">行為人心理輔導及性平教育階段</a></li>\n</ol>\n<h5>B. 臺南市教育局防治數位性別暴力微電影三部曲</h5>\n<ol>\n<li><a href=\"https://www.youtube.com/watch?v=lamiBlBgIdQ&amp;t=14s\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">看不見的恐懼－數位科技下的跟蹤騷擾</a></li>\n<li><a href=\"https://www.youtube.com/watch?v=vpQnCv_3r48\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">性私密影像外流－真的不是我們的錯</a></li>\n<li><a href=\"https://www.youtube.com/watch?v=kvl7fhvH9Q4\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">保護自己 勇敢求助</a></li>\n</ol>\n<h5>C. 公共電視青少年新聞議題節目：《青春發言人》</h5>\n<ol>\n<li><a href=\"https://www.youtube.com/playlist?list=PLCgIUUzhBJQcsCox98rzNRWr2Fx6VUj0z\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">躲在螢幕背後的人是誰？</a></li>\n<li><a href=\"https://www.youtube.com/playlist?list=PLCgIUUzhBJQcRMYBU4-H70QU3g_F0r6LG\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">性別平權</a></li>\n</ol>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "115學年度第一學期自主學習時間說明.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115學年度第一學期自主學習時間說明.pdf&files_sn=615"
-            }
-        ]
     }
 ]
