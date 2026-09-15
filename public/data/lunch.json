@@ -1,35 +1,30 @@
 {
-    "last_updated": "2026-09-14 07:54:47",
+    "last_updated": "2026-09-15 08:21:17",
     "items": [
         {
             "category": "主食",
-            "name": "胚芽飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1509074610361893"
+            "name": "燕麥飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020150992"
         },
         {
             "category": "主菜",
-            "name": "紹興紅燒肉",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970600014847"
+            "name": "鹽水雞",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1590636421108472"
         },
         {
             "category": "副菜",
-            "name": "雞絲拉皮",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807957009641"
+            "name": "豉汁豆腐",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807957007522"
         },
         {
             "category": "蔬菜",
-            "name": "高麗炒木耳",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807957009642"
+            "name": "有機奶油白菜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074680019976"
         },
         {
             "category": "湯品",
-            "name": "翡翠芙蓉湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807957009643"
-        },
-        {
-            "category": "附餐",
-            "name": "鮮乳",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1449102820125474"
+            "name": "關東煮",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1421895205126338"
         }
     ]
 }
