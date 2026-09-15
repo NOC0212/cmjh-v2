@@ -43,7 +43,7 @@
     },
     {
         "date": "2026-09-04",
-        "category": "行政",
+        "category": "活動",
         "source": "學務處",
         "title": "115學年度新生體檢日期公告及檢查影片連結",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=685&type=news&from_op=all_news",
@@ -52,7 +52,7 @@
     },
     {
         "date": "2026-09-01",
-        "category": "活動",
+        "category": "行政",
         "source": "輔導室",
         "title": "115學年度第一學期 <班級親師會> 訂於9月19日星期六上午辦理，歡迎家長參加 (各處室宣導資料請下載附件閱覽)",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=637&type=news&from_op=all_news",
@@ -92,6 +92,38 @@
     },
     {
         "date": "2026-09-15",
+        "category": "活動",
+        "source": "輔導室",
+        "title": "轉知台灣家長教育聯盟「技專院校新進路-面向家長說明宣導計畫」活動資訊",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=735&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<h3><strong><span style=\"font-size: 1.333rem;\">115 年技專校院新進路面向家長宣導計畫-成大南工場</span></strong></h3>\n<p><strong>活動名稱：<span style=\"font-size: 1.167rem;\">擁抱AI 新時代 走出技職璀璨路</span></strong></p>\n<ul>\n<li><strong>活動時間：</strong>115年9月19日(星期六)上午8:50～12:20</li>\n<li><strong>辦理地點：</strong>國立成功大學附屬臺南工業高級中等學校-營建科技館 1F 視聽教室</li>\n<li><strong>宣講講師：</strong>台家盟講師、成大南工教師、高科大教授</li>\n<li><strong>線上報名：</strong><a href=\"https://forms.gle/sWqcRe7TuqhR8JaM6\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">前往線上報名表單</a></li>\n</ul>\n<p>（詳情請參閱附件宣導計畫與海報，另有11/14(六)上午 台南高商場—群科巡禮）</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "115年技專進路宣導計畫.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115年技專進路宣導計畫.pdf&files_sn=642"
+            },
+            {
+                "name": "1150919活動海報.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=1150919活動海報.pdf&files_sn=643"
+            }
+        ]
+    },
+    {
+        "date": "2026-09-15",
+        "category": "研習",
+        "source": "教務處",
+        "title": "轉知國教署Cool English英語線上學習平臺實作暨應用基礎／進階班研習",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=734&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據教育部國民及學前教育署（以下簡稱國教署）115年9月8日臺教國署國字第1155504492號函辦理。</p>\n<p>二、為利教師瞭解英語線上學習平臺免費且優質之線上英語聽說讀寫學習資源，並應用於學校英語課程教學，國教署委請國立臺灣師範大學辦理旨揭平臺實作暨應用基礎／進階班。</p>\n<p>三、參加對象：</p>\n<ul>\n<li>(一)國民教育地方輔導團語文領域英語文分團及英語教育資源中心相關成員。</li>\n<li>(二)對於英語線上學習及科技融入英語教學有興趣之國民中小學教師。</li>\n</ul>\n<p>四、本次共舉行16場線上研習，各場次全程參與之教師須於活動開始及結束後，填寫Google表單作為簽到退紀錄，經審核通過者核發研習時數3小時，各場次時間及相關資訊請參閱附件。</p>\n<p>五、報名方式：請於報名時間截止前登入<a href=\"https://www3.inservice.edu.tw/\">全國教師在職進修網</a>，點選【研習搜尋】後，再次點擊【研習進階搜尋】，於【研習名稱／代碼】輸入欲參加之場次代碼，即可線上報名。</p>\n<p>六、報名時間：即日起至各場次前1日截止報名，如該場次人數額滿（達500人）則提前結束報名。</p>\n<p>七、詳細資料請參閱實施計畫（如附件）。如有相關問題，請逕洽「英語線上學習平臺及英語自主檢測系統之客服及推廣計畫」客服專線（02-8979-4155）或電子信箱（coolenglishhelp@ntnueng.tw）。</p>\n<p>八、請鼓勵貴屬踴躍報名參加，並核予參與教師公差假登記。</p>\n<p>九、檢附旨案研習實施計畫１份。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "115年度下半年國中小教師線上實作暨應用基礎／進階班實施計畫實施計畫.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115年度下半年國中小教師線上實作暨應用基礎／進階班實施計畫實施計畫.pdf&files_sn=641"
+            }
+        ]
+    },
+    {
+        "date": "2026-09-15",
         "category": "一般",
         "source": "人事室",
         "title": "重申本局所屬學校人員赴大陸地區及香港、澳門之申請、通報及登錄相關規定。",
@@ -123,11 +155,11 @@
         "source": "教務處",
         "title": "臺南市立崇明國民中學115學年度第一學期代收代辦費須知",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=730&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<h3>壹、繳費時間與方法</h3>\n<ol class=\"list-unstyled ps-0\">\n<li class=\"mb-2\"><strong>一、繳費期限：</strong>依照繳費單上期限進行繳交<strong><span style=\"color:#c0392b;\">(總務處預計於9月底10月初發放)</span></strong></li>\n<li class=\"mb-2\"><strong>二、繳費方式：</strong>請持繳費單至7-11、萊爾富、OK、全家便利商店、郵局等(手續費均為6元)；亦可以信用卡ATM轉帳。\r\n\t<ul class=\"list-unstyled ps-4 mt-2\">\n<li class=\"mb-1\">(一)繳款後收據第一、二聯請務必自行妥為保存，以便查核時須繳回。</li>\n<li class=\"mb-1\">(二)若遺失學校印製之繳款單者，務必回學校總務處出納組補單。</li>\n<li class=\"mb-1\">(三)有關繳款單問題，請洽詢本校出納組(聯絡電話：06-2907261轉833)。</li>\n</ul>\n</li>\n</ol>\n<h3>貳、繳費說明：</h3>\n<ol class=\"list-unstyled ps-0\">\n<li class=\"mb-2\"><strong>一、代收代辦費：</strong>一、二、三年級詳細收費如下。合於申請減免費用者(低收入戶、中低收入戶、學生或家長身障、原住民)繳交之費用，以繳款單所列金額為準。</li>\n<li class=\"mb-2\"><strong>二、</strong>一年級有參加新生訓練日會加收午餐費80元。</li>\n<li class=\"mb-2\"><strong>三、</strong>第八節輔導課及暑期學藝活動採自由報名參加，有參加者才需繳交費用。</li>\n</ol>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<h3>тБ╣сђЂу╣│У▓╗ТЎѓжќЊУѕЄТќ╣Т│Ћ</h3>\n<ol class=\"list-unstyled ps-0\">\n<li class=\"mb-2\"><strong>СИђсђЂу╣│У▓╗ТюЪжЎљ№╝џ</strong>СЙЮуЁДу╣│У▓╗тќ«СИіТюЪжЎљжђ▓УАїу╣│С║ц<strong><span style=\"color:#c0392b;\">(уИйтІЎУЎЋжаљУеѕТќ╝9Тюѕт║Ћ10ТюѕтѕЮуЎ╝ТћЙ)</span></strong></li>\n<li class=\"mb-2\"><strong>С║їсђЂу╣│У▓╗Тќ╣т╝Ј№╝џ</strong>УФІТїЂу╣│У▓╗тќ«УЄ│7-11сђЂУљіуѕЙт»їсђЂOKсђЂтЁет«ХСЙ┐тѕЕтЋєт║ЌсђЂжЃхт▒ђуГЅ(ТЅІу║їУ▓╗тЮЄуѓ║6тЁЃ)№╝ЏС║дтЈ»С╗ЦС┐АућетЇАATMУйЅтИ│сђѓ\r\n\t<ul class=\"list-unstyled ps-4 mt-2\">\n<li class=\"mb-1\">(СИђ)у╣│ТгЙтЙїТћХТЊџуггСИђсђЂС║їУЂ»УФІтІЎт┐ЁУЄфУАїтдЦуѓ║С┐ЮтГў№╝їС╗ЦСЙ┐ТЪЦТаИТЎѓжаѕу╣│тЏъсђѓ</li>\n<li class=\"mb-1\">(С║ї)УІЦжЂ║тц▒тГИТаАтЇ░УБйС╣Іу╣│ТгЙтќ«УђЁ№╝їтІЎт┐ЁтЏътГИТаАуИйтІЎУЎЋтЄ║у┤ЇухёУБютќ«сђѓ</li>\n<li class=\"mb-1\">(СИЅ)ТюЅжЌюу╣│ТгЙтќ«тЋЈжАї№╝їУФІТ┤йУЕбТюгТаАтЄ║у┤Їухё(УЂ»ухАжЏ╗УЕ▒№╝џ06-2907261УйЅ833)сђѓ</li>\n</ul>\n</li>\n</ol>\n<h3>У▓│сђЂу╣│У▓╗УффТўј№╝џ</h3>\n<ol class=\"list-unstyled ps-0\">\n<li class=\"mb-2\"><strong>СИђсђЂС╗БТћХС╗БУЙдУ▓╗№╝џ</strong>СИђсђЂС║їсђЂСИЅт╣┤у┤џУЕ│у┤░ТћХУ▓╗тдѓСИІсђѓтљѕТќ╝ућ│УФІТИЏтЁЇУ▓╗ућеУђЁ(СйјТћХтЁЦТѕХсђЂСИГСйјТћХтЁЦТѕХсђЂтГИућЪТѕќт«ХжЋиУ║ФжџюсђЂтјЪСйЈТ░Љ)у╣│С║цС╣ІУ▓╗уће№╝їС╗Цу╣│ТгЙтќ«ТЅђтѕЌжЄЉжАЇуѓ║Т║ќсђѓ</li>\n<li class=\"mb-2\"><strong>С║їсђЂ</strong>СИђт╣┤у┤џТюЅтЈЃтіаТќ░ућЪУеЊуи┤ТЌЦТюЃтіаТћХтЇѕжцљУ▓╗80тЁЃсђѓ</li>\n<li class=\"mb-2\"><strong>СИЅсђЂ</strong>уггтЁФу»ђУ╝ћт░јУф▓тЈіТџЉТюЪтГИУЌЮТ┤╗тІЋТјАУЄфућ▒та▒тљЇтЈЃтіа№╝їТюЅтЈЃтіаУђЁТЅЇжюђу╣│С║цУ▓╗ућесђѓ</li>\n</ol>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
         "attachments": [
             {
-                "name": "115-1代收代辦費須知.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115-1代收代辦費須知.pdf&files_sn=637"
+                "name": "115-1С╗БТћХС╗БУЙдУ▓╗жаѕуЪЦ.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115-1С╗БТћХС╗БУЙдУ▓╗жаѕуЪЦ.pdf&files_sn=637"
             }
         ]
     },
@@ -248,28 +280,5 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2026年全美中學數學分級能力測驗活動簡章.pdf&files_sn=623"
             }
         ]
-    },
-    {
-        "date": "2026-09-11",
-        "category": "活動",
-        "source": "教務處",
-        "title": "轉知國立成功大學辦理「心連心・學情緒」：2026 SEL社會情緒學習嘉年華活動",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=718&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、為推廣社會情緒學習（Social Emotional Learning, SEL）理念，提升跨學段學子與社會大眾之情緒覺察、自我調節及人際互動能力，本校特結合南區各大專校院及學生社團資源等，盛大舉辦旨揭嘉年華活動。</p>\n<p>二、活動時間：115年10月31日(星期六)上午10時至16時30分。</p>\n<p>三、活動地點：本校光復校區學生活動中心前草坪（臺南市東區大學路1號）。</p>\n<p>四、參加對象：本校及南區各大專校院、臺南市各級公私立高中職、國中、國小教職員工生、家長及一般民眾。</p>\n<p>五、活動內容：包含大專校院成果展示、學生社團表演、美食攤位、互動闖關（集點兌換精美通關小物）及心靈角落深度體驗課程等豐富多元內容。</p>\n<p>六、本活動採自由探索集點參與，惟「心靈角落」體驗課程（含「心藝製造所」手作手繪、「桌越冒險家」互動桌遊及「靜思靜靈區」頌缽體驗，場次為10時30分至12時及14時至15時30分）因名額有限，一律採預先線上報名制，請於115年10月5日(一)前填寫報名表單，請至<a href=\"https://forms.gle/X9pgiuHNFpi51Zvs8\">心靈角落體驗課程線上報名表單</a>報名。</p>\n<p>七、為便利團體參與，單一學校或機構師生與會人數達20人（含）以上者，本校提供接駁專車預約服務。因車次數量有限，額滿為止，請有意申請之學校線上預約辦理，請於115年10月5日(一)前填寫預約表單，請至<a href=\"https://forms.gle/UTJcwFQ1T4uFGSC89\">接駁專車線上預約表單</a>預約。連絡人：本校學務處張茵婷副管理師，(06)2757575分機50306。</p>\n<p>八、檢附「心連心・學情緒」：2026 SEL社會情緒學習嘉年華活動海報電子檔1份，請貴校協助宣傳。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "社會情緒學習嘉年華.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=社會情緒學習嘉年華.pdf&files_sn=622"
-            }
-        ]
-    },
-    {
-        "date": "2026-09-11",
-        "category": "活動",
-        "source": "教務處",
-        "title": "轉知親子天下「免費體驗課｜蔡思怡的文言文應試課」資訊",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=717&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>為協助學生銜接國中國文課程，提升文言文閱讀理解與應試能力，親子天下特邀具20年國文教學資歷的蔡思怡老師，推出「蔡思怡的文言文應試課」。</p>\n<p>一、本次體驗課將幫助家長與孩子理解文言文閱讀邏輯、熟悉近年會考常見題型，以及了解各年級的準備方向。</p>\n<p>二、完成免費體驗課試聽，贈送「常考單字排行榜Top40清單」以及文言文應試課折扣券。</p>\n<p>三、<a href=\"https://cplink.co/UxSBkrqj\">報名頁面</a></p>\n<p>四、體驗課時間：以報名頁面所示之場次日期、時間為準。</p>\n<p>五、<a href=\"https://cplink.co/sDhw6wvF\">課程介紹</a></p>\n</div>",
-        "attachments": []
     }
 ]
