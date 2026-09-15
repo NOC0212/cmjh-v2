@@ -1,5 +1,19 @@
 [
     {
+        "date": "2026-09-15",
+        "category": "研習",
+        "source": "教務處",
+        "title": "轉知臺南市115年臺南教育節-第二十三屆「教育科技週」資訊",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=777&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、旨揭研習計畫如附件，歡迎對主題有興趣之教師踴躍報名參加。</p>\n<p>二、旨揭研習採google表單報名，外縣市教師不提供研習時數，臺南市教師請在google表單與臺南市教師研習系統兩處報名，未在臺南市教師研習系統報名者不核予研習時數。<br/>\n<a href=\"https://forms.gle/CpwWjk2waExRsNGH8\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">報名 Google 表單連結</a>。</p>\n<p>三、聯絡窗口：七股區樹林國小楊易霖老師0912127040。</p>\n<p>四、課程資訊：</p>\n<p><strong>(一) 線上場：Google Meet</strong></p>\n<ol>\n<li>10/02(五)19:00~21:00 讓平面教材活起來-AI動態教材影片創作-蔡政倫（研習護照編號：321438）</li>\n<li>10/07(三)19:00~21:00 先別急著焦慮！帶你搞懂 Gemini Spark，快速搭建備課工作流(訂閱限定)-黃信溢（研習護照編號：321439）</li>\n<li>10/09(五)19:00~21:00 這樣也能行？用Gemini Spark雲端自動化爬蟲+即時推播 (訂閱限定) -黃信溢（研習護照編號：321441）</li>\n<li>10/14(三)19:00~21:00 AI在教育上的應用-張哲剛(阿剛老師)（研習護照編號：321442）</li>\n<li>10/16(五)19:00~21:00 AI素養-蘇彥寧（研習護照編號：321443）</li>\n<li>10/21(三)19:00~21:00 這下真的急了！初探Google Antigravity新世代自動化工具-黃信溢（研習護照編號：321444）</li>\n<li>10/23(五)19:00~21:00 根本開外掛！Google Antigravity深度開發與工作流實戰-黃信溢（研習護照編號：321445）</li>\n<li>10/30(五)19:00~21:00 一堂課成為教學設計師-呂聰賢（研習護照編號：321446）</li>\n<li>11/04(三)19:00~21:00 Chatgpt AI代理人(上) -呂聰賢（研習護照編號：321447）</li>\n<li>11/06(五)19:00~21:00 Chatgpt AI代理人(下) -呂聰賢（研習護照編號：321448）</li>\n<li>11/11(三)19:00~21:00 AI教學影片創作-呂聰賢（研習護照編號：321436）</li>\n<li>11/13(五)19:00~21:00 Gemini Notebook在教學上的應用-洪旭亮(阿亮校長)（研習護照編號：321449）</li>\n<li>11/18(三)19:00~21:00 AI在教學上的應用-方俊為(橘子腦師)（研習護照編號：321451）</li>\n<li>11/20(五)19:00~21:00 從行政的角度談AI在教學場域的應用-張君聖(方方老師)（研習護照編號：321450）</li>\n</ol>\n<p><strong>(二) 實體場：和順國中科技中心</strong></p>\n<ol>\n<li>9/24(四)9:00~12:00 校園溝通新工具：AI生成在教育情境的應用-蔡政倫（研習護照編號：321413）</li>\n<li>11/12(四)9:00~12:00 AI動態視覺設計：打造高吸引力的教育應用-蔡政倫（研習護照編號：321414）</li>\n<li>12/24(四)9:00~12:00 讓教材動起來：AI影像敘事與教學影片創作-蔡政倫（研習護照編號：321416）</li>\n</ol>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "第二十三屆教育資訊週(公告).pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=第二十三屆教育資訊週(公告).pdf&files_sn=690"
+            }
+        ]
+    },
+    {
         "date": "2026-09-10",
         "category": "宣導",
         "source": "輔導室",
@@ -47,12 +61,12 @@
         "source": "學務處",
         "title": "115學年度新生體檢日期公告及檢查影片連結",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=685&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><strong>本學期新生健康檢查日期如下，屆時會通知各班排檢時間依序檢查：</strong></p>\n<div class=\"table-responsive\">\n<table class=\"table table-bordered\">\n<caption class=\"fw-bold text-dark\" style=\"caption-side: top;\">新生健康檢查時程表</caption>\n<thead>\n<tr class=\"table-light\">\n<th scope=\"col\">檢查項目</th>\n<th scope=\"col\">檢查日期與時間</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<th scope=\"row\"><strong><span style=\"color:#16a085;\">尿液檢查</span></strong></th>\n<td><strong><span style=\"color:#16a085;\">10/13(二) 08:30</span></strong></td>\n</tr>\n<tr>\n<th scope=\"row\"><strong><span style=\"color:#16a085;\">尿液補(複)檢</span></strong></th>\n<td><strong><span style=\"color:#16a085;\">10/27(二) 08:30</span></strong></td>\n</tr>\n<tr>\n<th scope=\"row\"><span style=\"color:#c0392b;\">抽血檢查</span></th>\n<td><span style=\"color:#c0392b;\">11/11(三)、11/12(四) 08:00-10:00 </span><span style=\"color:#ff0000;\"><strong> 檢查前一日午夜12點之後及當日早餐禁食</strong></span><span style=\"color:#c0392b;\"></span></td>\n</tr>\n<tr>\n<th scope=\"row\"><span style=\"color:#8e44ad;\"><span style=\"background-color:#ffffff;\">醫師理學檢查</span></span></th>\n<td><span style=\"color:#8e44ad;\"><span style=\"background-color:#ffffff;\">12/10(四) 07:40-16:00、12/11(五) 07:40-16:00  </span></span><strong><span style=\"color:#ff0000;\"><span style=\"background-color:#ffffff;\">檢查當日請穿著運動服裝</span></span></strong></td>\n</tr>\n</tbody>\n</table>\n</div>\n<ul class=\"list-unstyled\">\n<li class=\"mb-2\"><a href=\"https://www.youtube.com/watch?v=2AjOE_aRSek\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">觀看尿液檢查指導影片</a></li>\n<li class=\"mb-2\"><a href=\"https://youtu.be/n8es_TIbJzQ\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">觀看理學檢查與抽血指導影片</a></li>\n</ul>\n</div>",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><strong>жң¬еӯёжңҹж–°з”ҹеҒҘеә·жӘўжҹҘж—ҘжңҹеҰӮдёӢпјҢеұҶжҷӮжңғйҖҡзҹҘеҗ„зҸӯжҺ’жӘўжҷӮй–“дҫқеәҸжӘўжҹҘпјҡ</strong></p>\n<div class=\"table-responsive\">\n<table class=\"table table-bordered\">\n<caption class=\"fw-bold text-dark\" style=\"caption-side: top;\">ж–°з”ҹеҒҘеә·жӘўжҹҘжҷӮзЁӢиЎЁ</caption>\n<thead>\n<tr class=\"table-light\">\n<th scope=\"col\">жӘўжҹҘй …зӣ®</th>\n<th scope=\"col\">жӘўжҹҘж—ҘжңҹиҲҮжҷӮй–“</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<th scope=\"row\"><strong><span style=\"color:#16a085;\">е°ҝж¶ІжӘўжҹҘ</span></strong></th>\n<td><strong><span style=\"color:#16a085;\">10/13(дәҢ) 08:30</span></strong></td>\n</tr>\n<tr>\n<th scope=\"row\"><strong><span style=\"color:#16a085;\">е°ҝж¶ІиЈң(иӨҮ)жӘў</span></strong></th>\n<td><strong><span style=\"color:#16a085;\">10/27(дәҢ) 08:30</span></strong></td>\n</tr>\n<tr>\n<th scope=\"row\"><span style=\"color:#c0392b;\">жҠҪиЎҖжӘўжҹҘ</span></th>\n<td><span style=\"color:#c0392b;\">11/11(дёү)гҖҒ11/12(еӣӣ) 08:00-10:00В </span><span style=\"color:#ff0000;\"><strong>В жӘўжҹҘеүҚдёҖж—ҘеҚҲеӨң12й»һд№ӢеҫҢеҸҠз•¶ж—Ҙж—©йӨҗзҰҒйЈҹ</strong></span><span style=\"color:#c0392b;\"></span></td>\n</tr>\n<tr>\n<th scope=\"row\"><span style=\"color:#8e44ad;\"><span style=\"background-color:#ffffff;\">йҶ«её«зҗҶеӯёжӘўжҹҘ</span></span></th>\n<td><span style=\"color:#8e44ad;\"><span style=\"background-color:#ffffff;\">12/10(еӣӣ) 07:40-16:00гҖҒ12/11(дә”) 07:40-16:00В  </span></span><strong><span style=\"color:#ff0000;\"><span style=\"background-color:#ffffff;\">жӘўжҹҘз•¶ж—Ҙи«Ӣз©ҝи‘—йҒӢеӢ•жңҚиЈқ</span></span></strong></td>\n</tr>\n</tbody>\n</table>\n</div>\n<ul class=\"list-unstyled\">\n<li class=\"mb-2\"><a href=\"https://www.youtube.com/watch?v=2AjOE_aRSek\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"еҸҰй–Ӣж–°иҰ–зӘ—\">и§ҖзңӢе°ҝж¶ІжӘўжҹҘжҢҮе°ҺеҪұзүҮ</a></li>\n<li class=\"mb-2\"><a href=\"https://youtu.be/n8es_TIbJzQ\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"еҸҰй–Ӣж–°иҰ–зӘ—\">и§ҖзңӢзҗҶеӯёжӘўжҹҘиҲҮжҠҪиЎҖжҢҮе°ҺеҪұзүҮ</a></li>\n</ul>\n</div>",
         "attachments": []
     },
     {
         "date": "2026-09-01",
-        "category": "行政",
+        "category": "活動",
         "source": "輔導室",
         "title": "115學年度第一學期 <班級親師會> 訂於9月19日星期六上午辦理，歡迎家長參加 (各處室宣導資料請下載附件閱覽)",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=637&type=news&from_op=all_news",
@@ -93,18 +107,28 @@
     {
         "date": "2026-09-15",
         "category": "活動",
-        "source": "輔導室",
-        "title": "轉知台灣家長教育聯盟「技專院校新進路-面向家長說明宣導計畫」活動資訊",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=735&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<h3><strong><span style=\"font-size: 1.333rem;\">115 年技專校院新進路面向家長宣導計畫-成大南工場</span></strong></h3>\n<p><strong>活動名稱：<span style=\"font-size: 1.167rem;\">擁抱AI 新時代 走出技職璀璨路</span></strong></p>\n<ul>\n<li><strong>活動時間：</strong>115年9月19日(星期六)上午8:50～12:20</li>\n<li><strong>辦理地點：</strong>國立成功大學附屬臺南工業高級中等學校-營建科技館 1F 視聽教室</li>\n<li><strong>宣講講師：</strong>台家盟講師、成大南工教師、高科大教授</li>\n<li><strong>線上報名：</strong><a href=\"https://forms.gle/sWqcRe7TuqhR8JaM6\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">前往線上報名表單</a></li>\n</ul>\n<p>（詳情請參閱附件宣導計畫與海報，另有11/14(六)上午 台南高商場—群科巡禮）</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "source": "教務處",
+        "title": "轉知數發部資安署115年度第21屆資安技能金盾獎競賽活動事宜，請學生踴躍報名參加",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=783&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據數位發展部115年9月2日數授資輔字第1153000826號函辦理。</p>\n<p>二、旨揭競賽係為提升學生解決資安問題能力與實戰經驗，以競賽機制結合資安威脅趨勢命題，分為初賽與決賽，參賽對象包含國中、高中及大專校院在學學生。</p>\n<p>三、旨揭競賽資訊摘述如下：</p>\n<p><strong>(一)辦理時程：</strong></p>\n<ol>\n<li>報名期間：115年9月1日（週二）9時至9月30日（週三）17時。</li>\n<li>初賽：115年10月17日（週六）。</li>\n<li>公告入圍決賽隊伍：115年10月30日（週五）。</li>\n<li>決賽暨頒獎典禮：115年11月27日（週五）。</li>\n</ol>\n<p><strong>(二)競賽獎項：國高中組：</strong><br/>\r\n第1名：頒發團隊獎牌、價值3萬元獎品及個人獎狀。<br/>\r\n第2名：頒發團隊獎牌、價值2萬元獎品及個人獎狀。<br/>\r\n第3名：頒發團隊獎牌、價值1萬元獎品及個人獎狀。另有鋒芒畢露獎2名。</p>\n<p><strong>(三)報名及聯絡資訊：</strong></p>\n<ol>\n<li>報名方式：採網路報名，請於報名截止日前至<a href=\"https://csc.nics.nat.gov.tw/\">競賽活動網站</a>，完成上傳報名表件。</li>\n<li>聯繫方式：\r\n\t<ol type=\"a\">\n<li>活動報名及競賽相關問題，請逕洽活動小組鄭小姐或曾小姐，電話：(02)2528-8278轉23、24。</li>\n<li>如有資安競賽其他建議，請洽國家資通安全研究院詹小姐(02)6631-3527或資通安全署黃小姐(02)2380-8725。</li>\n</ol>\n</li>\n</ol>\n<p><strong>(四)報名及競賽方式等內容，請詳見競賽要點（附件1）。</strong></p>\n<p>四、檢附宣傳海報電子檔1份（附件2），敬請協助利用及公告周知。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
         "attachments": [
             {
-                "name": "115年技專進路宣導計畫.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115年技專進路宣導計畫.pdf&files_sn=642"
-            },
+                "name": "115年度第21屆資安技能金盾獎競賽~競賽要點.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115年度第21屆資安技能金盾獎競賽~競賽要點.pdf&files_sn=693"
+            }
+        ]
+    },
+    {
+        "date": "2026-09-15",
+        "category": "活動",
+        "source": "教務處",
+        "title": "知國立高雄師範大學辦理「2026自主學習節暨AI賦能教與學研討會」徵稿",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=782&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據國立高雄師範大學115年9月9日高師大科環字第1151007612號函辦理。</p>\n<p>二、旨揭研討會徵稿資訊如下：</p>\n<p>(一)研討會日期：115年12月9日(星期三)。</p>\n<p>(二)論文徵稿：即日起至115年9月30日(星期三)，以電子郵件寄送錄取通知。</p>\n<p>三、詳細徵稿主題及投稿資訊請參閱附件海報。</p>\n<p>四、本案聯絡人: 國立高雄師範大學胡曼玉助理，電話：07-7172930#7028，電子信箱：tasrl.southern@tlkr.nknu.edu.tw</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
             {
-                "name": "1150919活動海報.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=1150919活動海報.pdf&files_sn=643"
+                "name": "AI賦能教與學研討會海報.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=AI賦能教與學研討會海報.pdf&files_sn=691"
             }
         ]
     },
@@ -112,173 +136,99 @@
         "date": "2026-09-15",
         "category": "研習",
         "source": "教務處",
-        "title": "轉知國教署Cool English英語線上學習平臺實作暨應用基礎／進階班研習",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=734&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據教育部國民及學前教育署（以下簡稱國教署）115年9月8日臺教國署國字第1155504492號函辦理。</p>\n<p>二、為利教師瞭解英語線上學習平臺免費且優質之線上英語聽說讀寫學習資源，並應用於學校英語課程教學，國教署委請國立臺灣師範大學辦理旨揭平臺實作暨應用基礎／進階班。</p>\n<p>三、參加對象：</p>\n<ul>\n<li>(一)國民教育地方輔導團語文領域英語文分團及英語教育資源中心相關成員。</li>\n<li>(二)對於英語線上學習及科技融入英語教學有興趣之國民中小學教師。</li>\n</ul>\n<p>四、本次共舉行16場線上研習，各場次全程參與之教師須於活動開始及結束後，填寫Google表單作為簽到退紀錄，經審核通過者核發研習時數3小時，各場次時間及相關資訊請參閱附件。</p>\n<p>五、報名方式：請於報名時間截止前登入<a href=\"https://www3.inservice.edu.tw/\">全國教師在職進修網</a>，點選【研習搜尋】後，再次點擊【研習進階搜尋】，於【研習名稱／代碼】輸入欲參加之場次代碼，即可線上報名。</p>\n<p>六、報名時間：即日起至各場次前1日截止報名，如該場次人數額滿（達500人）則提前結束報名。</p>\n<p>七、詳細資料請參閱實施計畫（如附件）。如有相關問題，請逕洽「英語線上學習平臺及英語自主檢測系統之客服及推廣計畫」客服專線（02-8979-4155）或電子信箱（coolenglishhelp@ntnueng.tw）。</p>\n<p>八、請鼓勵貴屬踴躍報名參加，並核予參與教師公差假登記。</p>\n<p>九、檢附旨案研習實施計畫１份。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "115年度下半年國中小教師線上實作暨應用基礎／進階班實施計畫實施計畫.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115年度下半年國中小教師線上實作暨應用基礎／進階班實施計畫實施計畫.pdf&files_sn=641"
-            }
-        ]
+        "title": "教育局辦理「B5-2生成式AI融入學科領域教學工作坊(國語文)」",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=781&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據教育部115年5月5日臺教資(三)字第1152701317號函辦理。</p>\n<p>二、旨揭工作坊資訊如下：</p>\n<ol>\n<li>研習時間：115年10月21日(星期三)13:30-16:30及115年10月28日(星期三)13:30-16:30，共2個半天。</li>\n<li>研習地點：和順國中2樓自造教育與科技中心(安南區安和路五段84巷66號)。</li>\n<li>報名方式：請至<a href=\"https://forms.gle/x7juD84SF4CMGEha8\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">工作坊 Google 表單</a>報名。</li>\n</ol>\n<p>三、注意事項:</p>\n<p><strong>(一) 須於本次工作坊前完成【B5-1生成式AI與教育應用工作坊】，並檢附研習時數截圖證明於報名時提供。</strong></p>\n<p><strong>(二) 本場研習為2個半天，皆須全程參與始能核予研習時數。</strong></p>\n<p><strong>(三) 本次工作坊為達實作之成效，敬請參與學員自行攜帶筆記型電腦。</strong></p>\n<p>四、請惠予參與教師公(差)假登記及課務派代。</p>\n<p>五、如有相關疑問，請洽本局數位學習推動辦公室 邱珮瑜 小姐，網電：69191，市話：2130669分機483</p>\n</div>",
+        "attachments": []
     },
     {
         "date": "2026-09-15",
-        "category": "一般",
-        "source": "人事室",
-        "title": "重申本局所屬學校人員赴大陸地區及香港、澳門之申請、通報及登錄相關規定。",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=6&zone_id=0&page_id=48&content_id=733&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>重申本局所屬學校人員赴大陸地區及香港、澳門之申請、通報及登錄相關規定。</p>\n<p>說明：</p>\n<ol>\n<li>本局114年11月7日南市教人(一)字第1141508436號函諒達。</li>\n<li>因應行政院訂定「行政院與所屬中央及地方各機關（構）學校公務人員違法（規）赴陸建議懲處原則」及「行政院與所屬各機關（構）學校公務人員違規赴港澳建議懲處原則」（以下簡稱懲處原則），請各校加強宣導所屬人員赴大陸地區及香港、澳門（含過境、轉機）之相關規定，並應於行前依其身分完成應辦之申請、通報、登錄及差假程序；自115年7月1日起，如有違法（規）情形，依前開懲處原則及相關規定辦理。</li>\n<li>查「臺灣地區公務員及特定身分人員進入大陸地區許可辦法」第3條規定，所稱公務員，指公務員服務法第2條規定之人員。復依司法院釋字第308號解釋意旨，公立學校校長及兼任行政職務之教師，就其所兼任之行政職務，有公務員服務法之適用。爰公立學校校長、職員及兼任行政職務之教師赴大陸地區及香港、澳門，其申請、通報、登錄及差假等事項，應依公務員相關規定辦理。</li>\n<li>前項人員赴大陸地區或香港、澳門，應於出境前依規定完成相關申請或通報程序，並至大陸委員會「國人赴陸港澳動態登錄」系統完成登錄；校長部分並應依規定函報本局核准。另涉及會見或聯繫特定身分人員，或返臺後依法應辦理通報者，應依相關規定辦理。</li>\n<li>未兼任行政職務之教師赴大陸地區或香港、澳門，應依教師請假規則等相關規定辦理差假，並於出境前完成「國人赴陸港澳動態登錄」。至未具公務員身分之約聘僱人員、約用人員、技工、工友及臨時人員等，亦應依其適用之管理規定、工作規則或契約辦理請假及相關核准程序，並依規定完成前開登錄；如有違法（規）情形，得參酌懲處原則，視情節輕重依各該管理規定或工作規則辦理。</li>\n<li>請各校人事單位於所屬人員辦理赴大陸地區或香港、澳門之差假時，確實核對其身分及應辦程序，並查驗相關申請、通報、登錄文件是否完備；另請利用校務會議、主管會議、電子郵件或其他適當方式加強宣導，以落實相關管理規定。</li>\n</ol>\n</div>",
+        "category": "研習",
+        "source": "教務處",
+        "title": "教育局辦理B3數位教學指引培力工作坊，請踴躍報名參加。",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=780&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據教育部115年5月5日臺教資(三)字第1152701317號函辦理。</p>\n<p>二、旨揭工作坊資訊如下:</p>\n<p><strong>(一) 場次一</strong></p>\n<p>1. 辦理日期: 115年9月23日(星期三)13:00~16:00。</p>\n<p>2. 辦理地點: 賢北國小2樓會議室(北區賢北里大興街599號)。</p>\n<p>3. 報名方式: 請至全教網報名，課程代碼【5710831】。</p>\n<p><strong>(二) 場次二 </strong></p>\n<p>1. 辦理日期: 115年10月7日(星期三)13:00~16:00。</p>\n<p>2. 辦理地點: 鹽水國小視廳教室(鹽水區水秀里9鄰朝琴路137號)。</p>\n<p>3. 報名方式: 請至全教網報名，課程代碼【5714926】。</p>\n<p><strong>(三) 場次三 </strong></p>\n<p>1. 辦理日期: 115年10月12日(星期一)9:00~12:00。</p>\n<p>2. 辦理地點: 金城國中A棟二樓電腦教室(三)(安平區建平里17鄰怡平路8號)。</p>\n<p>3. 報名方式: 請至全教網報名，課程代碼【5715617】。</p>\n<p><strong>(四) 場次四</strong></p>\n<ol>\n<li>辦理日期: 115年10月30日(星期五)9:00至12:00。</li>\n<li>辦理地點: 資訊中心3樓電腦教室(中西區五妃街236-1號)。</li>\n<li>報名方式: 請至全教網報名，課程代碼【5715073】。</li>\n</ol>\n<p><strong>(五) 場次五</strong></p>\n<ol>\n<li>辦理日期: 115年11月18日(星期三)13:30至16:30。</li>\n<li>辦理地點: 資訊中心3樓電腦教室(中西區五妃街236-1號)。</li>\n<li>報名方式: 請至全教網報名，課程代碼【5715857】。</li>\n</ol>\n<p><strong>(六) 場次六</strong></p>\n<ol>\n<li>辦理日期: 115年11月20日(星期五)9:00至12:00。</li>\n<li>辦理地點: 資訊中心3樓電腦教室(中西區五妃街236-1號)。</li>\n<li>報名方式: 請至全教網報名，課程代碼【5715898】。</li>\n</ol>\n<p><strong>(七) 場次七</strong></p>\n<ol>\n<li>辦理日期: 115年12月2日(星期三)13:30至16:30。</li>\n<li>辦理地點: 資訊中心3樓電腦教室(中西區五妃街236-1號)。</li>\n<li>報名方式: 請至全教網報名，課程代碼【5716549】。</li>\n</ol>\n<p><strong>(八) 場次八</strong></p>\n<ol>\n<li>辦理日期: 115年12月9日(星期三)13:30至16:30。</li>\n<li>辦理地點: 資訊中心3樓電腦教室(中西區五妃街236-1號)。</li>\n<li>報名方式: 請至全教網報名，課程代碼【5716557】。</li>\n</ol>\n<p><strong>(九) 場次九</strong></p>\n<ol>\n<li>辦理日期: 115年12月16日(星期三)13:30至16:30。</li>\n<li>辦理地點: 資訊中心3樓電腦教室(中西區五妃街236-1號)。</li>\n<li>報名方式: 請至全教網報名，課程代碼【5716563】。</li>\n</ol>\n<p>三、請惠予參與教師公(差)假登記及課務派代。</p>\n<p>四、注意事項: 請務必先至全教網報名，如符合報名資格之名額額滿，將提前截止報名。全程參與者始能核予研習時數，本研習恕不受理現場報名。</p>\n<p>五、如有相關疑問，請洽本局數位學習推動辦公室 邱珮瑜小姐，網電：69191，市話2130669分機483</p>\n</div>",
         "attachments": []
     },
     {
-        "date": "2026-09-14",
-        "category": "一般",
-        "source": "學務處",
-        "title": "反毒健康學堂",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=732&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、為積極宣導市民運用本市毒品危害防制中心資源，製作推廣「為青春把關 一日個管師」、「如何辨別新興毒品」宣導影片，希冀結合各級學校辦理「反毒健康學堂」線上學習營，俾利學生族群更瞭解毒品危害及健康促進生活型態。</p>\n<p>二、邀請全校學生參加本市「反毒健康學堂」線上學習營，於線上觀看反毒宣導影片，並填答題目後即可完成。</p>\n<p>三、線上學習營請至<a href=\"https://forms.gle/aa9BhiVUaKqeoNkv5\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">「反毒健康學堂」線上學習營網站</a>或掃手機 QR 碼連結（請如附檔）至學習營網站。</p>\n</div>",
-        "attachments": []
-    },
-    {
-        "date": "2026-09-14",
+        "date": "2026-09-15",
         "category": "宣導",
-        "source": "學務處",
-        "title": "校園毒品危害防制宣導",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=731&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>依據教育局提供之圖卡與影片做宣導，請各班導師幫忙於早自修或週會時間進行影片與圖卡的介紹分享。</p>\n<p>請各班於 <strong>9/21 前</strong> 完成宣導。</p>\n<ul>\n<li>必要分享的有三個檔案</li>\n<li>選用的檔案有兩個</li>\n<li>宣導資料：<a href=\"https://reurl.cc/8Ybkej\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">教育局圖卡與影片資料夾</a></li>\n</ul>\n<p>拍照上傳各年級班級的資料夾內 (需登錄 google 帳號)</p>\n<p>感謝各位導師協助，如有問題請洽生教組 分機824</p>\n</div>",
+        "source": "教務處",
+        "title": "檢送「五妃及大港機房基礎電力設施改善停電作業」各項系統及網路服務中斷通知",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=779&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><strong>一、辦理緣由：</strong><br/>\r\n為辦理「115年臺南市政府教育局機房基礎環境改善資訊服務案」，資訊中心將進行五妃及大港機房基礎電力及環境設施改善工程。施工期間為維護人員安全及避免設備因電力不穩定造成故障或資料損毀，相關機房將配合辦理停電作業，屆時部分網路及系統服務將暫停服務。</p>\n<p><strong>二、停電時程及影響範圍：</strong></p>\n<div class=\"table-responsive\">\n<table class=\"table table-bordered\">\n<caption style=\"caption-side: top;\">停電時程及主要影響服務一覽表</caption>\n<thead>\n<tr>\n<th scope=\"col\">機房</th>\n<th scope=\"col\">停電時間</th>\n<th scope=\"col\">主要影響服務</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>大港機房</td>\n<td>115年9月18日(五)17時至9月20日(日)23時止</td>\n<td>永華市政中心教育局無線網路及網路電話、原臺南市學校對外網路、使用OpenID登入之服務系統</td>\n</tr>\n<tr>\n<td>五妃機房</td>\n<td>115年9月24日(四)17時至9月28日(一) 23時止(中秋連假)</td>\n<td>本市教育學術網路機房各項服務系統、使用OpenID登入之服務系統、本局各連線單位、原臺南縣學校對外網路</td>\n</tr>\n<tr>\n<td>大港機房</td>\n<td>115年10月23日(五)17時至10月26日(一)23時止。(光復節連假)</td>\n<td>永華市政中心教育局無線網路及網路電話、原臺南市學校對外網路、使用OpenID登入之服務系統</td>\n</tr>\n</tbody>\n</table>\n</div>\n<p><strong>(一)大港機房停電期間，影響服務如下：</strong></p>\n<ol>\n<li>永華市政中心教育局無線網路及網路電話。</li>\n<li>原臺南市學校對外網路。</li>\n<li>使用OpenID登入之各項服務系統，例如無線網路、布可星球、布可小星球、因雄崛起、電子郵件等。</li>\n<li>原臺南縣學校對外網路因接入五妃機房，故不受影響。</li>\n</ol>\n<p><strong>(二)五妃機房停電期間，影響服務如下：</strong></p>\n<ol>\n<li>本市教育學術網路機房各項服務系統。</li>\n<li>使用OpenID登入之各項服務系統，例如無線網路、布可星球、布可小星球、因雄崛起、電子郵件等。</li>\n<li>本局各連線單位。</li>\n<li>原臺南縣學校對外網路。</li>\n<li>原臺南市學校對外網路因接入大港機房，故不受影響。</li>\n</ol>\n<p><strong>三、復電注意事項：</strong><br/>\r\n上述停電時間為預定作業時程，實際復電時間將依現場施工進度及安全檢查結果辦理。倘工程提前完成，將視作業情形提前恢復供電；如施工期間遇特殊狀況，復電時間亦可能順延，請各單位留意相關服務恢復情形。</p>\n<p><strong>四、停電期間替代登入方式：</strong><br/>\r\n停電期間，各校若有使用教育部相關教學平台，可先改用教育雲端帳號登入，提供登入教學方式，請參閱<a href=\"https://tnit.tn.edu.tw/modules/tadnews/index.php?nsn=91\">教育雲端帳號登入教學說明</a>。</p>\n<p><strong>五、請各單位及學校提前做好相關應變措施，並依上述停電時程預先調整教學及行政業務安排，以降低服務中斷所造成之影響。</strong></p>\n<p><strong>六、本公告請有分校的學校轉知。</strong></p>\n<p><strong>七、停電及施工期間如造成不便，敬請見諒，並感謝各單位及學校之配合。</strong></p>\n</div>",
         "attachments": []
     },
     {
-        "date": "2026-09-14",
-        "category": "行政",
+        "date": "2026-09-15",
+        "category": "宣導",
         "source": "教務處",
-        "title": "臺南市立崇明國民中學115學年度第一學期代收代辦費須知",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=730&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<h3>тБ╣сђЂу╣│У▓╗ТЎѓжќЊУѕЄТќ╣Т│Ћ</h3>\n<ol class=\"list-unstyled ps-0\">\n<li class=\"mb-2\"><strong>СИђсђЂу╣│У▓╗ТюЪжЎљ№╝џ</strong>СЙЮуЁДу╣│У▓╗тќ«СИіТюЪжЎљжђ▓УАїу╣│С║ц<strong><span style=\"color:#c0392b;\">(уИйтІЎУЎЋжаљУеѕТќ╝9Тюѕт║Ћ10ТюѕтѕЮуЎ╝ТћЙ)</span></strong></li>\n<li class=\"mb-2\"><strong>С║їсђЂу╣│У▓╗Тќ╣т╝Ј№╝џ</strong>УФІТїЂу╣│У▓╗тќ«УЄ│7-11сђЂУљіуѕЙт»їсђЂOKсђЂтЁет«ХСЙ┐тѕЕтЋєт║ЌсђЂжЃхт▒ђуГЅ(ТЅІу║їУ▓╗тЮЄуѓ║6тЁЃ)№╝ЏС║дтЈ»С╗ЦС┐АућетЇАATMУйЅтИ│сђѓ\r\n\t<ul class=\"list-unstyled ps-4 mt-2\">\n<li class=\"mb-1\">(СИђ)у╣│ТгЙтЙїТћХТЊџуггСИђсђЂС║їУЂ»УФІтІЎт┐ЁУЄфУАїтдЦуѓ║С┐ЮтГў№╝їС╗ЦСЙ┐ТЪЦТаИТЎѓжаѕу╣│тЏъсђѓ</li>\n<li class=\"mb-1\">(С║ї)УІЦжЂ║тц▒тГИТаАтЇ░УБйС╣Іу╣│ТгЙтќ«УђЁ№╝їтІЎт┐ЁтЏътГИТаАуИйтІЎУЎЋтЄ║у┤ЇухёУБютќ«сђѓ</li>\n<li class=\"mb-1\">(СИЅ)ТюЅжЌюу╣│ТгЙтќ«тЋЈжАї№╝їУФІТ┤йУЕбТюгТаАтЄ║у┤Їухё(УЂ»ухАжЏ╗УЕ▒№╝џ06-2907261УйЅ833)сђѓ</li>\n</ul>\n</li>\n</ol>\n<h3>У▓│сђЂу╣│У▓╗УффТўј№╝џ</h3>\n<ol class=\"list-unstyled ps-0\">\n<li class=\"mb-2\"><strong>СИђсђЂС╗БТћХС╗БУЙдУ▓╗№╝џ</strong>СИђсђЂС║їсђЂСИЅт╣┤у┤џУЕ│у┤░ТћХУ▓╗тдѓСИІсђѓтљѕТќ╝ућ│УФІТИЏтЁЇУ▓╗ућеУђЁ(СйјТћХтЁЦТѕХсђЂСИГСйјТћХтЁЦТѕХсђЂтГИућЪТѕќт«ХжЋиУ║ФжџюсђЂтјЪСйЈТ░Љ)у╣│С║цС╣ІУ▓╗уће№╝їС╗Цу╣│ТгЙтќ«ТЅђтѕЌжЄЉжАЇуѓ║Т║ќсђѓ</li>\n<li class=\"mb-2\"><strong>С║їсђЂ</strong>СИђт╣┤у┤џТюЅтЈЃтіаТќ░ућЪУеЊуи┤ТЌЦТюЃтіаТћХтЇѕжцљУ▓╗80тЁЃсђѓ</li>\n<li class=\"mb-2\"><strong>СИЅсђЂ</strong>уггтЁФу»ђУ╝ћт░јУф▓тЈіТџЉТюЪтГИУЌЮТ┤╗тІЋТјАУЄфућ▒та▒тљЇтЈЃтіа№╝їТюЅтЈЃтіаУђЁТЅЇжюђу╣│С║цУ▓╗ућесђѓ</li>\n</ol>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "115-1С╗БТћХС╗БУЙдУ▓╗жаѕуЪЦ.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115-1С╗БТћХС╗БУЙдУ▓╗жаѕуЪЦ.pdf&files_sn=637"
-            }
-        ]
+        "title": "舊版 Mail2000 郵件系統訂於 9 月 19 日關閉",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=778&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>教育局新版電子郵件系統目前運作穩定。<a href=\"https://mail.tn.edu.tw\">前往教育局新版電子郵件系統</a></p>\n<p>舊版 Mail2000 郵件系統原訂於 6 月 19 日關閉，考量部分使用者未在期限內完成信件同步，服務已延長至 9 月 19 日止。<br/>\r\n屆時舊版系統將正式停止服務，並無法再進行通訊錄與信件之匯出。</p>\n</div>",
+        "attachments": []
     },
     {
-        "date": "2026-09-14",
-        "category": "簡章",
-        "source": "教務處",
-        "title": "115年度第2次原住民族語言能力認證測驗即日起報名，至9月30日止，敬請踴躍報名參加。",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=729&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<ol class=\"ps-3 mb-3\">\n<li class=\"mb-2\">「115年度第2次原住民族語言能力認證測驗」由原住民族委員會及財團法人原住民族語言研究發展基金會委託國立臺灣師範大學辦理。報名期間即日起至<strong><span style=\"color:#c0392b;\">9月30日（星期三）</span></strong>止，<strong><span style=\"color:#c0392b;\">測驗日期訂於115年12月5日（星期六）舉行</span></strong>。</li>\n<li class=\"mb-2\">本測驗級別分為初級、中級、中高級、高級及優級，報名資格不限國籍、族別、年齡及學歷。簡章及相關測驗資訊可至<a href=\"https://exam.sce.ntnu.edu.tw/abst/\">115年度第2次原住民族語言能力認證測驗網站</a>查詢下載，或洽考生免付費服務專線：0800-699-566、(02)7749-3664，亦可加入本認證LINE官方帳號（@107abst）掌握最新資訊。</li>\n<li class=\"mb-2\">另為提供更便利之測驗管道，自115年8月起原住民族語言能力認證新增初級、中級<strong><span style=\"color:#c0392b;\">「在地（到鄉、到校）測驗」</span></strong>，並建立「即測即評即發證」制度（詳情可至<a href=\"https://cwt-exam.csf.org.tw/\">原住民族語言能力認證在地測驗網站</a>查詢）。此外，<strong><span style=\"color:#c0392b;\">自116年起全國性測驗將由每年辦理2次調整為每年1次</span></strong>（於12月辦理）。</li>\n<li class=\"mb-2\">欲報名之師生請洽教務處註冊組登記。</li>\n</ol>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "11 5年度第2次原住民族語言能力認證測驗.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=11 5年度第2次原住民族語言能力認證測驗.pdf&files_sn=636"
-            }
-        ]
-    },
-    {
-        "date": "2026-09-14",
-        "category": "研習",
-        "source": "教務處",
-        "title": "臺南市新興科技中心辦理 115 學年度第1學期「科技領域素養導向暨多元課程教材」教師研習，歡迎本校有興趣教師報名參與",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=728&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<ol class=\"list-unstyled ms-3\">\n<li class=\"mb-2\">一、依據臺南市政府教育局115年8月3日南市教課 （一）字第 115118770號辦理新興自造教育及科技中心研習活動。</li>\n<li class=\"mb-2\">二、辦理單位：新興科技中心。</li>\n<li class=\"mb-2\">三、研習地點：新興科技中心創意教室。</li>\n<li class=\"mb-2\">四、研習相關訊息：\r\n\t<ul class=\"list-unstyled ms-3 mt-1\">\n<li class=\"mb-1\">(一)研習日期：115年9月30日（三）9：00─12：00，課程名稱：居家修繕─電動工具與用電安全，臺南市學習護照代碼：321693。</li>\n<li class=\"mb-1\">(二)研習日期：115年10月14日（三）9：00─12：00，課程名稱：居家修繕─基礎水電實務，臺南市學習護照代碼：321694。</li>\n<li class=\"mb-1\">(三)研習日期：115年11月25日（三）9：00─12：00，課程名稱：居家修繕─矽利康、五金與油漆修繕實務，臺南市學習護照代碼：321695。</li>\n<li class=\"mb-1\">(四)研習日期：115年12月30日（三）9：00─12：00，課程名稱：實體電子卡片 DIY 工作坊，臺南市學習護照代碼：321696。</li>\n<li class=\"mb-1\">(五)研習日期：116年1月6日（三）9：00─12：00，課程名稱：電的形象─繪畫產生互動體驗工作坊，臺南市學習護照代碼：321697。</li>\n<li class=\"mb-1\">(六)研習日期：116年1月13日（三）9：00─12：00，課程名稱：CNC木質印章，臺南市學習護照代碼：321704。</li>\n</ul>\n</li>\n<li class=\"mb-2\">五、報名日期：115年9月16日起，請至臺南市學習護照進行報名。</li>\n<li class=\"mb-2\">六、參與人員：依場地及材料限制各場次研習人數請參照研習網訊息，按身分別及報名先後順序錄取或備取，研習前一週確認名單，若符合報名資格之名額已滿時提前截止報名，請至臺南市學護照或收 email 信件確認錄取。</li>\n<li class=\"mb-2\">七、研習對象依序：\r\n\t<ul class=\"list-unstyled ms-3 mt-1\">\n<li class=\"mb-1\">(一)臺南市新興自造教育及科技中心專業工作人員教師群。</li>\n<li class=\"mb-1\">(二)臺南市新興自造教育及科技中心合作推動學校教師。</li>\n<li class=\"mb-1\">(三)臺南市各國中小科技教師。</li>\n<li class=\"mb-1\">(四)臺南市各國中小教師有興趣之教師。</li>\n</ul>\n</li>\n<li class=\"mb-2\">八、注意事項：材料工具有限，恕不接受現場報名，已錄取人員請全程參與，無法全程參與者請勿報名，錄取後未到者備案，請學員衡量課表規劃再行報名。</li>\n<li class=\"mb-2\">九、承辦人員：新興國中科技中心副召林彥佑，信箱：yenyolin@tn.edu.tw。</li>\n</ol>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "新興科技中心-公文.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=新興科技中心-公文.pdf&files_sn=635"
-            }
-        ]
-    },
-    {
-        "date": "2026-09-11",
+        "date": "2026-09-15",
         "category": "活動",
         "source": "學務處",
-        "title": "2027里港玉賢宮-第一屆元宵燈籠藝術季活動",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=727&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>Т┤╗тІЋУЙдТ│ЋтдѓжЎёС╗Х</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "2027 жЄїТИ»ујЅУ│бт««уггСИђт▒єтЁЃт«хуЄѕу▒аУЌЮУАЊтГБ.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2027 жЄїТИ»ујЅУ│бт««уггСИђт▒єтЁЃт«хуЄѕу▒аУЌЮУАЊтГБ.pdf&files_sn=634"
-            }
-        ]
-    },
-    {
-        "date": "2026-09-11",
-        "category": "簡章",
-        "source": "輔導室",
-        "title": "南華大學傑出校友遴選辦法",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=725&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><strong>主旨：</strong>檢送本校傑出校友遴選辦法暨115學年度傑出校友推薦表，即日起受理各界推薦有優異成就或特殊貢獻的校友，請查照。</p>\n<p><strong>說明：</strong></p>\n<p>一、依本校傑出校友遴選辦法第二條規定，本校傑出校友分為：學術成就類、工商經營類、社會暨宗教服務類、藝文體育類、公共服務類、捐資興學類及其他類。敬請惠予推薦符合本校傑出校友遴選辦法所列具體事蹟之本校畢業校友。</p>\n<p>二、推薦書暨相關資料、證明文件請於115年11月30日前(郵戳為憑)，逕寄至本校學務處校友服務中心。</p>\n<p>三、「南華大學傑出校友遴選辦法」、「115學年度傑出校友推薦表」、「南華大學校友個人資料保護聲明及肖像權同意使用說明書」逕自至<a href=\"https://reurl.cc/QNYR7b\">本校學務處校友服務中心網站</a>下載。</p>\n<p>四、傑出校友經本校遴選委員會審查通過並核定後公告當選名單，將於本校校慶典禮公開表揚。</p>\n</div>",
+        "title": "【真假世界・由我定義】－真相金手套防詐桌遊教學回饋計畫活動辦法",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=776&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<p>一、 依據臺灣求知育文化協會115年8月24日知協字第1150821-1號函辦理。</p>\n<p>二、 旨揭活動相關細節請參閱<a href=\"https://lohas-edu.org/2026-promotion/\">該會官方網站</a>。計畫所提供之《完全比賽》防詐桌遊電子版及《防詐大聯盟》教案資源皆為開源授權，免費提供各級學校<a href=\"https://user333801.pse.is/96dvhk\">下載與使用</a>。</p>\n<p>三、 本活動教學回饋上傳期間自即日起至民國115年11月27日止。為獎勵積極推廣防詐教育之教師，凡於期限內完成教案實施與<a href=\"https://pse.is/96fvww\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">回饋</a>，該會將提供相應獎勵金。</p>\n</div>",
         "attachments": []
     },
     {
-        "date": "2026-09-11",
-        "category": "研習",
+        "date": "2026-09-15",
+        "category": "傑出校友",
         "source": "輔導室",
-        "title": "轉知臺南市政府衛生局辦理青少年心理健康講座",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=724&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<p>一、依據115年「強化社會安全網計畫2.0」─強化精神疾病、自殺防治、藥癮個案及加害人處遇服務計畫辦理。</p>\n<p>二、講座主題以強化青少年心理健康並增進家長、教師及相關照顧者對青少年心理健康議題之認識，提升情緒辨識、溝通互動及支持陪伴能力，建立家庭、學校與社區共同促進青少年心理健康之支持網絡。</p>\n<p>三、本次講座全程免費，並採事先報名制，額滿為止，資訊如下：</p>\n<p>(一)主題：「對話404─找不到共識？」親子對話與溝通技巧講座。</p>\n<p>(二)時間：115年9月19日（星期六）上午10時至12時。</p>\n<p>(三)地點：臺南市立仁德圖書館3樓教室。（臺南市仁德區仁義里正義一街39號）</p>\n<p>(四)講師：禾覓心理諮商所毛惠瑩社工師。</p>\n<p>四、線上報名：請至<a href=\"https://reurl.cc/jVrD3p\">親子對話與溝通技巧講座線上報名系統</a>，聯絡人：林心輔員，聯絡電話：06-5955525分機203。</p>\n</div>",
+        "title": "第五屆醫療服務類當選人-卓龍翔(國軍高雄總醫院外科加護病房主治醫師)",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=87&content_id=775&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><img alt=\"\" class=\"img-fluid\" role=\"presentation\" src=\"https://www.cmjh.tn.edu.tw/uploads/school/image/5/87/5.jpg\" style=\"width: 500px; height: 707px;\"/></p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
         "attachments": []
     },
     {
-        "date": "2026-09-11",
-        "category": "研習",
-        "source": "教務處",
-        "title": "臺南市和順自造教育及科技中心115學年度第1學期辦理「科技領域教師研習」，歡迎本校有興趣教師報名參與",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=723&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：<br/>\r\n一、依據教育部國民及學前教育署 115 年 6 月 22 日臺教授國部字第 1155501836 號函、臺南市政府教育局 115 年 8 月 3 日南市教課(一)字第 1151186770 號函辦理。<br/>\r\n二、旨揭研習計畫詳如附件。<br/>\r\n三、研習對象：<br/>\r\n(一)臺南市和順自造教育及科技中心專業工作人員教師群。<br/>\r\n(二)臺南市和順自造教育及科技中心合作推動學校教師。<br/>\r\n(三)臺南市安南區、安平區各國中小有興趣教師，以任科技領域課程教師優先錄取。<br/>\r\n(四)臺南市各國中小教師有興趣教師，以任教科技領域課程教師優先取。<br/>\r\n四、研習地點：臺南市和順自造教育及科技中心（臺南市安南區安和路5段84巷66號）。<br/>\r\n五、報名方式：<br/>\r\n(一)請至學習護照系統報名，報名截止日為各場次研習前一天，依身分別及報名先後順序錄取或備取，報名人數過多時，限定一校一人參加，若符合報名資格之名額已滿，則提前截止報名。<br/>\r\n(二)量疫情個人安全距離與材料器材有限，恕不接受現場報名參加，完成研習後核予研習時數，活動當天請給予公（差）假登記。<br/>\r\n(三)研習日期若有調整時，請留意<a href=\"https://www.facebook.com/hsjhmaker\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">和順自造中心的臉書粉絲團最新公告訊息</a>。<br/>\r\n六、注意事項：<br/>\r\n(一)為響應環保及撙節費用，煩請自備杯具。<br/>\r\n(二)為珍惜教育資源，報名後倘未能出席者請於研習前事先告知。<br/>\r\n(三)若有任何問題請洽聯絡人：臺南市和順科技中心周育如副召集人，聯繫電話：06-3551440轉118。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "和順計畫.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=和順計畫.pdf&files_sn=632"
-            },
-            {
-                "name": "和順公文.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=和順公文.pdf&files_sn=633"
-            }
-        ]
+        "date": "2026-09-15",
+        "category": "傑出校友",
+        "source": "輔導室",
+        "title": "第五屆藝文表演類當選人-黃蔚傑(自由音樂表演工作者)",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=87&content_id=774&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><img alt=\"\" class=\"img-fluid\" role=\"presentation\" src=\"https://www.cmjh.tn.edu.tw/uploads/school/image/5/87/1-2.jpg\" style=\"width: 500px; height: 707px;\"/></p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": []
     },
     {
-        "date": "2026-09-11",
-        "category": "一般",
-        "source": "人事室",
-        "title": "115年地方公職人員選舉，為因應合併全國性公民投票案第22案同日舉行投票，中西區區公所投開票所尚缺乏工作人員，請同仁踴躍報名參加",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=6&zone_id=0&page_id=48&content_id=721&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>115年地方公職人員選舉，為因應合併全國性公民投票案第22案同日舉行投票，中西區區公所投開票所尚缺乏工作人員，請同仁踴躍報名參加。</p>\n<p><strong>說明：</strong></p>\n<ol>\n<li>依據臺南市選舉委員會115 年5 月4 日南市選一字第1153150039號函暨115年9月1日南市選一字第1150001341號函辦理。</li>\n<li>投開票所工作人員依「中央選舉委員會選舉工作費支給表」核發工作費。主任管理員3,900元，主任監察員3,200元，管理員2,550元，監察員2,300元，預備員2,000元。</li>\n<li>投開票工作人員，除依規定發給投票日工作費外，並依臺南市選舉委員會115年8月20日南市選一字第1153150139號函示，參加選務工作人員給予<span style=\"font-size: 1.167rem;\"><span style=\"color:#e74c3c;\"><strong>補假2天</strong></span></span>，請廣為宣導並鼓勵現任公教人員參加。</li>\n<li>投開票所管理員均以年滿18歲以上者始可擔任，服替代役之役男依法不得擔任投開票所工作人員。</li>\n<li>被推薦之工作人員由本所遴派至本區投開票所擔任主任管理員、主任監察員、管理員或預備員，投開票所工作人員均須參加區公所辦理之投開票所工作人員講習，講習後之交通費200元（將與投票日工作費一併發放）及核發學習時數3小時，<span style=\"font-size: 1.167rem;\"><strong><span style=\"color:#e74c3c;\">講習會預定於115年10月底至11月中</span></strong></span>辦理，屆時由本所另函通知被推薦之工作人員。有意參加者請於<span style=\"font-size: 1.167rem;\"><span style=\"color:#e74c3c;\"><strong>9月16日前</strong></span></span>向本室提出申請。</li>\n</ol>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "中西區公所.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=中西區公所.pdf&files_sn=628"
-            },
-            {
-                "name": "臺南市選舉委員會-2.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市選舉委員會-2.pdf&files_sn=629"
-            },
-            {
-                "name": "115年地方公職人員選舉暨全國性公民投票案各單位推薦投開票所工作人員名冊-空白.ods",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115年地方公職人員選舉暨全國性公民投票案各單位推薦投開票所工作人員名冊-空白.ods&files_sn=630"
-            },
-            {
-                "name": "臺南市選舉委員會-115.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市選舉委員會-115.pdf&files_sn=631"
-            }
-        ]
+        "date": "2026-09-15",
+        "category": "傑出校友",
+        "source": "輔導室",
+        "title": "第五屆傑出校友當選名單",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=87&content_id=773&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><img alt=\"\" class=\"img-fluid\" role=\"presentation\" src=\"https://www.cmjh.tn.edu.tw/uploads/school/image/5/87/%E5%B4%87%E6%98%8E%E5%9C%8B%E4%B8%AD%E7%AC%AC%E4%BA%94%E5%B1%86%E5%82%91%E5%87%BA%E6%A0%A1%E5%8F%8B%E5%85%AC%E5%91%8A.jpg\" style=\"width: 550px; height: 778px;\"/></p>\n</div>",
+        "attachments": []
     },
     {
-        "date": "2026-09-11",
-        "category": "活動",
-        "source": "教務處",
-        "title": "財團法人九九文教基金會承辦美國數學協會（MAA）所屬AMC測驗中心「2026年全美中學數學分級能力測驗 AMC 10A/12A 及 AMC 10B/12B」臺灣區測驗",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=719&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、測驗參加資格如下：</p>\n<p style=\"margin-left: 40px;\">(一) AMC 10A / 10B：全國高中職一年級（10年級）以下（含）在學學生。</p>\n<p style=\"margin-left: 40px;\">(二) AMC 12A / 12B：全國高中職三年級（12年級）以下（含）在學學生。</p>\n<p>二、報名時間：2026年9月18日（星期五）~ 2026年9月30日（星期三）</p>\n<p>三、考試日期與時間：</p>\n<p style=\"margin-left: 40px;\">(一) AMC10A / 12A：2026年11月6日（星期五）晚上。</p>\n<p style=\"margin-left: 40px;\">(二) AMC10B / 12B：2026年11月14日（星期六）上午。</p>\n<p>四、報名方式：採網路報名，詳細報名方式、流程及相關規定請參閱測驗簡章及本會官網公告。</p>\n<p>五、各考場容納人數有限，如欲選擇之考場名額已滿，請改選其他尚有名額之考場。</p>\n<p>六、未設考區之縣市，如報名人數達一定規模，得視實際需求增設考區；有相關需求者請與本會聯繫，詳細規定請參閱測驗簡章。</p>\n<p>七、檢附活動簡章。</p>\n<p>八、本項測驗相關資訊以測驗簡章及本會官網公告為準；如美方主辦單位嗣後對測驗方式、規定或其他事項有所調整或補充，本會將配合於官網公告。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "2026年全美中學數學分級能力測驗活動簡章.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2026年全美中學數學分級能力測驗活動簡章.pdf&files_sn=623"
-            }
-        ]
+        "date": "2026-09-15",
+        "category": "傑出校友",
+        "source": "輔導室",
+        "title": "第四屆藝文表演類當選人-何宇森(復興美工教師暨知名藝術創作家)",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=87&content_id=772&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><img alt=\"\" class=\"img-fluid\" role=\"presentation\" src=\"https://www.cmjh.tn.edu.tw/uploads/school/image/5/87/2.jpg\" style=\"width: 500px; height: 707px;\"/></p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": []
+    },
+    {
+        "date": "2026-09-15",
+        "category": "傑出校友",
+        "source": "輔導室",
+        "title": "第四屆藝文表演類當選人-詹秉翔(臺北市立國樂團副指揮)",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=87&content_id=771&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><img alt=\"\" class=\"img-fluid\" role=\"presentation\" src=\"https://www.cmjh.tn.edu.tw/uploads/school/image/5/87/1.jpg\" style=\"width: 500px; height: 707px;\"/></p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": []
+    },
+    {
+        "date": "2026-09-15",
+        "category": "傑出校友",
+        "source": "輔導室",
+        "title": "第四屆傑出校友當選名單",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=87&content_id=770&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><img alt=\"\" class=\"img-fluid\" role=\"presentation\" src=\"https://www.cmjh.tn.edu.tw/uploads/school/image/5/87/%E5%B4%87%E6%98%8E%E5%9C%8B%E4%B8%AD%E7%AC%AC%E5%9B%9B%E5%B1%86%E5%82%91%E5%87%BA%E6%A0%A1%E5%8F%8B.jpg\" style=\"width: 550px; height: 778px;\"/></p>\n</div>",
+        "attachments": []
     }
 ]
