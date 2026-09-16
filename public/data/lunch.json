@@ -1,30 +1,30 @@
 {
-    "last_updated": "2026-09-15 08:21:17",
+    "last_updated": "2026-09-16 07:59:55",
     "items": [
         {
             "category": "主食",
-            "name": "燕麥飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020150992"
+            "name": "豚骨味噌拉麵",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1739498077099894"
         },
         {
             "category": "主菜",
-            "name": "鹽水雞",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1590636421108472"
+            "name": "CAS溏心蛋",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074705023523"
         },
         {
             "category": "副菜",
-            "name": "豉汁豆腐",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807957007522"
+            "name": "奶酥麵包",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074643018655"
         },
         {
             "category": "蔬菜",
-            "name": "有機奶油白菜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074680019976"
+            "name": "高麗菜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1542697407128915"
         },
         {
-            "category": "湯品",
-            "name": "關東煮",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1421895205126338"
+            "category": "附餐",
+            "name": "優格",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1761709761074840"
         }
     ]
 }
