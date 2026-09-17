@@ -1,30 +1,35 @@
 {
-    "last_updated": "2026-09-17 08:10:06",
+    "last_updated": "2026-09-18 07:56:20",
     "items": [
         {
             "category": "主食",
-            "name": "糙米飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144959"
+            "name": "小米飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020151003"
         },
         {
             "category": "主菜",
-            "name": "養生菇茄汁蛋",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807959007581"
+            "name": "佛跳牆",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1524793349349535"
         },
         {
             "category": "副菜",
-            "name": "沙茶四寶",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1461801772217293"
+            "name": "雙色花生",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1411369446267617"
         },
         {
             "category": "蔬菜",
-            "name": "花花世界",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807959007582"
+            "name": "紅蘿蔔炒青江",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1761709734056433"
         },
         {
             "category": "湯品",
-            "name": "虱目魚瓜綿湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807959007583"
+            "name": "營養蔬菜湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807959009681"
+        },
+        {
+            "category": "附餐",
+            "name": "香梨",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807932007502"
         }
     ]
 }
