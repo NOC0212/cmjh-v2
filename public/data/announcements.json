@@ -77,14 +77,36 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=校長室報告.pdf&files_sn=640"
             },
             {
-                "name": "學務處宣導資料.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=學務處宣導資料.pdf&files_sn=614"
+                "name": "教務處宣導資料.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=教務處宣導資料.pdf&files_sn=713"
             },
             {
                 "name": "輔導室宣導資料.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=輔導室宣導資料.pdf&files_sn=613"
+            },
+            {
+                "name": "學務處宣導資料.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=學務處宣導資料.pdf&files_sn=614"
             }
         ]
+    },
+    {
+        "date": "2026-09-17",
+        "category": "宣導",
+        "source": "學務處",
+        "title": "轉知運動部全民運動署製作之水域運動安全宣導影片，請各校加強推廣運用",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=794&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<p>一、依據本府體育局115 年 9 月 15 日南市體全字第 1151403003 號函辦理。</p>\n<p>二、為加強宣導水域運動安全知能，防範溺水事件發生並深植安全防護觀念，請各校協助運用多元管道推廣播放相關宣導影片，提醒親師生注意戲水安全。</p>\n<p>三、宣導影片主題（共 2 支）：</p>\n<p>海灘危險辨識與自救：辨識三種容易被忽略的海灘危險，並提供對應的自救與預防知識。</p>\n<p>正確岸上救援五步驟：教導「不會游泳也能救人」的觀念與步驟，避免因貿然下水救人而發生雙重溺水憾事。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": []
+    },
+    {
+        "date": "2026-09-17",
+        "category": "一般",
+        "source": "人事室",
+        "title": "轉行政院人事行政總處官網業公告「公務AI共通核心能力認證」民間認證機構考證資訊。",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=6&zone_id=0&page_id=48&content_id=793&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>行政院人事行政總處官網業公告「公務AI共通核心能力認證」民間認證機構考證資訊。</p>\n<p><strong>說明：</strong></p>\n<p>一、依據行政院人事行政總處(以下簡稱人事總處)115年9月9日總處授發字第1150800325號函辦理。</p>\n<p>二、旨揭認證採「70/30雙軌採認模式」，結合民間具公信力既有AI鑑定項目(70%)，並融合公務客製核心素養項目(占30%)；測驗主題聚焦於AI政策法規、機敏資料防護、資安風險管理、倫理準則等實務應用安全防線，確保公務同仁兼具技術操作與法制合規能力。</p>\n<p>三、另旨揭認證預定本年9月底前，由財團法人中華民國電腦技能基金會、財團法人台灣人工智慧學校基金會及財團法人資訊工業策進會等3家認證機構開辦公務人員專場考試，相關考證報名網址、場次、公務優惠價及學習資源等，已公告於人事總處官網<a href=\"https://www.dgpa.gov.tw/mp/informationlist?uid=904&amp;mid=903\">AI公務人才發展辦公室專區</a>，請轉知並鼓勵同仁踴躍報考。</p>\n<p>四、凡參加測驗且通過認證者，由發證機構核發效期2年電子證書，將自動介接WebHR人事資訊系統，並可至「公務人員個人資料服務網(MyData)」個人專長技能查詢。</p>\n</div>",
+        "attachments": []
     },
     {
         "date": "2026-09-16",
@@ -274,24 +296,6 @@
         "title": "教育局辦理「B5-2生成式AI融入學科領域教學工作坊(國語文)」",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=781&type=news&from_op=all_news",
         "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據教育部115年5月5日臺教資(三)字第1152701317號函辦理。</p>\n<p>二、旨揭工作坊資訊如下：</p>\n<ol>\n<li>研習時間：115年10月21日(星期三)13:30-16:30及115年10月28日(星期三)13:30-16:30，共2個半天。</li>\n<li>研習地點：和順國中2樓自造教育與科技中心(安南區安和路五段84巷66號)。</li>\n<li>報名方式：請至<a href=\"https://forms.gle/x7juD84SF4CMGEha8\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">工作坊 Google 表單</a>報名。</li>\n</ol>\n<p>三、注意事項:</p>\n<p><strong>(一) 須於本次工作坊前完成【B5-1生成式AI與教育應用工作坊】，並檢附研習時數截圖證明於報名時提供。</strong></p>\n<p><strong>(二) 本場研習為2個半天，皆須全程參與始能核予研習時數。</strong></p>\n<p><strong>(三) 本次工作坊為達實作之成效，敬請參與學員自行攜帶筆記型電腦。</strong></p>\n<p>四、請惠予參與教師公(差)假登記及課務派代。</p>\n<p>五、如有相關疑問，請洽本局數位學習推動辦公室 邱珮瑜 小姐，網電：69191，市話：2130669分機483</p>\n</div>",
-        "attachments": []
-    },
-    {
-        "date": "2026-09-15",
-        "category": "研習",
-        "source": "教務處",
-        "title": "教育局辦理B3數位教學指引培力工作坊，請踴躍報名參加。",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=780&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據教育部115年5月5日臺教資(三)字第1152701317號函辦理。</p>\n<p>二、旨揭工作坊資訊如下:</p>\n<p><strong>(一) 場次一</strong></p>\n<p>1. 辦理日期: 115年9月23日(星期三)13:00~16:00。</p>\n<p>2. 辦理地點: 賢北國小2樓會議室(北區賢北里大興街599號)。</p>\n<p>3. 報名方式: 請至全教網報名，課程代碼【5710831】。</p>\n<p><strong>(二) 場次二 </strong></p>\n<p>1. 辦理日期: 115年10月7日(星期三)13:00~16:00。</p>\n<p>2. 辦理地點: 鹽水國小視廳教室(鹽水區水秀里9鄰朝琴路137號)。</p>\n<p>3. 報名方式: 請至全教網報名，課程代碼【5714926】。</p>\n<p><strong>(三) 場次三 </strong></p>\n<p>1. 辦理日期: 115年10月12日(星期一)9:00~12:00。</p>\n<p>2. 辦理地點: 金城國中A棟二樓電腦教室(三)(安平區建平里17鄰怡平路8號)。</p>\n<p>3. 報名方式: 請至全教網報名，課程代碼【5715617】。</p>\n<p><strong>(四) 場次四</strong></p>\n<ol>\n<li>辦理日期: 115年10月30日(星期五)9:00至12:00。</li>\n<li>辦理地點: 資訊中心3樓電腦教室(中西區五妃街236-1號)。</li>\n<li>報名方式: 請至全教網報名，課程代碼【5715073】。</li>\n</ol>\n<p><strong>(五) 場次五</strong></p>\n<ol>\n<li>辦理日期: 115年11月18日(星期三)13:30至16:30。</li>\n<li>辦理地點: 資訊中心3樓電腦教室(中西區五妃街236-1號)。</li>\n<li>報名方式: 請至全教網報名，課程代碼【5715857】。</li>\n</ol>\n<p><strong>(六) 場次六</strong></p>\n<ol>\n<li>辦理日期: 115年11月20日(星期五)9:00至12:00。</li>\n<li>辦理地點: 資訊中心3樓電腦教室(中西區五妃街236-1號)。</li>\n<li>報名方式: 請至全教網報名，課程代碼【5715898】。</li>\n</ol>\n<p><strong>(七) 場次七</strong></p>\n<ol>\n<li>辦理日期: 115年12月2日(星期三)13:30至16:30。</li>\n<li>辦理地點: 資訊中心3樓電腦教室(中西區五妃街236-1號)。</li>\n<li>報名方式: 請至全教網報名，課程代碼【5716549】。</li>\n</ol>\n<p><strong>(八) 場次八</strong></p>\n<ol>\n<li>辦理日期: 115年12月9日(星期三)13:30至16:30。</li>\n<li>辦理地點: 資訊中心3樓電腦教室(中西區五妃街236-1號)。</li>\n<li>報名方式: 請至全教網報名，課程代碼【5716557】。</li>\n</ol>\n<p><strong>(九) 場次九</strong></p>\n<ol>\n<li>辦理日期: 115年12月16日(星期三)13:30至16:30。</li>\n<li>辦理地點: 資訊中心3樓電腦教室(中西區五妃街236-1號)。</li>\n<li>報名方式: 請至全教網報名，課程代碼【5716563】。</li>\n</ol>\n<p>三、請惠予參與教師公(差)假登記及課務派代。</p>\n<p>四、注意事項: 請務必先至全教網報名，如符合報名資格之名額額滿，將提前截止報名。全程參與者始能核予研習時數，本研習恕不受理現場報名。</p>\n<p>五、如有相關疑問，請洽本局數位學習推動辦公室 邱珮瑜小姐，網電：69191，市話2130669分機483</p>\n</div>",
-        "attachments": []
-    },
-    {
-        "date": "2026-09-15",
-        "category": "宣導",
-        "source": "教務處",
-        "title": "檢送「五妃及大港機房基礎電力設施改善停電作業」各項系統及網路服務中斷通知",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=779&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><strong>一、辦理緣由：</strong><br/>\r\n為辦理「115年臺南市政府教育局機房基礎環境改善資訊服務案」，資訊中心將進行五妃及大港機房基礎電力及環境設施改善工程。施工期間為維護人員安全及避免設備因電力不穩定造成故障或資料損毀，相關機房將配合辦理停電作業，屆時部分網路及系統服務將暫停服務。</p>\n<p><strong>二、停電時程及影響範圍：</strong></p>\n<div class=\"table-responsive\">\n<table class=\"table table-bordered\">\n<caption style=\"caption-side: top;\">停電時程及主要影響服務一覽表</caption>\n<thead>\n<tr>\n<th scope=\"col\">機房</th>\n<th scope=\"col\">停電時間</th>\n<th scope=\"col\">主要影響服務</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>大港機房</td>\n<td>115年9月18日(五)17時至9月20日(日)23時止</td>\n<td>永華市政中心教育局無線網路及網路電話、原臺南市學校對外網路、使用OpenID登入之服務系統</td>\n</tr>\n<tr>\n<td>五妃機房</td>\n<td>115年9月24日(四)17時至9月28日(一) 23時止(中秋連假)</td>\n<td>本市教育學術網路機房各項服務系統、使用OpenID登入之服務系統、本局各連線單位、原臺南縣學校對外網路</td>\n</tr>\n<tr>\n<td>大港機房</td>\n<td>115年10月23日(五)17時至10月26日(一)23時止。(光復節連假)</td>\n<td>永華市政中心教育局無線網路及網路電話、原臺南市學校對外網路、使用OpenID登入之服務系統</td>\n</tr>\n</tbody>\n</table>\n</div>\n<p><strong>(一)大港機房停電期間，影響服務如下：</strong></p>\n<ol>\n<li>永華市政中心教育局無線網路及網路電話。</li>\n<li>原臺南市學校對外網路。</li>\n<li>使用OpenID登入之各項服務系統，例如無線網路、布可星球、布可小星球、因雄崛起、電子郵件等。</li>\n<li>原臺南縣學校對外網路因接入五妃機房，故不受影響。</li>\n</ol>\n<p><strong>(二)五妃機房停電期間，影響服務如下：</strong></p>\n<ol>\n<li>本市教育學術網路機房各項服務系統。</li>\n<li>使用OpenID登入之各項服務系統，例如無線網路、布可星球、布可小星球、因雄崛起、電子郵件等。</li>\n<li>本局各連線單位。</li>\n<li>原臺南縣學校對外網路。</li>\n<li>原臺南市學校對外網路因接入大港機房，故不受影響。</li>\n</ol>\n<p><strong>三、復電注意事項：</strong><br/>\r\n上述停電時間為預定作業時程，實際復電時間將依現場施工進度及安全檢查結果辦理。倘工程提前完成，將視作業情形提前恢復供電；如施工期間遇特殊狀況，復電時間亦可能順延，請各單位留意相關服務恢復情形。</p>\n<p><strong>四、停電期間替代登入方式：</strong><br/>\r\n停電期間，各校若有使用教育部相關教學平台，可先改用教育雲端帳號登入，提供登入教學方式，請參閱<a href=\"https://tnit.tn.edu.tw/modules/tadnews/index.php?nsn=91\">教育雲端帳號登入教學說明</a>。</p>\n<p><strong>五、請各單位及學校提前做好相關應變措施，並依上述停電時程預先調整教學及行政業務安排，以降低服務中斷所造成之影響。</strong></p>\n<p><strong>六、本公告請有分校的學校轉知。</strong></p>\n<p><strong>七、停電及施工期間如造成不便，敬請見諒，並感謝各單位及學校之配合。</strong></p>\n</div>",
         "attachments": []
     }
 ]
