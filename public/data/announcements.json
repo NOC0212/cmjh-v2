@@ -28,32 +28,6 @@
         ]
     },
     {
-        "date": "2026-09-01",
-        "category": "活動",
-        "source": "輔導室",
-        "title": "115學年度第一學期 <班級親師會> 訂於9月19日星期六上午辦理，歡迎家長參加 (各處室宣導資料請下載附件閱覽)",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=637&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><img alt=\"\" class=\"img-fluid\" role=\"presentation\" src=\"https://www.cmjh.tn.edu.tw/uploads/school/image/5/39/20260901085121_ZhNi.png\"/></p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "校長室報告.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=校長室報告.pdf&files_sn=640"
-            },
-            {
-                "name": "教務處宣導資料.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=教務處宣導資料.pdf&files_sn=713"
-            },
-            {
-                "name": "輔導室宣導資料.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=輔導室宣導資料.pdf&files_sn=613"
-            },
-            {
-                "name": "學務處宣導資料.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=學務處宣導資料.pdf&files_sn=614"
-            }
-        ]
-    },
-    {
         "date": "2026-09-18",
         "category": "一般",
         "source": "學務處",
@@ -281,6 +255,24 @@
             {
                 "name": "115學年度第1梯次新北市科技化學習扶助種子教師增能研.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115學年度第1梯次新北市科技化學習扶助種子教師增能研.pdf&files_sn=696"
+            }
+        ]
+    },
+    {
+        "date": "2026-09-16",
+        "category": "競賽",
+        "source": "教務處",
+        "title": "國立臺灣師範大學華語文與科技研究中心辦理「2026-2027第八屆科普閱讀力大賽」，歡迎本校學生踴躍報名參加",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=784&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<p>一、為促進學生閱讀動機，培養閱讀素養能力，本校華語文與科技研究中心辦理「2026-2027第八屆科普閱讀力大賽」。</p>\n<p>二、為提升學生自主學習與科普知識，本中心將對參賽者頒發完賽證明及提供各項獎勵。</p>\n<p>三、活動相關資訊如下：</p>\n<p>(一)線上報名時間：2026年9月14日中午12時至2026年11月27日中午12時。</p>\n<p>(二)參賽對象：國小三年級至國中八年級、高中十年級學生。</p>\n<p>(三)報名方式：</p>\n<p>１、學校團體報名：各校教師可至本競賽網站報名資訊中的<a href=\"https://contest.smartreading.net/contest2026/tw/info_signUp_4.aspx\">學校團報方案</a>進行報名。</p>\n<p>２、一般報名：請至本競賽網站報名資訊中的<a href=\"https://contest.smartreading.net/contest2026/tw/parti_contest.html\">「個人報名」或「一般團報」</a>進行報名。</p>\n<p>３、一般團報/團體報名若達指定門檻人數，可參與揪團團報抽博客來禮券活動。</p>\n<p>(四)競賽流程：</p>\n<p>１、前測考試：2026年12月。</p>\n<p>２、閱讀任務：依據各年級參賽組別規定，閱讀書籍及文章，並登入官網填寫讀後評量，任務期間：2027年1月11日中午12時至2027年4月2日中午12時。</p>\n<p>３、後測考試：2027年4月。</p>\n<p>４、詳細資訊歡迎參考<a href=\"https://contest.smartreading.net/contest2026/tw/info_schedule.html\">「官網&gt;參賽專區&gt;重要時程」</a>。</p>\n<p>四、檢附活動海報、活動說明如附件。</p>\n<p>五、若有任何參賽問題，請與主辦單位蔡先生聯繫。</p>\n<p>(一)聯絡電話：02-2351-7160。</p>\n<p>(二)活動信箱：service@contest.smartreading.net。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "科普閱讀力大賽海報.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=科普閱讀力大賽海報.pdf&files_sn=694"
+            },
+            {
+                "name": "科普閱讀力大賽活動辦法.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=科普閱讀力大賽活動辦法.pdf&files_sn=695"
             }
         ]
     }
