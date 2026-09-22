@@ -83,6 +83,20 @@
     },
     {
         "date": "2026-09-22",
+        "category": "研習",
+        "source": "教務處",
+        "title": "臺南市國教輔導團自然團協辦「2026科學探究競賽--這樣教我就懂」說明會，歡迎本校教師踴躍報名",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=814&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><strong>說明：</strong></p>\n<ol>\n<li>依據本市115學年度精進國民中小學教師教學專業與課程品質整體推動計畫辦理。</li>\n<li>研習日期及地點：115年9月30日(星期三)下午1時30分至4時20分，假安平區億載國小辦理。</li>\n<li>報名方式：請逕至本局學習護照系統報名，研習代碼321504。</li>\n<li>參加對象：各國中或國小自然領域教師，或對科學探究競賽有興趣之教師。</li>\n<li>出席人員公（差）假登記。</li>\n<li>檢附各實施計畫1份。</li>\n<li>本案聯絡人：大橋國小李麗菁老師，聯絡電話：2033001#787。</li>\n</ol>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "科學探究競賽研習實施計畫.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=科學探究競賽研習實施計畫.pdf&files_sn=734"
+            }
+        ]
+    },
+    {
+        "date": "2026-09-22",
         "category": "簡章",
         "source": "教務處",
         "title": "2026/2027年台灣地區國際中小學數學能力檢測",
@@ -279,19 +293,5 @@
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=797&type=news&from_op=all_news",
         "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>有報名臺南市115學年度學生舞蹈比賽個人組的同學及家長，請注意教育局所公告之相關訊息。<br/>\n<span style=\"background-color:#f1c40f;\">有意了解南區報名狀況的選手家長，請私下與學生活動組吳老師聯繫 06-2907261#822</span><br/>\r\n </p>\n<p>說明：</p>\n<p>一、依據本市115學年度學生舞蹈比賽實施計畫辦理。</p>\n<p>二、旨揭比賽於115年9月24日（星期四）上午9時30分，假歸仁區紅瓦厝國小（臺南市歸仁區信義南路100號）辦理領隊會議（業於上開計畫明訂），請參賽學校派員參加，並核予出席人員公（差）假登記。<span style=\"background-color:#f1c40f;\">請參賽選手教練前往</span></p>\n<p>三、爾後，有關本比賽最新訊息，請各校承辦人員隨時至本局網站教育公告檢閱，本局將不另行文通知。請學校務必轉知相關人員公告事項。</p>\n<p>四、檢送臺南市115學年度學生舞蹈比賽各組項報名名單如附件。</p>\n<p>五、再次提醒使用特殊道具或非舞者自行手持之道具，須於報名系統填寫相關資料和繳交特殊道具及非舞者自行手持道具申請單，經大會技術核定後得使用，否則予以扣總平均分數 1 分。附件2臺南市115學年度學生舞蹈比賽特殊及非舞者自行手持道具申請使用單請於領隊會議抽完序號，填寫完整資料，當場繳交，至遲應於115年10月6日(星期二)以雙掛號郵寄至歸仁區紅瓦厝國小學務處，以郵戳為憑。未繳交此申請單及逾期繳交者，均視同不使用特殊及非舞者自行手持道具，且不予發放道具證。</p>\n<p>六、當日校內停車空間有限，請出席人員儘量共乘前往，並善用學校周邊停車位。</p>\n<p>七、請依個人資料保護法等相關規定，嚴守個人資料之保護且不得逾越特定目的之必要範圍。</p>\n</div>",
         "attachments": []
-    },
-    {
-        "date": "2026-09-17",
-        "category": "競賽",
-        "source": "學務處",
-        "title": "轉知-臺南市115年中小學田徑錦標賽競賽規程",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=796&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>欲參加臺南市115年中小學田徑錦標賽的同學</p>\n<p>請於115年10月1日（星期四）17時前，至學務處體育組報名，逾時不候。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "臺南市115年中小學田徑錦標賽競賽規程.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市115年中小學田徑錦標賽競賽規程.pdf&files_sn=715"
-            }
-        ]
     }
 ]
