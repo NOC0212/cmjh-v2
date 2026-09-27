@@ -57,7 +57,7 @@
     },
     {
         "date": "2026-09-01",
-        "category": "宣導",
+        "category": "活動",
         "source": "輔導室",
         "title": "歡迎家長參加115學年度第一學期 <班級親師會> ，各處室宣導資料請下載附件閱覽",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=637&type=news&from_op=all_news",
@@ -80,6 +80,15 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=學務處宣導資料.pdf&files_sn=614"
             }
         ]
+    },
+    {
+        "date": "2026-09-24",
+        "category": "一般",
+        "source": "學務處",
+        "title": "「2026臺南『世代躍動』幸福嘉年華」",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=826&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<div>\n<p>說明：</p>\n<p>一、旨揭活動相關資訊如下：</p>\n<p>（一）活動時間：</p>\n<p>1、親子童萌：115年10月3日（星期六）上午10時至下午4時。</p>\n<p>2、青春武林：115年10月4日（星期日）上午9時至中午12時。</p>\n<p>（二）活動地點：中信金融管理學院（臺南市安南區台江大道3段600號）。</p>\n<p>（三）宣傳資訊：請至<a href=\"https://www.facebook.com/share/p/1HKgr4S8q1/\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">教育花路米Facebook粉絲專頁貼文</a>參閱。</p>\n</div>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": []
     },
     {
         "date": "2026-09-24",
@@ -238,20 +247,6 @@
             {
                 "name": "海報.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=海報.pdf&files_sn=729"
-            }
-        ]
-    },
-    {
-        "date": "2026-09-21",
-        "category": "競賽",
-        "source": "教務處",
-        "title": "國立勤益科技大學電機工程系辦理「2026第38屆AERC亞洲機器人運 動競技大賽」，歡迎本校師生踴躍報名參加",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=808&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<p>一、為促進各級學校重視創客創新精神及技能教學，提升理念知識與技能之教學水準，培養創造思考之能力，促進各級學校師生電機、電子、電腦、控制、資訊等相關技術應用於機器人之整合能力，特舉辦本次比賽。</p>\n<p>二、本校賽場謹訂於115年11月14日(六)舉行，共有十二項競賽項目，辦法請參閱附件。</p>\n<p>三、參加對象:國小、國中、高中高職、大專院校及社會組。</p>\n<p>四、相關資訊請上<a href=\"http://www.aerc1988.com.tw\">競賽網站</a>，或洽台灣創新自造者學會(02)2391-7058。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "競賽辦法.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=競賽辦法.pdf&files_sn=728"
             }
         ]
     }
