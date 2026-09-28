@@ -1,30 +1,4 @@
 {
-    "last_updated": "2026-09-24 08:16:12",
-    "items": [
-        {
-            "category": "主食",
-            "name": "小米飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020151003"
-        },
-        {
-            "category": "主菜",
-            "name": "茶碗蒸",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807990012241"
-        },
-        {
-            "category": "副菜",
-            "name": "麻婆豆腐",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020150993"
-        },
-        {
-            "category": "蔬菜",
-            "name": "彩椒青花菜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1640074460080036"
-        },
-        {
-            "category": "湯品",
-            "name": "養生鱸魚湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807990012242"
-        }
-    ]
+    "last_updated": "2026-09-28 08:19:40",
+    "items": []
 }
