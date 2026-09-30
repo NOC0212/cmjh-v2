@@ -1,4 +1,25 @@
 {
-    "last_updated": "2026-09-28 08:19:40",
-    "items": []
+    "last_updated": "2026-09-30 09:07:39",
+    "items": [
+        {
+            "category": "主食",
+            "name": "義大利肉醬麵",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1410925244156509"
+        },
+        {
+            "category": "主菜",
+            "name": "紅豆麵包",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1443685989207976"
+        },
+        {
+            "category": "湯品",
+            "name": "小白菜豆腐湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970698010159"
+        },
+        {
+            "category": "附餐",
+            "name": "優酪乳",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144986"
+        }
+    ]
 }
