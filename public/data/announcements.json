@@ -14,22 +14,8 @@
         ]
     },
     {
-        "date": "2026-09-09",
-        "category": "宣導",
-        "source": "輔導室",
-        "title": "給國一新生家長的一份成長指南---「我和我的孩子」親職教育手冊",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=711&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>孩子進入國中，是成長與改變的重要階段。<br/>\r\n面對青春期的身心變化、親子溝通與生活適應，家長也需要一些陪伴孩子的方法與方向。</p>\n<p>教育部特別編製「我和我的孩子－一本給國一新生家長的手冊（青少年篇）」，以簡單易懂的內容，整理國一孩子成長過程中常見的親職問題與實用提醒，陪伴家長更了解孩子，也找到適合的溝通方式。</p>\n<p>📖 邀請國一新生家長一起閱讀這本手冊，花一點時間了解孩子，也讓親子關係多一點理解與陪伴。</p>\n<p>👉 手冊電子版請下載附件閱讀</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "我和我的孩子 青少年篇.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=我和我的孩子 青少年篇.pdf&files_sn=609"
-            }
-        ]
-    },
-    {
         "date": "2026-09-01",
-        "category": "活動",
+        "category": "宣導",
         "source": "輔導室",
         "title": "歡迎家長參加115學年度第一學期 <班級親師會> ，各處室宣導資料請下載附件閱覽",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=637&type=news&from_op=all_news",
@@ -282,5 +268,14 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115-臺灣台語情境情境式演說.pdf&files_sn=770"
             }
         ]
+    },
+    {
+        "date": "2026-09-29",
+        "category": "研習",
+        "source": "教務處",
+        "title": "「115 學年度 PaGamO 手把手平台分階增能研習」",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=829&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>本研習辦理資訊如下：</p>\n<p><strong>(一)研習主題：</strong>引燃期中考學習熱忱！PaGamO 手把手平台分階增能研習。</p>\n<p><strong>(二)研習場次：</strong>115 年 10 月 13 日（星期二）至 10 月 15 日（星期四）連續三天，每日 18:30 至 20:10。</p>\n<p><strong>(三)研習形式：</strong>線上研習（採 Google Meet 進行，會議連結將於課前發送至報名信箱）。</p>\n<p><strong>(四)參與對象：</strong>全國中小學行政教師、級任導師及科任教師，不限教學年資與平台使用經驗均歡迎參加。</p>\n<p>本研習採分階課程設計，教師可依自身平台使用程度，自由選擇單日或多日參加；各日課程主題與建議參與對象詳如研習簡章。</p>\n<p><strong>報名方式：</strong></p>\n<p>(一)請點選<a href=\"https://pagamo.pse.is/PaGamO_StepbyStep_Workshop\">線上報名表單</a>進行報名。</p>\n<p>(二)報名期間：自即日起至 115 年 10 月 11 日（星期日）18:00 止</p>\n<p>(三)報名提交後將由 PaGamO 團隊進行資格審核，並於研習前一日以電子郵件寄送課程通知信，敬請留意信箱來信。</p>\n<p>六、惠請貴校協助將本研習訊息公告周知，並鼓勵所屬教師踴躍報名參加。</p>\n<p>七、如有研習相關疑問，請點選加入<a href=\"https://lin.ee/PglYQVK\">PaGamO校園客服小幫手</a>聯繫。</p>\n</div>",
+        "attachments": []
     }
 ]
