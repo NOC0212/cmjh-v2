@@ -14,32 +14,6 @@
         ]
     },
     {
-        "date": "2026-09-01",
-        "category": "宣導",
-        "source": "輔導室",
-        "title": "歡迎家長參加115學年度第一學期 <班級親師會> ，各處室宣導資料請下載附件閱覽",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=637&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><img alt=\"\" class=\"img-fluid\" role=\"presentation\" src=\"https://www.cmjh.tn.edu.tw/uploads/school/image/5/39/20260901085121_ZhNi.png\"/></p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "校長室報告.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=校長室報告.pdf&files_sn=640"
-            },
-            {
-                "name": "教務處宣導資料.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=教務處宣導資料.pdf&files_sn=713"
-            },
-            {
-                "name": "輔導室宣導資料.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=輔導室宣導資料.pdf&files_sn=613"
-            },
-            {
-                "name": "學務處宣導資料.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=學務處宣導資料.pdf&files_sn=614"
-            }
-        ]
-    },
-    {
         "date": "2026-10-02",
         "category": "研習",
         "source": "教務處",
@@ -215,7 +189,7 @@
     },
     {
         "date": "2026-09-29",
-        "category": "簡章",
+        "category": "競賽",
         "source": "學務處",
         "title": "本市115學年度學生舞蹈比賽領隊會議資料及各隊比賽出場序",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=830&type=news&from_op=all_news",
@@ -277,5 +251,19 @@
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=829&type=news&from_op=all_news",
         "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>本研習辦理資訊如下：</p>\n<p><strong>(一)研習主題：</strong>引燃期中考學習熱忱！PaGamO 手把手平台分階增能研習。</p>\n<p><strong>(二)研習場次：</strong>115 年 10 月 13 日（星期二）至 10 月 15 日（星期四）連續三天，每日 18:30 至 20:10。</p>\n<p><strong>(三)研習形式：</strong>線上研習（採 Google Meet 進行，會議連結將於課前發送至報名信箱）。</p>\n<p><strong>(四)參與對象：</strong>全國中小學行政教師、級任導師及科任教師，不限教學年資與平台使用經驗均歡迎參加。</p>\n<p>本研習採分階課程設計，教師可依自身平台使用程度，自由選擇單日或多日參加；各日課程主題與建議參與對象詳如研習簡章。</p>\n<p><strong>報名方式：</strong></p>\n<p>(一)請點選<a href=\"https://pagamo.pse.is/PaGamO_StepbyStep_Workshop\">線上報名表單</a>進行報名。</p>\n<p>(二)報名期間：自即日起至 115 年 10 月 11 日（星期日）18:00 止</p>\n<p>(三)報名提交後將由 PaGamO 團隊進行資格審核，並於研習前一日以電子郵件寄送課程通知信，敬請留意信箱來信。</p>\n<p>六、惠請貴校協助將本研習訊息公告周知，並鼓勵所屬教師踴躍報名參加。</p>\n<p>七、如有研習相關疑問，請點選加入<a href=\"https://lin.ee/PglYQVK\">PaGamO校園客服小幫手</a>聯繫。</p>\n</div>",
         "attachments": []
+    },
+    {
+        "date": "2026-09-29",
+        "category": "一般",
+        "source": "學務處",
+        "title": "苗栗縣政府「2027台灣燈會在苗栗-全國花燈競賽」實施計畫",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=827&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "全國花燈競賽實施計畫.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=全國花燈競賽實施計畫.pdf&files_sn=743"
+            }
+        ]
     }
 ]
