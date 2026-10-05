@@ -15,7 +15,21 @@
     },
     {
         "date": "2026-10-05",
-        "category": "獎學金",
+        "category": "活動",
+        "source": "學務處",
+        "title": "115年度藝術與美感深耕計畫-親子藝術營隊實施計畫(第一梯次)",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=867&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<ol>\n<li>依據本市115年度藝術與美感深耕計畫辦理。</li>\n<li>旨揭活動資訊如下：\r\n\t<ul>\n<li>時間：115年10月17日（星期六）8時15分至16時30分。</li>\n<li>地點：官田國中藝術基地、大隆田生態園區。</li>\n<li>參加對象：本市國民中小學學生與家長或手足，每場次約15戶家庭(每戶最多4人)，預計每場次錄取30人。</li>\n</ul>\n</li>\n<li>報名方式：\r\n\t<ul>\n<li>線上報名：手機掃QRCode線上立即報名。(QRCode 詳如計畫)</li>\n<li>紙本報名：交至官田國中總務處或警衛室。</li>\n<li>郵寄報名：臺南市官田區隆林路60號 官田國中總務處【親子藝術營報名】。</li>\n<li>E-MAIL報名：g880802@tn.edu.tw 標題【親子藝術營：聯絡人姓名】</li>\n</ul>\n</li>\n<li>115年10月9日(星期五)下午1時報名截止或額滿為止，115年10月9日（星期五）前email寄發通知，並於本校首頁公告錄取名單。</li>\n<li>如有相關問題，請逕洽本案聯絡人官田國中總務處林主任（06）579-1371轉112（請於上班時間來電08：30～16：00）。</li>\n<li>檢附實施計畫及報名QR Code1份，請逕行下載參閱。</li>\n</ol>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "115年度親子藝術營隊計畫1梯次.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115年度親子藝術營隊計畫1梯次.pdf&files_sn=790"
+            }
+        ]
+    },
+    {
+        "date": "2026-10-05",
+        "category": "宣導",
         "source": "教務處",
         "title": "財團法人王冠文教基金會獎學金申請開始",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=860&type=news&from_op=all_news",
@@ -52,7 +66,7 @@
     },
     {
         "date": "2026-10-05",
-        "category": "宣導",
+        "category": "獎學金",
         "source": "教務處",
         "title": "115年度社團法人台南市冬陽愛心低收入戶子女獎助學金申請",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=858&type=news&from_op=all_news",
@@ -218,19 +232,5 @@
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=834&type=news&from_op=all_news",
         "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>為防範溺水事件發生、深植全民安全防護觀念，該署特再製作水域運動安全宣導影片計2支，其核心主題如下：</p>\n<p>(一)辨識三種容易被忽略的海灘危險，並提供對應的自救與預防知識。</p>\n<p>(二)教導民眾「不會游泳也能救人」的正確岸上救援五步驟，避免因貿然下水救人而發生雙重溺水悲劇。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
         "attachments": []
-    },
-    {
-        "date": "2026-09-30",
-        "category": "競賽",
-        "source": "學務處",
-        "title": "轉知-「臺南市115年中等學校跆拳錦標賽」競賽規程",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=833&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>(一)比賽日期：115年11月14日（星期六）至15日（星期日）共計2日。</p>\n<p>(二)比賽地點：臺南市立新東國民中學學生活動中心2樓。(新營區民治東路30號)</p>\n<p>(三)報名期間：即日起至115年10月8日（星期四）下午5點截止。</p>\n<p>(四)報名辦法：詳細辦法請參閱競賽規程。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "臺南市115年中等學校跆拳道錦標賽競賽規程.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市115年中等學校跆拳道錦標賽競賽規程.pdf&files_sn=761"
-            }
-        ]
     }
 ]
