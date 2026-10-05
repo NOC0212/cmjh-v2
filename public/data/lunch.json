@@ -1,4 +1,35 @@
 {
-    "last_updated": "2026-10-04 08:22:49",
-    "items": []
+    "last_updated": "2026-10-05 08:29:07",
+    "items": [
+        {
+            "category": "主食",
+            "name": "胚芽飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1509074610361893"
+        },
+        {
+            "category": "主菜",
+            "name": "五香肉排",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1790753311055258"
+        },
+        {
+            "category": "副菜",
+            "name": "雞絲熱炒彩薯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1790753311055259"
+        },
+        {
+            "category": "蔬菜",
+            "name": "杏鮑菇炒油菜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1790753311055260"
+        },
+        {
+            "category": "湯品",
+            "name": "海帶芽味噌豆腐湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1790753311055261"
+        },
+        {
+            "category": "附餐",
+            "name": "橘子",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1413872530174156"
+        }
+    ]
 }
