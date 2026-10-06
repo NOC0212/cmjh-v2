@@ -14,6 +14,20 @@
         ]
     },
     {
+        "date": "2026-10-06",
+        "category": "活動",
+        "source": "教務處",
+        "title": "本市115學年度「北極星家長論壇」十二年國教總綱宣講活動，歡迎家長參加。",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=868&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據本市 115 學年度精進國民中小學教師教學專業與課程品質整體推動計畫辦理。</p>\n<p>二、為提升本市家長了解國教總綱及最新教育趨勢之認知與理解，進而成爲各校推動課程與教學的助力，本局與大台南家長協會、台南市中小學家長協會、社團法人台南市家長會聯合會、臺南市家長協會共同辦理 2 場次總綱宣講辦理旨案活動，擴大宣導效益。</p>\n<p>三、各場次活動資訊如下：</p>\n<ul>\n<li>(一) 蓮潭國中小場：115 年 12 月 5 日（星期六）上午 8 時 30 分至 12 時 30 分。</li>\n<li>(二) 建興國中場：115 年 12 月 19 日（星期六）上午 8 時 30 分至 12 時 30 分。</li>\n</ul>\n<p>四、本活動宣導對象為本市國中小學生家長及教育相關人員，請鼓勵家長擇 1 場次參與。</p>\n<p>五、檢附活動計畫（如附件 1）及宣傳海報（如附件 2）各 1 份，請協助張貼宣導。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "「北極星家長論壇」-宣講活動計畫.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=「北極星家長論壇」-宣講活動計畫.pdf&files_sn=791"
+            }
+        ]
+    },
+    {
         "date": "2026-10-05",
         "category": "活動",
         "source": "學務處",
@@ -29,7 +43,7 @@
     },
     {
         "date": "2026-10-05",
-        "category": "宣導",
+        "category": "獎學金",
         "source": "教務處",
         "title": "財團法人王冠文教基金會獎學金申請開始",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=860&type=news&from_op=all_news",
@@ -222,15 +236,6 @@
         "title": "崇仁醫護管理專科學校辦理本校115年度傑出校友遴選及推薦作業，請貴單位踴躍推薦",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=87&content_id=835&type=news&from_op=all_news",
         "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<p>一、為弘揚本校優良校風，特依據本校傑出校友遴選辦法辦理115年度傑出校友遴選，以為後學之典範。</p>\n<p>二、敬請貴會（單位）踴躍推薦符合資格之優秀校友，並請填具「崇仁醫護管理專科學校傑出校友推薦表」，檢附相關具體事蹟及佐證資料，於115年10月30日（星期五）前寄（送）達本校秘書室(62241嘉義縣大林鎮湖北里大湖1之10號)，俾利辦理後續遴選作業。</p>\n<p>三、檢附「崇仁醫護管理專科學校傑出校友遴選辦法」及「崇仁醫護管理專科學校傑出校友推薦表」各1份，敬請查照並惠予協助推薦。</p>\n</div>",
-        "attachments": []
-    },
-    {
-        "date": "2026-09-30",
-        "category": "宣導",
-        "source": "學務處",
-        "title": "轉知-運動部全民運動署加強宣導水域運動安全知能",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=834&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>為防範溺水事件發生、深植全民安全防護觀念，該署特再製作水域運動安全宣導影片計2支，其核心主題如下：</p>\n<p>(一)辨識三種容易被忽略的海灘危險，並提供對應的自救與預防知識。</p>\n<p>(二)教導民眾「不會游泳也能救人」的正確岸上救援五步驟，避免因貿然下水救人而發生雙重溺水悲劇。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
         "attachments": []
     }
 ]
