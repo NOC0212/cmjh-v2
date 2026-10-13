@@ -1,5 +1,19 @@
 [
     {
+        "date": "2026-10-13",
+        "category": "宣導",
+        "source": "教務處",
+        "title": "修正本市115學年度「獎勵學生通過本土語文能力認證實施計畫」1份（如附件）",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=888&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據本局115年9月3日南市教課（一）字第1151291227號函續辦。</p>\n<p>二、旨揭計畫修正重點如下：</p>\n<p><strong>(一) 第肆點第五款：</strong>倘為通過「原住民族學生語言能力認證測驗」者，另於表揚大會辦理獎勵，本次不重複核發。</p>\n<p><strong>(二) 第伍點：</strong>新增第一款「申請本計畫獎勵者，其認證證書取得或發證日期須於本計畫實施期程內；非於實施期程內取得者，不予受理。」</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "臺南市115學年度獎勵高中以下學校學生參加本土語文能力認證實施計畫.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市115學年度獎勵高中以下學校學生參加本土語文能力認證實施計畫.pdf&files_sn=808"
+            }
+        ]
+    },
+    {
         "date": "2026-10-12",
         "category": "活動",
         "source": "教務處",
@@ -243,19 +257,5 @@
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=857&type=news&from_op=all_news",
         "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、「全民英檢」適合大考暖身練習。成績可上傳高中職「學習歷程檔案」，展現個人多元表現或作為英文能力證明等。</p>\n<p>二、報名資訊如下：</p>\n<p>(一) 初級聽讀（CEFR A2）</p>\n<ul>\n<li>測驗日期：116年1月9日（星期六）</li>\n<li>報名日期：即日起</li>\n<li>報名網址：<a href=\"https://bit.ly/4iCFRz2\">全民英檢初級聽讀報名</a></li>\n</ul>\n<p>(二) 中級聽讀／一日考（CEFR B1）</p>\n<ul>\n<li>測驗日期：116年1月30日（六）</li>\n<li>報名日期：115年10月20日起</li>\n<li>報名網址：<a href=\"https://bit.ly/4rss14P\">全民英檢中級聽讀／一日考報名</a></li>\n</ul>\n<p>三、考生報名可享加價購「全民英檢 i學網」（GEPT iPrep）學習點數8折優惠，更多練習資源請參閱<a href=\"https://www.gept.org.tw/\">全民英檢官方網站</a>。</p>\n</div>",
         "attachments": []
-    },
-    {
-        "date": "2026-10-05",
-        "category": "獎學金",
-        "source": "教務處",
-        "title": "115年度社團法人台南市冬陽愛心低收入戶子女獎助學金申請",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=858&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<h3>一、申請人條件</h3>\n<ol>\n<li>設籍<span style=\"color:#c0392b;\"><strong>台南市</strong></span>滿<span style=\"color:#c0392b;\"><strong>6個月</strong></span>以上之<strong><span style=\"color:#c0392b;\">低收入戶</span></strong>(或學校專函推薦)  或</li>\n<li>失親子女(父母雙亡)</li>\n</ol>\n<h3>二、申請資格</h3>\n<ol>\n<li>114學年<strong><span style=\"color:#c0392b;\">上下學期平均80分</span></strong>以上</li>\n<li><span style=\"color:#c0392b;\"><strong>無曠課、記過紀錄</strong></span>。</li>\n<li>日常生活綜合表現、校內外特殊表現優良表彰者。</li>\n</ol>\n<h3>三、獎學金名額</h3>\n<p>國二30名、國三30名，每名獎學金三千元。</p>\n<h3>四、報名期限</h3>\n<p>請於<strong><span style=\"color:#c0392b;\">10月16日(五)前向教務處註冊組</span></strong>報名，<span style=\"color:#c0392b;\"><strong>10月23日(五)前繳交相關證明文件</strong></span>。</p>\n<h3>五、繳交資料</h3>\n<ol>\n<li>申請書</li>\n<li>低收入戶證明書</li>\n<li>父母雙亡者須有除戶之戶籍謄本。</li>\n<li>成績單、日常生活表現資料由學校統一處理。</li>\n</ol>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "115冬陽.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115冬陽.pdf&files_sn=786"
-            }
-        ]
     }
 ]
