@@ -1,20 +1,30 @@
 {
-    "last_updated": "2026-10-14 08:54:58",
+    "last_updated": "2026-10-15 08:18:27",
     "items": [
         {
             "category": "主食",
-            "name": "紅燒豬肉麵",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1448841473205948"
+            "name": "糙米飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144959"
         },
         {
             "category": "主菜",
-            "name": "水煎包",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1790753331055390"
+            "name": "清蒸破朴子鱸魚丁",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1761709649096445"
         },
         {
-            "category": "附餐",
-            "name": "鮮乳",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1449102820125474"
+            "category": "副菜",
+            "name": "沙茶炒毛豆乾丁",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1790753332055403"
+        },
+        {
+            "category": "蔬菜",
+            "name": "冬瓜木耳紅拌蛋",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1790753332055404"
+        },
+        {
+            "category": "湯品",
+            "name": "小白菜魚丸湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970647014936"
         }
     ]
 }
