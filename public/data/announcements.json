@@ -40,6 +40,20 @@
     },
     {
         "date": "2026-10-16",
+        "category": "活動",
+        "source": "教務處",
+        "title": "台南市115年度科學教育「和你一起玩科學」親子營計畫，歡迎本校學生踴躍報名參加",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=931&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<h3>說明：</h3>\n<p>一、依據「臺南市115年度科學教育總體計畫」辦理。</p>\n<p>二、本活動重要資訊摘述如下：</p>\n<p>(一)時間及地點：115年10月24日(六)11:20-16:10後火車站大遠百5F VIP室</p>\n<p>(二)參加對象：開放全市報名。每場上限10組親子（上限20人），額滿為止。</p>\n<p>(三)報名方式：一律採線上報名，即日起至10月20日（星期二）前，進入<a href=\"https://forms.gle/Lwh56mwaQfXivTCE9\">活動報名表單連結</a>填寫活動報名表單，將完成報名之先後順序錄取，額滿時會立即公告於大橋國小全球資訊網，請記得上網查詢。本活動為親子營，親子需一起參與。</p>\n<p>三、檢附實施計畫詳如附件。</p>\n<p>四、本案聯絡人：大橋國小李麗菁老師，06-2033001#787。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "10-和你一起玩科學計畫.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=10-和你一起玩科學計畫.pdf&files_sn=821"
+            }
+        ]
+    },
+    {
+        "date": "2026-10-16",
         "category": "宣導",
         "source": "學務處",
         "title": "115學年度學生舞蹈比賽「松香使用及場地復原規定」調整",
@@ -95,7 +109,7 @@
     },
     {
         "date": "2026-10-14",
-        "category": "活動",
+        "category": "簡章",
         "source": "學務處",
         "title": "高雄市私立中華高級藝術職業學校辦理2026「華藝盃全國青少年藝文競賽」",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=924&type=news&from_op=all_news",
@@ -218,20 +232,6 @@
             {
                 "name": "151008-1競賽辦法.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=151008-1競賽辦法.pdf&files_sn=810"
-            }
-        ]
-    },
-    {
-        "date": "2026-10-13",
-        "category": "競賽",
-        "source": "教務處",
-        "title": "國立臺灣師範大學機電工程學系於115年12月5日(星期六)舉辦「2026全國二足機器人競賽」及「國際新創機器人節合作競賽」， 歡迎本校學生踴躍參加",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=896&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<h3>說明：</h3>\n<ol>\n<li>為培養大專及高中職(含)以下學校智慧型機器人科技人才，提昇科學教育及實踐機械、電機、電子與資訊等相關領域之技術整合能力，特辦理智慧型二足機器人競賽。</li>\n<li>本活動報名期間自115年10月16日（星期五）起至11月20日（星期五）止。凡於115年10月30日（星期五）前完成報名並繳費者，即可享有早鳥優惠價格。詳細內容與報名訊息，請至<a href=\"http://www.me.ntnu.edu.tw/\">國立臺灣師範大學機電工程學系網站</a>查詢。</li>\n<li>如有疑問，請逕洽本校機電工程學系許智偉先生，電子信箱：hcw0729@ntnu.edu.tw，電話：（02）7749-3517。</li>\n</ol>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "2026 年全國二足機器人競賽活動辦法.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2026 年全國二足機器人競賽活動辦法.pdf&files_sn=809"
             }
         ]
     }
