@@ -1,5 +1,19 @@
 [
     {
+        "date": "2026-10-20",
+        "category": "行政",
+        "source": "輔導室",
+        "title": "115學年度第一學期班親會意見反映回覆",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=935&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><span style=\"font-size: 1.333rem;\">感謝家長於班親會提出寶貴的意見，回覆內容請下載附件參閱，謝謝。</span><br/>\r\n </p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "115班親會意見反映回覆.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115班親會意見反映回覆.pdf&files_sn=824"
+            }
+        ]
+    },
+    {
         "date": "2026-09-29",
         "category": "行政",
         "source": "教務處",
@@ -31,15 +45,56 @@
     },
     {
         "date": "2026-10-20",
-        "category": "行政",
+        "category": "活動",
+        "source": "學務處",
+        "title": "國立臺南生活美學館辦理「文化，在我們回家的路上」臺南場系列活動",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=950&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：旨揭活動以「藝文走進科學園區」為出發點，將表演藝術、文化科技、閱讀書市及親子共創等文化內容，帶進科技人的工作與生活場域，希望在高度效率的園區日常裡，創造一些可停留、觀看、閱讀、體驗與交流的空間。臺南場於臺南科學園區辦理，活動訊息如下：</p>\n<ol type=\"1\">\n<li>日期：115年11月21日(週六)至22日(週日)。</li>\n<li>地點：南部科學園區管理局行政大樓暨廣場(臺南市新市區南科三路22號)。</li>\n<li>場次內容詳如請參考<a href=\"https://culturedrive.com.tw/\">藝文走進科學園區活動網頁</a>。</li>\n</ol>\n</div>",
+        "attachments": []
+    },
+    {
+        "date": "2026-10-20",
+        "category": "研習",
         "source": "輔導室",
-        "title": "115學年度第一學期班親會意見反映回覆",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=935&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><span style=\"font-size: 1.333rem;\">感謝家長於班親會提出寶貴的意見，回覆內容請下載附件參閱，謝謝。</span><br/>\r\n </p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "title": "轉知少輔會辦理「燈塔計畫-家長情緒靠岸與親子溝通重構親職支持團體」課程",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=87&content_id=949&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<p>一、依據：115年10月12日臺南市政府少年輔導委員會少輔字第1150644463號函辦理。</p>\n<p>二、活動相關訊息如下：</p>\n<p>(一)活動時間：115年10月31日起至115年12月5日止之每週六，上午9:00-中午12:30，共計六週6場次。</p>\n<p>(二)招收對象：少年家長10名，額滿為止。</p>\n<p>(三)活動地點：臺南市少年輔導委員會(中西區北門路一段51巷18之3號)</p>\n<p>(四)報名方式：請至<a href=\"https://reurl.cc/bebLXo\">報名網址</a>線上報名，或洽06-2031182、06-2031192蔡少輔員。</p>\n<p>(五)活動全程免費，提供午餐。</p>\n<p>三、檢附活動簡章(如附件)。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": []
+    },
+    {
+        "date": "2026-10-20",
+        "category": "活動",
+        "source": "學務處",
+        "title": "2026臺南藝術節影片",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=948&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<ol>\n<li>為推廣2026臺南藝術節，本局已製作宣傳影片，請惠予協助加強宣傳。</li>\n<li>宣傳影片原檔：請參考<a href=\"https://reurl.cc/p8bDG4\">2026臺南藝術節宣傳影片</a>。</li>\n</ol>\n</div>",
+        "attachments": []
+    },
+    {
+        "date": "2026-10-20",
+        "category": "宣導",
+        "source": "學務處",
+        "title": "轉知:衛生福利部修訂之「115-116年COVID-19疫苗接種計畫」，新增自115年10月19日起提供滿12歲以上公費接種對象，接種Novavax XFG COVID-19疫苗相關內容。",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=947&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<p>一、衛福部函文之重點略以，本次供應之Novavax XFG COVID-19疫苗，適用年齡為滿12歲以上之公費接種對象，優先提供不適合mRNA疫苗者接種；請協助向所屬符合公費接種對象，宣導疫苗接種相關訊息，以及其重要性及保護效益，提高接種意願。<br/>\r\n二、旨揭修訂之接種計畫置於衛福部疾病管制署/傳染病與防疫專題/傳染病介紹/第四類法定傳染病/新冠併發重症/COVID-19疫苗，請逕行下載及運用。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
         "attachments": [
             {
-                "name": "115班親會意見反映回覆.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115班親會意見反映回覆.pdf&files_sn=824"
+                "name": "115-116 COVID-19疫苗接種計畫.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=115-116 COVID-19疫苗接種計畫.pdf&files_sn=836"
+            }
+        ]
+    },
+    {
+        "date": "2026-10-20",
+        "category": "活動",
+        "source": "教務處",
+        "title": "社團法人台灣翻轉未來創新協會辦理「2027教育創新100」徵件募集活動",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=946&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依該協會115年10月13日翻創字第2026101302號函(附件1)辦理。</p>\n<p>二、該協會邀請講師分別於115年10月28日、12月16日於線上進行說明會結合培力工作坊，以期協助參與者準備募集作業。</p>\n<p>三、徵件募集活動相關訊息如下：</p>\n<p>(一)報名時間：即日起至116年2月25日（星期四）下午5時止。</p>\n<p>(二)線上說明會暨工作坊：預計於115年10月28日（星期三）及12月16日（星期三）辦理兩場。<a href=\"https://forms.gle/VWvrR2KGFdbRYaWL6\">線上說明會暨工作坊報名連結</a></p>\n<p>(三)更多資訊，請至<a href=\"https://www.eduinnohub.org.tw\">該協會官方網站</a>查詢。</p>\n<p>四、本案聯絡窗口：親子天下教育創新中心企劃副理：許雅玲小姐，電話：(02)2509-2800分機665；信箱：sharonhsu@cw.com.tw</p>\n<p>五、檢附簡章(附件2)1份。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "2027教育創新100報名簡章.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=2027教育創新100報名簡章.pdf&files_sn=835"
             }
         ]
     },
@@ -189,55 +244,5 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南南島文化節-南島食光.pdf&files_sn=816"
             }
         ]
-    },
-    {
-        "date": "2026-10-14",
-        "category": "活動",
-        "source": "輔導室",
-        "title": "轉知臺南大學附中辦理「國中學生家長實作體驗活動」",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=919&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><span style=\"font-size: 1.333rem;\"><strong>南大附中－「國中學生家長實作體驗活動」</strong></span></p>\n<p>說明：</p>\n<p>一、依據本校115學年度高職優質化輔助方案子計劃：115-1-3(選)國中生適性試探及家長宣導辦理。</p>\n<p>二、辦理時間：115年10月31日(六)上午9:00~12:00</p>\n<p>三、辦理內容、地點及人數</p>\n<p>　　(一)土木群科實作體驗場次：環保樂土模型製作/土木科館/20人。</p>\n<p>　　(二)食品群科實作體驗場次：巧克甜心與香脆杏仁的交織/食品科館/20人。</p>\n<p>四、報名：<a href=\"https://forms.gle/qo1L33aFsfTchvgW6\">填寫國中學生家長實作體驗活動報名表單</a></p>\n<p>五、宣傳海報及活動地點之電子檔，請參考附件。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": []
-    },
-    {
-        "date": "2026-10-13",
-        "category": "活動",
-        "source": "教務處",
-        "title": "轉知高雄市115學年度中等學校電腦程式設計比賽實施計畫",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=918&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>請參閱附件</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "高雄市115學年度中等學校電腦程式設計比賽簡章.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=高雄市115學年度中等學校電腦程式設計比賽簡章.pdf&files_sn=813"
-            }
-        ]
-    },
-    {
-        "date": "2026-10-13",
-        "category": "研習",
-        "source": "教務處",
-        "title": "轉知並鼓勵家長報名參加 「115年臺南市數位學習家長宣講活動」",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=917&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據教育部「115年度中小學數位學習實施計畫」辦理。</p>\n<p>二、為協助本市中小學家長了解數位學習推動現況，迎向數位學習新時代，邀請各位家長參與體驗因材網任務指派、學習診斷等功能。</p>\n<p>三、活動資訊：</p>\n<ul>\n<li>活動時間：115年10月17日 (六) 14:30–16:30。</li>\n<li>活動地點：崇明國小 二樓國際會議室 (臺南市東區崇明路698號)。</li>\n<li>參加對象：幼兒園、國小、國中及高中的學生及家長。</li>\n<li>報名方式：請至線上表單 <a href=\"https://reurl.cc/begExM\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">數位學習家長體驗活動報名表</a> 報名，即日起至115年10月12日 (一) 12:00 止 (⚠️ 若提前額滿將關閉表單)。</li>\n<li>錄取時會發送mail通知，請依照規定申請入社群，進入社群才算報名成功，未錄取者恕不另行通知。</li>\n</ul>\n<p>四、活動訊息請參閱附件，如有相關疑問，請洽客服信箱: talp.hcpa@gmail.com。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": []
-    },
-    {
-        "date": "2026-10-13",
-        "category": "研習",
-        "source": "教務處",
-        "title": "「B5-2生成式AI融入學科領域教學工作坊(國語文)」調整辦理日期",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=916&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>一、依據教育部115年5月5日臺教資(三)字第1152701317號函辦理及本局115年9月15日公告第293598號諒達。</p>\n<p>二、旨揭工作坊資訊如下：</p>\n<ul>\n<li>調整後研習日期：115年10月28日(星期三)13:30-16:30及115年11月4日(星期三)13:30-16:30，共2個半天。</li>\n<li>研習地點：和順國中2樓自造教育與科技中心(臺南市安南區安和路五段84巷66號)。</li>\n<li>報名方式：請至Google表單 <a href=\"https://forms.gle/x7juD84SF4CMGEha8\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">生成式AI與教育應用工作坊報名表</a> 報名。</li>\n</ul>\n<p>三、注意事項:</p>\n<ol>\n<li>須於本次工作坊前完成【B5-1生成式AI與教育應用工作坊】，並檢附研習時數截圖證明於報名時提供。</li>\n<li>本場研習為2個半天，皆須全程參與始能核予研習時數。</li>\n<li>本次工作坊為達實作之成效，敬請參與學員自行攜帶筆記型電腦。</li>\n</ol>\n<p>四、請惠予參與教師公(差)假登記及課務派代。</p>\n<p>五、如有相關疑問，請洽本局數位學習推動辦公室 邱珮瑜 小姐，網電：69191，市話：2130669分機483</p>\n</div>",
-        "attachments": []
-    },
-    {
-        "date": "2026-10-13",
-        "category": "研習",
-        "source": "教務處",
-        "title": "親子天下辦理 2026 校園領導力工作坊，歡迎本校教師報名參與",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=915&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><strong>說明：</strong></p>\n<p>一、親子天下2026 校園領導力工作坊將於11/14（六）下午13:30~16:30於親子天下Club（臺北市中山區長安東路2段101號10樓）實體舉辦，以「校園衝突與關係經營的領導行動」為主題，旨在協助校園領導者有效應對衝突管理與親師溝通兩大實務難題，幫助校園領導者透過「誠信溝通」與「共好領導」來化解對立。</p>\n<p>二、2026 校園領導力工作坊關鍵議題包括：全台教師議題調查分享、從對立到對話，破解校園危機的溝通僵局、校園組織領導與親師溝通等面向多元探討，透過溝通技巧，建立互信與合作關係，並透過多位校長的實務案例分享，提供具體可行的衝突應對策略與組織運作方法。</p>\n<p>三、本場實體工作坊為免費報名，並提供參與教師3小時教師研習時數。</p>\n<p>四、請至<a href=\"https://flipedu.parenting.com.tw/event/170\">2026 校園領導力工作坊報名官網</a>進行線上報名。</p>\n</div>",
-        "attachments": []
     }
 ]
