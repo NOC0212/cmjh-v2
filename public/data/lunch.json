@@ -1,20 +1,30 @@
 {
-    "last_updated": "2026-10-21 08:23:51",
+    "last_updated": "2026-10-22 08:27:11",
     "items": [
         {
             "category": "主食",
-            "name": "雞蛋肉末粥",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970697072270"
+            "name": "糙米飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144959"
         },
         {
             "category": "主菜",
-            "name": "乾滷獅子頭",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970697072271"
+            "name": "紅蘿蔔炒蛋",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074681018703"
         },
         {
-            "category": "附餐",
-            "name": "優格",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1761709761074840"
+            "category": "副菜",
+            "name": "麻婆豆腐",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020150993"
+        },
+        {
+            "category": "蔬菜",
+            "name": "木須高麗",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1443658884210608"
+        },
+        {
+            "category": "湯品",
+            "name": "日式虱目魚柳味噌湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1790753362038627"
         }
     ]
 }
