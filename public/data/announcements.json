@@ -54,12 +54,17 @@
     },
     {
         "date": "2026-10-27",
-        "category": "行政",
-        "source": "輔導室",
-        "title": "[補測] 情境式職涯興趣測驗",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=976&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><strong><span style=\"font-size: 1.333rem;\">情境式職涯興趣測驗</span></strong>（<a href=\"https://exam.career.ntnu.edu.tw/cit/\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">測驗網站</a>）</p>\n<p>登入帳號：身分證字號</p>\n<p>登入密碼：學號<br/>\n<br/>\r\n＊請國二同學按照各班排定時程進行測驗。</p>\n</div>",
-        "attachments": []
+        "category": "研習",
+        "source": "教務處",
+        "title": "崇明國小辦理115學年度「AI機器人競賽教學實務研習」，歡迎本校教師踴躍報名參加",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=977&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p>說明：</p>\n<p>一、依據崇明國小115學年度AI機器人教育重點發展學校計畫辦理。</p>\n<p>二、研習資訊如下：</p>\n<p>(一)時間：115年11月25日（星期三）下午1時30分至4時30分。</p>\n<p>(二)地點：崇明國小AI科學教室。</p>\n<p>(三)研習講師：臺南市七股區後港國小郭蔚文教師</p>\n<p>三、參加教師公（差）假登記。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
+        "attachments": [
+            {
+                "name": "AI機器人競賽教學實務研習-公文.pdf",
+                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=AI機器人競賽教學實務研習-公文.pdf&files_sn=858"
+            }
+        ]
     },
     {
         "date": "2026-10-27",
@@ -208,7 +213,7 @@
     },
     {
         "date": "2026-10-20",
-        "category": "活動",
+        "category": "宣導",
         "source": "學務處",
         "title": "2026臺南藝術節影片",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=948&type=news&from_op=all_news",
