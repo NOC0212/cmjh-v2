@@ -1,4 +1,20 @@
 {
-    "last_updated": "2026-10-26 07:52:56",
-    "items": []
+    "last_updated": "2026-10-28 09:00:29",
+    "items": [
+        {
+            "category": "主食",
+            "name": "沙茶花枝肉羹麵",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1779775702015086"
+        },
+        {
+            "category": "主菜",
+            "name": "豬肉餡餅",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1666677234086116"
+        },
+        {
+            "category": "附餐",
+            "name": "優酪乳",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144986"
+        }
+    ]
 }
