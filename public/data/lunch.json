@@ -1,35 +1,4 @@
 {
-    "last_updated": "2026-10-30 09:37:15",
-    "items": [
-        {
-            "category": "主食",
-            "name": "胚芽飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1509074610361893"
-        },
-        {
-            "category": "主菜",
-            "name": "麻油野菇國產豬",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1790753382038715"
-        },
-        {
-            "category": "副菜",
-            "name": "蝦米爆鮮菇匏瓜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1790753382038716"
-        },
-        {
-            "category": "蔬菜",
-            "name": "雙色大白菜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074679019954"
-        },
-        {
-            "category": "湯品",
-            "name": "香菇雞湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1413871776173372"
-        },
-        {
-            "category": "附餐",
-            "name": "葡萄",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1412553444122491"
-        }
-    ]
+    "last_updated": "2026-10-31 09:26:05",
+    "items": []
 }
