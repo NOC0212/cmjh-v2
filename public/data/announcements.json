@@ -14,20 +14,6 @@
         ]
     },
     {
-        "date": "2026-11-03",
-        "category": "活動",
-        "source": "學務處",
-        "title": "臺南市立崇明國民中學三十五週年校慶暨運動大會活動程序表(公告版)",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=1025&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "臺南市立崇明國民中學三十五週年校慶暨運動大會活動程序表(公告版).pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南市立崇明國民中學三十五週年校慶暨運動大會活動程序表(公告版).pdf&files_sn=883"
-            }
-        ]
-    },
-    {
         "date": "2026-10-27",
         "category": "宣導",
         "source": "學務處",
@@ -271,11 +257,20 @@
     },
     {
         "date": "2026-11-04",
-        "category": "行政",
+        "category": "競賽",
         "source": "教務處",
         "title": "115學年度校內語文競賽獲獎名單(武場)",
         "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=1028&type=news&from_op=all_news",
         "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><img alt=\"\" class=\"img-fluid\" role=\"presentation\" src=\"https://www.cmjh.tn.edu.tw/uploads/school/image/2/12/%E6%AD%A6%E5%A0%B4.PNG\" style=\"width: 545px; height: 727px;\"/></p>\n<p><strong>恭喜以上獲獎同學</strong></p>\n<p> </p>\n</div>",
+        "attachments": []
+    },
+    {
+        "date": "2026-11-04",
+        "category": "行政",
+        "source": "教務處",
+        "title": "115學年度校內語文競賽獲獎名單(文場)",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=2&zone_id=0&page_id=12&content_id=1027&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><img alt=\"\" class=\"img-fluid\" role=\"presentation\" src=\"https://www.cmjh.tn.edu.tw/uploads/school/image/2/12/%E6%96%87%E5%A0%B4.PNG\" style=\"width: 567px; height: 644px;\"/></p>\n<p><strong>恭喜以上獲獎同學</strong></p>\n<p> </p>\n</div>",
         "attachments": []
     }
 ]
