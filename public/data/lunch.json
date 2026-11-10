@@ -1,35 +1,30 @@
 {
-    "last_updated": "2026-11-09 09:28:39",
+    "last_updated": "2026-11-10 11:58:06",
     "items": [
         {
             "category": "主食",
-            "name": "胚芽飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1509074610361893"
+            "name": "燕麥飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020150992"
         },
         {
             "category": "主菜",
-            "name": "花式沙茶豬",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1793157487008372"
+            "name": "花雕雞",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1519621268346607"
         },
         {
             "category": "副菜",
-            "name": "絲絲入扣",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1451441818151170"
+            "name": "蠔油養生菇燜冬瓜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970648014947"
         },
         {
             "category": "蔬菜",
-            "name": "雙色白菜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1793157488008373"
+            "name": "有機黑葉白菜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1480662293330983"
         },
         {
             "category": "湯品",
-            "name": "香菇貢丸湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807932007501"
-        },
-        {
-            "category": "附餐",
-            "name": "芭樂",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1411969807129367"
+            "name": "金瓜豆腐湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1793157488008396"
         }
     ]
 }
