@@ -1,30 +1,30 @@
 {
-    "last_updated": "2026-11-11 09:43:42",
+    "last_updated": "2026-11-12 10:43:26",
     "items": [
         {
             "category": "主食",
-            "name": "刈包",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1427355617217978"
+            "name": "糙米飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144959"
         },
         {
             "category": "主菜",
-            "name": "燒烤無骨雞腿排",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970673015082"
+            "name": "蒸三色蛋",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1793157490007162"
         },
         {
             "category": "副菜",
-            "name": "蒜爆醬燒蔬菜豆乾",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1793157489007151"
+            "name": "麻婆豆腐",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020150993"
+        },
+        {
+            "category": "蔬菜",
+            "name": "雙色花椰",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970625072019"
         },
         {
             "category": "湯品",
-            "name": "紅豆雙色湯圓",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1768891690035482"
-        },
-        {
-            "category": "附餐",
-            "name": "鮮乳",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1449102820125474"
+            "name": "大黃瓜魚丸湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970696010131"
         }
     ]
 }
