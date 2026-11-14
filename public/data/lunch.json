@@ -1,35 +1,4 @@
 {
-    "last_updated": "2026-11-13 10:26:35",
-    "items": [
-        {
-            "category": "主食",
-            "name": "小米飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020151003"
-        },
-        {
-            "category": "主菜",
-            "name": "蔥爆紅燒排骨",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1793157490008425"
-        },
-        {
-            "category": "副菜",
-            "name": "匏瓜炒黑輪",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1761709647073513"
-        },
-        {
-            "category": "蔬菜",
-            "name": "高麗菜炒豆菊",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1793157490008426"
-        },
-        {
-            "category": "湯品",
-            "name": "冬瓜文蛤薑湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074644018678"
-        },
-        {
-            "category": "附餐",
-            "name": "葡萄",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1412553444122491"
-        }
-    ]
+    "last_updated": "2026-11-14 09:59:02",
+    "items": []
 }
