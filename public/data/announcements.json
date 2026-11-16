@@ -50,6 +50,15 @@
     },
     {
         "date": "2026-11-16",
+        "category": "活動",
+        "source": "輔導室",
+        "title": "轉知中國醫藥大學舉辦「2027寒假國、高中醫學營隊」",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=1081&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<p><strong><span style=\"font-size: 1.333rem;\">中國醫藥大學「2027寒假國、高中醫學營隊」</span></strong></p>\n<p>說明：</p>\n<ol class=\"list-unstyled\">\n<li class=\"mb-2\">一、本校推廣教育中心辦理「2027寒假國、高中醫學營隊」，讓學生更能了解中西醫學的奧秘，奠定日後選系志向。</li>\n<li class=\"mb-2\">二、國中中西醫學營：\r\n\t<ol class=\"list-unstyled ps-4 mt-1\">\n<li>(一)上課日期：116/01/21-116/01/23</li>\n<li>(二)上課地點：中國醫藥大學英才校區(台中市北區學士路91號)</li>\n<li>(三)報名時間：115/10/20-115/12/18 止(額滿提前截止報名)</li>\n<li>(四)報名方式：<a href=\"https://sites.google.com/view/cmucamp\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">中國醫藥大學醫學營線上報名網站</a></li>\n</ol>\n</li>\n<li class=\"mb-2\">三、課程洽詢電話：04-22054326</li>\n</ol>\n</div>",
+        "attachments": []
+    },
+    {
+        "date": "2026-11-16",
         "category": "競賽",
         "source": "教務處",
         "title": "臺南市立圖書館辦理「2026年臺南市立圖書館－台語親子說故事比賽」歡迎本校師生踴躍組隊報名參加",
@@ -331,20 +340,6 @@
             {
                 "name": "5屆教師生命成長營+簡章.pdf",
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=5屆教師生命成長營+簡章.pdf&files_sn=925"
-            }
-        ]
-    },
-    {
-        "date": "2026-11-10",
-        "category": "活動",
-        "source": "輔導室",
-        "title": "轉知臺南護專舉辦「計分說明暨校園開放日」活動",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=5&zone_id=0&page_id=39&content_id=1062&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<h3><strong><span style=\"font-size: 1.333rem;\">國立臺南護理專科學校「我的選擇權：以國中會考成績就讀國立五專」</span></strong></h3>\n<p><span style=\"font-size: 1.167rem;\"><strong>※活動日期：116年1月23日(星期六)下午</strong></span></p>\n<p>說明：</p>\n<p>一、本校五專設有護理科、化妝品應用科及老人服務事業科等三科，116學年度招生名額共355名。另，擴大招收原住民外加名額20名。</p>\n<p>二、學校鄰近臺南火車站，步行約8分鐘可達，為南部地區唯一國立專科，五專前三年免學費。為善盡國立學校之社會責任，提供經濟或文化不利學生相關就學獎補助措施，請惠予鼓勵學生(含原住民)踴躍參加。</p>\n<p>三、五專各入學管道招生報名在即，許多家長關心入學計分方式、各科未來進路等，特舉辦本說明會暨校園參觀(計畫如附件)，歡迎至本校入口網頁或掃描附件QR code報名，報名網址：<a href=\"https://forms.gle/EPPvKw2r62aamZeh7\" rel=\"noopener noreferrer\" target=\"_blank\" title=\"另開新視窗\">前往說明會線上報名表單</a>。</p>\n<div class=\"my-3\"><div style=\"clear:both;\"></div></div>\n</div>",
-        "attachments": [
-            {
-                "name": "臺南護專-計分說明會暨校園參觀0123.pdf",
-                "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=臺南護專-計分說明會暨校園參觀0123.pdf&files_sn=924"
             }
         ]
     }
