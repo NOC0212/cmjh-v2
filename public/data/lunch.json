@@ -1,20 +1,30 @@
 {
-    "last_updated": "2026-11-18 11:20:58",
+    "last_updated": "2026-11-19 10:56:46",
     "items": [
         {
             "category": "主食",
-            "name": "日式海鮮烏龍湯麵",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1761709698097200"
+            "name": "糙米飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144959"
         },
         {
             "category": "主菜",
-            "name": "溏心蛋",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1768891664035395"
+            "name": "黃金泡菜寬粉",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970624009929"
         },
         {
-            "category": "附餐",
-            "name": "優格",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1761709761074840"
+            "category": "副菜",
+            "name": "山東白燴魚羹",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970674015105"
+        },
+        {
+            "category": "蔬菜",
+            "name": "洋菇炒青花菜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1793157521008773"
+        },
+        {
+            "category": "湯品",
+            "name": "鮮蝦仁蛋豆腐羹",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807903009549"
         }
     ]
 }
