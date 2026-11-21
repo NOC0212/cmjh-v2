@@ -1,35 +1,4 @@
 {
-    "last_updated": "2026-11-20 10:51:39",
-    "items": [
-        {
-            "category": "主食",
-            "name": "小米飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020151003"
-        },
-        {
-            "category": "主菜",
-            "name": "筍絲赤肉柳滷",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1793157522006089"
-        },
-        {
-            "category": "副菜",
-            "name": "熱炒什錦小黃瓜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1793157522006090"
-        },
-        {
-            "category": "蔬菜",
-            "name": "蒜爆油菜",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1793157522006091"
-        },
-        {
-            "category": "湯品",
-            "name": "關東煮",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1421895205126338"
-        },
-        {
-            "category": "附餐",
-            "name": "柳丁",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1576584971319930"
-        }
-    ]
+    "last_updated": "2026-11-21 10:59:26",
+    "items": []
 }
