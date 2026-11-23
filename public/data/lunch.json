@@ -1,4 +1,35 @@
 {
-    "last_updated": "2026-11-22 09:55:40",
-    "items": []
+    "last_updated": "2026-11-23 10:19:44",
+    "items": [
+        {
+            "category": "主食",
+            "name": "胚芽飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1509074610361893"
+        },
+        {
+            "category": "主菜",
+            "name": "咕咾肉",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1793157555009484"
+        },
+        {
+            "category": "副菜",
+            "name": "魚丸炒大黃瓜",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1787807902007421"
+        },
+        {
+            "category": "蔬菜",
+            "name": "枸杞高麗",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074644018677"
+        },
+        {
+            "category": "湯品",
+            "name": "味噌豆腐湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1411369447268054"
+        },
+        {
+            "category": "附餐",
+            "name": "甜柿",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1542327576206444"
+        }
+    ]
 }
