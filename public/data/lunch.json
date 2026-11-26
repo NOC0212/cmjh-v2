@@ -1,35 +1,30 @@
 {
-    "last_updated": "2026-11-25 12:47:56",
+    "last_updated": "2026-11-26 11:58:07",
     "items": [
         {
             "category": "主食",
-            "name": "小米飯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409627020151003"
+            "name": "糙米飯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144959"
         },
         {
             "category": "主菜",
-            "name": "節筍福菜扣肉",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1793157557009518"
+            "name": "紅蘿蔔炒蛋",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1760074681018703"
         },
         {
             "category": "副菜",
-            "name": "三杯日式滷味",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1793157557009519"
+            "name": "彩椒杏鮑菇煨三杯豆腐",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970600009824"
         },
         {
             "category": "蔬菜",
-            "name": "紅綠花椰",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1793157557009520"
+            "name": "花椰炒花枝",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1793157557009541"
         },
         {
             "category": "湯品",
-            "name": "小白菜魚丸湯",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1763970647014936"
-        },
-        {
-            "category": "附餐",
-            "name": "優酪乳",
-            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1409626202144986"
+            "name": "黑輪米血湯",
+            "image": "https://fatraceschool.k12ea.gov.tw/dish/pic/1793157557009542"
         }
     ]
 }
