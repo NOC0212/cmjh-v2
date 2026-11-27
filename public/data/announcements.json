@@ -24,6 +24,15 @@
     },
     {
         "date": "2026-11-27",
+        "category": "活動",
+        "source": "學務處",
+        "title": "2027第四十五屆大墩陽光冬令營",
+        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=1139&type=news&from_op=all_news",
+        "content": "<div class=\"flex-items\" id=\"print_content\">\n<h3>2027第四十五屆大墩陽光冬令營公告</h3>\n<p>寒假期間將於1月21日至2月3日舉辦，請公告此活動至貴單位網站，以便提供一般民眾此教育訊息。公告日期可至1月20日為止。</p>\n<p><strong>網站公告內容：</strong></p>\n<ol>\n<li>2027年第四十五屆大墩陽光兒童冬令營，營隊計有：\r\n\t<ul>\n<li>勇闖大墩王國─三大職人任務─烘焙X獸醫X魔術</li>\n<li>麥塊程式遊戲設計營</li>\n<li>空中霸主─無人機科技營</li>\n<li>韓流KPOP街舞─練習生養成營</li>\n<li>灌籃高手─籃球運動營</li>\n<li>森林探索過夜營(可國小、國高中)</li>\n</ul>\n</li>\n</ol>\n<p><strong>活動報名網址：</strong> <a href=\"http://www.sng.idv.tw\">前往報名網站</a></p>\n<p><strong>全國服務專線：</strong>（04）37007883</p>\n</div>",
+        "attachments": []
+    },
+    {
+        "date": "2026-11-27",
         "category": "研習",
         "source": "教務處",
         "title": "轉知高雄市中學生線上程式解題實施計畫，延長報名期限至115年11月30日下午5時止",
@@ -253,14 +262,5 @@
                 "link": "https://www.cmjh.tn.edu.tw/modules/school/index.php?op=tufdl&fn=「童聲有議：一日兒少代表體驗活動」計劃書.pdf&files_sn=1007"
             }
         ]
-    },
-    {
-        "date": "2026-11-24",
-        "category": "活動",
-        "source": "學務處",
-        "title": "國立臺南女子高級中學辦理音樂班展演",
-        "url": "https://www.cmjh.tn.edu.tw/modules/school/index.php?department_id=3&zone_id=0&page_id=21&content_id=1115&type=news&from_op=all_news",
-        "content": "<div class=\"flex-items\" id=\"print_content\">\n<h3>台南女中音樂班訂於115年12月辦理兩場音樂會：</h3>\n<ol>\n<li><strong>2026《樂‧暘》臺南女中音樂班成果展：</strong><br/>\r\n\t115年12月10日（星期四）19時30分，假國立臺南大學雅音樓舉行，免票入場。</li>\n<li><strong>2026《共振》－臺南女中與高雄中學聯合展演：</strong><br/>\r\n\t115年12月21日（星期一）19時，假衛武營國家藝術文化中心音樂廳舉行，特別提供各校師長免費貴賓票券，登記方式詳如說明三。</li>\n</ol>\n<p>本次展演由本校弦樂團、管樂團及管弦樂團呈現專業學習成果，並延續與高雄中學音樂班之跨校合作，透過聯合展演促進學生藝術交流與相互觀摩，精進演奏技巧及合奏能力，拓展音樂藝術學習視野。</p>\n<p>敬請貴校惠予公告活動資訊，並轉知有意參加高雄場《共振》聯合展演之師長，於115年12月4日（星期五）20時前完成貴賓票登記，以利票券安排及發放。</p>\n<p>登記網址：<a href=\"https://forms.gle/eFNX6eadNgqCwuBN9\">前往貴賓票登記</a></p>\n</div>",
-        "attachments": []
     }
 ]
